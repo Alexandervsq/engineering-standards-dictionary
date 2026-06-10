@@ -1440,7 +1440,8 @@ function quickSearch(q){
 
 function showView(v,btn){
   ['search','browse','seismic','about'].forEach(id=>{
-    document.getElementById('view-'+id).style.display=(id===v?'':'none');
+    // must be 'block', not '' — the non-search views have display:none in the stylesheet
+    document.getElementById('view-'+id).style.display=(id===v?'block':'none');
   });
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
@@ -1560,7 +1561,23 @@ function buildPdfLibraryHTML(){
     });
     html+=`</div></div>`;
   }
-  html+=`<p class="footnote" style="margin-top:8px">Files served directly from GitHub Pages. Click to view in browser or right-click → Save link as to download.</p></div>`;
+  // DWG engineering drawings (ACI Detailing Manual supplemental AutoCAD files)
+  const dwgs=window.STANDARDS_MANIFEST.DWG||[];
+  if(dwgs.length){
+    html+=`<div style="margin-bottom:18px"><p style="font-weight:700;font-size:13px;margin-bottom:8px"><span class="tag-amer">DWG</span> 📐 Engineering Drawings — ACI Detailing Manual MNL-66(20) AutoCAD Files (${dwgs.length} drawings)</p>`;
+    const groups={};
+    dwgs.forEach(f=>{(groups[f.group]=groups[f.group]||[]).push(f);});
+    for(const[group,files] of Object.entries(groups)){
+      html+=`<details style="margin-bottom:8px"><summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--blue2);padding:4px 0">▸ ${group} (${files.length} DWG files)</summary><div style="display:flex;flex-wrap:wrap;gap:5px;padding:8px 0 4px 14px">`;
+      files.forEach(f=>{
+        const url=`standards/DWG/${encodeURIComponent(group)}/${encodeURIComponent(f.name)}`;
+        html+=`<a href="${url}" download class="ext-link" style="font-size:11px;padding:4px 9px">📐 ${escapeHtml(f.name)}</a>`;
+      });
+      html+=`</div></details>`;
+    }
+    html+=`</div>`;
+  }
+  html+=`<p class="footnote" style="margin-top:8px">Files served directly from GitHub Pages. Click to view in browser or right-click → Save link as to download. DWG files require AutoCAD or a free viewer (e.g. DWG TrueView).</p></div>`;
   return html;
 }
 
@@ -1665,6 +1682,8 @@ function ensureLeafletMap(){
     // Leaflet not yet loaded — wait a bit
     setTimeout(()=>{if(window.L)initLeafletMap();},600);
   }
+  // re-measure: map may have been created while the view was hidden
+  if(leafletMap)setTimeout(()=>leafletMap.invalidateSize(),200);
 }
 
 // Init
