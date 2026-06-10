@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Engineering Standards Dictionary | SNI · ACI/AISC/ASCE · GB/JGJ</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -18,7 +19,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;color:var(--text);min-hei
 a{color:var(--blue2);text-decoration:none}a:hover{text-decoration:underline}
 
 /* HEADER */
-header{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);color:#fff;padding:0 24px}
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);color:#fff;padding:0 24px;position:sticky;top:0;z-index:50}
 .hdr{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:700}
 .logo-icon{font-size:28px}
@@ -27,6 +28,7 @@ header{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);color:
 nav{display:flex;gap:6px}
 nav button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;transition:.2s}
 nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
+.menu-toggle{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;border-radius:6px;width:40px;height:38px;cursor:pointer}
 
 /* HERO */
 .hero{background:linear-gradient(160deg,var(--navy) 0%,#1a3a5c 100%);color:#fff;padding:48px 24px 56px;text-align:center}
@@ -79,13 +81,37 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .std-item:last-child{border:none}
 .std-item .bullet{color:var(--blue2)}
 .ext-links{display:flex;flex-wrap:wrap;gap:8px;padding-top:8px}
-.ext-link{display:inline-flex;align-items:center;gap:6px;background:var(--gray);padding:7px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--blue2);border:1px solid var(--gray2)}
+.ext-link{display:inline-flex;align-items:center;gap:6px;background:var(--gray);padding:7px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--blue2);border:1px solid var(--gray2);cursor:pointer}
 .ext-link:hover{background:#dae8fc}
 
 .missing-card{background:#fffbf0;border:1px solid #f0c040;border-radius:12px;padding:18px;margin-bottom:20px}
 .missing-card h3{color:#b8860b;font-size:14px;font-weight:600;margin-bottom:10px}
 .missing-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:13px}
 .missing-item::before{content:"⚠";color:#f0a500;flex-shrink:0}
+
+/* TOPIC ANSWER MODULES */
+.module-card{background:#fff;border-radius:12px;margin-bottom:20px;box-shadow:var(--card-shadow);overflow:hidden;border-left:4px solid var(--blue2)}
+.module-card>summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:700;font-size:15px;color:var(--navy);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#f7fbff,#eef5fc);user-select:none}
+.module-card>summary::-webkit-details-marker{display:none}
+.module-card>summary .twist{font-size:13px;color:var(--blue2);font-weight:600;transition:.2s}
+.module-card[open]>summary .twist{transform:rotate(90deg)}
+.module-card>summary .mtitle{display:flex;align-items:center;gap:10px}
+.module-card>summary .micon{font-size:20px}
+.module-body{padding:6px 20px 20px}
+.module-body h4{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px}
+.module-body h4:first-child{margin-top:8px}
+.module-body p{font-size:13px;color:var(--text2);line-height:1.6;margin:6px 0}
+.module-body .src{font-size:11px;color:var(--gray2);margin-top:14px;border-top:1px dashed var(--gray);padding-top:8px;line-height:1.5}
+.mtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0}
+.mtable th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-weight:600;font-size:11.5px}
+.mtable td{padding:7px 10px;border:1px solid var(--gray);vertical-align:top}
+.mtable tr:nth-child(even) td{background:#f8f9fa}
+.mtable td:first-child{font-weight:600;color:var(--navy)}
+.mtable.center td,.mtable.center th{text-align:center}
+.mtable.center td:first-child{text-align:left}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.note-box{background:#eef7ff;border-left:3px solid var(--blue2);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--text2);margin:10px 0;line-height:1.6}
+.note-box.warn{background:#fffbf0;border-left-color:#f0c040}
 
 .fa-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
 .fa-table th{background:var(--navy);color:#fff;padding:8px;text-align:center;font-weight:600}
@@ -98,9 +124,8 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
 .filter-btn{padding:7px 16px;border:1px solid var(--gray2);border-radius:20px;background:#fff;cursor:pointer;font-size:13px;font-family:inherit;transition:.2s}
 .filter-btn.active,.filter-btn:hover{background:var(--blue2);color:#fff;border-color:var(--blue2)}
-.std-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.std-list-card{background:#fff;border-radius:10px;padding:16px;box-shadow:var(--card-shadow);border-top:3px solid var(--gray2);cursor:pointer;transition:.2s}
-.std-list-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.std-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;align-items:start}
+.std-list-card{background:#fff;border-radius:10px;padding:16px;box-shadow:var(--card-shadow);border-top:3px solid var(--gray2);transition:.2s}
 .std-list-card.sni{border-top-color:var(--sni)}
 .std-list-card.amer{border-top-color:var(--amer)}
 .std-list-card.cn{border-top-color:var(--cn)}
@@ -108,9 +133,24 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .slc-title{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.4}
 .slc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
 .slc-tag{background:var(--gray);padding:2px 7px;border-radius:10px;font-size:11px;color:var(--text2)}
+.slc-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.slc-btn{font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--gray2);background:#fff;color:var(--blue2);cursor:pointer;font-family:inherit;font-weight:500}
+.slc-btn:hover{background:#dae8fc}
+.slc-details{margin-top:12px;border-top:1px dashed var(--gray);padding-top:10px}
+.slc-details summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--blue2);list-style:none;user-select:none}
+.slc-details summary::-webkit-details-marker{display:none}
+.slc-details summary::before{content:"📄 ";}
+.slc-details[open] summary::before{content:"📂 ";}
+.slc-detail-body{margin-top:10px;font-size:12px;color:var(--text2);line-height:1.6}
+.slc-detail-body .lbl{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin:10px 0 4px;display:block}
+.kv-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+.kv-table td{padding:5px 8px;border:1px solid var(--gray);vertical-align:top}
+.kv-table td:first-child{color:var(--text2);width:55%}
+.kv-table td:last-child{font-weight:600;color:var(--text)}
+.preview-text{background:#f8f9fa;border-radius:6px;padding:10px;font-size:11.5px;color:var(--text2);line-height:1.6;max-height:140px;overflow:auto;border:1px solid var(--gray)}
 
 /* SEARCH RESULTS */
-.search-hits{margin-top:16px}
+.search-hits{margin-top:8px}
 .hit-card{background:#fff;border-radius:10px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--card-shadow);border-left:3px solid var(--blue2)}
 .hit-src{font-size:12px;font-weight:600;color:var(--blue2);margin-bottom:6px}
 .hit-text{font-size:13px;color:var(--text2);line-height:1.6}
@@ -121,25 +161,36 @@ mark{background:#fff3cd;padding:0 2px;border-radius:2px}
 .about-card{background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;box-shadow:var(--card-shadow)}
 .about-card h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--navy)}
 .about-card p{font-size:14px;line-height:1.7;color:var(--text2);margin-bottom:8px}
-.about-card pre{background:var(--gray);padding:14px;border-radius:8px;font-size:12px;overflow-x:auto;margin:8px 0}
+.about-card pre{background:var(--gray);padding:14px;border-radius:8px;font-size:12px;overflow-x:auto;margin:8px 0;line-height:1.5}
+.about-card code{background:var(--gray);padding:1px 5px;border-radius:4px;font-size:12.5px}
 .step{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start}
 .step-num{background:var(--blue2);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
 .step-body{font-size:13px;color:var(--text2);line-height:1.6;padding-top:3px}
 
-/* RSA TOOL */
+/* SEISMIC TOOL */
+#view-seismic{display:none}
 .rsa-tool{background:linear-gradient(135deg,#0d2137,#1a5276);color:#fff;border-radius:12px;padding:20px;margin-bottom:20px}
 .rsa-tool h3{font-size:15px;font-weight:700;margin-bottom:14px}
 .rsa-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
 .rsa-field{display:flex;flex-direction:column;gap:4px}
 .rsa-field label{font-size:11px;opacity:.7;font-weight:500}
-.rsa-field input,.rsa-field select{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-family:inherit;width:140px}
+.rsa-field input,.rsa-field select{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-family:inherit;width:150px}
 .rsa-field select option{color:var(--text)}
+.rsa-field.wide input,.rsa-field.wide select{width:230px}
 .rsa-btn{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.rsa-btn:hover{background:#d35400}
 #rsa-result{margin-top:14px;font-size:13px;line-height:1.8}
 #rsa-result .rval{font-weight:700;font-size:16px}
-
-/* SPECTRUM CHART */
+.panel{background:#fff;border-radius:12px;padding:20px;margin-top:16px;box-shadow:var(--card-shadow)}
+.panel h3{font-size:14px;margin-bottom:10px;color:var(--navy)}
 canvas{max-width:100%;margin-top:10px}
+.rsa-frame-wrap{border-radius:10px;overflow:hidden;border:1px solid var(--gray2);margin-top:8px;background:#fff;min-height:60px}
+.rsa-frame-wrap iframe{width:100%;height:520px;border:0;display:block}
+.rsa-fallback{padding:24px;text-align:center}
+#seismicMap{height:420px;border-radius:8px;overflow:hidden;border:1px solid var(--gray2);margin-top:10px}
+.map-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:11.5px;color:var(--text2)}
+.map-legend span{display:flex;align-items:center;gap:5px}
+.map-dot{width:10px;height:10px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 
 /* UTIL */
 .tag-sni{background:rgba(39,174,96,.1);color:var(--sni);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
@@ -147,15 +198,20 @@ canvas{max-width:100%;margin-top:10px}
 .tag-cn{background:rgba(231,76,60,.1);color:var(--cn);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
 .sec-title{font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin:20px 0 10px}
 .divider{border:none;border-top:1px solid var(--gray);margin:20px 0}
-.footnote{font-size:11px;color:var(--gray2);margin-top:6px}
+.footnote{font-size:11px;color:var(--gray2);margin-top:6px;line-height:1.5}
 .loading{text-align:center;padding:40px;color:var(--text2)}
-.no-result{text-align:center;padding:40px;color:var(--text2)}
+.no-result{text-align:center;padding:40px;color:var(--text2);background:#fff;border-radius:12px;box-shadow:var(--card-shadow)}
 
-@media(max-width:640px){
+@media(max-width:760px){
   .std-grid{grid-template-columns:1fr}
   .search-wrap{flex-direction:column}
-  nav{display:none}
+  .menu-toggle{display:block}
+  nav{display:none;position:absolute;top:64px;right:0;left:0;flex-direction:column;background:var(--navy);padding:10px 16px;gap:6px;box-shadow:0 8px 20px rgba(0,0,0,.3);z-index:60}
+  nav.open{display:flex}
+  nav button{width:100%;text-align:left;padding:11px 14px}
   .context-grid{grid-template-columns:repeat(2,1fr)}
+  .rsa-field input,.rsa-field select,.rsa-field.wide input,.rsa-field.wide select{width:100%}
+  .rsa-field{width:100%}
 }
 </style>
 </head>
@@ -170,7 +226,8 @@ canvas{max-width:100%;margin-top:10px}
         <div class="logo-sub">Multi-Discipline Civil/Structural/Geotechnical Reference</div>
       </div>
     </div>
-    <nav>
+    <button class="menu-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">☰</button>
+    <nav id="mainNav">
       <button class="active" onclick="showView('search',this)">Search</button>
       <button onclick="showView('browse',this)">Browse Standards</button>
       <button onclick="showView('seismic',this)">Seismic Tool</button>
@@ -186,16 +243,16 @@ canvas{max-width:100%;margin-top:10px}
     <p>Search across 80+ Indonesian, American, and Chinese standards. Ask in plain language.</p>
     <div class="search-wrap">
       <input id="searchInput" type="text"
-        placeholder="e.g. structural design for Power Plant in North Maluku · seismic design criteria · concrete cover for marine environment"
+        placeholder="e.g. concrete cover requirements · steel seismic detailing · foundation bearing capacity · power plant in North Maluku"
         onkeydown="if(event.key==='Enter')handleSearch()">
       <button id="searchBtn" onclick="handleSearch()">Search</button>
     </div>
     <div class="chips">
-      <span class="chip" onclick="quickSearch('seismic design criteria Indonesia')">🌍 Seismic Design</span>
-      <span class="chip" onclick="quickSearch('reinforced concrete cover requirements')">🏗 Concrete Cover</span>
-      <span class="chip" onclick="quickSearch('design live loads for industrial buildings')">📐 Design Loads</span>
+      <span class="chip" onclick="quickSearch('concrete cover and strength requirements')">🏗 Concrete</span>
+      <span class="chip" onclick="quickSearch('steel structure seismic detailing')">🔩 Steel</span>
       <span class="chip" onclick="quickSearch('foundation bearing capacity safety factor')">🏚 Foundation</span>
-      <span class="chip" onclick="quickSearch('steel structure seismic detailing')">🔩 Steel Seismic</span>
+      <span class="chip" onclick="quickSearch('design live loads for buildings')">📐 Design Loads</span>
+      <span class="chip" onclick="quickSearch('seismic design criteria Indonesia')">🌍 Seismic</span>
       <span class="chip" onclick="quickSearch('power plant structural design North Maluku')">⚡ Power Plant (Example)</span>
     </div>
     <div class="badges">
@@ -211,7 +268,7 @@ canvas{max-width:100%;margin-top:10px}
 </div>
 
 <!-- ===================== BROWSE VIEW ===================== -->
-<div id="view-browse" style="display:none">
+<div id="view-browse">
   <div class="container" style="padding-top:28px">
     <div class="filter-row" id="browseFilters">
       <button class="filter-btn active" onclick="filterBrowse('all',this)">All Standards</button>
@@ -220,20 +277,31 @@ canvas{max-width:100%;margin-top:10px}
       <button class="filter-btn" onclick="filterBrowse('Chinese',this)">🇨🇳 Chinese (GB)</button>
       <button class="filter-btn" onclick="filterBrowse('seismic',this)">Seismic</button>
       <button class="filter-btn" onclick="filterBrowse('structural',this)">Structural</button>
+      <button class="filter-btn" onclick="filterBrowse('concrete',this)">Concrete</button>
+      <button class="filter-btn" onclick="filterBrowse('steel',this)">Steel</button>
       <button class="filter-btn" onclick="filterBrowse('geotechnical',this)">Geotechnical</button>
       <button class="filter-btn" onclick="filterBrowse('loads',this)">Loads</button>
       <button class="filter-btn" onclick="filterBrowse('fire',this)">Fire/Safety</button>
     </div>
     <div class="std-list" id="stdList"></div>
+    <div id="pdfLibrary"></div>
   </div>
 </div>
 
 <!-- ===================== SEISMIC TOOL ===================== -->
-<div id="view-seismic" style="display:none">
+<div id="view-seismic">
   <div class="container" style="padding-top:28px">
     <div class="rsa-tool">
       <h3>🌍 Seismic Design Spectrum Calculator — SNI 1726:2019</h3>
       <div class="rsa-row">
+        <div class="rsa-field wide">
+          <label>Indonesian Region Preset (auto-fills Ss/S1)</label>
+          <select id="rProvince" onchange="applyProvincePreset()">
+            <option value="">— Select province / city —</option>
+          </select>
+        </div>
+      </div>
+      <div class="rsa-row" style="margin-top:12px">
         <div class="rsa-field">
           <label>Ss (g) — Short Period</label>
           <input id="rSs" type="number" value="1.0" step="0.05" min="0" max="3">
@@ -262,11 +330,42 @@ canvas{max-width:100%;margin-top:10px}
         </div>
         <button class="rsa-btn" onclick="calcSpectrum()">Calculate</button>
       </div>
+      <div class="rsa-row" style="margin-top:10px">
+        <div class="rsa-field"><label>Latitude (°)</label><input id="rLat" type="number" step="0.001" placeholder="e.g. 1.57"></div>
+        <div class="rsa-field"><label>Longitude (°)</label><input id="rLon" type="number" step="0.001" placeholder="e.g. 127.81"></div>
+        <button class="rsa-btn" style="background:rgba(255,255,255,.15)" onclick="openRSA()">🌐 Open RSA Portal for these coordinates</button>
+      </div>
       <div id="rsa-result"></div>
     </div>
-    <canvas id="specChart" height="280"></canvas>
-    <div style="background:#fff;border-radius:12px;padding:20px;margin-top:16px;box-shadow:var(--card-shadow)">
-      <h3 style="font-size:14px;margin-bottom:10px;color:var(--navy)">Fa — Short-Period Site Coefficient (Tabel 6, SNI 1726:2019)</h3>
+
+    <div class="panel">
+      <h3>📍 Select Location on Map</h3>
+      <p style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:6px">Click anywhere on the map to set coordinates and automatically calculate the design spectrum. Coloured dots mark the 34 Indonesian provinces with estimated seismic hazard levels.</p>
+      <div id="seismicMap"></div>
+      <div class="map-legend">
+        <span><span class="map-dot" style="background:#e74c3c"></span>Very High hazard</span>
+        <span><span class="map-dot" style="background:#e67e22"></span>High hazard</span>
+        <span><span class="map-dot" style="background:#f1c40f"></span>Moderate-High</span>
+        <span><span class="map-dot" style="background:#2ecc71"></span>Low–Moderate</span>
+      </div>
+      <p class="footnote" style="margin-top:8px">Ss/S1 values are regional estimates from SNI 1726:2019 hazard maps. For exact site-specific values, use the RSA Portal (link below).</p>
+    </div>
+
+    <div class="panel">
+      <h3>Design Response Spectrum</h3>
+      <canvas id="specChart" height="300"></canvas>
+      <div id="specTable"></div>
+    </div>
+
+    <div class="panel" id="rsaPortalPanel">
+      <h3>RSA Portal — Indonesian Seismic Hazard (rsa.ciptakarya.pu.go.id)</h3>
+      <p style="font-size:12.5px;color:var(--text2);line-height:1.6">The official PUPR portal gives exact Ss / S1 / spectra for any coordinate in Indonesia. It is attempted in-page below; many government portals block embedding, in which case use the button to open it in a new tab.</p>
+      <div class="rsa-frame-wrap" id="rsaFrameWrap"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Fa — Short-Period Site Coefficient (Tabel 6, SNI 1726:2019)</h3>
+      <div class="tablewrap">
       <table class="fa-table">
         <tr><th>Site Class</th><th>Ss≤0.25</th><th>Ss=0.50</th><th>Ss=0.75</th><th>Ss=1.00</th><th>Ss=1.25</th><th>Ss≥1.50</th></tr>
         <tr><td class="site-col">SA — Hard Rock</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td></tr>
@@ -276,7 +375,9 @@ canvas{max-width:100%;margin-top:10px}
         <tr><td class="site-col">SE — Soft Soil</td><td>2.4</td><td>1.7</td><td>1.3</td><td>1.1</td><td>0.9</td><td>0.8</td></tr>
         <tr><td class="site-col">SF</td><td colspan="6" style="font-style:italic">Site-specific investigation required</td></tr>
       </table>
-      <h3 style="font-size:14px;margin:16px 0 10px;color:var(--navy)">Fv — Long-Period Site Coefficient (Tabel 7, SNI 1726:2019)</h3>
+      </div>
+      <h3 style="margin:16px 0 10px">Fv — Long-Period Site Coefficient (Tabel 7, SNI 1726:2019)</h3>
+      <div class="tablewrap">
       <table class="fa-table">
         <tr><th>Site Class</th><th>S1≤0.10</th><th>S1=0.20</th><th>S1=0.30</th><th>S1=0.40</th><th>S1=0.50</th><th>S1≥0.60</th></tr>
         <tr><td class="site-col">SA</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td></tr>
@@ -286,19 +387,37 @@ canvas{max-width:100%;margin-top:10px}
         <tr><td class="site-col">SE</td><td>4.2</td><td>3.3</td><td>2.8</td><td>2.4</td><td>2.2</td><td>2.0</td></tr>
         <tr><td class="site-col">SF</td><td colspan="6" style="font-style:italic">Site-specific investigation required</td></tr>
       </table>
+      </div>
       <p class="footnote">Source: SNI 1726:2019 Tabel 6 &amp; 7 — extracted directly from PDF text. Note: SB Fa=0.9 (differs from ASCE 7-16 value of 1.0).</p>
     </div>
   </div>
 </div>
 
 <!-- ===================== ABOUT VIEW ===================== -->
-<div id="view-about" style="display:none">
+<div id="view-about">
   <div class="container" style="padding-top:28px">
     <div class="about-card">
       <h2>About This Dictionary</h2>
       <p>A multi-discipline engineering standards reference for civil, structural, geotechnical, and architectural engineers. Covers Indonesian (SNI), American (ACI/AISC/ASCE/ASTM), and Chinese (GB/JGJ) standards.</p>
-      <p>The built-in knowledge base is derived from 80+ standards PDFs. Running <code>build_index.ps1</code> expands the search to full extracted text from your local PDF collection.</p>
+      <p>Type a topic in plain language — <code>concrete</code>, <code>steel</code>, <code>foundation</code>, <code>loads</code>, or <code>seismic</code> — and the dictionary returns a comprehensive cross-standard answer module plus the relevant code cards. Add a project type (e.g. "power plant") and a location (e.g. "North Maluku") to get risk category, importance factor Ie, and regional seismic estimates.</p>
+      <p>The built-in knowledge base is derived from 80+ standards PDFs. Running <code>build_index.ps1</code> expands the search to full extracted text from your local PDF collection (currently loaded: <span id="aboutIndexStat">checking…</span>).</p>
     </div>
+
+    <div class="about-card">
+      <h2>📚 Add the PDF Library to GitHub (Manual Step)</h2>
+      <p>The full-text search index (<code>standards_data.js</code>) is generated from your local PDFs, but the PDF files themselves are <strong>not</strong> committed automatically (they are large and excluded by <code>.gitignore</code>). To publish the actual PDFs so visitors can open them, add them manually with these terminal commands:</p>
+      <pre>cd "C:\Users\cader\OneDrive\Desktop\Alexander\Engineering Standards Website"
+
+# Create category subfolders for the PDFs
+New-Item -ItemType Directory -Force standards/SNI, standards/American, standards/Chinese
+
+# Copy your PDFs into the matching subfolders, then commit &amp; push:
+git add standards/
+git commit -m "Add PDF library"
+git push</pre>
+      <div class="note-box warn">Note: GitHub has a 100 MB per-file limit and recommends repositories stay under 1 GB. If the combined PDF library is very large, consider hosting the PDFs on a release asset, an external bucket, or Git LFS instead of committing them directly.</div>
+    </div>
+
     <div class="about-card">
       <h2>🚀 Deploy to GitHub Pages (Free Public Hosting)</h2>
       <div class="step"><div class="step-num">1</div><div class="step-body">Install <a href="https://git-scm.com/">Git</a> and create a free account at <a href="https://github.com">github.com</a></div></div>
@@ -307,7 +426,7 @@ canvas{max-width:100%;margin-top:10px}
         <pre>cd "C:\Users\cader\OneDrive\Desktop\Alexander\Engineering Standards Website"
 .\build_index.ps1</pre>
       </div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-body">Push to GitHub:
+      <div class="step"><div class="step-num">4</div><div class="step-body">Push the site to GitHub:
         <pre>git init
 git add index.html standards_data.js
 git commit -m "Initial deployment"
@@ -315,8 +434,9 @@ git remote add origin https://github.com/YOUR_USERNAME/engineering-standards-dic
 git push -u origin main</pre>
       </div></div>
       <div class="step"><div class="step-num">5</div><div class="step-body">Go to GitHub repo → Settings → Pages → Source: main branch → Save. Site will be live at <code>https://YOUR_USERNAME.github.io/engineering-standards-dictionary/</code></div></div>
-      <div class="step"><div class="step-num">6</div><div class="step-body">To update after adding/removing PDFs: re-run <code>build_index.ps1</code>, then <code>git add . &amp;&amp; git commit -m "Update index" &amp;&amp; git push</code></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body">To update after adding/removing PDFs: re-run <code>build_index.ps1</code>, then <code>git add . ; git commit -m "Update index" ; git push</code></div></div>
     </div>
+
     <div class="about-card">
       <h2>Standards Included (Built-in Knowledge Base)</h2>
       <div id="aboutStdList"></div>
@@ -326,6 +446,7 @@ git push -u origin main</pre>
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <script src="standards_data.js" onerror="console.log('No dynamic index — using built-in KB')"></script>
+<script src="standards_manifest.js" onerror="console.log('No PDF manifest — download links unavailable')"></script>
 <script>
 // ================================================================
 // KNOWLEDGE BASE
@@ -523,7 +644,7 @@ standards: [
 ],
 
 // ================================================================
-// TOPICS
+// TOPICS — query-side keyword detection
 // ================================================================
 topics:{
   seismic:{name:"Seismic Design",name_id:"Perancangan Tahan Gempa",
@@ -531,19 +652,19 @@ topics:{
     standards:["sni-1726-2019","asce-7-22","gb-50011-2010","aisc-341-22"],
     required_info:["location_coords","site_class","building_type"]},
   structural_concrete:{name:"Structural Concrete",name_id:"Beton Struktural",
-    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847"],
+    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40"],
     standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
-    keywords:["steel","baja","moment frame","braced frame","SMRF","seismic steel","AISC","connection","welding","bolt","buckling","column","beam","stability","LRFD","ASD"],
+    keywords:["steel","baja","moment frame","braced frame","SMRF","SMF","SCBF","EBF","seismic steel","AISC","connection","welding","weld","bolt","buckling","stability","LRFD","ASD","BJ37","A992","Q235","Q355"],
     standards:["sni-1729-2020","aisc-360-22","aisc-341-22","gb-50017-2017"],
     required_info:["steel_grade","loading","system_type"]},
   geotechnical:{name:"Geotechnical / Foundation",name_id:"Geoteknik / Pondasi",
-    keywords:["foundation","pondasi","bearing capacity","daya dukung","settlement","penurunan","pile","tiang","SPT","CPT","soil investigation","penyelidikan tanah","liquefaction","slope stability","retaining"],
+    keywords:["foundation","pondasi","footing","bearing capacity","daya dukung","settlement","penurunan","pile","tiang","bored pile","driven pile","micropile","SPT","CPT","sondir","soil investigation","penyelidikan tanah","liquefaction","slope stability","retaining","borehole"],
     standards:["sni-8460-2017","gb-50007-2011","jgj-94-2008","aci-543r-12"],
     required_info:["soil_data","N_SPT","groundwater_depth"]},
   design_loads:{name:"Design Loads",name_id:"Beban Desain",
-    keywords:["load","beban","live load","beban hidup","dead load","beban mati","wind","angin","snow","floor load","roof load","minimum load","ASCE 7","SNI 1727"],
+    keywords:["load","beban","live load","beban hidup","dead load","beban mati","wind","angin","snow","floor load","roof load","minimum load","occupancy load","ASCE 7","SNI 1727"],
     standards:["sni-1727-2020","asce-7-22","gb-50009-2012"],
     required_info:["building_use","floor_area"]},
   fire:{name:"Fire Protection",name_id:"Ketahanan Api",
@@ -554,6 +675,235 @@ topics:{
     keywords:["precast","pracetak","prestress","prategang","hollow core","double tee","pretension","post-tension","camber"],
     standards:["sni-7833-2012","aci-318-19"],
     required_info:["span","load","environment"]}
+},
+
+// Map a detected query-topic key -> answer-module key
+topicToModule:{
+  structural_concrete:"concrete",
+  precast:"concrete",
+  steel_structure:"steel",
+  geotechnical:"geotechnical",
+  design_loads:"design_loads",
+  seismic:"seismic"
+},
+
+// ================================================================
+// ANSWER MODULES — comprehensive cross-standard data per topic
+// ================================================================
+answer_modules:{
+
+  concrete:{
+    icon:"🏗", title:"Structural Concrete — Design Parameters",
+    sections:[
+      {h:"Concrete Strength Comparison",
+       table:{cols:["Parameter","SNI 2847:2019 / ACI 318-19","GB 50010-2010"],
+         rows:[
+           ["Normal-weight concrete density","2400 kg/m³","2400 kg/m³"],
+           ["Min fc' — structural","21 MPa","C20 (fck = 13.4 MPa)"],
+           ["Min fc' — seismic cols (SRPMK / SMRF)","28 MPa","C30 (fck = 20.1 MPa)"],
+           ["Min fc' — precast","35 MPa","C30"],
+           ["Min fc' — prestressed","41 MPa","C40"],
+           ["Modulus of elasticity Ec","4700·√fc' MPa","4730·√fck MPa"]
+         ]}},
+      {h:"GB 50010-2010 Concrete Grade Table (C15–C80)",
+       table:{center:true,cols:["Grade","fck (MPa)","fc (MPa)","ftk (MPa)","ft (MPa)","Ec (GPa)"],
+         rows:[
+           ["C15","10.0","7.2","1.27","0.91","22.0"],
+           ["C20","13.4","9.6","1.54","1.10","25.5"],
+           ["C25","16.7","11.9","1.78","1.27","28.0"],
+           ["C30","20.1","14.3","2.01","1.43","30.0"],
+           ["C35","23.4","16.7","2.20","1.57","31.5"],
+           ["C40","26.8","19.1","2.39","1.71","32.5"],
+           ["C45","29.6","21.2","2.51","1.80","33.5"],
+           ["C50","32.4","23.1","2.64","1.89","34.5"],
+           ["C55","35.5","25.3","2.74","1.96","35.5"],
+           ["C60","38.5","27.5","2.85","2.04","36.0"],
+           ["C65","41.5","29.7","2.93","2.09","36.5"],
+           ["C70","44.5","31.8","2.99","2.14","37.0"],
+           ["C75","47.4","33.8","3.05","2.18","37.5"],
+           ["C80","50.2","35.9","3.11","2.22","38.0"]
+         ]}},
+      {h:"Concrete Cover Requirements (SNI 2847:2019 §20.6.1.3 / ACI 318-19 Table 20.6.1.3)",
+       table:{cols:["Exposure Condition","Minimum Cover"],
+         rows:[
+           ["Cast against and permanently in contact with earth","75 mm"],
+           ["Exposed to weather — bars larger than D16","50 mm"],
+           ["Exposed to weather — D16 and smaller","40 mm"],
+           ["Beams / columns not exposed to weather or earth","40 mm"],
+           ["Slabs / walls / joists not exposed","20 mm"],
+           ["Marine / splash zone","65 mm"]
+         ]}},
+      {h:"Reinforcement Grades (SNI 2052:2017 / SNI 2847:2019 / ASTM)",
+       table:{cols:["Grade","Type / Standard","fy (MPa)","fu (MPa)"],
+         rows:[
+           ["BJTP-24","Plain round (SNI 2052:2017)","235","380"],
+           ["BJTD-40","Deformed (SNI 2052:2017)","390","540"],
+           ["BJTD-48","Deformed","480","—"],
+           ["BJTD-55","Deformed","550","—"],
+           ["Grade 60","ASTM A615","420","620"],
+           ["A706 Grade 60","ASTM A706 (seismic, weldable)","420","550 min"]
+         ]}},
+      {h:"Seismic Detailing — System Classification (SNI 2847:2019 Ch.18 / ACI 318-19 Ch.18)",
+       table:{cols:["Indonesian System","Equivalent SDC","Requirements"],
+         rows:[
+           ["SRPMK (Special)","SDC D / E / F","Min ρ = 0.01, max ρ = 0.025, min fc' = 28 MPa"],
+           ["SRPMM (Intermediate)","SDC C","Reduced seismic detailing"],
+           ["SRPMB (Ordinary / Biasa)","SDC A / B","Standard non-seismic detailing"]
+         ]},
+       notes:["Seismic column confinement (SRPMK): minimum hoop spacing = min(b_col/4, 6·d_b, 150 mm) within the confinement length Lₒ.",
+              "Lₒ = max(member depth, L_clear/6, 450 mm) per SNI 2847:2019 §18.7.5."]},
+    ],
+    sources:"SNI 2847:2019 Tabel 20.6.1.3 (cover), §4.10 (min fc'), Ch.18 (seismic) · SNI 2052:2017 (rebar) · GB 50010-2010 Table 4.1.3 (fck) & 4.1.5 (Ec) · ACI 318-19 Table 19.2.1.1 (Ec), Table 20.6.1.3 (cover), Ch.18"
+  },
+
+  steel:{
+    icon:"🔩", title:"Steel Structure — Design Parameters",
+    sections:[
+      {h:"Steel Grade Comparison (Three Standard Systems)",
+       table:{cols:["Indonesian (SNI)","American (AISC/ASTM)","Chinese (GB)","fy (MPa)","fu (MPa)","Application"],
+         rows:[
+           ["BJ37","A36","Q235","240 / 250 / 235","370 / 400 / 370","General structure"],
+           ["BJ41","—","Q355","250 / — / 355","410 / — / 470","General structure"],
+           ["BJ50","A572-50","Q390","290 / 345 / 390","500 / 450 / 490","Structural"],
+           ["—","A992","Q420","— / 345 / 420","— / 450 / 520","Wide-flange sections"],
+           ["—","A572 Gr60","—","415","520","High-strength"]
+         ]}},
+      {h:"LRFD Resistance Factors φ (AISC 360-22 / SNI 1729:2020)",
+       table:{center:true,cols:["Limit State","φ factor"],
+         rows:[
+           ["Flexure (φb)","0.90"],
+           ["Shear (φv)","1.00"],
+           ["Tension — yielding (φt)","0.90"],
+           ["Tension — fracture (φt)","0.75"],
+           ["Compression (φc)","0.90"],
+           ["Welds (φ)","0.75"]
+         ]}},
+      {h:"Seismic Provisions (AISC 341-22 / SNI 1729:2020 seismic chapter)",
+       table:{cols:["System","Key Requirement"],
+         rows:[
+           ["SMF — Special Moment Frame","Ry = 1.1 (A992); highly ductile columns max Pu/φc·Pn = 0.75"],
+           ["SCBF — Special Concentrically Braced Frame","Brace slenderness KL/r ≤ 200"],
+           ["EBF — Eccentrically Braced Frame","Link rotation ≤ 0.08 rad (short link), ≤ 0.02 rad (long link)"]
+         ]},
+       notes:["Ry = ratio of expected to specified minimum yield stress, used in capacity design of seismic systems."]},
+    ],
+    sources:"SNI 1729:2020 (≈ AISC 360-16) · AISC 360-22 Tables B4.1, J3.2 & Ch.D–J · AISC 341-22 (seismic) · GB 50017-2017 Table 4.4.1 (Q-grades)"
+  },
+
+  geotechnical:{
+    icon:"🏚", title:"Geotechnical & Foundation — Design Parameters",
+    sections:[
+      {h:"Site Investigation Requirements (SNI 8460:2017 §6 / GB 50007-2011)",
+       table:{cols:["Requirement","Value / Criterion"],
+         rows:[
+           ["Minimum borehole depth","≥ 6 m below proposed foundation base (SNI 8460 §6.3)"],
+           ["Borehole depth for seismic site class","≥ 30 m to determine Vs30 or N60-SPT (SNI 1726:2019 §5.3)"],
+           ["CPT cone resistance qc","Reported in kPa or MPa; qc > 15 MPa typically dense soil / rock"]
+         ]}},
+      {h:"Bearing Capacity Factor of Safety",
+       table:{center:true,cols:["Loading Condition","SNI 8460:2017","GB 50007-2011"],
+         rows:[
+           ["Static loading","FS ≥ 3.0","FS ≥ 2.5–3.0"],
+           ["Seismic loading","FS ≥ 2.0","FS ≥ 1.5"],
+           ["Uplift / overturning","FS ≥ 1.5","FS ≥ 1.5"]
+         ]}},
+      {h:"Settlement Limits",
+       table:{cols:["Criterion","Limit"],
+         rows:[
+           ["Isolated footing — differential","≤ 25 mm (SNI 8460:2017 §8.6); L/300 to L/500"],
+           ["Total settlement","≤ 50 mm (SNI) / ≤ 200 mm (GB 50007 frame buildings)"]
+         ]}},
+      {h:"SPT-Based Soil Classification (SNI 8460:2017 / SNI 1726:2019 Tabel 3)",
+       table:{center:true,cols:["SPT N₆₀ / Vs30","Classification","Site Class"],
+         rows:[
+           ["N < 15","Soft soil","SE or SD"],
+           ["15 ≤ N < 50","Stiff soil","SD"],
+           ["N ≥ 50","Dense soil / rock","SC–SB"],
+           ["Vs30 > 760 m/s","Rock","SB–SA"]
+         ]}},
+      {h:"Pile Types",
+       table:{cols:["Type","Description"],
+         rows:[
+           ["Driven piles","250×250 mm to 600×600 mm precast RC; capacity by static formula or dynamic testing"],
+           ["Bored piles (tiang bor)","400–2000 mm diameter; min fc' = 21 MPa; frictional + end bearing"],
+           ["Micropiles (tiang mini)","< 300 mm diameter"]
+         ]},
+       notes:["Pile group efficiency (Converse-Labarre): η = 1 − [arctan(d/s)/90°] × (m+n−2)/(m×n), where d = pile diameter, s = spacing, m×n = pile array."]},
+    ],
+    sources:"SNI 8460:2017 §6 (investigation), §8.6 (settlement) · SNI 1726:2019 §5.3 & Tabel 3 (site class) · GB 50007-2011 (FS, settlement) · SNI 2827:2008 (CPT)"
+  },
+
+  design_loads:{
+    icon:"📐", title:"Design Loads — Reference Values",
+    sections:[
+      {h:"Minimum Uniform Live Loads (SNI 1727:2020 Tabel 4.3-1 = ASCE 7-16 Table 4.3-1)",
+       table:{center:true,cols:["Occupancy / Use","SNI / ASCE (kN/m²)","GB 50009-2012 (kN/m²)"],
+         rows:[
+           ["Residential apartment","1.92","2.0"],
+           ["Office","2.40","2.0"],
+           ["Corridor (office floor)","4.79","2.5"],
+           ["Assembly — fixed seats","2.87","3.0"],
+           ["Assembly — movable seats / lobbies","4.79","3.5"],
+           ["Classrooms","1.92","2.5"],
+           ["Storage — light","6.00","5.0"],
+           ["Storage — heavy","12.00","—"],
+           ["Manufacturing — light","6.00","—"],
+           ["Manufacturing — heavy","12.00","10.0–20.0"],
+           ["Mechanical / equipment room","4.79","7.0–10.0"],
+           ["Parking — passenger car","2.40","4.0 (≤ 2500 kg vehicle)"],
+           ["Stairs, fire escapes","4.79","3.5"],
+           ["Roofs — accessible","0.96","2.0"],
+           ["Roofs — not accessible","0.48","0.5"]
+         ]}},
+      {h:"Indicative Dead Loads",
+       table:{cols:["Component","Load"],
+         rows:[
+           ["RC slab — 120 mm","2.88 kN/m²"],
+           ["RC slab — 200 mm","4.80 kN/m²"],
+           ["Topping / screed — 50 mm","1.10 kN/m²"],
+           ["Tile finishes","0.4–0.8 kN/m²"],
+           ["Partition walls (lightweight allowance)","1.0 kN/m²"],
+           ["Self-weight of reinforced concrete","24.0 kN/m³"]
+         ]}},
+    ],
+    sources:"SNI 1727:2020 Tabel 4.3-1 (= ASCE 7-16 Table 4.3-1) · GB 50009-2012 Table 5.1.1 · Self-weight per SNI 1727:2020 / typical material densities"
+  },
+
+  seismic:{
+    icon:"🌍", title:"Seismic Design — Multi-Standard Parameters",
+    sections:[
+      {h:"Risk Category & Importance Factor Ie (SNI 1726:2019 / ASCE 7-22)",
+       table:{cols:["Risk Category","Ie","Typical Occupancy"],
+         rows:[
+           ["I","1.00","Minor storage, agricultural facilities"],
+           ["II","1.00","Standard occupancy (most buildings)"],
+           ["III","1.25","Schools > 250 persons, assembly > 300 persons, healthcare without surgery/emergency"],
+           ["IV","1.50","Essential: power plants, hospitals with surgery/emergency, fire/police stations, designated EOC, water-treatment facilities, GIS substations"]
+         ]}},
+      {h:"Seismic Design Category (SDC) Determination Matrix",
+       table:{center:true,cols:["SDC","SDS","SD1","Applies to"],
+         rows:[
+           ["A","< 0.167","< 0.067","All risk categories"],
+           ["B","< 0.33","< 0.133","Cat I / II"],
+           ["C","< 0.50 (or < 0.33 Cat III/IV)","< 0.20","Cat I/II; or Cat III/IV"],
+           ["D","≥ 0.50","≥ 0.20","Cat I / II / III / IV"]
+         ]},
+       notes:["Source: SNI 1726:2019 Tabel 8 & 9. The governing SDC is the more severe of the SDS-based and SD1-based categories."]},
+      {h:"Chinese Seismic Intensity vs Acceleration (GB 50011-2010)",
+       table:{center:true,cols:["Seismic Intensity","ag (design)","αmax"],
+         rows:[
+           ["VI","0.05 g","0.04"],
+           ["VII (0.10g)","0.10 g","0.08"],
+           ["VII (0.15g)","0.15 g","0.12"],
+           ["VIII (0.20g)","0.20 g","0.16"],
+           ["VIII (0.30g)","0.30 g","0.24"],
+           ["IX (0.40g)","0.40 g","0.32"]
+         ]}},
+    ],
+    sources:"SNI 1726:2019 Tabel 2 (risk/Ie), Tabel 8 & 9 (SDC) · ASCE 7-22 Table 1.5-2 · GB 50011-2010 Table 5.1.4-1 (αmax)",
+    tool_link:true
+  }
+
 },
 
 // ================================================================
@@ -597,7 +947,7 @@ project_types:{
     applicable:["sni-03-6772-2002"]},
   water_structure:{
     name:"Water Retaining Structure",name_id:"Struktur Penyimpan Air",
-    keywords:["water tank","tangki air","reservoir","bak air","wastewater","sewage","water treatment","IPAL","WTP"],
+    keywords:["water tank","tangki air","reservoir","bak air","wastewater","sewage","water treatment","ipal","wtp"],
     risk_category:"III",ie:1.25,
     note:"Water tanks serving essential facilities may require Risk Cat III or IV",
     applicable:["sni-2847-2019","aci-350-20","sni-8460-2017"]}
@@ -658,6 +1008,14 @@ function interp(x,xs,ys){
   return ys[0];
 }
 
+// Sa(T) ordinate for the SNI 1726:2019 design spectrum shape
+function saOf(T,SDS,SD1,T0,Ts,TL){
+  if(T<T0)        return SDS*(0.4+0.6*T/T0);
+  else if(T<=Ts)  return SDS;
+  else if(T<=TL)  return SD1/T;
+  else            return SD1*TL/(T*T);
+}
+
 function calcSpectrum(){
   const Ss=+document.getElementById('rSs').value;
   const S1=+document.getElementById('rS1').value;
@@ -668,46 +1026,127 @@ function calcSpectrum(){
   const fv=interp(S1,FV_S1,FV[site]);
   const SMS=fa*Ss, SM1=fv*S1;
   const SDS=(2/3)*SMS, SD1=(2/3)*SM1;
-  const Ts=SD1/SDS, T0=0.2*Ts, TL=6.0;
+  const Ts=SDS>0?SD1/SDS:0, T0=0.2*Ts, TL=6.0;
   const T0d=T0.toFixed(3),Tsd=Ts.toFixed(3);
-  const Sa_max=(SDS*Ie).toFixed(3);
+  const sa_max=(SDS*Ie).toFixed(3);
   const SDC=getSDC(SDS,SD1,Ie);
   document.getElementById('rsa-result').innerHTML=`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px">
       ${rv('Fa',fa.toFixed(2))} ${rv('Fv',fv.toFixed(2))} ${rv('SMS',SMS.toFixed(3)+'g')} ${rv('SM1',SM1.toFixed(3)+'g')}
       ${rv('SDS',SDS.toFixed(3)+'g')} ${rv('SD1',SD1.toFixed(3)+'g')} ${rv('T0',T0d+'s')} ${rv('Ts',Tsd+'s')}
-      ${rv('Sa,max = SDS×Ie',sa_max)} ${rv('SDC',SDC)}
+      ${rv('Sa,max = SDS×Ie',sa_max+'g')} ${rv('SDC',SDC)}
     </div>
-    <p style="font-size:11px;opacity:.7">Source: SNI 1726:2019 §6.3. Fa/Fv from Tabel 6 &amp; 7 (extracted from PDF). SDS = (2/3)SMS, SD1 = (2/3)SM1.</p>`;
-  const sa_max=(SDS*Ie).toFixed(3);
+    <p style="font-size:11px;opacity:.7">Source: SNI 1726:2019 §6.3. Fa/Fv from Tabel 6 &amp; 7 (extracted from PDF). SDS = (2/3)·SMS, SD1 = (2/3)·SM1. Solid curve = design spectrum (× Ie); dashed grey = un-amplified (Ie = 1).</p>`;
   drawChart(SDS,SD1,T0,Ts,TL,Ie);
+  buildSpecTable(SDS,SD1,T0,Ts,TL,Ie);
 }
 
 function rv(label,val){return`<div style="background:rgba(255,255,255,.1);padding:8px;border-radius:6px"><div style="font-size:10px;opacity:.65">${label}</div><div class="rval">${val}</div></div>`;}
 
 function getSDC(SDS,SD1,Ie){
   const cat=(Ie>=1.5)?'IV':(Ie>=1.25)?'III':'II';
-  if(cat==='IV'){if(SDS>=0.167||SD1>=0.067)return'D (min — verify with SNI 1726 Table 8/9)'}
-  if(SDS>=0.50&&SD1>=0.20)return'D';
-  if(SDS>=0.33&&SD1>=0.133)return'C';
-  return'B';
+  if(cat==='IV'&&(SDS>=0.167||SD1>=0.067))return'D (min — verify w/ Tabel 8/9)';
+  if(SDS>=0.50||SD1>=0.20)return'D';
+  if(SDS>=0.33||SD1>=0.133)return'C';
+  if(SDS>=0.167||SD1>=0.067)return'B';
+  return'A';
 }
 
 let chartInst=null;
 function drawChart(SDS,SD1,T0,Ts,TL,Ie){
-  const pts=[];
-  for(let T=0;T<=3;T+=0.02){
-    let Sa;
-    if(T<T0)        Sa=SDS*(0.4+0.6*T/T0);
-    else if(T<=Ts)  Sa=SDS;
-    else if(T<=TL)  Sa=SD1/T;
-    else            Sa=SD1*TL/(T*T);
-    pts.push({x:+T.toFixed(3),y:+(Sa*Ie).toFixed(4)});
+  const design=[], plain=[];
+  for(let T=0;T<=4.001;T+=0.02){
+    const sa=saOf(T,SDS,SD1,T0,Ts,TL);
+    const Tr=+T.toFixed(3);
+    design.push({x:Tr,y:+(sa*Ie).toFixed(4)});
+    plain.push({x:Tr,y:+sa.toFixed(4)});
   }
+  const yMax=SDS*Ie;
   const ctx=document.getElementById('specChart').getContext('2d');
   if(chartInst)chartInst.destroy();
-  chartInst=new Chart(ctx,{type:'line',data:{datasets:[{label:'Design Spectrum Sa(T) [g]',data:pts,borderColor:'#FF9800',backgroundColor:'rgba(255,152,0,.15)',pointRadius:0,borderWidth:2,fill:true}]},
-    options:{responsive:true,scales:{x:{type:'linear',title:{display:true,text:'Period T (s)'}},y:{title:{display:true,text:'Sa (g)'},min:0}},plugins:{legend:{position:'top'}}}});
+  // vertical marker lines for T0 and Ts via a thin dataset each
+  const vline=(T,color,label)=>({label:label,data:[{x:T,y:0},{x:T,y:yMax*1.08}],borderColor:color,borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false});
+  chartInst=new Chart(ctx,{type:'line',
+    data:{datasets:[
+      {label:'Design spectrum Sa·Ie (g)',data:design,borderColor:'#FF9800',backgroundColor:'rgba(255,152,0,.15)',pointRadius:0,borderWidth:2.5,fill:true,tension:.05},
+      {label:'Un-amplified Sa, Ie=1 (g)',data:plain,borderColor:'#90a4ae',borderDash:[5,4],pointRadius:0,borderWidth:1.5,fill:false,tension:.05},
+      vline(T0,'#27ae60','T0'),
+      vline(Ts,'#e74c3c','Ts')
+    ]},
+    options:{responsive:true,interaction:{intersect:false,mode:'index'},
+      scales:{x:{type:'linear',title:{display:true,text:'Period T (s)'},max:4},y:{title:{display:true,text:'Sa (g)'},min:0}},
+      plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:11}}},
+        tooltip:{callbacks:{title:items=>'T = '+(items[0]?.parsed.x ?? 0).toFixed(2)+' s'}},
+        annotation:undefined,
+        subtitle:{display:true,text:`T0 = ${T0.toFixed(3)} s   ·   Ts = ${Ts.toFixed(3)} s   ·   plateau Sa = SDS·Ie = ${(SDS*Ie).toFixed(3)} g   ·   T > Ts: Sa = SD1·Ie / T`,font:{size:11},color:'#555',padding:{bottom:8}}}}});
+}
+
+function buildSpecTable(SDS,SD1,T0,Ts,TL,Ie){
+  const Ts_=[0,0.2,0.5,1.0,2.0];
+  let rows=Ts_.map(T=>{
+    const sa=saOf(T,SDS,SD1,T0,Ts,TL);
+    return `<tr><td>${T.toFixed(1)}</td><td>${sa.toFixed(3)}</td><td>${(sa*Ie).toFixed(3)}</td></tr>`;
+  }).join('');
+  document.getElementById('specTable').innerHTML=`
+    <div class="sec-title" style="margin-top:18px">Spectral Acceleration at Key Periods</div>
+    <div class="tablewrap"><table class="fa-table">
+      <tr><th>Period T (s)</th><th>Sa, Ie=1 (g)</th><th>Sa × Ie (g)</th></tr>${rows}
+    </table></div>
+    <p class="footnote">T0 = ${T0.toFixed(3)} s, Ts = ${Ts.toFixed(3)} s, TL = ${TL} s (assumed; verify regional TL from SNI 1726:2019 long-period map).</p>`;
+}
+
+// ── Province presets + RSA portal in seismic tool ──────────────
+function populateProvinceSelect(){
+  const sel=document.getElementById('rProvince');
+  if(!sel)return;
+  const entries=Object.entries(KB.locations).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+  entries.forEach(([k,v])=>{
+    const o=document.createElement('option');
+    o.value=k; o.textContent=v.name;
+    sel.appendChild(o);
+  });
+}
+
+function applyProvincePreset(){
+  const k=document.getElementById('rProvince').value;
+  if(!k||!KB.locations[k])return;
+  const v=KB.locations[k];
+  if(v.typical_Ss)document.getElementById('rSs').value=((v.typical_Ss[0]+v.typical_Ss[1])/2).toFixed(2);
+  if(v.typical_S1)document.getElementById('rS1').value=((v.typical_S1[0]+v.typical_S1[1])/2).toFixed(2);
+  const lat=v.rsa_lat??v.lat, lon=v.rsa_lon??v.lon;
+  if(lat!=null)document.getElementById('rLat').value=lat;
+  if(lon!=null)document.getElementById('rLon').value=lon;
+  if(lat!=null&&lon!=null)setMapMarker(lat,lon,v.name);
+  if(leafletMap&&lat!=null&&lon!=null)leafletMap.setView([lat,lon],8);
+  calcSpectrum();
+}
+
+function openRSA(){
+  const lat=document.getElementById('rLat').value, lon=document.getElementById('rLon').value;
+  let url='https://rsa.ciptakarya.pu.go.id/2021/';
+  if(lat&&lon)url+=`?lat=${lat}&lon=${lon}`;
+  window.open(url,'_blank');
+}
+
+function tryEmbedRSA(){
+  const wrap=document.getElementById('rsaFrameWrap');
+  if(!wrap)return;
+  const url='https://rsa.ciptakarya.pu.go.id/2021/';
+  let loaded=false;
+  const iframe=document.createElement('iframe');
+  iframe.src=url; iframe.title='RSA Portal';
+  iframe.referrerPolicy='no-referrer';
+  iframe.addEventListener('load',()=>{loaded=true;});
+  wrap.appendChild(iframe);
+  // Most government portals send X-Frame-Options: DENY/SAMEORIGIN; load won't fire cross-origin.
+  setTimeout(()=>{
+    if(!loaded){
+      wrap.innerHTML=`<div class="rsa-fallback">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px">The RSA portal blocks in-page embedding (X-Frame-Options). Open it directly in a new tab:</p>
+        <button class="rsa-btn" onclick="openRSA()">🌐 Open RSA Portal (rsa.ciptakarya.pu.go.id)</button>
+      </div>`;
+    }
+  },3500);
 }
 
 // ================================================================
@@ -715,10 +1154,9 @@ function drawChart(SDS,SD1,T0,Ts,TL,Ie){
 // ================================================================
 function analyzeQuery(q){
   const ql=q.toLowerCase();
-  // Topics
   const topicScores={};
   for(const[k,v] of Object.entries(KB.topics)){
-    topicScores[k]=v.keywords.filter(w=>ql.includes(w)).length;
+    topicScores[k]=v.keywords.filter(w=>ql.includes(w.toLowerCase())).length;
   }
   const topics=Object.entries(topicScores).filter(([,s])=>s>0).sort((a,b)=>b[1]-a[1]).map(([k])=>k);
   // Project type
@@ -732,42 +1170,46 @@ function analyzeQuery(q){
   for(const[k,v] of locEntries){
     if(ql.includes(k)||(v.name&&ql.includes(v.name.toLowerCase()))||(v.aliases&&v.aliases.some(a=>ql.includes(a)))){loc={key:k,...v};break;}
   }
-  // Missing info
-  const missing=[];
-  if(topics.includes('seismic')){
-    if(!loc)missing.push({item:"Site location (province, city, or GPS coordinates)",why:"Required to look up Ss and S1 from seismic hazard map (RSA portal)"});
-    else if(!loc.rsa_lat)missing.push({item:"Exact GPS coordinates (latitude/longitude)",why:"For precise Ss/S1 from RSA portal. Province-level estimate provided below."});
-    missing.push({item:"Site class / soil investigation data",why:"Determines Fa and Fv coefficients. Requires borehole data (Vs30 or N60-SPT to 30m depth)"});
+  return{topics,projType,loc,raw:q};
+}
+
+// Only nag for missing info on calculation-type queries (Bug 2 fix)
+function shouldShowMissingInfo(ctx){
+  if(ctx.topics.includes('seismic')&&!ctx.loc)return true;   // need location for seismic
+  if(ctx.topics.includes('seismic')&&ctx.loc&&!ctx.projType)return true; // need Ie
+  return false; // general "what is concrete" type queries — don't nag
+}
+
+function buildMissingInfo(ctx){
+  const out=[];
+  if(ctx.topics.includes('seismic')&&!ctx.loc){
+    out.push({item:"Site location (province, city, or GPS coordinates)",why:"Required to look up Ss and S1 from the seismic hazard map (RSA portal)."});
   }
-  if(topics.includes('structural_concrete')||topics.includes('geotechnical')){
-    missing.push({item:"Structural system and building height",why:"Affects seismic system selection (SRPMK, SRPMB, etc.) and irregularity checks"});
+  if(ctx.topics.includes('seismic')&&ctx.loc&&!ctx.loc.rsa_lat){
+    out.push({item:"Exact GPS coordinates (latitude / longitude)",why:"For precise Ss/S1 from the RSA portal. A province-level estimate is shown above."});
   }
-  if(topics.includes('geotechnical')){
-    missing.push({item:"SPT N-values and/or CPT qc data",why:"Required for bearing capacity and liquefaction assessment per SNI 8460:2017"});
-    missing.push({item:"Groundwater depth",why:"Affects foundation type selection and liquefaction susceptibility"});
+  if(ctx.topics.includes('seismic')&&!ctx.projType){
+    out.push({item:"Project type / occupancy",why:"Determines Risk Category and Importance Factor Ie (e.g. power plant → Cat IV, Ie = 1.50)."});
   }
-  if(!projType&&topics.length>0){
-    missing.push({item:"Project type / occupancy",why:"Determines Risk Category and Importance Factor Ie"});
-  }
-  return{topics,projType,loc,missing,raw:q};
+  return out;
 }
 
 // ================================================================
 // RESPONSE BUILDER
 // ================================================================
 function buildResponse(ctx){
-  const{topics,projType,loc,missing}=ctx;
-  if(!topics.length&&!projType&&!loc)return`<div class="no-result">No relevant engineering topics detected. Try: "seismic design criteria", "concrete cover requirements", "foundation bearing capacity"</div>`;
+  const{topics,projType,loc}=ctx;
+  if(!topics.length&&!projType&&!loc)return`<div class="no-result">No relevant engineering topics detected.<br>Try: <strong>"concrete cover requirements"</strong>, <strong>"steel seismic detailing"</strong>, <strong>"foundation bearing capacity"</strong>, or <strong>"design live loads"</strong>.</div>`;
   const pt=projType?KB.project_types[projType]:null;
   let html='';
 
-  // Context card
+  // 1) Context card
   html+=`<div class="context-card"><h3>Query Analysis</h3><div class="context-grid">`;
   if(pt) html+=`<div class="ctx-item hi"><label>Project Type</label><span>${pt.name}</span></div>
     <div class="ctx-item hi"><label>Risk Category</label><span>${pt.risk_category}</span></div>
     <div class="ctx-item hi"><label>Importance Factor Ie</label><span>${pt.ie}</span></div>`;
   if(loc) html+=`<div class="ctx-item"><label>Location</label><span>${loc.name}</span></div>
-    <div class="ctx-item ${loc.seismic==='very_high'?'hi':loc.seismic==='high'?'med':''}"><label>Seismic Hazard</label><span>${loc.seismic?.replace('_',' ').toUpperCase()}</span></div>
+    <div class="ctx-item ${loc.seismic==='very_high'?'hi':loc.seismic==='high'?'med':''}"><label>Seismic Hazard</label><span>${(loc.seismic||'').replace(/_/g,' ').toUpperCase()}</span></div>
     <div class="ctx-item"><label>Typical Ss</label><span>${loc.typical_Ss?loc.typical_Ss[0]+'–'+loc.typical_Ss[1]+' g':'—'}</span></div>
     <div class="ctx-item"><label>Typical S1</label><span>${loc.typical_S1?loc.typical_S1[0]+'–'+loc.typical_S1[1]+' g':'—'}</span></div>`;
   if(topics.length) html+=`<div class="ctx-item" style="grid-column:1/-1"><label>Topics Detected</label><span>${topics.map(t=>KB.topics[t]?.name||t).join(' · ')}</span></div>`;
@@ -776,47 +1218,57 @@ function buildResponse(ctx){
   if(loc)html+=`<p style="font-size:12px;margin-top:6px;color:var(--text2)">📍 ${loc.note||''}</p>`;
   html+=`</div>`;
 
-  // Standard cards
+  // 2) Topic answer modules (Bug 3 fix) — show full comprehensive data first
+  html+=buildTopicModuleHTML(topics);
+
+  // 3) Standards cards — always when topics detected
   const relevantStds=getRelevantStandards(ctx);
   if(relevantStds.SNI.length||relevantStds.American.length||relevantStds.Chinese.length){
-    html+=`<div class="std-grid">`;
+    html+=`<div class="sec-title">Applicable Standards</div><div class="std-grid">`;
     if(relevantStds.SNI.length)html+=makeStdCard('SNI','🇮🇩 Indonesian Standards (SNI)',relevantStds.SNI,ctx);
     if(relevantStds.American.length)html+=makeStdCard('American','🇺🇸 American Standards (ACI/AISC/ASCE)',relevantStds.American,ctx);
     if(relevantStds.Chinese.length)html+=makeStdCard('Chinese','🇨🇳 Chinese Standards (GB/JGJ)',relevantStds.Chinese,ctx);
     html+=`</div>`;
   }
 
-  // Seismic param table
+  // 4) Seismic param table (only seismic + known location)
   if(topics.includes('seismic')&&loc){
-    html+=`<div style="background:#fff;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:var(--card-shadow)">
-      <div class="sec-title">Seismic Design Parameters — ${loc.name}</div>
-      <table class="fa-table" style="margin-top:0">
+    const ieVal=pt?pt.ie:1.0;
+    const ssMid=loc.typical_Ss?((loc.typical_Ss[0]+loc.typical_Ss[1])/2):null;
+    const s1Mid=loc.typical_S1?((loc.typical_S1[0]+loc.typical_S1[1])/2):0.4;
+    const sdsEst=ssMid?(ieVal*(2/3)*1.1*ssMid):null;
+    html+=`<div class="panel" style="margin-top:0;margin-bottom:16px">
+      <div class="sec-title" style="margin-top:0">Seismic Design Parameters — ${loc.name}</div>
+      <div class="tablewrap"><table class="fa-table" style="margin-top:0">
         <tr><th>Parameter</th><th>Value</th><th>Source</th></tr>
         <tr><td>Typical Ss</td><td>${loc.typical_Ss?loc.typical_Ss[0]+' – '+loc.typical_Ss[1]+' g':'Use RSA portal'}</td><td>SNI 1726:2019 hazard map</td></tr>
         <tr><td>Typical S1</td><td>${loc.typical_S1?loc.typical_S1[0]+' – '+loc.typical_S1[1]+' g':'Use RSA portal'}</td><td>SNI 1726:2019 hazard map</td></tr>
         <tr><td>Recommended site class (default)</td><td>SD (stiff soil)</td><td>SNI 8460:2017 §7 — verify with borehole</td></tr>
         <tr><td>Fa (SD, Ss=1.0g)</td><td>1.1</td><td>SNI 1726:2019 Tabel 6</td></tr>
         <tr><td>Fv (SD, S1=0.5g)</td><td>1.8</td><td>SNI 1726:2019 Tabel 7</td></tr>
-        <tr><td>Ie (Risk Cat ${pt?pt.risk_category:'—'})</td><td>${pt?pt.ie:'1.00'}</td><td>SNI 1726:2019 Tabel 2</td></tr>
-        ${loc.typical_Ss?`<tr><td>Estimated SDS (Ie×(2/3)Fa×Ss, midpoint)</td><td>${(pt?.ie||1)*(2/3)*1.1*((loc.typical_Ss[0]+loc.typical_Ss[1])/2)>.001?((pt?.ie||1)*(2/3)*1.1*((loc.typical_Ss[0]+loc.typical_Ss[1])/2)).toFixed(3)+' g':'—'}</td><td>Estimate only — use RSA for exact values</td></tr>`:''}
-      </table>
+        <tr><td>Ie (Risk Cat ${pt?pt.risk_category:'II — assumed'})</td><td>${ieVal}</td><td>SNI 1726:2019 Tabel 2</td></tr>
+        ${sdsEst!=null?`<tr><td>Estimated SDS = Ie·(2/3)·Fa·Ss (midpoint)</td><td>${sdsEst.toFixed(3)} g</td><td>Estimate only — use RSA for exact values</td></tr>`:''}
+      </table></div>
       <div class="ext-links">
         <a class="ext-link" href="https://rsa.ciptakarya.pu.go.id/2021/" target="_blank">🌐 RSA Portal (Indonesian Seismic Hazard)</a>
         ${loc.rsa_lat?`<a class="ext-link" href="https://rsa.ciptakarya.pu.go.id/2021/?lat=${loc.rsa_lat}&lon=${loc.rsa_lon}" target="_blank">📍 RSA — ${loc.name} coordinates</a>`:''}
-        <a class="ext-link" onclick="showView('seismic',null);document.getElementById('rSs').value='${loc.typical_Ss?((loc.typical_Ss[0]+loc.typical_Ss[1])/2).toFixed(2):1.0}';document.getElementById('rS1').value='${loc.typical_S1?((loc.typical_S1[0]+loc.typical_S1[1])/2).toFixed(2):0.4}';${pt?'document.getElementById(\'rIe\').value=\''+pt.ie+'\';':''}" style="cursor:pointer">⚙ Open Spectrum Calculator</a>
+        <a class="ext-link" onclick="openSpectrumForLoc('${loc.key}',${ssMid!=null?ssMid.toFixed(2):'null'},${s1Mid.toFixed(2)},${ieVal})">⚙ Open Spectrum Calculator</a>
       </div>
-      <p class="footnote">⚠ Values above are regional estimates. Always obtain site-specific Ss/S1 from RSA portal (https://rsa.ciptakarya.pu.go.id/2021/) using exact project coordinates.</p>
+      <p class="footnote">⚠ Values above are regional estimates. Always obtain site-specific Ss/S1 from the RSA portal (https://rsa.ciptakarya.pu.go.id/2021/) using exact project coordinates.</p>
     </div>`;
   }
 
-  // Missing info card
-  if(missing.length){
-    html+=`<div class="missing-card"><h3>⚠ Additional Information Required for Complete Design</h3>`;
-    missing.forEach(m=>html+=`<div class="missing-item"><strong>${m.item}</strong> — ${m.why}</div>`);
-    html+=`</div>`;
+  // 5) Missing info — ONLY for seismic calculations needing location / project type (Bug 2 fix)
+  if(shouldShowMissingInfo(ctx)){
+    const missing=buildMissingInfo(ctx);
+    if(missing.length){
+      html+=`<div class="missing-card"><h3>⚠ Additional Information Needed for Site-Specific Seismic Values</h3>`;
+      missing.forEach(m=>html+=`<div class="missing-item"><div><strong>${m.item}</strong> — ${m.why}</div></div>`);
+      html+=`</div>`;
+    }
   }
 
-  // Full-text search results from dynamic index
+  // 6) Full-text search results from dynamic index
   if(window.DYNAMIC_INDEX&&window.DYNAMIC_INDEX.chunks&&ctx.raw){
     const hits=searchDynamic(ctx.raw);
     if(hits.length){
@@ -831,14 +1283,59 @@ function buildResponse(ctx){
   return html;
 }
 
+// ── Topic answer modules (Bug 3) ───────────────────────────────
+function buildTopicModuleHTML(topics){
+  const shown=new Set();
+  let html='';
+  topics.forEach(t=>{
+    const modKey=KB.topicToModule[t];
+    if(!modKey||shown.has(modKey))return;
+    const mod=KB.answer_modules[modKey];
+    if(!mod)return;
+    shown.add(modKey);
+    html+=renderModule(modKey,mod);
+  });
+  return html;
+}
+
+function renderModule(key,mod){
+  let body='';
+  mod.sections.forEach(sec=>{
+    body+=`<h4>${sec.h}</h4>`;
+    if(sec.table)body+=renderModTable(sec.table);
+    if(sec.notes)sec.notes.forEach(n=>body+=`<div class="note-box">${n}</div>`);
+  });
+  if(mod.tool_link){
+    body+=`<div class="ext-links" style="margin-top:14px"><a class="ext-link" onclick="showView('seismic',null)">⚙ Open Seismic Spectrum Calculator</a></div>`;
+  }
+  if(mod.sources)body+=`<p class="src"><strong>Sources:</strong> ${mod.sources}</p>`;
+  // open by default so the comprehensive answer is immediately visible
+  return `<details class="module-card" open>
+    <summary><span class="mtitle"><span class="micon">${mod.icon||'📘'}</span>${mod.title}</span><span class="twist">▸</span></summary>
+    <div class="module-body">${body}</div>
+  </details>`;
+}
+
+function renderModTable(t){
+  const cls='mtable'+(t.center?' center':'');
+  let h=`<div class="tablewrap"><table class="${cls}"><thead><tr>`;
+  t.cols.forEach(c=>h+=`<th>${c}</th>`);
+  h+=`</tr></thead><tbody>`;
+  t.rows.forEach(r=>{h+='<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>';});
+  h+=`</tbody></table></div>`;
+  return h;
+}
+
+// ── Relevant standards (Bug 1 fix: substring topic matching) ────
 function getRelevantStandards(ctx){
   const{topics,projType}=ctx;
   const pt=projType?KB.project_types[projType]:null;
   const result={SNI:[],American:[],Chinese:[]};
   KB.standards.forEach(s=>{
-    const relevantTopic=topics.some(t=>(s.topic||[]).includes(t))||topics.some(t=>['seismic','structural','geotechnical','loads','fire'].includes(t)&&(s.topic||[]).includes(t));
+    // any word in the standard's topic array appears as substring in any query topic key (or vice-versa)
+    const relevantTopic=(s.topic||[]).some(st=>topics.some(qt=>qt.includes(st)||st.includes(qt)));
     const relevantProj=pt&&(pt.applicable||[]).includes(s.id);
-    if(relevantTopic||relevantProj){result[s.cat]?.push(s);}
+    if(relevantTopic||relevantProj){if(result[s.cat])result[s.cat].push(s);}
   });
   return result;
 }
@@ -846,7 +1343,7 @@ function getRelevantStandards(ctx){
 function makeStdCard(cat,title,stds,ctx){
   const cc=cat.toLowerCase().replace('american','amer');
   let html=`<div class="std-card"><div class="std-card-hdr ${cc}"><span class="flag">${cat==='SNI'?'🇮🇩':cat==='American'?'🇺🇸':'🇨🇳'}</span>${title}</div><div class="std-card-body">`;
-  stds.slice(0,6).forEach(s=>{
+  stds.slice(0,7).forEach(s=>{
     html+=`<div class="std-item"><span class="bullet">▸</span><div><strong>${s.code}</strong> — ${s.title_en||s.title||''}<br>`;
     const relevantParams=getRelevantParams(s,ctx);
     if(relevantParams.length){
@@ -862,41 +1359,63 @@ function makeStdCard(cat,title,stds,ctx){
 
 function getRelevantParams(std,ctx){
   if(!std.key_params)return[];
-  const{topics,projType}=ctx;
+  const{topics}=ctx;
+  const has=t=>topics.includes(t);
   const params=Object.entries(std.key_params);
   const filtered=params.filter(([k])=>{
     const kl=k.toLowerCase();
-    if(topics.includes('seismic')&&(kl.includes('ie')||kl.includes('risk')||kl.includes('sdc')||kl.includes('ss')||kl.includes('s1')||kl.includes('fa')||kl.includes('fv')))return true;
-    if(topics.includes('structural_concrete')&&(kl.includes('fc')||kl.includes('cover')||kl.includes('fy')||kl.includes('rho')||kl.includes('phi')))return true;
-    if(topics.includes('steel_structure')&&(kl.includes('fy')||kl.includes('phi')||kl.includes('bolt')||kl.includes('q235')||kl.includes('q345')||kl.includes('a992')))return true;
-    if(topics.includes('geotechnical')&&(kl.includes('fs')||kl.includes('settlement')||kl.includes('borehole')||kl.includes('spt')))return true;
-    if(topics.includes('design_loads')&&(kl.includes('load')||kl.includes('kn')||kl.includes('live')||kl.includes('roof')||kl.includes('floor')))return true;
+    if(has('seismic')&&(kl.includes('ie')||kl.includes('risk')||kl.includes('sdc')||kl.includes('ss')||kl.includes('s1')||kl.includes(' fa')||kl.includes('fa ')||kl.includes('fv')||kl.includes('αmax')||kl.includes('intensity')||kl.includes('ry')))return true;
+    if(has('structural_concrete')&&(kl.includes('fc')||kl.includes('cover')||kl.includes('fy')||kl.includes('ρ')||kl.includes('rho')||kl.includes('φ')||kl.includes('fck')||kl.includes('hook')||kl.includes('splice')))return true;
+    if(has('steel_structure')&&(kl.includes('fy')||kl.includes('φ')||kl.includes('phi')||kl.includes('bolt')||kl.includes('q235')||kl.includes('q345')||kl.includes('q390')||kl.includes('q420')||kl.includes('a992')||kl.includes('bj')))return true;
+    if(has('geotechnical')&&(kl.includes('fs')||kl.includes('settlement')||kl.includes('borehole')||kl.includes('spt')||kl.includes('pile')||kl.includes('bearing')||kl.includes('embedment')||kl.includes('qc')))return true;
+    if(has('design_loads')&&(kl.includes('load')||kl.includes('kn')||kl.includes('live')||kl.includes('roof')||kl.includes('floor')||kl.includes('office')||kl.includes('corridor')||kl.includes('parking')||kl.includes('stair')))return true;
+    if(has('fire')&&(kl.includes('fire')||kl.includes('rating')||kl.includes('hour')||kl.includes('min')))return true;
     return false;
   });
-  return filtered.slice(0,5);
+  // if nothing matched the topic filters, show the first few params so the card is still useful
+  return (filtered.length?filtered:params).slice(0,5);
 }
 
 // ================================================================
 // DYNAMIC INDEX SEARCH (from build_index.ps1 output)
+// chunks = [{sid,cat,code,pg,t}, ...]
 // ================================================================
 let fuseInst=null;
 function initFuse(){
-  if(!window.DYNAMIC_INDEX||fuseInst)return;
-  fuseInst=new Fuse(window.DYNAMIC_INDEX.chunks,{keys:['t'],threshold:.35,includeScore:true,minMatchCharLength:4});
+  if(!window.DYNAMIC_INDEX||!window.DYNAMIC_INDEX.chunks||fuseInst)return;
+  fuseInst=new Fuse(window.DYNAMIC_INDEX.chunks,{keys:['t'],threshold:.35,includeScore:true,minMatchCharLength:4,ignoreLocation:true});
 }
-window._indexReady=initFuse;
+window._indexReady=function(){initFuse();updateAboutIndexStat();};
 
 function searchDynamic(q){
   initFuse();
   if(!fuseInst)return[];
-  return fuseInst.search(q).filter(r=>r.score<.4).map(r=>r.item);
+  return fuseInst.search(q).filter(r=>r.score<.5).map(r=>r.item);
 }
 
 function highlight(text,query){
   const words=query.split(/\s+/).filter(w=>w.length>3);
-  let t=text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let t=String(text||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   words.forEach(w=>{const re=new RegExp('('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');t=t.replace(re,'<mark>$1</mark>');});
   return t.substring(0,400)+'…';
+}
+
+// Find first dynamic-index chunk whose sid relates to a KB standard id
+function dynamicPreviewFor(stdId){
+  if(!window.DYNAMIC_INDEX||!window.DYNAMIC_INDEX.chunks)return null;
+  const base=stdId.toLowerCase();
+  // try progressively shorter prefixes: "sni-2847-2019" -> "sni-2847"
+  const parts=base.split('-');
+  const candidates=[];
+  for(let n=parts.length;n>=2;n--)candidates.push(parts.slice(0,n).join('-'));
+  for(const cand of candidates){
+    const hit=window.DYNAMIC_INDEX.chunks.find(c=>{
+      const sid=(c.sid||'').toLowerCase();
+      return sid===cand||sid.startsWith(cand)||cand.startsWith(sid);
+    });
+    if(hit)return hit;
+  }
+  return null;
 }
 
 // ================================================================
@@ -914,9 +1433,9 @@ function handleSearch(){
 }
 
 function quickSearch(q){
+  showView('search',document.querySelector('nav button'));
   document.getElementById('searchInput').value=q;
   handleSearch();
-  showView('search',null);
 }
 
 function showView(v,btn){
@@ -925,11 +1444,47 @@ function showView(v,btn){
   });
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  if(v==='browse')renderBrowse('all');
-  if(v==='about')renderAboutStds();
+  else{
+    // sync the nav highlight when navigation is triggered programmatically
+    const idx={search:0,browse:1,seismic:2,about:3}[v];
+    const nb=document.querySelectorAll('nav button')[idx];
+    if(nb)nb.classList.add('active');
+  }
+  document.getElementById('mainNav').classList.remove('open');
+  if(v==='browse')renderBrowse(currentBrowseFilter);
+  if(v==='about'){renderAboutStds();updateAboutIndexStat();}
+  if(v==='seismic'){if(!chartInst)calcSpectrum();ensureRSAEmbed();setTimeout(ensureLeafletMap,100);}
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
+// From a search result: open seismic tool pre-filled for the detected location
+function openSpectrumForLoc(locKey,ssMid,s1Mid,ie){
+  showView('seismic',null);
+  const v=KB.locations[locKey];
+  if(v){
+    const sel=document.getElementById('rProvince');
+    if(sel)sel.value=locKey;
+    const lat=v.rsa_lat??v.lat, lon=v.rsa_lon??v.lon;
+    if(lat!=null)document.getElementById('rLat').value=lat;
+    if(lon!=null)document.getElementById('rLon').value=lon;
+  }
+  if(ssMid!=null&&!isNaN(ssMid))document.getElementById('rSs').value=(+ssMid).toFixed(2);
+  if(s1Mid!=null&&!isNaN(s1Mid))document.getElementById('rS1').value=(+s1Mid).toFixed(2);
+  if(ie!=null)document.getElementById('rIe').value=(+ie).toFixed(2);
+  calcSpectrum();
+}
+
+let rsaEmbedTried=false;
+function ensureRSAEmbed(){
+  if(rsaEmbedTried)return;
+  rsaEmbedTried=true;
+  tryEmbedRSA();
+}
+
+// ── Browse ─────────────────────────────────────────────────────
+let currentBrowseFilter='all';
 function filterBrowse(f,btn){
+  currentBrowseFilter=f;
   document.querySelectorAll('#browseFilters .filter-btn').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
   renderBrowse(f);
@@ -942,21 +1497,79 @@ function renderBrowse(filter){
     if(['SNI','American','Chinese'].includes(filter))stds=stds.filter(s=>s.cat===filter);
     else stds=stds.filter(s=>(s.topic||[]).includes(filter));
   }
-  container.innerHTML=stds.map(s=>`
-    <div class="std-list-card ${s.cat.toLowerCase().replace('american','amer')}" onclick="quickSearch('${s.code} ${(s.topic||[])[0]||''}')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+  container.innerHTML=stds.map(s=>{
+    const cc=s.cat.toLowerCase().replace('american','amer');
+    const firstTopic=(s.topic||[])[0]||'';
+    const kp=s.key_params&&Object.keys(s.key_params).length?s.key_params:null;
+    const preview=dynamicPreviewFor(s.id);
+    const detailBody=`
+      <div class="slc-detail-body">
+        <span class="lbl">Scope</span>${s.scope?escapeHtml(s.scope):'<em>Not described in built-in KB.</em>'}
+        ${kp?`<span class="lbl">Key Parameters</span><table class="kv-table">${Object.entries(kp).map(([k,v])=>`<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(String(v))}</td></tr>`).join('')}</table>`:''}
+        ${preview?`<span class="lbl">Extracted Text Preview</span><div class="preview-text">${escapeHtml(preview.t).substring(0,500)}…</div><div style="font-size:10.5px;color:var(--gray2);margin-top:4px">From ${escapeHtml(preview.code)} · page ~${preview.pg} (run build_index.ps1 to refresh)</div>`:`<span class="lbl">Extracted Text Preview</span><div style="font-size:11.5px;color:var(--gray2)">No PDF text indexed for this standard. Run <code>build_index.ps1</code> to add it.</div>`}
+        <span class="lbl">Source</span>${s.cat} standard${s.year?` · ${s.year}`:''} · id <code>${s.id}</code>
+      </div>`;
+    return `<div class="std-list-card ${cc}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
         <div class="slc-code">${s.code}</div>
-        <span class="tag-${s.cat.toLowerCase().replace('american','amer')}">${s.cat}</span>
+        <span class="tag-${cc}">${s.cat}</span>
       </div>
       <div class="slc-title">${s.title_en||s.title||''}</div>
-      <div class="slc-tags">${(s.topic||[]).map(t=>`<span class="slc-tag">${t}</span>`).join('')}</div>
-      ${s.year?`<div style="font-size:11px;color:var(--gray2);margin-top:6px">${s.year}</div>`:''}
-    </div>`).join('');
+      <div class="slc-tags">${(s.topic||[]).map(t=>`<span class="slc-tag">${t}</span>`).join('')}${s.year?`<span class="slc-tag">${s.year}</span>`:''}</div>
+      <div class="slc-actions">
+        <button class="slc-btn" onclick="quickSearch('${(s.code+' '+firstTopic).replace(/'/g,'')}')">🔎 Ask the dictionary</button>
+        ${findPdfForStandard(s)?`<a class="slc-btn" href="standards/${s.cat}/${encodeURIComponent(findPdfForStandard(s).name)}" target="_blank" download style="text-decoration:none;color:var(--green)">📥 Download PDF</a>`:''}
+      </div>
+      <details class="slc-details"><summary>Details</summary>${detailBody}</details>
+    </div>`;
+  }).join('');
+  // Update PDF library below the cards
+  const libEl=document.getElementById('pdfLibrary');
+  if(libEl)(filter==='all'||['SNI','American','Chinese'].includes(filter))?libEl.innerHTML=buildPdfLibraryHTML():libEl.innerHTML='';
 }
 
+function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// Find matching PDF in the manifest for a KB standard
+function findPdfForStandard(std){
+  if(!window.STANDARDS_MANIFEST)return null;
+  const files=window.STANDARDS_MANIFEST[std.cat]||[];
+  const nums=(std.code.match(/\d+/g)||[]).filter(n=>n.length>=3);
+  if(!nums.length)return null;
+  // Full match first (all numbers present in filename)
+  let hit=files.find(f=>nums.every(n=>f.name.toLowerCase().includes(n)));
+  // Fallback: main code number only
+  if(!hit)hit=files.find(f=>f.name.toLowerCase().includes(nums[0]));
+  return hit||null;
+}
+
+// Build the full PDF library grid for Browse view
+function buildPdfLibraryHTML(){
+  if(!window.STANDARDS_MANIFEST)return'';
+  const cats={'SNI':['🇮🇩 Indonesian Standards (SNI)','sni'],'American':['🇺🇸 American Standards','amer'],'Chinese':['🇨🇳 Chinese Standards (GB/JGJ)','cn']};
+  let html=`<div style="margin-top:28px"><div class="sec-title">📥 Full PDF Library — Download Standards</div>`;
+  for(const[cat,[label,cls]] of Object.entries(cats)){
+    const files=(window.STANDARDS_MANIFEST[cat]||[]);
+    if(!files.length)continue;
+    html+=`<div style="margin-bottom:18px"><p style="font-weight:700;font-size:13px;margin-bottom:8px"><span class="tag-${cls}">${cat}</span> ${label} (${files.length} PDFs)</p>`;
+    html+=`<div style="display:flex;flex-wrap:wrap;gap:6px">`;
+    files.forEach(f=>{
+      const url=`standards/${cat}/${encodeURIComponent(f.name)}`;
+      const short=f.name.replace(/\.pdf$/i,'').substring(0,55)+(f.name.length>60?'…':'');
+      html+=`<a href="${url}" target="_blank" download class="ext-link" style="font-size:11.5px;padding:5px 10px" title="${escapeHtml(f.name)}">📄 ${escapeHtml(short)} <span style="font-size:10px;opacity:.6">(${f.size}MB)</span></a>`;
+    });
+    html+=`</div></div>`;
+  }
+  html+=`<p class="footnote" style="margin-top:8px">Files served directly from GitHub Pages. Click to view in browser or right-click → Save link as to download.</p></div>`;
+  return html;
+}
+
+// ── About ──────────────────────────────────────────────────────
+let aboutRendered=false;
 function renderAboutStds(){
   const el=document.getElementById('aboutStdList');
-  if(!el||el.innerHTML)return;
+  if(!el||aboutRendered)return;
+  aboutRendered=true;
   const cats={'SNI':'🇮🇩 Indonesian (SNI)','American':'🇺🇸 American (ACI/AISC/ASCE/ASTM)','Chinese':'🇨🇳 Chinese (GB/JGJ/Atlas)'};
   let html='';
   for(const[cat,label] of Object.entries(cats)){
@@ -965,18 +1578,104 @@ function renderAboutStds(){
     html+=stds.map(s=>`<p style="font-size:13px;color:var(--text2);padding:3px 0">▸ <strong>${s.code}</strong> — ${s.title_en||s.title||''} (${s.year||''})</p>`).join('');
   }
   el.innerHTML=html;
-  const dynEl=document.createElement('p');
-  dynEl.style.cssText='font-size:12px;color:var(--gray2);margin-top:12px';
-  dynEl.textContent=window.DYNAMIC_INDEX?`Dynamic index loaded: ${window.DYNAMIC_INDEX.standards?.length||0} PDFs, ${window.DYNAMIC_INDEX.chunks?.length||0} text chunks`:'Dynamic index not loaded. Run build_index.ps1 to add full PDF text search.';
-  el.appendChild(dynEl);
+}
+
+function updateAboutIndexStat(){
+  const el=document.getElementById('aboutIndexStat');
+  if(!el)return;
+  el.textContent=window.DYNAMIC_INDEX?`${window.DYNAMIC_INDEX.standards?.length||0} PDFs, ${window.DYNAMIC_INDEX.chunks?.length||0} text chunks`:'dynamic index not loaded — run build_index.ps1';
+}
+
+// ================================================================
+// LEAFLET MAP (Seismic Tool)
+// ================================================================
+let leafletMap=null, locMarker=null, leafletReady=false;
+
+function initLeafletMap(){
+  if(!window.L||leafletMap)return;
+  const mapEl=document.getElementById('seismicMap');
+  if(!mapEl)return;
+  leafletMap=L.map('seismicMap',{zoomControl:true}).setView([-2.5,117.5],5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom:18
+  }).addTo(leafletMap);
+
+  // Province markers from KB
+  Object.entries(KB.locations).forEach(([key,v])=>{
+    if(v.lat==null||v.lon==null)return;
+    const s=v.seismic||'low';
+    const col=s==='very_high'?'#e74c3c':s==='high'?'#e67e22':s==='moderate_high'?'#f1c40f':'#2ecc71';
+    const icon=L.divIcon({
+      html:`<div style="width:12px;height:12px;border-radius:50%;background:${col};border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:pointer"></div>`,
+      className:'',iconSize:[12,12],iconAnchor:[6,6]
+    });
+    const ssT=v.typical_Ss?`Ss: ${v.typical_Ss[0]}–${v.typical_Ss[1]} g`:'';
+    const s1T=v.typical_S1?`S1: ${v.typical_S1[0]}–${v.typical_S1[1]} g`:'';
+    L.marker([v.lat,v.lon],{icon}).addTo(leafletMap)
+      .bindPopup(`<div style="min-width:160px"><strong>${v.name}</strong><br><span style="font-size:11px;color:#666">Hazard: ${s.replace(/_/g,' ')}</span><br><span style="font-size:12px">${ssT}<br>${s1T}</span><br><small style="color:#888">${(v.note||'').substring(0,80)}</small></div>`)
+      .on('click',()=>{
+        // Pre-fill lat/lon from province centre and run calculator
+        const lat=(v.rsa_lat!=null?v.rsa_lat:v.lat).toFixed(4);
+        const lon=(v.rsa_lon!=null?v.rsa_lon:v.lon).toFixed(4);
+        document.getElementById('rLat').value=lat;
+        document.getElementById('rLon').value=lon;
+        // Apply typical Ss/S1 midpoints
+        if(v.typical_Ss)document.getElementById('rSs').value=((v.typical_Ss[0]+v.typical_Ss[1])/2).toFixed(2);
+        if(v.typical_S1)document.getElementById('rS1').value=((v.typical_S1[0]+v.typical_S1[1])/2).toFixed(2);
+        setMapMarker(+lat,+lon,v.name);
+        calcSpectrum();
+        // Also sync the province select
+        const sel=document.getElementById('rProvince');
+        if(sel)sel.value=key;
+      });
+  });
+
+  // Click anywhere on map to set lat/lon
+  leafletMap.on('click',e=>{
+    const lat=e.latlng.lat.toFixed(4);
+    const lon=e.latlng.lng.toFixed(4);
+    document.getElementById('rLat').value=lat;
+    document.getElementById('rLon').value=lon;
+    setMapMarker(+lat,+lon,'Selected point');
+    calcSpectrum();
+  });
+
+  // Set initial marker if lat/lon already filled
+  const initLat=+document.getElementById('rLat').value;
+  const initLon=+document.getElementById('rLon').value;
+  if(initLat&&initLon)setMapMarker(initLat,initLon,'Location');
+  leafletReady=true;
+}
+
+function setMapMarker(lat,lon,label){
+  if(!leafletMap)return;
+  if(locMarker)leafletMap.removeLayer(locMarker);
+  const icon=L.divIcon({
+    html:`<div style="width:16px;height:16px;border-radius:50%;background:#2196F3;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.5)"></div>`,
+    className:'',iconSize:[16,16],iconAnchor:[8,8]
+  });
+  locMarker=L.marker([lat,lon],{icon,zIndexOffset:1000}).addTo(leafletMap)
+    .bindPopup(`<strong>${label}</strong><br>Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`).openPopup();
+}
+
+function ensureLeafletMap(){
+  if(!leafletMap&&window.L)initLeafletMap();
+  else if(!window.L){
+    // Leaflet not yet loaded — wait a bit
+    setTimeout(()=>{if(window.L)initLeafletMap();},600);
+  }
 }
 
 // Init
 window.addEventListener('DOMContentLoaded',()=>{
   initFuse();
+  populateProvinceSelect();
+  updateAboutIndexStat();
   document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleSearch();});
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
 </html>
