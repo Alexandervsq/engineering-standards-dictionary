@@ -29,6 +29,10 @@ nav{display:flex;gap:6px}
 nav button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;transition:.2s}
 nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .menu-toggle{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;border-radius:6px;width:40px;height:38px;cursor:pointer}
+.lang-switch{display:flex;gap:0;border:1px solid rgba(255,255,255,.3);border-radius:6px;overflow:hidden;margin-left:8px;flex-shrink:0}
+.lang-btn{background:transparent;border:none;color:#fff;padding:6px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;transition:.2s;opacity:.65}
+.lang-btn.active{background:var(--accent);opacity:1;font-weight:600}
+.lang-btn:hover{opacity:1}
 
 /* HERO */
 .hero{background:linear-gradient(160deg,var(--navy) 0%,#1a3a5c 100%);color:#fff;padding:48px 24px 56px;text-align:center}
@@ -231,17 +235,21 @@ canvas{max-width:100%;margin-top:10px}
     <div class="logo">
       <span class="logo-icon">⚙</span>
       <div>
-        <div class="logo-title">Engineering Standards Dictionary</div>
-        <div class="logo-sub">Multi-Discipline Civil/Structural/Geotechnical Reference</div>
+        <div class="logo-title" data-i18n="hdr.title">Engineering Standards Dictionary</div>
+        <div class="logo-sub" data-i18n="hdr.sub">Multi-Discipline Civil/Structural/Geotechnical Reference</div>
       </div>
     </div>
     <button class="menu-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">☰</button>
     <nav id="mainNav">
-      <button class="active" onclick="showView('search',this)">Search</button>
-      <button onclick="showView('browse',this)">Browse Standards</button>
-      <button onclick="showView('seismic',this)">Seismic Tool</button>
-      <button onclick="showView('site',this)">Site Analysis</button>
-      <button onclick="showView('about',this)">About / Deploy</button>
+      <button class="active" onclick="showView('search',this)" data-i18n="nav.search">Search</button>
+      <button onclick="showView('browse',this)" data-i18n="nav.browse">Browse Standards</button>
+      <button onclick="showView('seismic',this)" data-i18n="nav.seismic">Seismic Tool</button>
+      <button onclick="showView('site',this)" data-i18n="nav.site">Site Analysis</button>
+      <button onclick="showView('about',this)" data-i18n="nav.about">About / Deploy</button>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+      </div>
     </nav>
   </div>
 </header>
@@ -249,31 +257,31 @@ canvas{max-width:100%;margin-top:10px}
 <!-- ===================== SEARCH VIEW ===================== -->
 <div id="view-search">
   <div class="hero">
-    <h1>Engineering Standards Reference</h1>
-    <p>Search across 80+ Indonesian, American, and Chinese standards. Ask in plain language.</p>
+    <h1 data-i18n="hero.h1">Engineering Standards Reference</h1>
+    <p data-i18n="hero.p">Search across 80+ Indonesian, American, and Chinese standards. Ask in plain language.</p>
     <div class="search-wrap">
-      <input id="searchInput" type="text"
+      <input id="searchInput" type="text" data-i18n-ph="hero.ph"
         placeholder="e.g. concrete cover requirements · steel seismic detailing · foundation bearing capacity · power plant in North Maluku"
         onkeydown="if(event.key==='Enter')handleSearch()">
-      <button id="searchBtn" onclick="handleSearch()">Search</button>
+      <button id="searchBtn" onclick="handleSearch()" data-i18n="hero.btn">Search</button>
     </div>
     <div class="chips">
-      <span class="chip" onclick="quickSearch('concrete cover and strength requirements')">🏗 Concrete</span>
-      <span class="chip" onclick="quickSearch('steel structure seismic detailing')">🔩 Steel</span>
-      <span class="chip" onclick="quickSearch('foundation bearing capacity safety factor')">🏚 Foundation</span>
-      <span class="chip" onclick="quickSearch('design live loads for buildings')">📐 Design Loads</span>
-      <span class="chip" onclick="quickSearch('seismic design criteria Indonesia')">🌍 Seismic</span>
-      <span class="chip" onclick="quickSearch('wind load design parameters')">🌬 Wind Load</span>
-      <span class="chip" onclick="quickSearch('rain load and rainfall design')">🌧 Rain Load</span>
-      <span class="chip" onclick="quickSearch('purlin design requirements')">🏠 Purlin</span>
-      <span class="chip" onclick="quickSearch('foundation type selection criteria')">🧱 Foundation Type</span>
-      <span class="chip" onclick="quickSearch('power plant structural design North Maluku')">⚡ Power Plant (Example)</span>
-      <span class="chip" style="background:rgba(230,126,34,.35);border-color:rgba(230,126,34,.6)" onclick="showView('site',null)">📡 Site Analysis (Wind · Rain · Soil)</span>
+      <span class="chip" onclick="quickSearch('concrete cover and strength requirements')" data-i18n="chip.concrete">🏗 Concrete</span>
+      <span class="chip" onclick="quickSearch('steel structure seismic detailing')" data-i18n="chip.steel">🔩 Steel</span>
+      <span class="chip" onclick="quickSearch('foundation bearing capacity safety factor')" data-i18n="chip.foundation">🏚 Foundation</span>
+      <span class="chip" onclick="quickSearch('design live loads for buildings')" data-i18n="chip.loads">📐 Design Loads</span>
+      <span class="chip" onclick="quickSearch('seismic design criteria Indonesia')" data-i18n="chip.seismic">🌍 Seismic</span>
+      <span class="chip" onclick="quickSearch('wind load design parameters')" data-i18n="chip.wind">🌬 Wind Load</span>
+      <span class="chip" onclick="quickSearch('rain load and rainfall design')" data-i18n="chip.rain">🌧 Rain Load</span>
+      <span class="chip" onclick="quickSearch('purlin design requirements')" data-i18n="chip.purlin">🏠 Purlin</span>
+      <span class="chip" onclick="quickSearch('foundation type selection criteria')" data-i18n="chip.ftype">🧱 Foundation Type</span>
+      <span class="chip" onclick="quickSearch('power plant structural design North Maluku')" data-i18n="chip.pp">⚡ Power Plant (Example)</span>
+      <span class="chip" style="background:rgba(230,126,34,.35);border-color:rgba(230,126,34,.6)" onclick="showView('site',null)" data-i18n="chip.site">📡 Site Analysis (Wind · Rain · Soil)</span>
     </div>
     <div class="badges">
-      <span class="badge sni">🇮🇩 SNI (Indonesian)</span>
-      <span class="badge amer">🇺🇸 ACI/AISC/ASCE (American)</span>
-      <span class="badge cn">🇨🇳 GB/JGJ (Chinese)</span>
+      <span class="badge sni" data-i18n="badge.sni">🇮🇩 SNI (Indonesian)</span>
+      <span class="badge amer" data-i18n="badge.amer">🇺🇸 ACI/AISC/ASCE (American)</span>
+      <span class="badge cn" data-i18n="badge.cn">🇨🇳 GB/JGJ (Chinese)</span>
     </div>
   </div>
 
@@ -286,20 +294,20 @@ canvas{max-width:100%;margin-top:10px}
 <div id="view-browse">
   <div class="container" style="padding-top:28px">
     <div class="filter-row" id="browseFilters">
-      <button class="filter-btn active" onclick="filterBrowse('all',this)">All Standards</button>
-      <button class="filter-btn" onclick="filterBrowse('SNI',this)">🇮🇩 Indonesian (SNI)</button>
-      <button class="filter-btn" onclick="filterBrowse('American',this)">🇺🇸 American</button>
-      <button class="filter-btn" onclick="filterBrowse('Chinese',this)">🇨🇳 Chinese (GB)</button>
-      <button class="filter-btn" onclick="filterBrowse('seismic',this)">Seismic</button>
-      <button class="filter-btn" onclick="filterBrowse('structural',this)">Structural</button>
-      <button class="filter-btn" onclick="filterBrowse('concrete',this)">Concrete</button>
-      <button class="filter-btn" onclick="filterBrowse('steel',this)">Steel</button>
-      <button class="filter-btn" onclick="filterBrowse('geotechnical',this)">Geotechnical</button>
-      <button class="filter-btn" onclick="filterBrowse('foundation',this)">Foundation</button>
-      <button class="filter-btn" onclick="filterBrowse('loads',this)">Loads</button>
-      <button class="filter-btn" onclick="filterBrowse('wind',this)">Wind/Rain</button>
-      <button class="filter-btn" onclick="filterBrowse('purlin',this)">Purlin</button>
-      <button class="filter-btn" onclick="filterBrowse('fire',this)">Fire/Safety</button>
+      <button class="filter-btn active" onclick="filterBrowse('all',this)" data-i18n="b.all">All Standards</button>
+      <button class="filter-btn" onclick="filterBrowse('SNI',this)" data-i18n="b.sni">🇮🇩 Indonesian (SNI)</button>
+      <button class="filter-btn" onclick="filterBrowse('American',this)" data-i18n="b.amer">🇺🇸 American</button>
+      <button class="filter-btn" onclick="filterBrowse('Chinese',this)" data-i18n="b.cn">🇨🇳 Chinese (GB)</button>
+      <button class="filter-btn" onclick="filterBrowse('seismic',this)" data-i18n="b.seismic">Seismic</button>
+      <button class="filter-btn" onclick="filterBrowse('structural',this)" data-i18n="b.structural">Structural</button>
+      <button class="filter-btn" onclick="filterBrowse('concrete',this)" data-i18n="b.concrete">Concrete</button>
+      <button class="filter-btn" onclick="filterBrowse('steel',this)" data-i18n="b.steel">Steel</button>
+      <button class="filter-btn" onclick="filterBrowse('geotechnical',this)" data-i18n="b.geo">Geotechnical</button>
+      <button class="filter-btn" onclick="filterBrowse('foundation',this)" data-i18n="b.found">Foundation</button>
+      <button class="filter-btn" onclick="filterBrowse('loads',this)" data-i18n="b.loads">Loads</button>
+      <button class="filter-btn" onclick="filterBrowse('wind',this)" data-i18n="b.windrain">Wind/Rain</button>
+      <button class="filter-btn" onclick="filterBrowse('purlin',this)" data-i18n="b.purlin">Purlin</button>
+      <button class="filter-btn" onclick="filterBrowse('fire',this)" data-i18n="b.fire">Fire/Safety</button>
     </div>
     <div class="std-list" id="stdList"></div>
     <div id="pdfLibrary"></div>
@@ -310,103 +318,103 @@ canvas{max-width:100%;margin-top:10px}
 <div id="view-seismic">
   <div class="container" style="padding-top:28px">
     <div class="rsa-tool">
-      <h3>🌍 Seismic Design Spectrum Calculator — SNI 1726:2019</h3>
+      <h3 data-i18n="s.title">🌍 Seismic Design Spectrum Calculator — SNI 1726:2019</h3>
       <div class="rsa-row">
         <div class="rsa-field wide">
-          <label>Indonesian Region Preset (auto-fills Ss/S1)</label>
+          <label data-i18n="s.preset">Indonesian Region Preset (auto-fills Ss/S1)</label>
           <select id="rProvince" onchange="applyProvincePreset()">
-            <option value="">— Select province / city —</option>
+            <option value="" data-i18n="s.preset0">— Select province / city —</option>
           </select>
         </div>
       </div>
       <div class="rsa-row" style="margin-top:12px">
         <div class="rsa-field">
-          <label>Ss (g) — Short Period</label>
+          <label data-i18n="s.ss">Ss (g) — Short Period</label>
           <input id="rSs" type="number" value="1.0" step="0.05" min="0" max="3">
         </div>
         <div class="rsa-field">
-          <label>S1 (g) — 1-Second Period</label>
+          <label data-i18n="s.s1">S1 (g) — 1-Second Period</label>
           <input id="rS1" type="number" value="0.4" step="0.05" min="0" max="2">
         </div>
         <div class="rsa-field">
-          <label>Site Class</label>
+          <label data-i18n="s.siteclass">Site Class</label>
           <select id="rSite">
-            <option value="SA">SA — Hard Rock</option>
-            <option value="SB">SB — Rock</option>
-            <option value="SC">SC — Dense Soil / Soft Rock</option>
-            <option value="SD" selected>SD — Stiff Soil</option>
-            <option value="SE">SE — Soft Soil</option>
+            <option value="SA" data-i18n="s.sa">SA — Hard Rock</option>
+            <option value="SB" data-i18n="s.sb">SB — Rock</option>
+            <option value="SC" data-i18n="s.sc">SC — Dense Soil / Soft Rock</option>
+            <option value="SD" selected data-i18n="s.sd">SD — Stiff Soil</option>
+            <option value="SE" data-i18n="s.se">SE — Soft Soil</option>
           </select>
         </div>
         <div class="rsa-field">
-          <label>Risk Category (Ie)</label>
+          <label data-i18n="s.risk">Risk Category (Ie)</label>
           <select id="rIe">
-            <option value="1.00">Cat I/II — Ie = 1.00</option>
-            <option value="1.25">Cat III — Ie = 1.25</option>
-            <option value="1.50" selected>Cat IV — Ie = 1.50</option>
+            <option value="1.00" data-i18n="s.risk1">Cat I/II — Ie = 1.00</option>
+            <option value="1.25" data-i18n="s.risk2">Cat III — Ie = 1.25</option>
+            <option value="1.50" selected data-i18n="s.risk3">Cat IV — Ie = 1.50</option>
           </select>
         </div>
-        <button class="rsa-btn" onclick="calcSpectrum()">Calculate</button>
+        <button class="rsa-btn" onclick="calcSpectrum()" data-i18n="s.calc">Calculate</button>
       </div>
       <div class="rsa-row" style="margin-top:10px">
-        <div class="rsa-field"><label>Latitude (°)</label><input id="rLat" type="number" step="0.001" placeholder="e.g. 1.57"></div>
-        <div class="rsa-field"><label>Longitude (°)</label><input id="rLon" type="number" step="0.001" placeholder="e.g. 127.81"></div>
-        <button class="rsa-btn" style="background:rgba(255,255,255,.15)" onclick="openRSA()">🌐 Open RSA Portal for these coordinates</button>
+        <div class="rsa-field"><label data-i18n="s.lat">Latitude (°)</label><input id="rLat" type="number" step="0.001" placeholder="e.g. 1.57"></div>
+        <div class="rsa-field"><label data-i18n="s.lon">Longitude (°)</label><input id="rLon" type="number" step="0.001" placeholder="e.g. 127.81"></div>
+        <button class="rsa-btn" style="background:rgba(255,255,255,.15)" onclick="openRSA()" data-i18n="s.openrsa">🌐 Open RSA Portal for these coordinates</button>
       </div>
       <div id="rsa-result"></div>
     </div>
 
     <div class="panel">
-      <h3>📍 Select Location on Map</h3>
-      <p style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:6px">Click anywhere on the map to set coordinates and automatically calculate the design spectrum. Coloured dots mark the 34 Indonesian provinces with estimated seismic hazard levels.</p>
+      <h3 data-i18n="s.mapTitle">📍 Select Location on Map</h3>
+      <p style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:6px" data-i18n="s.mapDesc">Click anywhere on the map to set coordinates and automatically calculate the design spectrum. Coloured dots mark the 34 Indonesian provinces with estimated seismic hazard levels.</p>
       <div id="seismicMap"></div>
       <div class="map-legend">
-        <span><span class="map-dot" style="background:#e74c3c"></span>Very High hazard</span>
-        <span><span class="map-dot" style="background:#e67e22"></span>High hazard</span>
-        <span><span class="map-dot" style="background:#f1c40f"></span>Moderate-High</span>
-        <span><span class="map-dot" style="background:#2ecc71"></span>Low–Moderate</span>
+        <span><span class="map-dot" style="background:#e74c3c"></span><span data-i18n="s.lg.vh">Very High hazard</span></span>
+        <span><span class="map-dot" style="background:#e67e22"></span><span data-i18n="s.lg.h">High hazard</span></span>
+        <span><span class="map-dot" style="background:#f1c40f"></span><span data-i18n="s.lg.mh">Moderate-High</span></span>
+        <span><span class="map-dot" style="background:#2ecc71"></span><span data-i18n="s.lg.lm">Low–Moderate</span></span>
       </div>
-      <p class="footnote" style="margin-top:8px">Ss/S1 values are regional estimates from SNI 1726:2019 hazard maps. For exact site-specific values, use the RSA Portal (link below).</p>
+      <p class="footnote" style="margin-top:8px" data-i18n="s.mapNote">Ss/S1 values are regional estimates from SNI 1726:2019 hazard maps. For exact site-specific values, use the RSA Portal (link below).</p>
     </div>
 
     <div class="panel">
-      <h3>Design Response Spectrum</h3>
+      <h3 data-i18n="s.spectrum">Design Response Spectrum</h3>
       <canvas id="specChart" height="300"></canvas>
       <div id="specTable"></div>
     </div>
 
     <div class="panel" id="rsaPortalPanel">
-      <h3>RSA Portal — Indonesian Seismic Hazard (rsa.ciptakarya.pu.go.id)</h3>
-      <p style="font-size:12.5px;color:var(--text2);line-height:1.6">The official PUPR portal gives exact Ss / S1 / spectra for any coordinate in Indonesia. It is attempted in-page below; many government portals block embedding, in which case use the button to open it in a new tab.</p>
+      <h3 data-i18n="s.rsaPanel">RSA Portal — Indonesian Seismic Hazard (rsa.ciptakarya.pu.go.id)</h3>
+      <p style="font-size:12.5px;color:var(--text2);line-height:1.6" data-i18n="s.rsaDesc">The official PUPR portal gives exact Ss / S1 / spectra for any coordinate in Indonesia. It is attempted in-page below; many government portals block embedding, in which case use the button to open it in a new tab.</p>
       <div class="rsa-frame-wrap" id="rsaFrameWrap"></div>
     </div>
 
     <div class="panel">
-      <h3>Fa — Short-Period Site Coefficient (Tabel 6, SNI 1726:2019)</h3>
+      <h3 data-i18n="s.fa">Fa — Short-Period Site Coefficient (Tabel 6, SNI 1726:2019)</h3>
       <div class="tablewrap">
       <table class="fa-table">
-        <tr><th>Site Class</th><th>Ss≤0.25</th><th>Ss=0.50</th><th>Ss=0.75</th><th>Ss=1.00</th><th>Ss=1.25</th><th>Ss≥1.50</th></tr>
-        <tr><td class="site-col">SA — Hard Rock</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td></tr>
-        <tr><td class="site-col">SB — Rock</td><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td></tr>
-        <tr><td class="site-col">SC — Dense/Soft Rock</td><td>1.3</td><td>1.3</td><td>1.2</td><td>1.2</td><td>1.2</td><td>1.2</td></tr>
-        <tr><td class="site-col">SD — Stiff Soil</td><td>1.6</td><td>1.4</td><td>1.2</td><td>1.1</td><td>1.0</td><td>1.0</td></tr>
-        <tr><td class="site-col">SE — Soft Soil</td><td>2.4</td><td>1.7</td><td>1.3</td><td>1.1</td><td>0.9</td><td>0.8</td></tr>
-        <tr><td class="site-col">SF</td><td colspan="6" style="font-style:italic">Site-specific investigation required</td></tr>
+        <tr><th data-i18n="f.siteclass">Site Class</th><th>Ss≤0.25</th><th>Ss=0.50</th><th>Ss=0.75</th><th>Ss=1.00</th><th>Ss=1.25</th><th>Ss≥1.50</th></tr>
+        <tr><td class="site-col" data-i18n="f.sa">SA — Hard Rock</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td></tr>
+        <tr><td class="site-col" data-i18n="f.sb">SB — Rock</td><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td><td>0.9</td></tr>
+        <tr><td class="site-col" data-i18n="f.sc">SC — Dense/Soft Rock</td><td>1.3</td><td>1.3</td><td>1.2</td><td>1.2</td><td>1.2</td><td>1.2</td></tr>
+        <tr><td class="site-col" data-i18n="f.sd">SD — Stiff Soil</td><td>1.6</td><td>1.4</td><td>1.2</td><td>1.1</td><td>1.0</td><td>1.0</td></tr>
+        <tr><td class="site-col" data-i18n="f.se">SE — Soft Soil</td><td>2.4</td><td>1.7</td><td>1.3</td><td>1.1</td><td>0.9</td><td>0.8</td></tr>
+        <tr><td class="site-col">SF</td><td colspan="6" style="font-style:italic" data-i18n="f.sf">Site-specific investigation required</td></tr>
       </table>
       </div>
-      <h3 style="margin:16px 0 10px">Fv — Long-Period Site Coefficient (Tabel 7, SNI 1726:2019)</h3>
+      <h3 style="margin:16px 0 10px" data-i18n="s.fv">Fv — Long-Period Site Coefficient (Tabel 7, SNI 1726:2019)</h3>
       <div class="tablewrap">
       <table class="fa-table">
-        <tr><th>Site Class</th><th>S1≤0.10</th><th>S1=0.20</th><th>S1=0.30</th><th>S1=0.40</th><th>S1=0.50</th><th>S1≥0.60</th></tr>
+        <tr><th data-i18n="f.siteclass">Site Class</th><th>S1≤0.10</th><th>S1=0.20</th><th>S1=0.30</th><th>S1=0.40</th><th>S1=0.50</th><th>S1≥0.60</th></tr>
         <tr><td class="site-col">SA</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td></tr>
         <tr><td class="site-col">SB</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td></tr>
         <tr><td class="site-col">SC</td><td>1.5</td><td>1.5</td><td>1.5</td><td>1.5</td><td>1.5</td><td>1.4</td></tr>
         <tr><td class="site-col">SD</td><td>2.4</td><td>2.2</td><td>2.0</td><td>1.9</td><td>1.8</td><td>1.7</td></tr>
         <tr><td class="site-col">SE</td><td>4.2</td><td>3.3</td><td>2.8</td><td>2.4</td><td>2.2</td><td>2.0</td></tr>
-        <tr><td class="site-col">SF</td><td colspan="6" style="font-style:italic">Site-specific investigation required</td></tr>
+        <tr><td class="site-col">SF</td><td colspan="6" style="font-style:italic" data-i18n="f.sf">Site-specific investigation required</td></tr>
       </table>
       </div>
-      <p class="footnote">Source: SNI 1726:2019 Tabel 6 &amp; 7 — extracted directly from PDF text. Note: SB Fa=0.9 (differs from ASCE 7-16 value of 1.0).</p>
+      <p class="footnote" data-i18n="s.faNote">Source: SNI 1726:2019 Tabel 6 &amp; 7 — extracted directly from PDF text. Note: SB Fa=0.9 (differs from ASCE 7-16 value of 1.0).</p>
     </div>
   </div>
 </div>
@@ -415,32 +423,32 @@ canvas{max-width:100%;margin-top:10px}
 <div id="view-site">
   <div class="container" style="padding-top:28px">
     <div class="rsa-tool">
-      <h3>📡 Site Analysis — Wind · Rainfall · Topography · Soil (Geology &amp; Climatology)</h3>
-      <p style="font-size:12.5px;opacity:.8;margin-bottom:14px;line-height:1.6">Select the proposed project location. The tool retrieves <strong>live historical climate data</strong> (ERA5 reanalysis, last 3 full years) and elevation for the exact coordinates, combines it with embedded regional geology profiles, and derives the minimum design requirements per SNI 1727:2020, ASCE 7-22, and GB 50009-2012.</p>
+      <h3 data-i18n="st.title">📡 Site Analysis — Wind · Rainfall · Topography · Soil (Geology &amp; Climatology)</h3>
+      <p style="font-size:12.5px;opacity:.8;margin-bottom:14px;line-height:1.6" data-i18n="st.desc">Select the proposed project location. The tool retrieves <strong>live historical climate data</strong> (ERA5 reanalysis, last 3 full years) and elevation for the exact coordinates, combines it with embedded regional geology profiles, and derives the minimum design requirements per SNI 1727:2020, ASCE 7-22, and GB 50009-2012.</p>
       <div class="rsa-row">
         <div class="rsa-field wide">
-          <label>Province / Region Preset</label>
+          <label data-i18n="st.preset">Province / Region Preset</label>
           <select id="siteProvince" onchange="siteApplyProvince()">
-            <option value="">— Select province / city —</option>
+            <option value="" data-i18n="st.preset0">— Select province / city —</option>
           </select>
         </div>
-        <div class="rsa-field"><label>Latitude (°)</label><input id="siteLat" type="number" step="0.001" placeholder="-6.2"></div>
-        <div class="rsa-field"><label>Longitude (°)</label><input id="siteLon" type="number" step="0.001" placeholder="106.8"></div>
-        <button class="rsa-btn" onclick="analyzeSite()" id="siteAnalyzeBtn">🔍 Analyze Site</button>
+        <div class="rsa-field"><label data-i18n="s.lat">Latitude (°)</label><input id="siteLat" type="number" step="0.001" placeholder="-6.2"></div>
+        <div class="rsa-field"><label data-i18n="s.lon">Longitude (°)</label><input id="siteLon" type="number" step="0.001" placeholder="106.8"></div>
+        <button class="rsa-btn" onclick="analyzeSite()" id="siteAnalyzeBtn" data-i18n="st.analyze">🔍 Analyze Site</button>
       </div>
       <div id="siteStatus"></div>
     </div>
 
     <div class="panel">
-      <h3>📍 Pick Location on Map (click anywhere)</h3>
+      <h3 data-i18n="st.mapTitle">📍 Pick Location on Map (click anywhere)</h3>
       <div id="siteMap"></div>
     </div>
 
     <div id="siteResults"></div>
 
     <div class="panel">
-      <h3>Official Data Sources (verify before final design)</h3>
-      <p style="font-size:12.5px;color:var(--text2);line-height:1.7">This tool uses the open <strong>Open-Meteo ERA5 reanalysis archive</strong> (live fetch, no key required) for wind/rain history and the Open-Meteo elevation model (Copernicus DEM 90 m) for topography. Government portals below block direct browser access (no CORS), so use them to <em>verify</em> the values for final design:</p>
+      <h3 data-i18n="st.srcTitle">Official Data Sources (verify before final design)</h3>
+      <p style="font-size:12.5px;color:var(--text2);line-height:1.7" data-i18n="st.srcDesc">This tool uses the open <strong>Open-Meteo ERA5 reanalysis archive</strong> (live fetch, no key required) for wind/rain history and the Open-Meteo elevation model (Copernicus DEM 90 m) for topography. Government portals below block direct browser access (no CORS), so use them to <em>verify</em> the values for final design:</p>
       <div class="src-links">
         <a class="ext-link" href="https://iklim.bmkg.go.id/id/" target="_blank">🌐 BMKG Climate (iklim.bmkg.go.id)</a>
         <a class="ext-link" href="https://github.com/infoBMKG/data-cuaca" target="_blank">📦 BMKG Open Data (GitHub)</a>
@@ -459,15 +467,15 @@ canvas{max-width:100%;margin-top:10px}
 <div id="view-about">
   <div class="container" style="padding-top:28px">
     <div class="about-card">
-      <h2>About This Dictionary</h2>
-      <p>A multi-discipline engineering standards reference for civil, structural, geotechnical, and architectural engineers. Covers Indonesian (SNI), American (ACI/AISC/ASCE/ASTM), and Chinese (GB/JGJ) standards.</p>
-      <p>Type a topic in plain language — <code>concrete</code>, <code>steel</code>, <code>foundation</code>, <code>loads</code>, or <code>seismic</code> — and the dictionary returns a comprehensive cross-standard answer module plus the relevant code cards. Add a project type (e.g. "power plant") and a location (e.g. "North Maluku") to get risk category, importance factor Ie, and regional seismic estimates.</p>
-      <p>The built-in knowledge base is derived from 80+ standards PDFs. Running <code>build_index.ps1</code> expands the search to full extracted text from your local PDF collection (currently loaded: <span id="aboutIndexStat">checking…</span>).</p>
+      <h2 data-i18n="a.h1">About This Dictionary</h2>
+      <p data-i18n="a.p1">A multi-discipline engineering standards reference for civil, structural, geotechnical, and architectural engineers. Covers Indonesian (SNI), American (ACI/AISC/ASCE/ASTM), and Chinese (GB/JGJ) standards.</p>
+      <p data-i18n="a.p2">Type a topic in plain language — <code>concrete</code>, <code>steel</code>, <code>foundation</code>, <code>loads</code>, or <code>seismic</code> — and the dictionary returns a comprehensive cross-standard answer module plus the relevant code cards. Add a project type (e.g. "power plant") and a location (e.g. "North Maluku") to get risk category, importance factor Ie, and regional seismic estimates.</p>
+      <p><span data-i18n="a.p3">The built-in knowledge base is derived from 80+ standards PDFs. Running <code>build_index.ps1</code> expands the search to full extracted text from your local PDF collection. Currently loaded:</span> <span id="aboutIndexStat">checking…</span></p>
     </div>
 
     <div class="about-card">
-      <h2>📚 Add the PDF Library to GitHub (Manual Step)</h2>
-      <p>The full-text search index (<code>standards_data.js</code>) is generated from your local PDFs, but the PDF files themselves are <strong>not</strong> committed automatically (they are large and excluded by <code>.gitignore</code>). To publish the actual PDFs so visitors can open them, add them manually with these terminal commands:</p>
+      <h2 data-i18n="a.libTitle">📚 Add the PDF Library to GitHub (Manual Step)</h2>
+      <p data-i18n="a.libP">The full-text search index (<code>standards_data.js</code>) is generated from your local PDFs, but the PDF files themselves are <strong>not</strong> committed automatically (they are large and excluded by <code>.gitignore</code>). To publish the actual PDFs so visitors can open them, add them manually with these terminal commands:</p>
       <pre>cd "C:\Users\cader\OneDrive\Desktop\Alexander\Engineering Standards Website"
 
 # Create category subfolders for the PDFs
@@ -477,30 +485,30 @@ New-Item -ItemType Directory -Force standards/SNI, standards/American, standards
 git add standards/
 git commit -m "Add PDF library"
 git push</pre>
-      <div class="note-box warn">Note: GitHub has a 100 MB per-file limit and recommends repositories stay under 1 GB. If the combined PDF library is very large, consider hosting the PDFs on a release asset, an external bucket, or Git LFS instead of committing them directly.</div>
+      <div class="note-box warn" data-i18n="a.libNote">Note: GitHub has a 100 MB per-file limit and recommends repositories stay under 1 GB. If the combined PDF library is very large, consider hosting the PDFs on a release asset, an external bucket, or Git LFS instead of committing them directly.</div>
     </div>
 
     <div class="about-card">
-      <h2>🚀 Deploy to GitHub Pages (Free Public Hosting)</h2>
-      <div class="step"><div class="step-num">1</div><div class="step-body">Install <a href="https://git-scm.com/">Git</a> and create a free account at <a href="https://github.com">github.com</a></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-body">Create a new repository named <code>engineering-standards-dictionary</code> and make it public</div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-body">Run the index builder to extract PDF content:
+      <h2 data-i18n="a.deployTitle">🚀 Deploy to GitHub Pages (Free Public Hosting)</h2>
+      <div class="step"><div class="step-num">1</div><div class="step-body" data-i18n="a.step1">Install <a href="https://git-scm.com/">Git</a> and create a free account at <a href="https://github.com">github.com</a></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body" data-i18n="a.step2">Create a new repository named <code>engineering-standards-dictionary</code> and make it public</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><span data-i18n="a.step3">Run the index builder to extract PDF content:</span>
         <pre>cd "C:\Users\cader\OneDrive\Desktop\Alexander\Engineering Standards Website"
 .\build_index.ps1</pre>
       </div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-body">Push the site to GitHub:
+      <div class="step"><div class="step-num">4</div><div class="step-body"><span data-i18n="a.step4">Push the site to GitHub:</span>
         <pre>git init
 git add index.html standards_data.js
 git commit -m "Initial deployment"
 git remote add origin https://github.com/YOUR_USERNAME/engineering-standards-dictionary.git
 git push -u origin main</pre>
       </div></div>
-      <div class="step"><div class="step-num">5</div><div class="step-body">Go to GitHub repo → Settings → Pages → Source: main branch → Save. Site will be live at <code>https://YOUR_USERNAME.github.io/engineering-standards-dictionary/</code></div></div>
-      <div class="step"><div class="step-num">6</div><div class="step-body">To update after adding/removing PDFs: re-run <code>build_index.ps1</code>, then <code>git add . ; git commit -m "Update index" ; git push</code></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body" data-i18n="a.step5">Go to GitHub repo → Settings → Pages → Source: main branch → Save. Site will be live at <code>https://YOUR_USERNAME.github.io/engineering-standards-dictionary/</code></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body" data-i18n="a.step6">To update after adding/removing PDFs: re-run <code>build_index.ps1</code>, then <code>git add . ; git commit -m "Update index" ; git push</code></div></div>
     </div>
 
     <div class="about-card">
-      <h2>Standards Included (Built-in Knowledge Base)</h2>
+      <h2 data-i18n="a.stdsTitle">Standards Included (Built-in Knowledge Base)</h2>
       <div id="aboutStdList"></div>
     </div>
   </div>
@@ -510,6 +518,59 @@ git push -u origin main</pre>
 <script src="standards_data.js" onerror="console.log('No dynamic index — using built-in KB')"></script>
 <script src="standards_manifest.js" onerror="console.log('No PDF manifest — download links unavailable')"></script>
 <script>
+// ================================================================
+// I18N — language state & helpers (Chinese pack: i18n_zh.js)
+// ================================================================
+let LANG=(function(){try{return localStorage.getItem('esd_lang')||'en'}catch(e){return 'en'}})();
+let lastQuery='', lastSiteData=null;
+function T(key,en){const z=window.ZH;return(LANG==='zh'&&z&&z[key])?z[key]:en;}
+function locName(v){return(LANG==='zh'&&v.name_zh)?v.name_zh:v.name;}
+function locNote(v){return(LANG==='zh'&&v.note_zh)?v.note_zh:(v.note||'');}
+function hazardLabel(s){if(LANG==='zh'&&window.HAZARD_ZH&&window.HAZARD_ZH[s])return window.HAZARD_ZH[s];return(s||'').replace(/_/g,' ').toUpperCase();}
+function trParam(s){if(LANG!=='zh'||!window.PARAM_ZH)return s;let out=String(s);for(let i=0;i<window.PARAM_ZH.length;i++)out=out.split(window.PARAM_ZH[i][0]).join(window.PARAM_ZH[i][1]);return out;}
+function stdTitle(s){return(LANG==='zh'&&s.title_zh)?s.title_zh:(s.title_en||s.title||'');}
+function stdScope(s){return(LANG==='zh'&&s.scope_zh)?s.scope_zh:(s.scope||'');}
+function topicName(t){const v=KB.topics[t];if(!v)return t;return(LANG==='zh'&&v.name_zh)?v.name_zh:v.name;}
+function monthLabels(){return LANG==='zh'?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:MONTHS;}
+function setLang(l){LANG=l;try{localStorage.setItem('esd_lang',l)}catch(e){}applyLanguage();}
+
+function rebuildLocationSelects(){
+  ['rProvince','siteProvince'].forEach(id=>{
+    const sel=document.getElementById(id);
+    if(!sel)return;
+    const val=sel.value;
+    while(sel.options.length>1)sel.remove(1);
+    Object.entries(KB.locations).sort((a,b)=>locName(a[1]).localeCompare(locName(b[1]))).forEach(([k,v])=>{
+      const o=document.createElement('option');o.value=k;o.textContent=locName(v);sel.appendChild(o);
+    });
+    sel.value=val;
+  });
+}
+
+function applyLanguage(){
+  document.documentElement.lang=(LANG==='zh')?'zh-CN':'en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    if(el.dataset.orig==null)el.dataset.orig=el.innerHTML;
+    const k=el.dataset.i18n;
+    el.innerHTML=(LANG==='zh'&&window.ZH&&window.ZH[k])?window.ZH[k]:el.dataset.orig;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    if(el.dataset.origPh==null)el.dataset.origPh=el.placeholder;
+    const k=el.dataset.i18nPh;
+    el.placeholder=(LANG==='zh'&&window.ZH&&window.ZH[k])?window.ZH[k]:el.dataset.origPh;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+  rebuildLocationSelects();
+  // re-render all dynamic views in the new language
+  aboutRendered=false;
+  renderAboutStds();
+  updateAboutIndexStat();
+  renderBrowse(currentBrowseFilter);
+  if(lastQuery){document.getElementById('searchInput').value=lastQuery;handleSearch();}
+  if(chartInst)calcSpectrum();
+  if(lastSiteData)renderSiteResults(lastSiteData);
+}
+
 // ================================================================
 // KNOWLEDGE BASE
 // ================================================================
@@ -1315,7 +1376,7 @@ function calcSpectrum(){
   const S1=+document.getElementById('rS1').value;
   const site=document.getElementById('rSite').value;
   const Ie=+document.getElementById('rIe').value;
-  if(!FA[site]){alert('Site-specific analysis required for site class SF');return;}
+  if(!FA[site]){alert(T('s.sfAlert','Site-specific analysis required for site class SF'));return;}
   const fa=interp(Ss,FA_SS,FA[site]);
   const fv=interp(S1,FV_S1,FV[site]);
   const SMS=fa*Ss, SM1=fv*S1;
@@ -1330,7 +1391,7 @@ function calcSpectrum(){
       ${rv('SDS',SDS.toFixed(3)+'g')} ${rv('SD1',SD1.toFixed(3)+'g')} ${rv('T0',T0d+'s')} ${rv('Ts',Tsd+'s')}
       ${rv('Sa,max = SDS×Ie',sa_max+'g')} ${rv('SDC',SDC)}
     </div>
-    <p style="font-size:11px;opacity:.7">Source: SNI 1726:2019 §6.3. Fa/Fv from Tabel 6 &amp; 7 (extracted from PDF). SDS = (2/3)·SMS, SD1 = (2/3)·SM1. Solid curve = design spectrum (× Ie); dashed grey = un-amplified (Ie = 1).</p>`;
+    <p style="font-size:11px;opacity:.7">${T('s.srcLine','Source: SNI 1726:2019 §6.3. Fa/Fv from Tabel 6 &amp; 7 (extracted from PDF). SDS = (2/3)·SMS, SD1 = (2/3)·SM1. Solid curve = design spectrum (× Ie); dashed grey = un-amplified (Ie = 1).')}</p>`;
   drawChart(SDS,SD1,T0,Ts,TL,Ie);
   buildSpecTable(SDS,SD1,T0,Ts,TL,Ie);
 }
@@ -1339,7 +1400,7 @@ function rv(label,val){return`<div style="background:rgba(255,255,255,.1);paddin
 
 function getSDC(SDS,SD1,Ie){
   const cat=(Ie>=1.5)?'IV':(Ie>=1.25)?'III':'II';
-  if(cat==='IV'&&(SDS>=0.167||SD1>=0.067))return'D (min — verify w/ Tabel 8/9)';
+  if(cat==='IV'&&(SDS>=0.167||SD1>=0.067))return T('sdc.min','D (min — verify w/ Tabel 8/9)');
   if(SDS>=0.50||SD1>=0.20)return'D';
   if(SDS>=0.33||SD1>=0.133)return'C';
   if(SDS>=0.167||SD1>=0.067)return'B';
@@ -1362,17 +1423,17 @@ function drawChart(SDS,SD1,T0,Ts,TL,Ie){
   const vline=(T,color,label)=>({label:label,data:[{x:T,y:0},{x:T,y:yMax*1.08}],borderColor:color,borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false});
   chartInst=new Chart(ctx,{type:'line',
     data:{datasets:[
-      {label:'Design spectrum Sa·Ie (g)',data:design,borderColor:'#FF9800',backgroundColor:'rgba(255,152,0,.15)',pointRadius:0,borderWidth:2.5,fill:true,tension:.05},
-      {label:'Un-amplified Sa, Ie=1 (g)',data:plain,borderColor:'#90a4ae',borderDash:[5,4],pointRadius:0,borderWidth:1.5,fill:false,tension:.05},
+      {label:T('chart.design','Design spectrum Sa·Ie (g)'),data:design,borderColor:'#FF9800',backgroundColor:'rgba(255,152,0,.15)',pointRadius:0,borderWidth:2.5,fill:true,tension:.05},
+      {label:T('chart.plain','Un-amplified Sa, Ie=1 (g)'),data:plain,borderColor:'#90a4ae',borderDash:[5,4],pointRadius:0,borderWidth:1.5,fill:false,tension:.05},
       vline(T0,'#27ae60','T0'),
       vline(Ts,'#e74c3c','Ts')
     ]},
     options:{responsive:true,interaction:{intersect:false,mode:'index'},
-      scales:{x:{type:'linear',title:{display:true,text:'Period T (s)'},max:4},y:{title:{display:true,text:'Sa (g)'},min:0}},
+      scales:{x:{type:'linear',title:{display:true,text:T('spec.T','Period T (s)')},max:4},y:{title:{display:true,text:'Sa (g)'},min:0}},
       plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:11}}},
         tooltip:{callbacks:{title:items=>'T = '+(items[0]?.parsed.x ?? 0).toFixed(2)+' s'}},
         annotation:undefined,
-        subtitle:{display:true,text:`T0 = ${T0.toFixed(3)} s   ·   Ts = ${Ts.toFixed(3)} s   ·   plateau Sa = SDS·Ie = ${(SDS*Ie).toFixed(3)} g   ·   T > Ts: Sa = SD1·Ie / T`,font:{size:11},color:'#555',padding:{bottom:8}}}}});
+        subtitle:{display:true,text:`T0 = ${T0.toFixed(3)} s   ·   Ts = ${Ts.toFixed(3)} s   ·   ${T('chart.plateau','plateau Sa = SDS·Ie')} = ${(SDS*Ie).toFixed(3)} g   ·   ${T('chart.tail','T > Ts: Sa = SD1·Ie / T')}`,font:{size:11},color:'#555',padding:{bottom:8}}}}});
 }
 
 function buildSpecTable(SDS,SD1,T0,Ts,TL,Ie){
@@ -1382,21 +1443,21 @@ function buildSpecTable(SDS,SD1,T0,Ts,TL,Ie){
     return `<tr><td>${T.toFixed(1)}</td><td>${sa.toFixed(3)}</td><td>${(sa*Ie).toFixed(3)}</td></tr>`;
   }).join('');
   document.getElementById('specTable').innerHTML=`
-    <div class="sec-title" style="margin-top:18px">Spectral Acceleration at Key Periods</div>
+    <div class="sec-title" style="margin-top:18px">${T('spec.title','Spectral Acceleration at Key Periods')}</div>
     <div class="tablewrap"><table class="fa-table">
-      <tr><th>Period T (s)</th><th>Sa, Ie=1 (g)</th><th>Sa × Ie (g)</th></tr>${rows}
+      <tr><th>${T('spec.T','Period T (s)')}</th><th>${T('spec.sa1','Sa, Ie=1 (g)')}</th><th>${T('spec.saIe','Sa × Ie (g)')}</th></tr>${rows}
     </table></div>
-    <p class="footnote">T0 = ${T0.toFixed(3)} s, Ts = ${Ts.toFixed(3)} s, TL = ${TL} s (assumed; verify regional TL from SNI 1726:2019 long-period map).</p>`;
+    <p class="footnote">T0 = ${T0.toFixed(3)} s, Ts = ${Ts.toFixed(3)} s, TL = ${TL} s ${T('spec.note1','(assumed; verify regional TL from SNI 1726:2019 long-period map)')}.</p>`;
 }
 
 // ── Province presets + RSA portal in seismic tool ──────────────
 function populateProvinceSelect(){
   const sel=document.getElementById('rProvince');
   if(!sel)return;
-  const entries=Object.entries(KB.locations).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+  const entries=Object.entries(KB.locations).sort((a,b)=>locName(a[1]).localeCompare(locName(b[1])));
   entries.forEach(([k,v])=>{
     const o=document.createElement('option');
-    o.value=k; o.textContent=v.name;
+    o.value=k; o.textContent=locName(v);
     sel.appendChild(o);
   });
 }
@@ -1410,7 +1471,7 @@ function applyProvincePreset(){
   const lat=v.rsa_lat??v.lat, lon=v.rsa_lon??v.lon;
   if(lat!=null)document.getElementById('rLat').value=lat;
   if(lon!=null)document.getElementById('rLon').value=lon;
-  if(lat!=null&&lon!=null)setMapMarker(lat,lon,v.name);
+  if(lat!=null&&lon!=null)setMapMarker(lat,lon,locName(v));
   if(leafletMap&&lat!=null&&lon!=null)leafletMap.setView([lat,lon],8);
   calcSpectrum();
 }
@@ -1436,8 +1497,8 @@ function tryEmbedRSA(){
   setTimeout(()=>{
     if(!loaded){
       wrap.innerHTML=`<div class="rsa-fallback">
-        <p style="font-size:13px;color:var(--text2);margin-bottom:14px">The RSA portal blocks in-page embedding (X-Frame-Options). Open it directly in a new tab:</p>
-        <button class="rsa-btn" onclick="openRSA()">🌐 Open RSA Portal (rsa.ciptakarya.pu.go.id)</button>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px">${T('s.rsaBlocked','The RSA portal blocks in-page embedding (X-Frame-Options). Open it directly in a new tab:')}</p>
+        <button class="rsa-btn" onclick="openRSA()">${T('s.openRsaBtn','🌐 Open RSA Portal (rsa.ciptakarya.pu.go.id)')}</button>
       </div>`;
     }
   },3500);
@@ -1462,7 +1523,7 @@ function analyzeQuery(q){
   let loc=null;
   const locEntries=Object.entries(KB.locations).sort((a,b)=>b[0].length-a[0].length);
   for(const[k,v] of locEntries){
-    if(ql.includes(k)||(v.name&&ql.includes(v.name.toLowerCase()))||(v.aliases&&v.aliases.some(a=>ql.includes(a)))){loc={key:k,...v};break;}
+    if(ql.includes(k)||(v.name&&ql.includes(v.name.toLowerCase()))||(v.name_zh&&ql.includes(v.name_zh))||(v.aliases&&v.aliases.some(a=>ql.includes(a)))){loc={key:k,...v};break;}
   }
   return{topics,projType,loc,raw:q};
 }
@@ -1477,13 +1538,13 @@ function shouldShowMissingInfo(ctx){
 function buildMissingInfo(ctx){
   const out=[];
   if(ctx.topics.includes('seismic')&&!ctx.loc){
-    out.push({item:"Site location (province, city, or GPS coordinates)",why:"Required to look up Ss and S1 from the seismic hazard map (RSA portal)."});
+    out.push({item:T('miss.loc',"Site location (province, city, or GPS coordinates)"),why:T('miss.locWhy',"Required to look up Ss and S1 from the seismic hazard map (RSA portal).")});
   }
   if(ctx.topics.includes('seismic')&&ctx.loc&&!ctx.loc.rsa_lat){
-    out.push({item:"Exact GPS coordinates (latitude / longitude)",why:"For precise Ss/S1 from the RSA portal. A province-level estimate is shown above."});
+    out.push({item:T('miss.gps',"Exact GPS coordinates (latitude / longitude)"),why:T('miss.gpsWhy',"For precise Ss/S1 from the RSA portal. A province-level estimate is shown above.")});
   }
   if(ctx.topics.includes('seismic')&&!ctx.projType){
-    out.push({item:"Project type / occupancy",why:"Determines Risk Category and Importance Factor Ie (e.g. power plant → Cat IV, Ie = 1.50)."});
+    out.push({item:T('miss.pt',"Project type / occupancy"),why:T('miss.ptWhy',"Determines Risk Category and Importance Factor Ie (e.g. power plant → Cat IV, Ie = 1.50).")});
   }
   return out;
 }
@@ -1498,35 +1559,37 @@ function buildResponse(ctx){
     // text of the standards library for related / equivalent context
     const hits=searchDynamic(ctx.raw);
     if(hits.length){
-      let html=`<div class="context-card"><h3>Full-Text Search — Standards Library</h3>
-        <p style="font-size:13px;color:var(--text2);line-height:1.6">No curated topic module matches "<strong>${escapeHtml(ctx.raw)}</strong>", but the following passages inside the standards documents are related or equivalent in context. Open the PDF from Browse Standards for the full clause.</p></div>
+      let html=`<div class="context-card"><h3>${T('fb.title','Full-Text Search — Standards Library')}</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6">${LANG==='zh'
+          ?`${T('fb.desc1','')}“<strong>${escapeHtml(ctx.raw)}</strong>”${T('fb.desc2','')}`
+          :`No curated topic module matches "<strong>${escapeHtml(ctx.raw)}</strong>", but the following passages inside the standards documents are related or equivalent in context. Open the PDF from Browse Standards for the full clause.`}</p></div>
         <div class="search-hits">`;
       hits.slice(0,10).forEach(h=>{
-        html+=`<div class="hit-card"><div class="hit-src">${h.code} <span class="tag-${h.cat==='SNI'?'sni':h.cat==='American'?'amer':'cn'}">${h.cat}</span> — page ~${h.pg}</div><div class="hit-text">${highlight(h.t,ctx.raw)}</div></div>`;
+        html+=`<div class="hit-card"><div class="hit-src">${h.code} <span class="tag-${h.cat==='SNI'?'sni':h.cat==='American'?'amer':'cn'}">${h.cat}</span> — ${T('hit.page','page ~')}${h.pg}</div><div class="hit-text">${highlight(h.t,ctx.raw)}</div></div>`;
       });
-      html+=`</div><div class="missing-card"><h3>Refine your inquiry for a richer answer</h3>
-        <div class="missing-item"><div>Topic modules give curated multi-standard tables — try keywords like <strong>concrete</strong>, <strong>steel</strong>, <strong>purlin / gording</strong>, <strong>foundation type</strong>, <strong>wind load</strong>, <strong>rain</strong>, <strong>seismic</strong>, <strong>loads</strong>, <strong>fire</strong>.</div></div>
-        <div class="missing-item"><div>Add a <strong>project type</strong> (power plant, hospital, school…) and a <strong>location</strong> (province / city) for risk category, Ie, and regional seismic + climate context.</div></div></div>`;
+      html+=`</div><div class="missing-card"><h3>${T('fb.refine','Refine your inquiry for a richer answer')}</h3>
+        <div class="missing-item"><div>${T('fb.tip1','Topic modules give curated multi-standard tables — try keywords like <strong>concrete</strong>, <strong>steel</strong>, <strong>purlin / gording</strong>, <strong>foundation type</strong>, <strong>wind load</strong>, <strong>rain</strong>, <strong>seismic</strong>, <strong>loads</strong>, <strong>fire</strong>.')}</div></div>
+        <div class="missing-item"><div>${T('fb.tip2','Add a <strong>project type</strong> (power plant, hospital, school…) and a <strong>location</strong> (province / city) for risk category, Ie, and regional seismic + climate context.')}</div></div></div>`;
       return html;
     }
-    return`<div class="no-result">No matching content found in the knowledge base or the full-text standards library.<br><br>Try: <strong>"concrete cover requirements"</strong>, <strong>"purlin deflection limits"</strong>, <strong>"foundation type for soft soil"</strong>, <strong>"wind load Cilegon"</strong>, or <strong>"design live loads"</strong>.<br><br>For location-based wind / rainfall / soil data, open the <a onclick="showView('site',null)" style="cursor:pointer"><strong>📡 Site Analysis</strong></a> tab.</div>`;
+    return`<div class="no-result">${T('fb.none','No matching content found in the knowledge base or the full-text standards library.<br><br>Try: <strong>"concrete cover requirements"</strong>, <strong>"purlin deflection limits"</strong>, <strong>"foundation type for soft soil"</strong>, <strong>"wind load Cilegon"</strong>, or <strong>"design live loads"</strong>.<br><br>For location-based wind / rainfall / soil data, open the <a onclick="showView(\'site\',null)" style="cursor:pointer"><strong>📡 Site Analysis</strong></a> tab.')}</div>`;
   }
   const pt=projType?KB.project_types[projType]:null;
   let html='';
 
   // 1) Context card
-  html+=`<div class="context-card"><h3>Query Analysis</h3><div class="context-grid">`;
-  if(pt) html+=`<div class="ctx-item hi"><label>Project Type</label><span>${pt.name}</span></div>
-    <div class="ctx-item hi"><label>Risk Category</label><span>${pt.risk_category}</span></div>
-    <div class="ctx-item hi"><label>Importance Factor Ie</label><span>${pt.ie}</span></div>`;
-  if(loc) html+=`<div class="ctx-item"><label>Location</label><span>${loc.name}</span></div>
-    <div class="ctx-item ${loc.seismic==='very_high'?'hi':loc.seismic==='high'?'med':''}"><label>Seismic Hazard</label><span>${(loc.seismic||'').replace(/_/g,' ').toUpperCase()}</span></div>
-    <div class="ctx-item"><label>Typical Ss</label><span>${loc.typical_Ss?loc.typical_Ss[0]+'–'+loc.typical_Ss[1]+' g':'—'}</span></div>
-    <div class="ctx-item"><label>Typical S1</label><span>${loc.typical_S1?loc.typical_S1[0]+'–'+loc.typical_S1[1]+' g':'—'}</span></div>`;
-  if(topics.length) html+=`<div class="ctx-item" style="grid-column:1/-1"><label>Topics Detected</label><span>${topics.map(t=>KB.topics[t]?.name||t).join(' · ')}</span></div>`;
+  html+=`<div class="context-card"><h3>${T('q.analysis','Query Analysis')}</h3><div class="context-grid">`;
+  if(pt) html+=`<div class="ctx-item hi"><label>${T('q.ptype','Project Type')}</label><span>${(LANG==='zh'&&pt.name_zh)?pt.name_zh:pt.name}</span></div>
+    <div class="ctx-item hi"><label>${T('q.risk','Risk Category')}</label><span>${pt.risk_category}</span></div>
+    <div class="ctx-item hi"><label>${T('q.ie','Importance Factor Ie')}</label><span>${pt.ie}</span></div>`;
+  if(loc) html+=`<div class="ctx-item"><label>${T('q.loc','Location')}</label><span>${locName(loc)}</span></div>
+    <div class="ctx-item ${loc.seismic==='very_high'?'hi':loc.seismic==='high'?'med':''}"><label>${T('q.hazard','Seismic Hazard')}</label><span>${hazardLabel(loc.seismic)}</span></div>
+    <div class="ctx-item"><label>${T('q.ss','Typical Ss')}</label><span>${loc.typical_Ss?loc.typical_Ss[0]+'–'+loc.typical_Ss[1]+' g':'—'}</span></div>
+    <div class="ctx-item"><label>${T('q.s1','Typical S1')}</label><span>${loc.typical_S1?loc.typical_S1[0]+'–'+loc.typical_S1[1]+' g':'—'}</span></div>`;
+  if(topics.length) html+=`<div class="ctx-item" style="grid-column:1/-1"><label>${T('q.topics','Topics Detected')}</label><span>${topics.map(t=>topicName(t)).join(' · ')}</span></div>`;
   html+=`</div>`;
-  if(pt)html+=`<p style="font-size:12px;margin-top:10px;color:var(--text2)">${pt.note}</p>`;
-  if(loc)html+=`<p style="font-size:12px;margin-top:6px;color:var(--text2)">📍 ${loc.note||''}</p>`;
+  if(pt)html+=`<p style="font-size:12px;margin-top:10px;color:var(--text2)">${(LANG==='zh'&&pt.note_zh)?pt.note_zh:pt.note}</p>`;
+  if(loc)html+=`<p style="font-size:12px;margin-top:6px;color:var(--text2)">📍 ${locNote(loc)}</p>`;
   html+=`</div>`;
 
   // 2) Topic answer modules (Bug 3 fix) — show full comprehensive data first
@@ -1535,10 +1598,10 @@ function buildResponse(ctx){
   // 3) Standards cards — always when topics detected
   const relevantStds=getRelevantStandards(ctx);
   if(relevantStds.SNI.length||relevantStds.American.length||relevantStds.Chinese.length){
-    html+=`<div class="sec-title">Applicable Standards</div><div class="std-grid">`;
-    if(relevantStds.SNI.length)html+=makeStdCard('SNI','🇮🇩 Indonesian Standards (SNI)',relevantStds.SNI,ctx);
-    if(relevantStds.American.length)html+=makeStdCard('American','🇺🇸 American Standards (ACI/AISC/ASCE)',relevantStds.American,ctx);
-    if(relevantStds.Chinese.length)html+=makeStdCard('Chinese','🇨🇳 Chinese Standards (GB/JGJ)',relevantStds.Chinese,ctx);
+    html+=`<div class="sec-title">${T('sec.applicable','Applicable Standards')}</div><div class="std-grid">`;
+    if(relevantStds.SNI.length)html+=makeStdCard('SNI',T('card.sni','🇮🇩 Indonesian Standards (SNI)'),relevantStds.SNI,ctx);
+    if(relevantStds.American.length)html+=makeStdCard('American',T('card.amer','🇺🇸 American Standards (ACI/AISC/ASCE)'),relevantStds.American,ctx);
+    if(relevantStds.Chinese.length)html+=makeStdCard('Chinese',T('card.cn','🇨🇳 Chinese Standards (GB/JGJ)'),relevantStds.Chinese,ctx);
     html+=`</div>`;
   }
 
@@ -1549,23 +1612,23 @@ function buildResponse(ctx){
     const s1Mid=loc.typical_S1?((loc.typical_S1[0]+loc.typical_S1[1])/2):0.4;
     const sdsEst=ssMid?(ieVal*(2/3)*1.1*ssMid):null;
     html+=`<div class="panel" style="margin-top:0;margin-bottom:16px">
-      <div class="sec-title" style="margin-top:0">Seismic Design Parameters — ${loc.name}</div>
+      <div class="sec-title" style="margin-top:0">${T('seis.title','Seismic Design Parameters —')} ${locName(loc)}</div>
       <div class="tablewrap"><table class="fa-table" style="margin-top:0">
-        <tr><th>Parameter</th><th>Value</th><th>Source</th></tr>
-        <tr><td>Typical Ss</td><td>${loc.typical_Ss?loc.typical_Ss[0]+' – '+loc.typical_Ss[1]+' g':'Use RSA portal'}</td><td>SNI 1726:2019 hazard map</td></tr>
-        <tr><td>Typical S1</td><td>${loc.typical_S1?loc.typical_S1[0]+' – '+loc.typical_S1[1]+' g':'Use RSA portal'}</td><td>SNI 1726:2019 hazard map</td></tr>
-        <tr><td>Recommended site class (default)</td><td>SD (stiff soil)</td><td>SNI 8460:2017 §7 — verify with borehole</td></tr>
-        <tr><td>Fa (SD, Ss=1.0g)</td><td>1.1</td><td>SNI 1726:2019 Tabel 6</td></tr>
-        <tr><td>Fv (SD, S1=0.5g)</td><td>1.8</td><td>SNI 1726:2019 Tabel 7</td></tr>
-        <tr><td>Ie (Risk Cat ${pt?pt.risk_category:'II — assumed'})</td><td>${ieVal}</td><td>SNI 1726:2019 Tabel 2</td></tr>
-        ${sdsEst!=null?`<tr><td>Estimated SDS = Ie·(2/3)·Fa·Ss (midpoint)</td><td>${sdsEst.toFixed(3)} g</td><td>Estimate only — use RSA for exact values</td></tr>`:''}
+        <tr><th>${T('seis.param','Parameter')}</th><th>${T('seis.val','Value')}</th><th>${T('seis.src','Source')}</th></tr>
+        <tr><td>${T('seis.typSs','Typical Ss')}</td><td>${loc.typical_Ss?loc.typical_Ss[0]+' – '+loc.typical_Ss[1]+' g':T('seis.useRsa','Use RSA portal')}</td><td>${T('seis.hazMap','SNI 1726:2019 hazard map')}</td></tr>
+        <tr><td>${T('seis.typS1','Typical S1')}</td><td>${loc.typical_S1?loc.typical_S1[0]+' – '+loc.typical_S1[1]+' g':T('seis.useRsa','Use RSA portal')}</td><td>${T('seis.hazMap','SNI 1726:2019 hazard map')}</td></tr>
+        <tr><td>${T('seis.recSite','Recommended site class (default)')}</td><td>${T('seis.sd','SD (stiff soil)')}</td><td>${T('seis.sdSrc','SNI 8460:2017 §7 — verify with borehole')}</td></tr>
+        <tr><td>Fa (SD, Ss=1.0g)</td><td>1.1</td><td>${T('seis.tab6','SNI 1726:2019 Tabel 6')}</td></tr>
+        <tr><td>Fv (SD, S1=0.5g)</td><td>1.8</td><td>${T('seis.tab7','SNI 1726:2019 Tabel 7')}</td></tr>
+        <tr><td>${T('seis.cat','Ie (Risk Cat')} ${pt?pt.risk_category:T('seis.assumed','II — assumed')}${T('seis.catEnd',')')}</td><td>${ieVal}</td><td>${T('seis.tab2','SNI 1726:2019 Tabel 2')}</td></tr>
+        ${sdsEst!=null?`<tr><td>${T('seis.estSds','Estimated SDS = Ie·(2/3)·Fa·Ss (midpoint)')}</td><td>${sdsEst.toFixed(3)} g</td><td>${T('seis.estOnly','Estimate only — use RSA for exact values')}</td></tr>`:''}
       </table></div>
       <div class="ext-links">
-        <a class="ext-link" href="https://rsa.ciptakarya.pu.go.id/2021/" target="_blank">🌐 RSA Portal (Indonesian Seismic Hazard)</a>
-        ${loc.rsa_lat?`<a class="ext-link" href="https://rsa.ciptakarya.pu.go.id/2021/?lat=${loc.rsa_lat}&lon=${loc.rsa_lon}" target="_blank">📍 RSA — ${loc.name} coordinates</a>`:''}
-        <a class="ext-link" onclick="openSpectrumForLoc('${loc.key}',${ssMid!=null?ssMid.toFixed(2):'null'},${s1Mid.toFixed(2)},${ieVal})">⚙ Open Spectrum Calculator</a>
+        <a class="ext-link" href="https://rsa.ciptakarya.pu.go.id/2021/" target="_blank">${T('seis.rsaLink','🌐 RSA Portal (Indonesian Seismic Hazard)')}</a>
+        ${loc.rsa_lat?`<a class="ext-link" href="https://rsa.ciptakarya.pu.go.id/2021/?lat=${loc.rsa_lat}&lon=${loc.rsa_lon}" target="_blank">${T('seis.rsaCoord','📍 RSA —')} ${locName(loc)} ${T('seis.coords','coordinates')}</a>`:''}
+        <a class="ext-link" onclick="openSpectrumForLoc('${loc.key}',${ssMid!=null?ssMid.toFixed(2):'null'},${s1Mid.toFixed(2)},${ieVal})">${T('seis.openCalc','⚙ Open Spectrum Calculator')}</a>
       </div>
-      <p class="footnote">⚠ Values above are regional estimates. Always obtain site-specific Ss/S1 from the RSA portal (https://rsa.ciptakarya.pu.go.id/2021/) using exact project coordinates.</p>
+      <p class="footnote">${T('seis.warn','⚠ Values above are regional estimates. Always obtain site-specific Ss/S1 from the RSA portal (https://rsa.ciptakarya.pu.go.id/2021/) using exact project coordinates.')}</p>
     </div>`;
   }
 
@@ -1573,7 +1636,7 @@ function buildResponse(ctx){
   if(shouldShowMissingInfo(ctx)){
     const missing=buildMissingInfo(ctx);
     if(missing.length){
-      html+=`<div class="missing-card"><h3>⚠ Additional Information Needed for Site-Specific Seismic Values</h3>`;
+      html+=`<div class="missing-card"><h3>${T('miss.title','⚠ Additional Information Needed for Site-Specific Seismic Values')}</h3>`;
       missing.forEach(m=>html+=`<div class="missing-item"><div><strong>${m.item}</strong> — ${m.why}</div></div>`);
       html+=`</div>`;
     }
@@ -1583,10 +1646,10 @@ function buildResponse(ctx){
   if(window.DYNAMIC_INDEX&&window.DYNAMIC_INDEX.chunks&&ctx.raw){
     const hits=searchDynamic(ctx.raw);
     if(hits.length){
-      html+=`<div class="sec-title">Relevant Extracts from Your PDF Library</div><div class="search-hits">`;
+      html+=`<div class="sec-title">${T('sec.extracts','Relevant Extracts from Your PDF Library')}</div><div class="search-hits">`;
       hits.slice(0,8).forEach(h=>{
         const hl=highlight(h.t,ctx.raw);
-        html+=`<div class="hit-card"><div class="hit-src">${h.code} — page ~${h.pg}</div><div class="hit-text">${hl}</div></div>`;
+        html+=`<div class="hit-card"><div class="hit-src">${h.code} — ${T('hit.page','page ~')}${h.pg}</div><div class="hit-text">${hl}</div></div>`;
       });
       html+=`</div>`;
     }
@@ -1610,22 +1673,24 @@ function buildTopicModuleHTML(topics){
 }
 
 function renderModule(key,mod){
+  // pick the Chinese version of the module content when 中文 is active
+  const m=(LANG==='zh'&&mod.zh)?mod.zh:mod;
   let body='';
-  mod.sections.forEach(sec=>{
+  m.sections.forEach(sec=>{
     body+=`<h4>${sec.h}</h4>`;
     if(sec.table)body+=renderModTable(sec.table);
     if(sec.notes)sec.notes.forEach(n=>body+=`<div class="note-box">${n}</div>`);
   });
   if(mod.tool_link){
-    body+=`<div class="ext-links" style="margin-top:14px"><a class="ext-link" onclick="showView('seismic',null)">⚙ Open Seismic Spectrum Calculator</a></div>`;
+    body+=`<div class="ext-links" style="margin-top:14px"><a class="ext-link" onclick="showView('seismic',null)">${T('mod.openSeis','⚙ Open Seismic Spectrum Calculator')}</a></div>`;
   }
   if(mod.tool_link_site){
-    body+=`<div class="ext-links" style="margin-top:14px"><a class="ext-link" onclick="showView('site',null)">📡 Open Site Analysis (live wind / rain / elevation data for your location)</a></div>`;
+    body+=`<div class="ext-links" style="margin-top:14px"><a class="ext-link" onclick="showView('site',null)">${T('mod.openSite','📡 Open Site Analysis (live wind / rain / elevation data for your location)')}</a></div>`;
   }
-  if(mod.sources)body+=`<p class="src"><strong>Sources:</strong> ${mod.sources}</p>`;
+  if(m.sources)body+=`<p class="src"><strong>${T('mod.sources','Sources:')}</strong> ${m.sources}</p>`;
   // open by default so the comprehensive answer is immediately visible
   return `<details class="module-card" open>
-    <summary><span class="mtitle"><span class="micon">${mod.icon||'📘'}</span>${mod.title}</span><span class="twist">▸</span></summary>
+    <summary><span class="mtitle"><span class="micon">${mod.icon||'📘'}</span>${m.title}</span><span class="twist">▸</span></summary>
     <div class="module-body">${body}</div>
   </details>`;
 }
@@ -1658,11 +1723,11 @@ function makeStdCard(cat,title,stds,ctx){
   const cc=cat.toLowerCase().replace('american','amer');
   let html=`<div class="std-card"><div class="std-card-hdr ${cc}"><span class="flag">${cat==='SNI'?'🇮🇩':cat==='American'?'🇺🇸':'🇨🇳'}</span>${title}</div><div class="std-card-body">`;
   stds.slice(0,7).forEach(s=>{
-    html+=`<div class="std-item"><span class="bullet">▸</span><div><strong>${s.code}</strong> — ${s.title_en||s.title||''}<br>`;
+    html+=`<div class="std-item"><span class="bullet">▸</span><div><strong>${s.code}</strong> — ${stdTitle(s)}<br>`;
     const relevantParams=getRelevantParams(s,ctx);
     if(relevantParams.length){
       html+=`<div style="margin-top:4px">`;
-      relevantParams.forEach(([k,v])=>html+=`<span style="font-size:11px;background:var(--gray);padding:2px 6px;border-radius:4px;margin:2px;display:inline-block"><strong>${k}:</strong> ${v}</span>`);
+      relevantParams.forEach(([k,v])=>html+=`<span style="font-size:11px;background:var(--gray);padding:2px 6px;border-radius:4px;margin:2px;display:inline-block"><strong>${trParam(k)}:</strong> ${trParam(String(v))}</span>`);
       html+=`</div>`;
     }
     html+=`</div></div>`;
@@ -1755,6 +1820,7 @@ function dynamicPreviewFor(stdId){
 function handleSearch(){
   const q=document.getElementById('searchInput').value.trim();
   if(!q)return;
+  lastQuery=q;
   const ctx=analyzeQuery(q);
   const html=buildResponse(ctx);
   const res=document.getElementById('results');
@@ -1837,23 +1903,23 @@ function renderBrowse(filter){
     const preview=dynamicPreviewFor(s.id);
     const detailBody=`
       <div class="slc-detail-body">
-        <span class="lbl">Scope</span>${s.scope?escapeHtml(s.scope):'<em>Not described in built-in KB.</em>'}
-        ${kp?`<span class="lbl">Key Parameters</span><table class="kv-table">${Object.entries(kp).map(([k,v])=>`<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(String(v))}</td></tr>`).join('')}</table>`:''}
-        ${preview?`<span class="lbl">Extracted Text Preview</span><div class="preview-text">${escapeHtml(preview.t).substring(0,500)}…</div><div style="font-size:10.5px;color:var(--gray2);margin-top:4px">From ${escapeHtml(preview.code)} · page ~${preview.pg} (run build_index.ps1 to refresh)</div>`:`<span class="lbl">Extracted Text Preview</span><div style="font-size:11.5px;color:var(--gray2)">No PDF text indexed for this standard. Run <code>build_index.ps1</code> to add it.</div>`}
-        <span class="lbl">Source</span>${s.cat} standard${s.year?` · ${s.year}`:''} · id <code>${s.id}</code>
+        <span class="lbl">${T('b.scope','Scope')}</span>${stdScope(s)?escapeHtml(stdScope(s)):T('b.noscope','<em>Not described in built-in KB.</em>')}
+        ${kp?`<span class="lbl">${T('b.kp','Key Parameters')}</span><table class="kv-table">${Object.entries(kp).map(([k,v])=>`<tr><td>${escapeHtml(trParam(k))}</td><td>${escapeHtml(trParam(String(v)))}</td></tr>`).join('')}</table>`:''}
+        ${preview?`<span class="lbl">${T('b.preview','Extracted Text Preview')}</span><div class="preview-text">${escapeHtml(preview.t).substring(0,500)}…</div><div style="font-size:10.5px;color:var(--gray2);margin-top:4px">${T('b.previewFrom','From')} ${escapeHtml(preview.code)} · ${T('b.page','page ~')}${preview.pg} ${T('b.refresh','(run build_index.ps1 to refresh)')}</div>`:`<span class="lbl">${T('b.preview','Extracted Text Preview')}</span><div style="font-size:11.5px;color:var(--gray2)">${T('b.nopreview','No PDF text indexed for this standard. Run <code>build_index.ps1</code> to add it.')}</div>`}
+        <span class="lbl">${T('b.src','Source')}</span>${s.cat}${s.year?` · ${s.year}`:''} · id <code>${s.id}</code>
       </div>`;
     return `<div class="std-list-card ${cc}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
         <div class="slc-code">${s.code}</div>
         <span class="tag-${cc}">${s.cat}</span>
       </div>
-      <div class="slc-title">${s.title_en||s.title||''}</div>
+      <div class="slc-title">${stdTitle(s)}</div>
       <div class="slc-tags">${(s.topic||[]).map(t=>`<span class="slc-tag">${t}</span>`).join('')}${s.year?`<span class="slc-tag">${s.year}</span>`:''}</div>
       <div class="slc-actions">
-        <button class="slc-btn" onclick="quickSearch('${(s.code+' '+firstTopic).replace(/'/g,'')}')">🔎 Ask the dictionary</button>
-        ${findPdfForStandard(s)?`<a class="slc-btn" href="standards/${s.cat}/${encodeURIComponent(findPdfForStandard(s).name)}" target="_blank" download style="text-decoration:none;color:var(--green)">📥 Download PDF</a>`:''}
+        <button class="slc-btn" onclick="quickSearch('${(s.code+' '+firstTopic).replace(/'/g,'')}')">${T('b.ask','🔎 Ask the dictionary')}</button>
+        ${findPdfForStandard(s)?`<a class="slc-btn" href="standards/${s.cat}/${encodeURIComponent(findPdfForStandard(s).name)}" target="_blank" download style="text-decoration:none;color:var(--green)">${T('b.dl','📥 Download PDF')}</a>`:''}
       </div>
-      <details class="slc-details"><summary>Details</summary>${detailBody}</details>
+      <details class="slc-details"><summary>${T('b.details','Details')}</summary>${detailBody}</details>
     </div>`;
   }).join('');
   // Update PDF library below the cards
@@ -1879,12 +1945,12 @@ function findPdfForStandard(std){
 // Build the full PDF library grid for Browse view
 function buildPdfLibraryHTML(){
   if(!window.STANDARDS_MANIFEST)return'';
-  const cats={'SNI':['🇮🇩 Indonesian Standards (SNI)','sni'],'American':['🇺🇸 American Standards','amer'],'Chinese':['🇨🇳 Chinese Standards (GB/JGJ)','cn']};
-  let html=`<div style="margin-top:28px"><div class="sec-title">📥 Full PDF Library — Download Standards</div>`;
+  const cats={'SNI':[T('card.sni','🇮🇩 Indonesian Standards (SNI)'),'sni'],'American':[T('card.amer','🇺🇸 American Standards'),'amer'],'Chinese':[T('card.cn','🇨🇳 Chinese Standards (GB/JGJ)'),'cn']};
+  let html=`<div style="margin-top:28px"><div class="sec-title">${T('b.libTitle','📥 Full PDF Library — Download Standards')}</div>`;
   for(const[cat,[label,cls]] of Object.entries(cats)){
     const files=(window.STANDARDS_MANIFEST[cat]||[]);
     if(!files.length)continue;
-    html+=`<div style="margin-bottom:18px"><p style="font-weight:700;font-size:13px;margin-bottom:8px"><span class="tag-${cls}">${cat}</span> ${label} (${files.length} PDFs)</p>`;
+    html+=`<div style="margin-bottom:18px"><p style="font-weight:700;font-size:13px;margin-bottom:8px"><span class="tag-${cls}">${cat}</span> ${label} (${files.length} ${T('b.pdfs','PDFs')})</p>`;
     html+=`<div style="display:flex;flex-wrap:wrap;gap:6px">`;
     files.forEach(f=>{
       const url=`standards/${cat}/${encodeURIComponent(f.name)}`;
@@ -1896,11 +1962,11 @@ function buildPdfLibraryHTML(){
   // DWG engineering drawings (ACI Detailing Manual supplemental AutoCAD files)
   const dwgs=window.STANDARDS_MANIFEST.DWG||[];
   if(dwgs.length){
-    html+=`<div style="margin-bottom:18px"><p style="font-weight:700;font-size:13px;margin-bottom:8px"><span class="tag-amer">DWG</span> 📐 Engineering Drawings — ACI Detailing Manual MNL-66(20) AutoCAD Files (${dwgs.length} drawings)</p>`;
+    html+=`<div style="margin-bottom:18px"><p style="font-weight:700;font-size:13px;margin-bottom:8px"><span class="tag-amer">DWG</span> ${T('b.dwgTitle','📐 Engineering Drawings — ACI Detailing Manual MNL-66(20) AutoCAD Files')} (${dwgs.length} ${T('b.drawings','drawings')})</p>`;
     const groups={};
     dwgs.forEach(f=>{(groups[f.group]=groups[f.group]||[]).push(f);});
     for(const[group,files] of Object.entries(groups)){
-      html+=`<details style="margin-bottom:8px"><summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--blue2);padding:4px 0">▸ ${group} (${files.length} DWG files)</summary><div style="display:flex;flex-wrap:wrap;gap:5px;padding:8px 0 4px 14px">`;
+      html+=`<details style="margin-bottom:8px"><summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--blue2);padding:4px 0">▸ ${group} (${files.length} ${T('b.dwgFiles','DWG files')})</summary><div style="display:flex;flex-wrap:wrap;gap:5px;padding:8px 0 4px 14px">`;
       files.forEach(f=>{
         const url=`standards/DWG/${encodeURIComponent(group)}/${encodeURIComponent(f.name)}`;
         html+=`<a href="${url}" download class="ext-link" style="font-size:11px;padding:4px 9px">📐 ${escapeHtml(f.name)}</a>`;
@@ -1909,7 +1975,7 @@ function buildPdfLibraryHTML(){
     }
     html+=`</div>`;
   }
-  html+=`<p class="footnote" style="margin-top:8px">Files served directly from GitHub Pages. Click to view in browser or right-click → Save link as to download. DWG files require AutoCAD or a free viewer (e.g. DWG TrueView).</p></div>`;
+  html+=`<p class="footnote" style="margin-top:8px">${T('b.libNote','Files served directly from GitHub Pages. Click to view in browser or right-click → Save link as to download. DWG files require AutoCAD or a free viewer (e.g. DWG TrueView).')}</p></div>`;
   return html;
 }
 
@@ -1919,12 +1985,12 @@ function renderAboutStds(){
   const el=document.getElementById('aboutStdList');
   if(!el||aboutRendered)return;
   aboutRendered=true;
-  const cats={'SNI':'🇮🇩 Indonesian (SNI)','American':'🇺🇸 American (ACI/AISC/ASCE/ASTM)','Chinese':'🇨🇳 Chinese (GB/JGJ/Atlas)'};
+  const cats={'SNI':T('a.cat.sni','🇮🇩 Indonesian (SNI)'),'American':T('a.cat.amer','🇺🇸 American (ACI/AISC/ASCE/ASTM)'),'Chinese':T('a.cat.cn','🇨🇳 Chinese (GB/JGJ/Atlas)')};
   let html='';
   for(const[cat,label] of Object.entries(cats)){
     const stds=KB.standards.filter(s=>s.cat===cat);
     html+=`<p style="font-weight:600;margin:10px 0 4px">${label}</p>`;
-    html+=stds.map(s=>`<p style="font-size:13px;color:var(--text2);padding:3px 0">▸ <strong>${s.code}</strong> — ${s.title_en||s.title||''} (${s.year||''})</p>`).join('');
+    html+=stds.map(s=>`<p style="font-size:13px;color:var(--text2);padding:3px 0">▸ <strong>${s.code}</strong> — ${stdTitle(s)} (${s.year||''})</p>`).join('');
   }
   el.innerHTML=html;
 }
@@ -1932,7 +1998,9 @@ function renderAboutStds(){
 function updateAboutIndexStat(){
   const el=document.getElementById('aboutIndexStat');
   if(!el)return;
-  el.textContent=window.DYNAMIC_INDEX?`${window.DYNAMIC_INDEX.standards?.length||0} PDFs, ${window.DYNAMIC_INDEX.chunks?.length||0} text chunks`:'dynamic index not loaded — run build_index.ps1';
+  el.textContent=window.DYNAMIC_INDEX
+    ?`${window.DYNAMIC_INDEX.standards?.length||0} ${T('idx.stat1','PDFs,')} ${window.DYNAMIC_INDEX.chunks?.length||0} ${T('idx.stat2','text chunks')}`
+    :T('idx.none','dynamic index not loaded — run build_index.ps1');
 }
 
 // ================================================================
@@ -1962,7 +2030,7 @@ function initLeafletMap(){
     const ssT=v.typical_Ss?`Ss: ${v.typical_Ss[0]}–${v.typical_Ss[1]} g`:'';
     const s1T=v.typical_S1?`S1: ${v.typical_S1[0]}–${v.typical_S1[1]} g`:'';
     L.marker([v.lat,v.lon],{icon}).addTo(leafletMap)
-      .bindPopup(`<div style="min-width:160px"><strong>${v.name}</strong><br><span style="font-size:11px;color:#666">Hazard: ${s.replace(/_/g,' ')}</span><br><span style="font-size:12px">${ssT}<br>${s1T}</span><br><small style="color:#888">${(v.note||'').substring(0,80)}</small></div>`)
+      .bindPopup(()=>`<div style="min-width:160px"><strong>${locName(v)}</strong><br><span style="font-size:11px;color:#666">${T('q.hazard','Hazard')}: ${hazardLabel(s)}</span><br><span style="font-size:12px">${ssT}<br>${s1T}</span><br><small style="color:#888">${locNote(v).substring(0,80)}</small></div>`)
       .on('click',()=>{
         // Pre-fill lat/lon from province centre and run calculator
         const lat=(v.rsa_lat!=null?v.rsa_lat:v.lat).toFixed(4);
@@ -1972,7 +2040,7 @@ function initLeafletMap(){
         // Apply typical Ss/S1 midpoints
         if(v.typical_Ss)document.getElementById('rSs').value=((v.typical_Ss[0]+v.typical_Ss[1])/2).toFixed(2);
         if(v.typical_S1)document.getElementById('rS1').value=((v.typical_S1[0]+v.typical_S1[1])/2).toFixed(2);
-        setMapMarker(+lat,+lon,v.name);
+        setMapMarker(+lat,+lon,locName(v));
         calcSpectrum();
         // Also sync the province select
         const sel=document.getElementById('rProvince');
@@ -1986,7 +2054,7 @@ function initLeafletMap(){
     const lon=e.latlng.lng.toFixed(4);
     document.getElementById('rLat').value=lat;
     document.getElementById('rLon').value=lon;
-    setMapMarker(+lat,+lon,'Selected point');
+    setMapMarker(+lat,+lon,T('st.selSite','Selected point'));
     calcSpectrum();
   });
 
@@ -2027,8 +2095,8 @@ const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov',
 function populateSiteProvince(){
   const sel=document.getElementById('siteProvince');
   if(!sel)return;
-  Object.entries(KB.locations).sort((a,b)=>a[1].name.localeCompare(b[1].name)).forEach(([k,v])=>{
-    const o=document.createElement('option');o.value=k;o.textContent=v.name;sel.appendChild(o);
+  Object.entries(KB.locations).sort((a,b)=>locName(a[1]).localeCompare(locName(b[1]))).forEach(([k,v])=>{
+    const o=document.createElement('option');o.value=k;o.textContent=locName(v);sel.appendChild(o);
   });
 }
 
@@ -2039,7 +2107,7 @@ function siteApplyProvince(){
   const lat=v.rsa_lat??v.lat, lon=v.rsa_lon??v.lon;
   document.getElementById('siteLat').value=lat;
   document.getElementById('siteLon').value=lon;
-  setSiteMarker(lat,lon,v.name);
+  setSiteMarker(lat,lon,locName(v));
   if(siteMap)siteMap.setView([lat,lon],7);
 }
 
@@ -2054,7 +2122,7 @@ function ensureSiteMap(){
       const lat=e.latlng.lat.toFixed(4),lon=e.latlng.lng.toFixed(4);
       document.getElementById('siteLat').value=lat;
       document.getElementById('siteLon').value=lon;
-      setSiteMarker(+lat,+lon,'Selected site');
+      setSiteMarker(+lat,+lon,T('st.selSite','Selected site'));
       // auto-pick nearest province preset for geology context
       const near=nearestLocation(+lat,+lon);
       if(near)document.getElementById('siteProvince').value=near;
@@ -2084,13 +2152,13 @@ async function analyzeSite(){
   const lat=parseFloat(document.getElementById('siteLat').value);
   const lon=parseFloat(document.getElementById('siteLon').value);
   const st=document.getElementById('siteStatus');
-  if(isNaN(lat)||isNaN(lon)){st.innerHTML='⚠ Enter coordinates or pick a province / click the map first.';return;}
+  if(isNaN(lat)||isNaN(lon)){st.innerHTML=T('st.needCoord','⚠ Enter coordinates or pick a province / click the map first.');return;}
   const provKey=document.getElementById('siteProvince').value||nearestLocation(lat,lon);
   const prov=provKey?KB.locations[provKey]:null;
   const geo=provKey?SITE_GEO[provKey]:null;
   const btn=document.getElementById('siteAnalyzeBtn');
-  btn.disabled=true;st.innerHTML='⏳ Fetching elevation and 3-year ERA5 climate history for '+lat.toFixed(3)+', '+lon.toFixed(3)+' …';
-  setSiteMarker(lat,lon,prov?prov.name:'Project site');
+  btn.disabled=true;st.innerHTML=T('st.fetching','⏳ Fetching elevation and 3-year ERA5 climate history for ')+lat.toFixed(3)+', '+lon.toFixed(3)+' …';
+  setSiteMarker(lat,lon,prov?locName(prov):T('st.projSite','Project site'));
 
   const yEnd=new Date().getFullYear()-1, yStart=yEnd-2;
   let elev=null,clim=null,fetchErr=null;
@@ -2101,7 +2169,7 @@ async function analyzeSite(){
     ]);
     elev=(er&&er.elevation&&er.elevation[0]!=null)?er.elevation[0]:null;
     if(cr&&cr.daily&&cr.daily.time&&cr.daily.time.length>300)clim=cr.daily;
-    else fetchErr='Climate archive returned no data';
+    else fetchErr=T('st.noData','Climate archive returned no data');
   }catch(e){fetchErr=String(e);}
 
   let agg=null;
@@ -2130,9 +2198,10 @@ async function analyzeSite(){
   }
   btn.disabled=false;
   st.innerHTML=clim
-    ?'✅ Live data loaded (ERA5 reanalysis '+agg.span+', '+agg.years+' yrs)'+(elev!=null?' · elevation '+Math.round(elev)+' m':'')
-    :'⚠ Live fetch unavailable ('+(fetchErr||'unknown')+') — showing embedded regional estimates only. Retry with internet access.';
-  renderSiteResults({lat,lon,elev,agg,prov,geo,provKey});
+    ?T('st.loaded','✅ Live data loaded (ERA5 reanalysis ')+agg.span+', '+agg.years+' '+T('st.years','yrs)')+(elev!=null?' '+T('st.elev','· elevation')+' '+Math.round(elev)+' m':'')
+    :T('st.failed','⚠ Live fetch unavailable (')+(fetchErr||'unknown')+T('st.failed2',') — showing embedded regional estimates only. Retry with internet access.');
+  lastSiteData={lat,lon,elev,agg,prov,geo,provKey};
+  renderSiteResults(lastSiteData);
 }
 
 function renderSiteResults(d){
@@ -2141,88 +2210,89 @@ function renderSiteResults(d){
   const windHi=geo?geo.wind[1]:33, windLo=geo?geo.wind[0]:28;
   const v10=windHi/1.42, w0=Math.max(0.30,v10*v10/1600);
   const qz=0.613*0.85*windHi*windHi/1000;
-  const gustNote=agg?`Max daily gust observed ${agg.maxGust.toFixed(1)} m/s (${agg.maxGustDate})`:'—';
+  const gustNote=agg?`${T('st.gustNote','Max daily gust observed')} ${agg.maxGust.toFixed(1)} m/s (${agg.maxGustDate})`:'—';
 
+  const ML=monthLabels();
   let html='';
   // ── Wind card ──
-  html+=`<div class="panel"><h3>🌬 Wind — Climatology & Design Requirements</h3>`;
+  html+=`<div class="panel"><h3>${T('st.windTitle','🌬 Wind — Climatology & Design Requirements')}</h3>`;
   if(agg){
     html+=`<div class="site-stat-grid">
-      <div class="site-stat"><label>Mean daily max wind</label><span>${agg.meanWind.toFixed(1)} m/s</span><small>10 m height, ${agg.span}</small></div>
-      <div class="site-stat"><label>Max gust observed</label><span>${agg.maxGust.toFixed(1)} m/s</span><small>${agg.maxGustDate}</small></div>
-      <div class="site-stat"><label>Windiest month</label><span>${MONTHS[agg.monthlyWind.indexOf(Math.max(...agg.monthlyWind))]}</span><small>${Math.max(...agg.monthlyWind).toFixed(1)} m/s avg daily max</small></div>
-      <div class="site-stat"><label>Calmest month</label><span>${MONTHS[agg.monthlyWind.indexOf(Math.min(...agg.monthlyWind))]}</span><small>${Math.min(...agg.monthlyWind).toFixed(1)} m/s avg daily max</small></div>
+      <div class="site-stat"><label>${T('st.meanWind','Mean daily max wind')}</label><span>${agg.meanWind.toFixed(1)} m/s</span><small>${T('st.h10','10 m height,')} ${agg.span}</small></div>
+      <div class="site-stat"><label>${T('st.maxGust','Max gust observed')}</label><span>${agg.maxGust.toFixed(1)} m/s</span><small>${agg.maxGustDate}</small></div>
+      <div class="site-stat"><label>${T('st.windiest','Windiest month')}</label><span>${ML[agg.monthlyWind.indexOf(Math.max(...agg.monthlyWind))]}</span><small>${Math.max(...agg.monthlyWind).toFixed(1)} ${T('st.avgDailyMax','m/s avg daily max')}</small></div>
+      <div class="site-stat"><label>${T('st.calmest','Calmest month')}</label><span>${ML[agg.monthlyWind.indexOf(Math.min(...agg.monthlyWind))]}</span><small>${Math.min(...agg.monthlyWind).toFixed(1)} ${T('st.avgDailyMax','m/s avg daily max')}</small></div>
     </div>
     <canvas id="siteWindChart" height="160"></canvas>`;
   }else{
-    html+=`<p style="font-size:13px;color:var(--text2)">Live wind history unavailable — regional estimate: typical basic wind speed ${windLo}–${windHi} m/s (3-s gust).</p>`;
+    html+=`<p style="font-size:13px;color:var(--text2)">${T('st.windUnavail','Live wind history unavailable — regional estimate: typical basic wind speed')} ${windLo}–${windHi} m/s ${T('st.gust3s','(3-s gust)')}.</p>`;
   }
   html+=`<div class="tablewrap"><table class="fa-table" style="margin-top:14px">
-    <tr><th>Design Requirement</th><th>Value</th><th>Standard</th></tr>
-    <tr><td>Recommended basic wind speed V (3-s gust, ultimate)</td><td><strong>≥ ${windHi} m/s</strong> (regional practice ${windLo}–${windHi}; confirm w/ BMKG extreme-value analysis)</td><td>SNI 1727:2020 §26 / ASCE 7-22</td></tr>
-    <tr><td>Velocity pressure qz (10 m, Exp C, Kzt=1)</td><td>≈ ${qz.toFixed(2)} kN/m²</td><td>qz = 0.613·Kz·Kzt·Kd·V², Kd=0.85</td></tr>
-    <tr><td>Minimum MWFRS design pressure</td><td>0.77 kN/m² walls + 0.38 kN/m² roof</td><td>ASCE 7-22 §26.10.2</td></tr>
-    <tr><td>GB basic wind pressure w₀ (50-yr, 10-min)</td><td>≈ ${w0.toFixed(2)} kN/m² (≥ 0.30 floor)</td><td>GB 50009-2012 §8.1, w₀=v₀²/1600</td></tr>
-    <tr><td>Observed support</td><td>${gustNote}</td><td>ERA5 (note: reanalysis smooths local gust extremes — design from code maps, not raw data)</td></tr>
+    <tr><th>${T('st.dReq','Design Requirement')}</th><th>${T('st.dVal','Value')}</th><th>${T('st.dStd','Standard')}</th></tr>
+    <tr><td>${T('st.vRec','Recommended basic wind speed V (3-s gust, ultimate)')}</td><td><strong>≥ ${windHi} m/s</strong> ${T('st.vRec2','(regional practice')} ${windLo}–${windHi}${T('st.vRec3','; confirm w/ BMKG extreme-value analysis)')}</td><td>SNI 1727:2020 §26 / ASCE 7-22</td></tr>
+    <tr><td>${T('st.qz','Velocity pressure qz (10 m, Exp C, Kzt=1)')}</td><td>≈ ${qz.toFixed(2)} kN/m²</td><td>${T('st.qzStd','qz = 0.613·Kz·Kzt·Kd·V², Kd=0.85')}</td></tr>
+    <tr><td>${T('st.minP','Minimum MWFRS design pressure')}</td><td>${T('st.minPVal','0.77 kN/m² walls + 0.38 kN/m² roof')}</td><td>ASCE 7-22 §26.10.2</td></tr>
+    <tr><td>${T('st.w0','GB basic wind pressure w₀ (50-yr, 10-min)')}</td><td>≈ ${w0.toFixed(2)} kN/m² ${T('st.w0Floor','(≥ 0.30 floor)')}</td><td>GB 50009-2012 §8.1, w₀=v₀²/1600</td></tr>
+    <tr><td>${T('st.obs','Observed support')}</td><td>${gustNote}</td><td>${T('st.obsNote','ERA5 (note: reanalysis smooths local gust extremes — design from code maps, not raw data)')}</td></tr>
   </table></div></div>`;
 
   // ── Rain card ──
-  html+=`<div class="panel"><h3>🌧 Rainfall — Climatology & Design Requirements</h3>`;
+  html+=`<div class="panel"><h3>${T('st.rainTitle','🌧 Rainfall — Climatology & Design Requirements')}</h3>`;
   if(agg){
     const wettest=agg.monthlyRain.indexOf(Math.max(...agg.monthlyRain)),driest=agg.monthlyRain.indexOf(Math.min(...agg.monthlyRain));
     html+=`<div class="site-stat-grid">
-      <div class="site-stat"><label>Annual rainfall (avg)</label><span>${Math.round(agg.annualRain)} mm</span><small>${agg.span} average</small></div>
-      <div class="site-stat"><label>Wettest month</label><span>${MONTHS[wettest]}</span><small>${Math.round(agg.monthlyRain[wettest])} mm avg</small></div>
-      <div class="site-stat"><label>Driest month</label><span>${MONTHS[driest]}</span><small>${Math.round(agg.monthlyRain[driest])} mm avg</small></div>
-      <div class="site-stat"><label>Wet season (regional)</label><span style="font-size:13px">${geo?geo.wet:'Oct–Apr typical'}</span><small>plan earthworks/concrete pours</small></div>
+      <div class="site-stat"><label>${T('st.annualRain','Annual rainfall (avg)')}</label><span>${Math.round(agg.annualRain)} mm</span><small>${agg.span} ${T('st.avg','average')}</small></div>
+      <div class="site-stat"><label>${T('st.wettest','Wettest month')}</label><span>${ML[wettest]}</span><small>${Math.round(agg.monthlyRain[wettest])} mm ${T('st.avg','avg')}</small></div>
+      <div class="site-stat"><label>${T('st.driest','Driest month')}</label><span>${ML[driest]}</span><small>${Math.round(agg.monthlyRain[driest])} mm ${T('st.avg','avg')}</small></div>
+      <div class="site-stat"><label>${T('st.wetSeason','Wet season (regional)')}</label><span style="font-size:13px">${geo?((LANG==='zh'&&geo.wet_zh)?geo.wet_zh:geo.wet):T('st.wetDefault','Oct–Apr typical')}</span><small>${T('st.planNote','plan earthworks/concrete pours')}</small></div>
     </div>
     <canvas id="siteRainChart" height="160"></canvas>`;
   }else{
-    html+=`<p style="font-size:13px;color:var(--text2)">Live rainfall history unavailable — regional estimate: ${geo?geo.rain[0]+'–'+geo.rain[1]:'1500–3000'} mm/yr; wet season ${geo?geo.wet:'Oct–Apr'}.</p>`;
+    html+=`<p style="font-size:13px;color:var(--text2)">${T('st.rainUnavail','Live rainfall history unavailable — regional estimate:')} ${geo?geo.rain[0]+'–'+geo.rain[1]:'1500–3000'} ${T('st.rainPerYr','mm/yr; wet season')} ${geo?((LANG==='zh'&&geo.wet_zh)?geo.wet_zh:geo.wet):'Oct–Apr'}.</p>`;
   }
   html+=`<div class="tablewrap"><table class="fa-table" style="margin-top:14px">
-    <tr><th>Design Requirement</th><th>Value</th><th>Standard</th></tr>
-    <tr><td>Roof rain load</td><td>R = 0.0098·(ds + dh) kN/m², secondary drainage w/ primary blocked</td><td>SNI 1727:2020 §8 / ASCE 7-22 Ch. 8</td></tr>
-    <tr><td>Roof drainage design intensity</td><td>100–200 mm/hr (5-min) — derive site IDF from BMKG for final</td><td>BMKG IDF / SNI plumbing practice</td></tr>
-    <tr><td>Ponding instability check</td><td>Required for roof slope &lt; 6.3 mm/m or flexible bays</td><td>ASCE 7 §8.4 / AISC 360 App. 2</td></tr>
-    <tr><td>GB treatment</td><td>≥ 0.5 kN/m² roof live + drainage per GB 50015</td><td>GB 50009-2012 §5.3</td></tr>
+    <tr><th>${T('st.dReq','Design Requirement')}</th><th>${T('st.dVal','Value')}</th><th>${T('st.dStd','Standard')}</th></tr>
+    <tr><td>${T('st.rainLoad','Roof rain load')}</td><td>${T('st.rainLoadVal','R = 0.0098·(ds + dh) kN/m², secondary drainage w/ primary blocked')}</td><td>SNI 1727:2020 §8 / ASCE 7-22 Ch. 8</td></tr>
+    <tr><td>${T('st.intensity','Roof drainage design intensity')}</td><td>${T('st.intensityVal','100–200 mm/hr (5-min) — derive site IDF from BMKG for final')}</td><td>${T('st.intensityStd','BMKG IDF / SNI plumbing practice')}</td></tr>
+    <tr><td>${T('st.ponding','Ponding instability check')}</td><td>${T('st.pondingVal','Required for roof slope &lt; 6.3 mm/m or flexible bays')}</td><td>ASCE 7 §8.4 / AISC 360 App. 2</td></tr>
+    <tr><td>${T('st.gbRain','GB treatment')}</td><td>${T('st.gbRainVal','≥ 0.5 kN/m² roof live + drainage per GB 50015')}</td><td>GB 50009-2012 §5.3</td></tr>
   </table></div></div>`;
 
   // ── Topography card ──
-  html+=`<div class="panel"><h3>⛰ Topography & Elevation</h3>
+  html+=`<div class="panel"><h3>${T('st.topoTitle','⛰ Topography & Elevation')}</h3>
     <div class="site-stat-grid">
-      <div class="site-stat"><label>Site elevation</label><span>${elev!=null?Math.round(elev)+' m':'n/a'}</span><small>Copernicus DEM 90 m (Open-Meteo)</small></div>
-      <div class="site-stat"><label>Coordinates</label><span style="font-size:13px">${lat.toFixed(4)}, ${lon.toFixed(4)}</span><small>WGS84</small></div>
+      <div class="site-stat"><label>${T('st.elevLabel','Site elevation')}</label><span>${elev!=null?Math.round(elev)+' m':'n/a'}</span><small>${T('st.demSrc','Copernicus DEM 90 m (Open-Meteo)')}</small></div>
+      <div class="site-stat"><label>${T('st.coord','Coordinates')}</label><span style="font-size:13px">${lat.toFixed(4)}, ${lon.toFixed(4)}</span><small>WGS84</small></div>
     </div>
-    <div class="note-box">If the site sits on a hill crest, ridge or escarpment with H/Lh ≥ 0.2 and H ≥ 4.5 m, apply topographic factor <strong>Kzt = (1 + K1·K2·K3)² &gt; 1.0</strong> (SNI 1727:2020 / ASCE 7-22 §26.8; GB 50009 §8.2.2 hilltop η). Obtain the contour profile from the BIG Geoportal below to evaluate H and Lh.</div>
+    <div class="note-box">${T('st.kztNote','If the site sits on a hill crest, ridge or escarpment with H/Lh ≥ 0.2 and H ≥ 4.5 m, apply topographic factor <strong>Kzt = (1 + K1·K2·K3)² &gt; 1.0</strong> (SNI 1727:2020 / ASCE 7-22 §26.8; GB 50009 §8.2.2 hilltop η). Obtain the contour profile from the BIG Geoportal below to evaluate H and Lh.')}</div>
     <div class="src-links">
-      <a class="ext-link" href="https://geoportal.big.go.id/#/viewer" target="_blank">⛰ BIG Geoportal — contour / DEMNAS</a>
-      <a class="ext-link" href="https://www.freemaptools.com/elevation-finder.htm" target="_blank">📐 Elevation Finder (verify)</a>
+      <a class="ext-link" href="https://geoportal.big.go.id/#/viewer" target="_blank">${T('st.bigLink','⛰ BIG Geoportal — contour / DEMNAS')}</a>
+      <a class="ext-link" href="https://www.freemaptools.com/elevation-finder.htm" target="_blank">${T('st.elevVerify','📐 Elevation Finder (verify)')}</a>
     </div></div>`;
 
   // ── Soil / geology card ──
-  html+=`<div class="panel"><h3>🧱 Soil & Geology — Regional Profile${prov?' ('+prov.name+')':''}</h3>`;
+  html+=`<div class="panel"><h3>${T('st.soilTitle','🧱 Soil & Geology — Regional Profile')}${prov?' ('+locName(prov)+')':''}</h3>`;
   if(geo){
     html+=`<div class="site-stat-grid">
-      <div class="site-stat"><label>Typical site class</label><span>${geo.sc}</span><small>SNI 1726:2019 Tabel 3 — VERIFY w/ ≥30 m borehole</small></div>
-      <div class="site-stat"><label>Seismic hazard</label><span>${prov?(prov.seismic||'').replace(/_/g,' ').toUpperCase():'—'}</span><small>Ss ${prov&&prov.typical_Ss?prov.typical_Ss.join('–'):'—'} g</small></div>
+      <div class="site-stat"><label>${T('st.siteClass','Typical site class')}</label><span>${geo.sc}</span><small>${T('st.verify30','SNI 1726:2019 Tabel 3 — VERIFY w/ ≥30 m borehole')}</small></div>
+      <div class="site-stat"><label>${T('st.hazard','Seismic hazard')}</label><span>${prov?hazardLabel(prov.seismic):'—'}</span><small>Ss ${prov&&prov.typical_Ss?prov.typical_Ss.join('–'):'—'} g</small></div>
     </div>
-    <p style="font-size:13px;line-height:1.7;color:var(--text2)"><strong>Typical geology / soil layers:</strong> ${geo.geo}</p>`;
+    <p style="font-size:13px;line-height:1.7;color:var(--text2)"><strong>${T('st.geoLayers','Typical geology / soil layers:')}</strong> ${(LANG==='zh'&&geo.geo_zh)?geo.geo_zh:geo.geo}</p>`;
     const sc=geo.sc;
     let fnd;
-    if(sc.indexOf('SE')>=0)fnd='Soft/compressible profile likely → expect DEEP foundations (driven/bored piles to competent stratum) or ground improvement; check negative skin friction & liquefaction (SNI 8460:2017 §9–10).';
-    else if(sc.indexOf('SC')>=0)fnd='Competent shallow strata likely → isolated/strip footings (FS ≥ 3.0, embedment ≥ 0.5 m) often feasible; confirm with SPT/CPT per SNI 8460:2017 §6–7.';
-    else fnd='Medium profile → shallow footings possible for light–moderate loads (FS ≥ 3.0); piles for heavy/settlement-sensitive structures; site investigation governs (SNI 8460:2017 §6).';
-    html+=`<div class="note-box warn"><strong>Foundation guidance:</strong> ${fnd}</div>`;
+    if(sc.indexOf('SE')>=0)fnd=T('st.fndSE','Soft/compressible profile likely → expect DEEP foundations (driven/bored piles to competent stratum) or ground improvement; check negative skin friction & liquefaction (SNI 8460:2017 §9–10).');
+    else if(sc.indexOf('SC')>=0)fnd=T('st.fndSC','Competent shallow strata likely → isolated/strip footings (FS ≥ 3.0, embedment ≥ 0.5 m) often feasible; confirm with SPT/CPT per SNI 8460:2017 §6–7.');
+    else fnd=T('st.fndSD','Medium profile → shallow footings possible for light–moderate loads (FS ≥ 3.0); piles for heavy/settlement-sensitive structures; site investigation governs (SNI 8460:2017 §6).');
+    html+=`<div class="note-box warn"><strong>${T('st.fndGuide','Foundation guidance:')}</strong> ${fnd}</div>`;
   }else{
-    html+=`<p style="font-size:13px;color:var(--text2)">No regional geology profile matched these coordinates. Select the nearest province preset, and always perform a site investigation per SNI 8460:2017 §6.</p>`;
+    html+=`<p style="font-size:13px;color:var(--text2)">${T('st.noGeo','No regional geology profile matched these coordinates. Select the nearest province preset, and always perform a site investigation per SNI 8460:2017 §6.')}</p>`;
   }
   html+=`<div class="ext-links" style="margin-top:10px">
-    <a class="ext-link" onclick="quickSearch('foundation type selection criteria')">🧱 Foundation Type Selection module</a>
-    <a class="ext-link" onclick="quickSearch('geotechnical investigation requirements')">🏚 Geotechnical module</a>
-    <a class="ext-link" onclick="openSpectrumForLoc('${d.provKey||''}',null,0.4,1.0)">🌍 Seismic spectrum for this region</a>
+    <a class="ext-link" onclick="quickSearch('foundation type selection criteria')">${T('st.fndLink','🧱 Foundation Type Selection module')}</a>
+    <a class="ext-link" onclick="quickSearch('geotechnical investigation requirements')">${T('st.geoLink','🏚 Geotechnical module')}</a>
+    <a class="ext-link" onclick="openSpectrumForLoc('${d.provKey||''}',null,0.4,1.0)">${T('st.seisLink','🌍 Seismic spectrum for this region')}</a>
   </div>
-  <p class="footnote">Regional profile is indicative only — SNI 8460:2017 §6 site investigation (boreholes ≥ 6 m below founding level; ≥ 30 m for seismic site class) is mandatory before final design.</p></div>`;
+  <p class="footnote">${T('st.footnote','Regional profile is indicative only — SNI 8460:2017 §6 site investigation (boreholes ≥ 6 m below founding level; ≥ 30 m for seismic site class) is mandatory before final design.')}</p></div>`;
 
   R.innerHTML=html;
 
@@ -2232,11 +2302,11 @@ function renderSiteResults(d){
     if(siteRainChart)siteRainChart.destroy();
     const wc=document.getElementById('siteWindChart');
     if(wc)siteWindChart=new Chart(wc.getContext('2d'),{type:'bar',
-      data:{labels:MONTHS,datasets:[{label:'Avg daily max wind (m/s, 10 m)',data:agg.monthlyWind.map(x=>+x.toFixed(2)),backgroundColor:'rgba(33,150,243,.55)',borderColor:'#2196F3',borderWidth:1}]},
+      data:{labels:ML,datasets:[{label:T('st.windChartLabel','Avg daily max wind (m/s, 10 m)'),data:agg.monthlyWind.map(x=>+x.toFixed(2)),backgroundColor:'rgba(33,150,243,.55)',borderColor:'#2196F3',borderWidth:1}]},
       options:{plugins:{legend:{labels:{font:{size:11}}}},scales:{y:{title:{display:true,text:'m/s'},min:0}}}});
     const rc=document.getElementById('siteRainChart');
     if(rc)siteRainChart=new Chart(rc.getContext('2d'),{type:'bar',
-      data:{labels:MONTHS,datasets:[{label:'Avg monthly rainfall (mm)',data:agg.monthlyRain.map(x=>Math.round(x)),backgroundColor:'rgba(39,174,96,.55)',borderColor:'#27ae60',borderWidth:1}]},
+      data:{labels:ML,datasets:[{label:T('st.rainChartLabel','Avg monthly rainfall (mm)'),data:agg.monthlyRain.map(x=>Math.round(x)),backgroundColor:'rgba(39,174,96,.55)',borderColor:'#27ae60',borderWidth:1}]},
       options:{plugins:{legend:{labels:{font:{size:11}}}},scales:{y:{title:{display:true,text:'mm'},min:0}}}});
   }
   R.scrollIntoView({behavior:'smooth',block:'start'});
@@ -2249,8 +2319,10 @@ window.addEventListener('DOMContentLoaded',()=>{
   populateSiteProvince();
   updateAboutIndexStat();
   document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleSearch();});
+  applyLanguage(); // apply saved language preference (EN default / 中文)
 });
 </script>
+<script src="i18n_zh.js" charset="utf-8" onerror="console.log('Chinese language pack not loaded — EN only')"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
