@@ -11,6 +11,7 @@ window.ZH = {
   // header / nav
   "hdr.title":"工程标准词典",
   "hdr.sub":"多专业土木 / 结构 / 岩土工程参考",
+  "hdr.credit":"由 <strong>乔书亚 Alexander</strong> 倾情呈献 — CCEPC Indonesia | 都市环保印尼公司",
   "nav.search":"检索",
   "nav.browse":"标准浏览",
   "nav.seismic":"抗震工具",
