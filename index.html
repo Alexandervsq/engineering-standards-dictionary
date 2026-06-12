@@ -90,6 +90,32 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .ext-link{display:inline-flex;align-items:center;gap:6px;background:var(--gray);padding:7px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--blue2);border:1px solid var(--gray2);cursor:pointer}
 .ext-link:hover{background:#dae8fc}
 
+/* AI ANSWER CARD */
+.ai-card{background:#fff;border-radius:12px;margin-bottom:20px;box-shadow:var(--card-shadow);border:1px solid #d4c5f9;border-left:4px solid #7c5cbf;overflow:hidden}
+.ai-card-hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 20px;background:linear-gradient(135deg,#f6f2ff,#eef2ff);flex-wrap:wrap}
+.ai-card-hdr .ai-title{font-weight:700;font-size:15px;color:#4a3580;display:flex;align-items:center;gap:9px}
+.ai-badge{font-size:10.5px;font-weight:600;background:#7c5cbf;color:#fff;padding:3px 10px;border-radius:20px;letter-spacing:.3px}
+.ai-badge.docs{background:#5c7cbf}
+.ai-badge.claude{background:#c96f2e}
+.ai-card-body{padding:14px 20px 18px}
+.ai-card-body h4{font-size:13.5px;font-weight:700;color:#5c4699;margin:13px 0 7px}
+.ai-card-body h4:first-child{margin-top:2px}
+.ai-pts{list-style:none;margin:0;padding:0}
+.ai-pts li{font-size:14px;line-height:1.65;color:var(--text);padding:4px 0 4px 20px;position:relative}
+.ai-pts li::before{content:"▸";position:absolute;left:4px;color:#7c5cbf;font-weight:700}
+.ai-pts code{background:#f3eefe;color:#4a3580;padding:1px 6px;border-radius:4px;font-size:13px}
+.ai-src{font-size:11.5px;color:var(--gray2);border-top:1px dashed var(--gray);margin-top:13px;padding-top:9px;line-height:1.6}
+.ai-related{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.ai-related .chip2{background:#f3eefe;border:1px solid #d4c5f9;color:#5c4699;padding:4px 12px;border-radius:16px;font-size:12.5px;cursor:pointer}
+.ai-related .chip2:hover{background:#e6dbfb}
+.ai-extract-cite{font-size:11px;color:#8a7bb5;margin-left:6px;white-space:nowrap}
+.ai-note{font-size:12px;color:var(--text2);background:#f8f6ff;border-radius:7px;padding:8px 12px;margin-top:10px;line-height:1.6}
+.ai-keylink{cursor:pointer;color:#7c5cbf;text-decoration:underline}
+.ai-toggle{padding:14px 16px;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
+.ai-toggle.on{background:#7c5cbf;border-color:#9b7fd4}
+.ai-spin{display:inline-block;width:13px;height:13px;border:2px solid #d4c5f9;border-top-color:#7c5cbf;border-radius:50%;animation:aispin .8s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes aispin{to{transform:rotate(360deg)}}
+
 .missing-card{background:#fffbf0;border:1px solid #f0c040;border-radius:12px;padding:18px;margin-bottom:20px}
 .missing-card h3{color:#b8860b;font-size:14px;font-weight:600;margin-bottom:10px}
 .missing-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:13px}
@@ -313,8 +339,8 @@ nav button{font-size:14px}
       <button onclick="showView('site',this)" data-i18n="nav.site">Site Analysis</button>
       <button onclick="showView('about',this)" data-i18n="nav.about">About / Deploy</button>
       <div class="lang-switch">
-        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
+        <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">🇨🇳 中文</button>
       </div>
     </nav>
   </div>
@@ -331,6 +357,7 @@ nav button{font-size:14px}
         placeholder="e.g. concrete cover requirements · steel seismic detailing · foundation bearing capacity · power plant in North Maluku"
         onkeydown="if(event.key==='Enter')handleSearch()">
       <button id="searchBtn" onclick="handleSearch()" data-i18n="hero.btn">Search</button>
+      <button id="aiToggle" class="ai-toggle" onclick="toggleAI()" title="Connect your own Claude API key for live AI answers">✨ AI</button>
     </div>
     <div class="chips">
       <span class="chip" onclick="quickSearch('concrete cover and strength requirements')" data-i18n="chip.concrete">🏗 Concrete</span>
@@ -584,6 +611,7 @@ git push -u origin main</pre>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <script src="standards_data.js" onerror="console.log('No dynamic index — using built-in KB')"></script>
 <script src="standards_manifest.js" onerror="console.log('No PDF manifest — download links unavailable')"></script>
+<script src="qa_cards.js" charset="utf-8" onerror="console.log('QA cards not loaded — extractive answers only')"></script>
 <script>
 // ================================================================
 // I18N — language state & helpers (Chinese pack: i18n_zh.js)
@@ -1884,6 +1912,201 @@ function dynamicPreviewFor(stdId){
 }
 
 // ================================================================
+// AI ANSWER ENGINE
+// Layer 1: curated Q&A knowledge cards (qa_cards.js, tri-standard)
+// Layer 2: extractive answer from the indexed standards full text
+// Layer 3 (optional): live Claude API with the visitor's own key
+// ================================================================
+function aiOn(){try{return localStorage.getItem('esd_ai_on')==='1'}catch(e){return false}}
+function aiKey(){try{return localStorage.getItem('esd_claude_key')||''}catch(e){return ''}}
+
+function detectStdPriority(ql){
+  if(/\bsni\b|indonesia/.test(ql)||ql.includes('印尼'))return'🇮🇩';
+  if(/\baci\b|\baisc\b|\basce\b|\bastm\b|american|\bus standard/.test(ql)||ql.includes('美国'))return'🇺🇸';
+  if(/\bgb\b|\bjgj\b|chinese|china standard/.test(ql)||ql.includes('中国')||ql.includes('国标'))return'🇨🇳';
+  return null;
+}
+
+function matchQACards(q){
+  if(!window.QA_CARDS)return{best:null,related:[]};
+  const ql=q.toLowerCase();
+  const scored=[];
+  window.QA_CARDS.forEach(c=>{
+    let s=0;
+    (c.kw||[]).forEach(k=>{if(ql.includes(k))s+=k.split(' ').length;});
+    (c.kw_zh||[]).forEach(k=>{if(ql.includes(k))s+=2;});
+    if(s>0)scored.push({s,c});
+  });
+  scored.sort((a,b)=>b.s-a.s);
+  return{best:scored.length?scored[0].c:null,related:scored.slice(1,4).map(x=>x.c)};
+}
+
+function renderQACard(card,related,ctx){
+  const c=(LANG==='zh'&&card.zh)?card.zh:card.en;
+  const pri=detectStdPriority(ctx.raw.toLowerCase());
+  let secs=c.sections.slice();
+  if(pri){
+    secs.sort((a,b)=>{const af=a.h.includes(pri)?0:1,bf=b.h.includes(pri)?0:1;return af-bf;});
+  }
+  let body='';
+  secs.forEach(sec=>{
+    body+=`<h4>${sec.h}${pri&&sec.h.includes(pri)?` <span style="font-size:10.5px;color:#c96f2e;font-weight:600">${T('ai.requested','(prioritised per your inquiry)')}</span>`:''}</h4><ul class="ai-pts">`;
+    sec.pts.forEach(p=>body+=`<li>${p}</li>`);
+    body+=`</ul>`;
+  });
+  if(related.length){
+    body+=`<div class="ai-related"><span style="font-size:12px;color:var(--text2);align-self:center">${T('ai.alsoRel','Also relevant:')}</span>`;
+    related.forEach(r=>{
+      const rt=(LANG==='zh'&&r.zh)?r.zh.title:r.en.title;
+      body+=`<span class="chip2" onclick="quickSearch('${(r.kw[0]||'').replace(/'/g,'')}')">${rt}</span>`;
+    });
+    body+=`</div>`;
+  }
+  body+=`<p class="ai-src"><strong>${T('ai.src','Basis:')}</strong> ${c.src}</p>`;
+  return body;
+}
+
+function buildExtractiveAnswer(q){
+  const hits=searchDynamic(q);
+  if(!hits.length)return null;
+  const words=q.toLowerCase().split(/[^a-z0-9一-鿿]+/).filter(w=>w.length>=3||/[一-鿿]/.test(w));
+  const cands=[];
+  hits.slice(0,6).forEach(h=>{
+    String(h.t||'').split(/[.。;；]\s*/).forEach(sen=>{
+      const s=sen.trim();
+      if(s.length<40||s.length>320)return;
+      const sl=s.toLowerCase();
+      let score=0;
+      words.forEach(w=>{if(sl.includes(w))score++;});
+      if(/\d/.test(s))score+=0.5;
+      if(score>=1.5)cands.push({score,s,code:h.code,pg:h.pg});
+    });
+  });
+  if(!cands.length)return null;
+  cands.sort((a,b)=>b.score-a.score);
+  const seen=new Set();
+  let body=`<p style="font-size:13px;color:var(--text2);margin-bottom:8px">${T('ai.extractNote','Key points extracted automatically from the standards full text (best-matching passages):')}</p><ul class="ai-pts">`;
+  let n=0;
+  for(const cd of cands){
+    const sig=cd.s.substring(0,60);
+    if(seen.has(sig))continue;
+    seen.add(sig);
+    body+=`<li>${escapeHtml(cd.s)} <span class="ai-extract-cite">[${escapeHtml(cd.code)} · ${T('hit.page','p.~')}${cd.pg}]</span></li>`;
+    if(++n>=6)break;
+  }
+  body+=`</ul>`;
+  return body;
+}
+
+function buildAIAnswerHTML(ctx){
+  const{best,related}=matchQACards(ctx.raw);
+  let body,badge,badgeCls;
+  if(best){
+    body=renderQACard(best,related,ctx);
+    badge=T('ai.badgeLocal','Built-in knowledge engine');badgeCls='';
+  }else{
+    const ext=buildExtractiveAnswer(ctx.raw);
+    if(ext){body=ext;badge=T('ai.badgeDocs','Extracted from documents');badgeCls=' docs';}
+    else return''; // nothing useful — let the normal response stand alone
+  }
+  const title=best?((LANG==='zh'&&best.zh)?best.zh.title:best.en.title):T('ai.title','Engineering Answer');
+  let keyNote='';
+  if(!aiOn()){
+    keyNote=`<div class="ai-note">💡 ${T('ai.hint','Want a live Claude AI answer for any question? Click the <strong>✨ AI</strong> button beside Search and connect your own Anthropic API key (stored only in your browser).')}</div>`;
+  }
+  return `<div class="ai-card">
+    <div class="ai-card-hdr"><span class="ai-title">🤖 ${title}</span><span class="ai-badge${badgeCls}" id="aiBadge">${badge}</span></div>
+    <div class="ai-card-body"><div id="aiAnswerBody">${body}</div>${keyNote}</div>
+  </div>`;
+}
+
+// ── Claude live AI (bring-your-own-key; key never leaves this browser
+//    except in direct calls to api.anthropic.com) ──────────────────
+function toggleAI(){
+  if(!aiOn()){
+    let k=aiKey();
+    if(!k){
+      k=window.prompt(T('ai.keyPrompt','Live AI mode uses YOUR OWN Anthropic API key (get one at console.anthropic.com). The key is stored only in this browser (localStorage) and sent only to api.anthropic.com.\n\nPaste your API key (sk-ant-...):'))||'';
+      k=k.trim();
+      if(!k)return;
+      if(!/^sk-ant-/.test(k)&&!window.confirm(T('ai.keyWarn','This does not look like an Anthropic key (sk-ant-...). Save anyway?')))return;
+      try{localStorage.setItem('esd_claude_key',k)}catch(e){}
+    }
+    try{localStorage.setItem('esd_ai_on','1')}catch(e){}
+  }else{
+    try{localStorage.setItem('esd_ai_on','0')}catch(e){}
+  }
+  syncAIToggle();
+  if(lastQuery)handleSearch();
+}
+function syncAIToggle(){
+  const b=document.getElementById('aiToggle');
+  if(b)b.classList.toggle('on',aiOn());
+}
+function clearAIKey(){
+  try{localStorage.removeItem('esd_claude_key');localStorage.setItem('esd_ai_on','0')}catch(e){}
+  syncAIToggle();
+  alert(T('ai.keyCleared','Claude API key removed from this browser.'));
+}
+
+function mdToHtml(md){
+  let t=String(md||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t=t.replace(/```[\s\S]*?```/g,m=>'<pre style="background:#f3eefe;padding:10px;border-radius:6px;font-size:12.5px;overflow-x:auto">'+m.replace(/```\w*\n?/g,'')+'</pre>');
+  t=t.replace(/`([^`]+)`/g,'<code>$1</code>');
+  t=t.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  const lines=t.split('\n');
+  let out='',inList=false;
+  lines.forEach(l=>{
+    const lt=l.trim();
+    if(/^#{1,4}\s/.test(lt)){if(inList){out+='</ul>';inList=false;}out+='<h4>'+lt.replace(/^#{1,4}\s*/,'')+'</h4>';}
+    else if(/^([-*•]|\d+[.)])\s/.test(lt)){if(!inList){out+='<ul class="ai-pts">';inList=true;}out+='<li>'+lt.replace(/^([-*•]|\d+[.)])\s*/,'')+'</li>';}
+    else if(lt===''){if(inList){out+='</ul>';inList=false;}}
+    else{if(inList){out+='</ul>';inList=false;}out+='<p style="font-size:14px;line-height:1.65;margin:6px 0">'+lt+'</p>';}
+  });
+  if(inList)out+='</ul>';
+  return out;
+}
+
+async function maybeAskClaude(ctx){
+  if(!aiOn()||!aiKey())return;
+  const bodyEl=document.getElementById('aiAnswerBody');
+  const badgeEl=document.getElementById('aiBadge');
+  // If there was no AI card (no local match at all), there is no container — skip silently
+  if(!bodyEl)return;
+  const localHTML=bodyEl.innerHTML;
+  bodyEl.insertAdjacentHTML('afterbegin',`<div id="aiThinking" class="ai-note"><span class="ai-spin"></span>${T('ai.thinking','Claude is generating a live answer…')}</div>`);
+  // grounding context: matched card text + top document chunks
+  let grounding='';
+  const{best}=matchQACards(ctx.raw);
+  if(best){const tmp=document.createElement('div');tmp.innerHTML=renderQACard(best,[],ctx);grounding+='CURATED KB:\n'+tmp.textContent.substring(0,1800)+'\n\n';}
+  searchDynamic(ctx.raw).slice(0,3).forEach(h=>{grounding+=`[${h.code} p.${h.pg}] ${String(h.t).substring(0,400)}\n`;});
+  const sys=(LANG==='zh')
+    ?'你是“工程标准词典”网站的 AI 引擎，精通印尼标准（SNI）、美国标准（ACI/AISC/ASCE/ASTM/IBC）与中国标准（GB/JGJ）。用简体中文、要点式（短句列表，可含公式与数值），不要长篇叙述。尽量按 🇮🇩 SNI → 🇺🇸 美标 → 🇨🇳 国标 分节并标注条文号。若用户指定某一标准体系则优先该体系。不超过 300 字要点。可参考提供的 CONTEXT，但以规范知识为准。不要使用表格，用列表。'
+    :'You are the AI engine of the Engineering Standards Dictionary website, expert in Indonesian (SNI), American (ACI/AISC/ASCE/ASTM/IBC) and Chinese (GB/JGJ) standards. Answer in concise POINT FORM (short bullets with formulas and numeric values), never long narrative. Where relevant break down by system: 🇮🇩 SNI → 🇺🇸 US → 🇨🇳 GB, citing clause numbers. If the user names one system, prioritise it. Max ~300 words. Use the provided CONTEXT when helpful. Use bullet lists, not tables.';
+  const model=localStorage.getItem('esd_claude_model')||'claude-sonnet-4-6';
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'content-type':'application/json','x-api-key':aiKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:model,max_tokens:1300,system:sys,
+        messages:[{role:'user',content:'QUESTION: '+ctx.raw+(grounding?'\n\nCONTEXT:\n'+grounding:'')}]})
+    });
+    if(!resp.ok){const e=await resp.text();throw new Error('HTTP '+resp.status+': '+e.substring(0,160));}
+    const data=await resp.json();
+    const text=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+    if(!text)throw new Error('empty response');
+    bodyEl.innerHTML=mdToHtml(text)
+      +`<p class="ai-src">${T('ai.byClaude','Generated live by Claude')} (${model}) · ${T('ai.verify','verify clause numbers against the PDFs in Browse Standards before final design')} · <span class="ai-keylink" onclick="clearAIKey()">${T('ai.removeKey','remove API key')}</span></p>`;
+    if(badgeEl){badgeEl.textContent='✨ Claude';badgeEl.className='ai-badge claude';}
+  }catch(err){
+    const th=document.getElementById('aiThinking');
+    if(th)th.remove();
+    bodyEl.innerHTML=localHTML;
+    bodyEl.insertAdjacentHTML('beforeend',`<div class="ai-note">⚠ ${T('ai.err','Claude call failed')} (${escapeHtml(String(err.message||err)).substring(0,140)}) — ${T('ai.errKept','showing the built-in answer instead.')} <span class="ai-keylink" onclick="clearAIKey()">${T('ai.removeKey','remove API key')}</span></div>`);
+  }
+}
+
+// ================================================================
 // UI CONTROLLER
 // ================================================================
 function handleSearch(){
@@ -1891,11 +2114,12 @@ function handleSearch(){
   if(!q)return;
   lastQuery=q;
   const ctx=analyzeQuery(q);
-  const html=buildResponse(ctx);
+  const html=buildAIAnswerHTML(ctx)+buildResponse(ctx);
   const res=document.getElementById('results');
   res.innerHTML=html;
   res.style.display='block';
   res.scrollIntoView({behavior:'smooth',block:'start'});
+  maybeAskClaude(ctx);
 }
 
 function quickSearch(q){
@@ -2389,6 +2613,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   updateAboutIndexStat();
   document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleSearch();});
   applyLanguage(); // apply saved language preference (EN default / 中文)
+  syncAIToggle();
 });
 </script>
 <script src="i18n_zh.js" charset="utf-8" onerror="console.log('Chinese language pack not loaded — EN only')"></script>

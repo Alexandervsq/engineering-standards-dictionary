@@ -1,0 +1,654 @@
+// ================================================================
+// Engineering Standards Dictionary — Q&A Knowledge Cards
+// Curated, structured answers authored from the standards documents:
+// SNI (Indonesian) · ACI/AISC/ASCE/ASTM/IBC (American) · GB/JGJ (Chinese)
+// Each card: keywords (en/id + zh) -> point-form tri-standard answer.
+// ================================================================
+window.QA_CARDS=[
+
+{id:"rebar-min-beam",
+ kw:["minimum reinforcement beam","min reinforcement","minimum reinforcement","reinforcement bar minimum","minimum rebar","rebar minimum","as min","as,min","tulangan minimum","rasio tulangan","flexural reinforcement minimum","minimum flexural"],
+ kw_zh:["最小配筋","最小配筋率","梁最小配筋","纵筋最小"],
+ en:{title:"Minimum Flexural Reinforcement — Beams",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §9.6.1",pts:[
+    "As,min = greater of <code>0.25·√fc′/fy·bw·d</code> and <code>1.4/fy·bw·d</code>",
+    "Example fc′ = 25 MPa, fy = 420 MPa → As,min = <strong>0.33%·bw·d</strong> (1.4/fy governs up to fc′ ≈ 31 MPa)",
+    "Waiver: not required if As provided ≥ 4/3 × As from analysis (§9.6.1.3)",
+    "Statically determinate T-beam, flange in tension: replace bw with min(2bw, flange width)"]},
+   {h:"🇺🇸 ACI 318-19 §9.6.1",pts:[
+    "Identical to SNI (SNI 2847 is the adoption of ACI 318): As,min = max(0.25√fc′/fy , 1.4/fy)·bw·d",
+    "In inch-pound units: max(3√fc′/fy , 200/fy)·bw·d"]},
+   {h:"🇨🇳 GB 50010-2010 §8.5.1",pts:[
+    "ρmin = larger of <code>0.20%</code> and <code>45·ft/fy (%)</code>, applied to full section b·h",
+    "C30 + HRB400 (ft = 1.43, fy = 360 MPa): 45×1.43/360 = 0.18% → <strong>0.20% governs</strong>",
+    "Seismic frame beams (GB 50011 §6.3.4): beam-end tension ρmin = 0.40% (Grade I), 0.30% (Grade II–III)"]}],
+  src:"SNI 2847:2019 §9.6.1 · ACI 318-19 §9.6.1 · GB 50010-2010 表8.5.1 · GB 50011-2010 §6.3"},
+ zh:{title:"梁最小受弯配筋",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §9.6.1（印尼）",pts:[
+    "As,min = <code>0.25·√fc′/fy·bw·d</code> 与 <code>1.4/fy·bw·d</code> 取大值",
+    "例 fc′=25 MPa、fy=420 MPa → As,min = <strong>0.33%·bw·d</strong>（fc′≈31 MPa 以下由 1.4/fy 控制）",
+    "豁免：实配 As ≥ 4/3 × 计算 As 时可不满足（§9.6.1.3）",
+    "翼缘受拉的静定 T 梁：bw 取 min(2bw, 翼缘宽)"]},
+   {h:"🇺🇸 ACI 318-19 §9.6.1（美国）",pts:[
+    "与 SNI 完全相同（SNI 2847 即 ACI 318 的采标）：As,min = max(0.25√fc′/fy , 1.4/fy)·bw·d"]},
+   {h:"🇨🇳 GB 50010-2010 §8.5.1（中国）",pts:[
+    "ρmin = <code>0.20%</code> 与 <code>45·ft/fy (%)</code> 取大值，按全截面 b·h",
+    "C30 + HRB400（ft=1.43、fy=360）：45×1.43/360=0.18% → <strong>0.20% 控制</strong>",
+    "抗震框架梁（GB 50011 §6.3.4）：梁端受拉 ρmin：一级 0.40%，二三级 0.30%"]}],
+  src:"SNI 2847:2019 §9.6.1 · ACI 318-19 §9.6.1 · GB 50010-2010 表8.5.1 · GB 50011-2010 §6.3"}},
+
+{id:"rebar-min-slab",
+ kw:["minimum reinforcement slab","slab reinforcement","shrinkage temperature","shrinkage reinforcement","temperature reinforcement","tulangan susut","tulangan pelat","slab rebar"],
+ kw_zh:["板配筋","板最小配筋","温度筋","分布筋"],
+ en:{title:"Minimum Reinforcement — Slabs (Shrinkage & Temperature)",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §24.4 / 🇺🇸 ACI 318-19 §24.4",pts:[
+    "Deformed bars fy = 420 MPa: As,min = <strong>0.0018·Ag</strong> (gross section)",
+    "fy = 280–350 MPa: As,min = 0.0020·Ag; fy > 420: 0.0018×420/fy ≥ 0.0014",
+    "Max spacing: lesser of <strong>5h and 450 mm</strong> (flexural bars: 3h, 450 mm)",
+    "Example 120 mm slab: As,min = 216 mm²/m → D10-300 (262 mm²/m) ✓"]},
+   {h:"🇨🇳 GB 50010-2010 §8.5.1 & §9.1",pts:[
+    "Flexural slab bars: ρmin = larger of <strong>0.15%</strong> and 0.45·ft/fy",
+    "Distribution (secondary) bars: ≥ 15% of main bars and ≥ 0.15%; spacing ≤ 250 mm",
+    "Main bar spacing: ≤ 200 mm (h ≤ 150 mm); ≤ min(1.5h, 250 mm) for thicker slabs"]}],
+  src:"SNI 2847:2019 §24.4 · ACI 318-19 Table 24.4.3.2 · GB 50010-2010 §8.5.1, §9.1.3–9.1.7"},
+ zh:{title:"板最小配筋（收缩与温度）",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §24.4 / 🇺🇸 ACI 318-19 §24.4",pts:[
+    "带肋钢筋 fy=420 MPa：As,min = <strong>0.0018·Ag</strong>（毛截面）",
+    "fy=280–350 MPa：0.0020·Ag；fy>420：0.0018×420/fy ≥ 0.0014",
+    "最大间距：<strong>5h 与 450 mm</strong> 取小（受弯主筋：3h、450 mm）",
+    "例 120 mm 板：As,min=216 mm²/m → D10-300（262 mm²/m）✓"]},
+   {h:"🇨🇳 GB 50010-2010 §8.5.1 与 §9.1",pts:[
+    "板受弯钢筋：ρmin = <strong>0.15%</strong> 与 0.45·ft/fy 取大值",
+    "分布筋：≥ 主筋 15% 且 ≥ 0.15%；间距 ≤ 250 mm",
+    "主筋间距：h≤150 时 ≤200 mm；更厚板 ≤ min(1.5h, 250 mm)"]}],
+  src:"SNI 2847:2019 §24.4 · ACI 318-19 表24.4.3.2 · GB 50010-2010 §8.5.1、§9.1.3–9.1.7"}},
+
+{id:"rebar-min-column",
+ kw:["column reinforcement","minimum reinforcement column","column rebar","longitudinal reinforcement column","tulangan kolom","column steel ratio"],
+ kw_zh:["柱配筋","柱最小配筋","柱纵筋"],
+ en:{title:"Longitudinal Reinforcement Limits — Columns",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §10.6.1 / 🇺🇸 ACI 318-19",pts:[
+    "<strong>0.01·Ag ≤ Ast ≤ 0.08·Ag</strong> (1% – 8% of gross area)",
+    "Practical cap ≈ 4% where bars are lap-spliced (congestion)",
+    "Minimum 4 bars in rectangular ties, 6 bars in spirals; tie φ ≥ 10 mm for D32 and smaller"]},
+   {h:"🇨🇳 GB 50010-2010 表8.5.1 / GB 50011-2010 表6.3.7-1",pts:[
+    "Non-seismic: total ρmin = <strong>0.55%</strong> (500 MPa), 0.60% (400 MPa), 0.65% (335 MPa); each face ≥ 0.20%",
+    "Seismic frame columns (HRB400): middle/side columns ρmin = 0.9% (Gr.I), 0.7% (II), 0.6% (III–IV); corner columns +0.1%",
+    "Maximum total: ≤ 5%; axial-compression-ratio limits also govern section size"]}],
+  src:"SNI 2847:2019 §10.6.1.1 · ACI 318-19 §10.6.1.1 · GB 50010-2010 表8.5.1 · GB 50011-2010 表6.3.7-1"},
+ zh:{title:"柱纵向钢筋限值",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §10.6.1 / 🇺🇸 ACI 318-19",pts:[
+    "<strong>0.01·Ag ≤ Ast ≤ 0.08·Ag</strong>（毛截面 1%–8%）",
+    "搭接区实际上限约 4%（避免钢筋拥挤）",
+    "矩形箍最少 4 根、螺旋箍最少 6 根纵筋；D32 及以下箍筋 φ≥10 mm"]},
+   {h:"🇨🇳 GB 50010-2010 表8.5.1 / GB 50011-2010 表6.3.7-1",pts:[
+    "非抗震：全部纵筋 ρmin = <strong>0.55%</strong>（500 级）、0.60%（400 级）、0.65%（335 级）；每侧 ≥0.20%",
+    "抗震框架柱（HRB400）：中柱边柱 ρmin：一级 0.9%、二级 0.7%、三四级 0.6%；角柱 +0.1%",
+    "总配筋率 ≤5%；轴压比限值同时控制截面"]}],
+  src:"SNI 2847:2019 §10.6.1.1 · ACI 318-19 §10.6.1.1 · GB 50010-2010 表8.5.1 · GB 50011-2010 表6.3.7-1"}},
+
+{id:"development-length",
+ kw:["development length","anchorage length","embedment length","panjang penyaluran","ld","bar anchorage","anchorage of reinforcement"],
+ kw_zh:["锚固长度","锚固","钢筋锚固"],
+ en:{title:"Development (Anchorage) Length of Deformed Bars",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §25.4 / 🇺🇸 ACI 318-19 Table 25.4.2.3",pts:[
+    "Simplified, fy = 420 MPa, normal concrete: <strong>D19 & smaller: ld = (fy·ψt·ψe)/(2.1·λ·√fc′)·db</strong>; D22+: divide by 1.7 instead",
+    "fc′ = 25 MPa bottom bars: ld ≈ <strong>40db</strong> (D19−), ≈ 49db (D22+)",
+    "Top bars (>300 mm fresh concrete below): × 1.3 · Epoxy-coated: × 1.2–1.5",
+    "Standard 90° hook: ldh = (0.24·fy·ψ/λ√fc′)·db ≈ 20db (fc′25, fy420), min 8db, 150 mm"]},
+   {h:"🇨🇳 GB 50010-2010 §8.3",pts:[
+    "Basic: <strong>lab = α·(fy/ft)·d</strong>, α = 0.14 ribbed bars",
+    "C30 + HRB400: lab = 0.14×360/1.43×d ≈ <strong>35d</strong>; la = ζa·lab (ζa: top-cast ×1.1, epoxy ×1.25 …)",
+    "Seismic: laE = ζaE·la; ζaE = 1.15 (Grades I–II), 1.05 (III), 1.0 (IV)",
+    "Minimum la ≥ 0.6·lab and ≥ 200 mm"]}],
+  src:"SNI 2847:2019 §25.4 · ACI 318-19 §25.4.2, Table 25.4.3.1 (hooks) · GB 50010-2010 §8.3.1–8.3.3 · GB 50011 §6.1"},
+ zh:{title:"带肋钢筋锚固（受拉锚固长度）",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §25.4 / 🇺🇸 ACI 318-19 表25.4.2.3",pts:[
+    "简化式（fy=420、普通混凝土）：<strong>D19 及以下：ld=(fy·ψt·ψe)/(2.1·λ·√fc′)·db</strong>；D22 以上分母改 1.7",
+    "fc′=25 底部钢筋：ld ≈ <strong>40db</strong>（D19−），≈49db（D22+）",
+    "顶部钢筋（下方新浇混凝土>300 mm）×1.3；环氧涂层 ×1.2–1.5",
+    "90° 标准弯钩：ldh ≈ 20db（fc′25、fy420），且 ≥8db、≥150 mm"]},
+   {h:"🇨🇳 GB 50010-2010 §8.3",pts:[
+    "基本锚固：<strong>lab = α·(fy/ft)·d</strong>，带肋筋 α=0.14",
+    "C30+HRB400：lab ≈ <strong>35d</strong>；la = ζa·lab（顶部 ×1.1、环氧 ×1.25 等）",
+    "抗震：laE = ζaE·la；ζaE：一二级 1.15、三级 1.05、四级 1.0",
+    "la ≥ 0.6·lab 且 ≥ 200 mm"]}],
+  src:"SNI 2847:2019 §25.4 · ACI 318-19 §25.4.2、表25.4.3.1（弯钩） · GB 50010-2010 §8.3.1–8.3.3 · GB 50011 §6.1"}},
+
+{id:"lap-splice",
+ kw:["lap splice","splice length","lap length","sambungan lewatan","panjang lewatan","bar splice","rebar splice"],
+ kw_zh:["搭接","搭接长度","钢筋搭接"],
+ en:{title:"Lap Splice Length of Deformed Bars",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §25.5 / 🇺🇸 ACI 318-19",pts:[
+    "Tension <strong>Class B (most cases): lst = 1.3·ld ≥ 300 mm</strong>",
+    "Class A (1.0·ld): only when As provided ≥ 2× required AND ≤ 50% spliced at one location",
+    "fc′25/fy420 example: Class B ≈ 52db (D19−) · Compression splice: 0.071·fy·db ≈ 30db (fy420)",
+    "D36+ bars: lap splices not permitted — use mechanical/welded couplers"]},
+   {h:"🇨🇳 GB 50010-2010 §8.4",pts:[
+    "<strong>ll = ζl·la</strong>; ζl by % spliced in one zone: ≤25% → 1.2, 50% → 1.4, 100% → 1.6",
+    "ll ≥ 300 mm; seismic: llE = ζl·laE",
+    "Beam/column longitudinal bars: spliced fraction ≤ 50% in one zone (seismic members)",
+    "d > 28 mm: mechanical couplers recommended; d > 32: lap splice not allowed in compression? — use couplers per practice"]}],
+  src:"SNI 2847:2019 §25.5.2 · ACI 318-19 Table 25.5.2.1 · GB 50010-2010 §8.4.3–8.4.4 表8.4.4"},
+ zh:{title:"带肋钢筋搭接长度",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §25.5 / 🇺🇸 ACI 318-19",pts:[
+    "受拉 <strong>B 类（多数情况）：lst = 1.3·ld ≥ 300 mm</strong>",
+    "A 类（1.0·ld）：仅当实配 ≥2× 计算值且同一截面搭接 ≤50%",
+    "fc′25/fy420 例：B 类 ≈52db（D19−）；受压搭接 0.071·fy·db ≈ 30db",
+    "D36 以上不允许搭接 — 采用机械连接或焊接"]},
+   {h:"🇨🇳 GB 50010-2010 §8.4",pts:[
+    "<strong>ll = ζl·la</strong>；同区段搭接率：≤25% → ζl=1.2、50% → 1.4、100% → 1.6",
+    "ll ≥ 300 mm；抗震：llE = ζl·laE",
+    "抗震构件梁柱纵筋同一区段搭接率 ≤50%",
+    "d>28 mm 宜用机械连接"]}],
+  src:"SNI 2847:2019 §25.5.2 · ACI 318-19 表25.5.2.1 · GB 50010-2010 §8.4.3–8.4.4 表8.4.4"}},
+
+{id:"stirrup-shear",
+ kw:["stirrup","shear reinforcement","stirrup spacing","hoop spacing","sengkang","jarak sengkang","transverse reinforcement","shear links","confinement"],
+ kw_zh:["箍筋","箍筋间距","加密区","抗剪钢筋"],
+ en:{title:"Stirrups / Hoops — Minimums & Spacing",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 / 🇺🇸 ACI 318-19",pts:[
+    "Min shear steel (where Vu > 0.5φVc): <strong>Av/s = max(0.062√fc′·bw/fyt , 0.35·bw/fyt)</strong>",
+    "Spacing: ≤ d/2 ≤ 600 mm (≤ d/4 ≤ 300 mm where Vs > 0.33√fc′·bw·d)",
+    "Seismic SRPMK beam ends (2h zone): s ≤ min(<strong>d/4, 6db, 150 mm</strong>); first hoop ≤ 50 mm from face",
+    "SRPMK column confinement Lo: s ≤ min(b/4, 6db, so = 100–150 mm)"]},
+   {h:"🇨🇳 GB 50010-2010 §9.2 / GB 50011-2010 §6.3",pts:[
+    "Min ratio: <strong>ρsv = Asv/(b·s) ≥ 0.24·ft/fyv</strong> (0.28·ft/fyv seismic frame beams)",
+    "Max spacing (non-seismic, V > 0.7ftbh0): h=300–500: 200 mm; 500–800: 250 mm",
+    "Seismic beam-end densified zone (1.5hb–2hb): s ≤ min(<strong>hb/4, 8d, 100 mm</strong>) Grade I; min(hb/4, 8d, 150) for II–III; hoop φ ≥ 8–10 mm",
+    "Column densified zone: s ≤ min(6d, 100 mm) Grade I; 8d/100 II; volumetric ratio ρv per λv table"]}],
+  src:"SNI 2847:2019 §9.6.3, §18.6–18.7 · ACI 318-19 同 · GB 50010-2010 §9.2.9 · GB 50011-2010 §6.3.3–6.3.9"},
+ zh:{title:"箍筋 — 最小用量与间距",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 / 🇺🇸 ACI 318-19",pts:[
+    "最小抗剪箍筋（Vu>0.5φVc 时）：<strong>Av/s = max(0.062√fc′·bw/fyt , 0.35·bw/fyt)</strong>",
+    "间距 ≤ d/2 且 ≤600 mm（Vs>0.33√fc′·bw·d 时 ≤d/4、≤300）",
+    "SRPMK 梁端加密区（2h）：s ≤ min(<strong>d/4、6db、150 mm</strong>)；首箍距柱面 ≤50 mm",
+    "SRPMK 柱加密区 Lo：s ≤ min(b/4、6db、100–150 mm)"]},
+   {h:"🇨🇳 GB 50010-2010 §9.2 / GB 50011-2010 §6.3",pts:[
+    "最小配箍率：<strong>ρsv ≥ 0.24·ft/fyv</strong>（抗震框架梁 0.28·ft/fyv）",
+    "非抗震最大间距（V>0.7ftbh0）：h=300–500：200 mm；500–800：250 mm",
+    "抗震梁端加密区（1.5–2hb）：一级 s ≤ min(<strong>hb/4、8d、100</strong>)；二三级 min(hb/4、8d、150)；箍径 ≥8–10 mm",
+    "柱加密区：一级 s ≤ min(6d、100)；二级 8d/100；体积配箍率按 λv 表"]}],
+  src:"SNI 2847:2019 §9.6.3、§18.6–18.7 · ACI 318-19 · GB 50010-2010 §9.2.9 · GB 50011-2010 §6.3.3–6.3.9"}},
+
+{id:"concrete-grade",
+ kw:["concrete grade","concrete class","concrete strength","mutu beton","kelas beton","k300","k250","k350","cylinder cube","fc conversion","cube strength","compressive strength concrete"],
+ kw_zh:["混凝土强度","强度等级","立方体强度","换算"],
+ en:{title:"Concrete Strength Classes & Conversions",
+  sections:[
+   {h:"⚖ Cylinder (SNI/ACI fc′) vs Cube (GB fcu,k)",pts:[
+    "<strong>fc′ ≈ 0.79 × fcu,k</strong> (150 mm cube) → C30 ≈ fc′ 24 MPa; C40 ≈ 32 MPa",
+    "Old Indonesian K-grade (kg/cm², cube): <strong>fc′ ≈ 0.083 × K</strong> → K300 ≈ fc′ 25 MPa; K350 ≈ 29; K400 ≈ 33",
+    "GB design value fc = fck/1.4 (material factor γc); ACI/SNI apply φ on strength side instead"]},
+   {h:"📋 Minimums by use",pts:[
+    "SNI/ACI structural min fc′ = 17 MPa; <strong>seismic special frames (SRPMK/SMF) ≥ 28 MPa</strong>; precast 35; prestressed 41",
+    "GB: plain ≥ C15; RC ≥ <strong>C20 (C25 with HRB400+)</strong>; seismic Grade I frames ≥ C30; prestressed ≥ C40",
+    "Full C15–C80 fck/fc/ft/Ec table → see the Concrete module below"]}],
+  src:"SNI 2847:2019 §19.2 · ACI 318-19 Table 19.2.1.1 · GB 50010-2010 §3.5, 表4.1.3 · PBI-71 (K-grades, historical)"},
+ zh:{title:"混凝土强度等级与换算",
+  sections:[
+   {h:"⚖ 圆柱体（SNI/ACI fc′）与立方体（GB fcu,k）",pts:[
+    "<strong>fc′ ≈ 0.79 × fcu,k</strong>（150 mm 立方体）→ C30 ≈ fc′24 MPa；C40 ≈ 32 MPa",
+    "印尼旧 K 标号（kg/cm² 立方体）：<strong>fc′ ≈ 0.083×K</strong> → K300≈25 MPa；K350≈29；K400≈33",
+    "GB 设计值 fc = fck/1.4（材料分项系数）；ACI/SNI 在抗力侧用 φ 系数"]},
+   {h:"📋 按用途最低等级",pts:[
+    "SNI/ACI 结构最低 fc′=17 MPa；<strong>抗震特殊框架 ≥28 MPa</strong>；预制 35；预应力 41",
+    "GB：素混凝土 ≥C15；钢筋混凝土 ≥<strong>C20（配 HRB400 时 ≥C25）</strong>；一级抗震框架 ≥C30；预应力 ≥C40",
+    "C15–C80 完整 fck/fc/ft/Ec 表 → 见下方混凝土模块"]}],
+  src:"SNI 2847:2019 §19.2 · ACI 318-19 表19.2.1.1 · GB 50010-2010 §3.5、表4.1.3 · PBI-71（K 标号，历史）"}},
+
+{id:"elastic-modulus",
+ kw:["modulus of elasticity","elastic modulus","young modulus","modulus elastisitas","ec concrete","stiffness concrete"],
+ kw_zh:["弹性模量","混凝土弹性模量"],
+ en:{title:"Modulus of Elasticity",
+  sections:[
+   {h:"Concrete",pts:[
+    "🇮🇩🇺🇸 SNI 2847/ACI 318: <strong>Ec = 4700·√fc′ MPa</strong> (normal weight); general: 0.043·wc^1.5·√fc′",
+    "fc′25 → 23.5 GPa; fc′30 → 25.7 GPa; fc′40 → 29.7 GPa",
+    "🇨🇳 GB 50010 表4.1.5: C25→28.0, C30→30.0, C35→31.5, C40→32.5, C50→34.5 GPa (Ec=100/(2.2+34.7/fcu,k))"]},
+   {h:"Steel & rebar",pts:[
+    "Structural steel & rebar all systems: <strong>Es = 200,000 MPa</strong> (GB: 206,000 for sections, 200,000 rebar)",
+    "Prestressing strand: Ep ≈ 195,000–197,000 MPa"]}],
+  src:"SNI 2847:2019 §19.2.2 · ACI 318-19 §19.2.2.1 · GB 50010-2010 表4.1.5, §4.2.5 · GB 50017-2017 §4.4"},
+ zh:{title:"弹性模量",
+  sections:[
+   {h:"混凝土",pts:[
+    "🇮🇩🇺🇸 SNI 2847/ACI 318：<strong>Ec = 4700·√fc′ MPa</strong>（普通混凝土）；通式 0.043·wc^1.5·√fc′",
+    "fc′25 → 23.5 GPa；fc′30 → 25.7；fc′40 → 29.7",
+    "🇨🇳 GB 50010 表4.1.5：C25→28.0、C30→30.0、C35→31.5、C40→32.5、C50→34.5 GPa（Ec=100/(2.2+34.7/fcu,k)）"]},
+   {h:"钢材与钢筋",pts:[
+    "三体系钢筋/型钢：<strong>Es = 200,000 MPa</strong>（GB 型钢 206,000、钢筋 200,000）",
+    "预应力钢绞线：Ep ≈ 195,000–197,000 MPa"]}],
+  src:"SNI 2847:2019 §19.2.2 · ACI 318-19 §19.2.2.1 · GB 50010-2010 表4.1.5、§4.2.5 · GB 50017-2017 §4.4"}},
+
+{id:"crack-width",
+ kw:["crack width","cracking limit","lebar retak","crack control","allowable crack"],
+ kw_zh:["裂缝","裂缝宽度","最大裂缝"],
+ en:{title:"Allowable Crack Width (Serviceability)",
+  sections:[
+   {h:"🇨🇳 GB 50010-2010 表3.4.5 (explicit limits, RC)",pts:[
+    "Environment I (indoor dry): <strong>wlim = 0.30 mm</strong> (0.40 where appearance not critical)",
+    "Environment IIa/IIb (outdoor, humid): <strong>0.20 mm</strong>; III (marine/de-icing): 0.20 mm with stricter cover",
+    "Computed by GB §7.1 formula wmax = αcr·ψ·σs/Es·(1.9cs+0.08deq/ρte)"]},
+   {h:"🇮🇩🇺🇸 SNI 2847 / ACI 318 (implicit control)",pts:[
+    "No explicit width limit — controlled via <strong>bar spacing s ≤ 380·(280/fs) − 2.5cc ≤ 300·(280/fs)</strong>",
+    "ACI 224R guide values: 0.41 mm (dry air) · 0.30 mm (humid) · 0.15 mm (seawater) · 0.10 mm (water-retaining)",
+    "Liquid-retaining structures: ACI 350 / SNI practice → design crack width ≤ <strong>0.25 mm</strong>"]}],
+  src:"GB 50010-2010 表3.4.5, §7.1 · SNI 2847:2019 §24.3 · ACI 318-19 §24.3.2 · ACI 224R-01 · ACI 350-20"},
+ zh:{title:"最大裂缝宽度限值（正常使用）",
+  sections:[
+   {h:"🇨🇳 GB 50010-2010 表3.4.5（钢筋混凝土显式限值）",pts:[
+    "一类环境（室内干燥）：<strong>wlim = 0.30 mm</strong>（无观感要求可 0.40）",
+    "二a/二b 类（室外、潮湿）：<strong>0.20 mm</strong>；三类（海洋/除冰盐）：0.20 mm 且保护层加严",
+    "按 §7.1 公式计算 wmax = αcr·ψ·σs/Es·(1.9cs+0.08deq/ρte)"]},
+   {h:"🇮🇩🇺🇸 SNI 2847 / ACI 318（隐式控制）",pts:[
+    "无显式宽度限值 — 以<strong>钢筋间距 s ≤ 380·(280/fs)−2.5cc ≤ 300·(280/fs)</strong> 控制",
+    "ACI 224R 参考值：干燥 0.41 mm · 潮湿 0.30 · 海水 0.15 · 贮水 0.10",
+    "贮液结构：ACI 350 / SNI 实践 → 设计裂缝 ≤ <strong>0.25 mm</strong>"]}],
+  src:"GB 50010-2010 表3.4.5、§7.1 · SNI 2847:2019 §24.3 · ACI 318-19 §24.3.2 · ACI 224R-01 · ACI 350-20"}},
+
+{id:"slab-thickness-deflection",
+ kw:["slab thickness","minimum thickness","deflection limit","deflection control","tebal pelat","lendutan","span depth ratio","beam depth"],
+ kw_zh:["板厚","最小厚度","挠度限值","跨高比"],
+ en:{title:"Minimum Member Thickness & Deflection Limits",
+  sections:[
+   {h:"🇮🇩🇺🇸 SNI 2847 / ACI 318 — depth not requiring deflection calc",pts:[
+    "One-way slabs: L/20 (simple), L/24 (one end cont.), <strong>L/28 (both cont.)</strong>, L/10 (cantilever)",
+    "Beams: L/16, L/18.5, L/21, L/8 respectively",
+    "Two-way flat plate (fy420, no edge beam): exterior panel <strong>ln/30</strong>, interior ln/33; min 125 mm",
+    "Deflection limits (Table 24.2.2): L/360 (live, supporting non-structural), L/240 (total after), L/480 (supporting brittle partitions)"]},
+   {h:"🇨🇳 GB 50010-2010 §9.1 / 表3.4.3",pts:[
+    "Min slab thickness: roof/floor <strong>60 mm</strong> (practice 100+), industrial 80, two-way ≥ 80, cantilever root ≥ L/10",
+    "Span-to-depth guidance: one-way h ≥ L/30, two-way ≥ L/40, cantilever ≥ L/12",
+    "Deflection limits 表3.4.3: L ≤ 7 m: <strong>L/200</strong>; 7–9 m: L/250; > 9 m: L/300 (crane girders stricter)"]}],
+  src:"SNI 2847:2019 Tables 7.3.1.1, 8.3.1.1, 24.2.2 · ACI 318-19 同 · GB 50010-2010 §9.1.2, 表3.4.3"},
+ zh:{title:"最小构件厚度与挠度限值",
+  sections:[
+   {h:"🇮🇩🇺🇸 SNI 2847 / ACI 318 — 免算挠度的最小高度",pts:[
+    "单向板：L/20（简支）、L/24（一端连续）、<strong>L/28（两端连续）</strong>、L/10（悬臂）",
+    "梁：分别 L/16、L/18.5、L/21、L/8",
+    "无边梁平板（fy420）：边区格 <strong>ln/30</strong>、内区格 ln/33；最小 125 mm",
+    "挠度限值（表24.2.2）：活载 L/360；后加总挠度 L/240；支承脆性隔墙 L/480"]},
+   {h:"🇨🇳 GB 50010-2010 §9.1 / 表3.4.3",pts:[
+    "最小板厚：屋面/楼板 <strong>60 mm</strong>（工程常用 ≥100）、工业 80、双向板 ≥80、悬臂根部 ≥L/10",
+    "跨厚比：单向 h ≥ L/30、双向 ≥ L/40、悬臂 ≥ L/12",
+    "挠度限值表3.4.3：L≤7 m：<strong>L/200</strong>；7–9 m：L/250；>9 m：L/300"]}],
+  src:"SNI 2847:2019 表7.3.1.1、8.3.1.1、24.2.2 · ACI 318-19 · GB 50010-2010 §9.1.2、表3.4.3"}},
+
+{id:"load-combinations",
+ kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
+ kw_zh:["荷载组合","荷载分项系数","组合"],
+ en:{title:"Load Combinations (Strength Design)",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 / 🇺🇸 ASCE 7-22 §2.3",pts:[
+    "1.4D",
+    "<strong>1.2D + 1.6L + 0.5(Lr or R)</strong>",
+    "1.2D + 1.6(Lr or R) + (L or 0.5W)",
+    "1.2D + 1.0W + L + 0.5(Lr or R)",
+    "1.2D + Ev + Eh + L  ·  0.9D − Ev + Eh  (E with Ω0 for overstrength cases)",
+    "0.9D + 1.0W · Service: D+L, D+0.6W …"]},
+   {h:"🇨🇳 GB 55001-2021 / GB 50068 (current factors)",pts:[
+    "Permanent γG = <strong>1.3</strong> (unfavourable; 1.0 favourable), variable γQ = <strong>1.5</strong>",
+    "Basic: 1.3G + 1.5Q · with wind: 1.3G + 1.5W + 1.5×0.7Q (ψc combination factors)",
+    "Seismic (GB 55002-2021): <strong>1.3(G + 0.5Q) + 1.4·Eh</strong> (+0.5Ev where applicable); wind ψw·1.5W for tall buildings",
+    "Older GB 50009-2012 used 1.2/1.4 — superseded by 1.3/1.5 in the 2021 general codes"]}],
+  src:"SNI 1727:2020 §2.3 (= ASCE 7-16) · ASCE 7-22 §2.3.1, §2.3.6 · GB 55001-2021 §3.1 · GB 55002-2021 §4.3"},
+ zh:{title:"荷载组合（承载能力极限状态）",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 / 🇺🇸 ASCE 7-22 §2.3",pts:[
+    "1.4D",
+    "<strong>1.2D + 1.6L + 0.5(Lr 或 R)</strong>",
+    "1.2D + 1.6(Lr 或 R) + (L 或 0.5W)",
+    "1.2D + 1.0W + L + 0.5(Lr 或 R)",
+    "1.2D + Ev + Eh + L · 0.9D − Ev + Eh（超强工况用 Ω0·E）",
+    "0.9D + 1.0W · 正常使用：D+L、D+0.6W…"]},
+   {h:"🇨🇳 GB 55001-2021 / GB 50068（现行系数）",pts:[
+    "恒载 γG = <strong>1.3</strong>（不利；有利取 1.0），活载 γQ = <strong>1.5</strong>",
+    "基本：1.3G + 1.5Q；含风：1.3G + 1.5W + 1.5×0.7Q（ψc 组合值系数）",
+    "地震（GB 55002-2021）：<strong>1.3(G + 0.5Q) + 1.4·Eh</strong>（必要时 +0.5Ev）",
+    "旧 GB 50009-2012 的 1.2/1.4 已被 2021 通用规范 1.3/1.5 取代"]}],
+  src:"SNI 1727:2020 §2.3（= ASCE 7-16） · ASCE 7-22 §2.3 · GB 55001-2021 §3.1 · GB 55002-2021 §4.3"}},
+
+{id:"base-shear",
+ kw:["base shear","seismic base shear","lateral force","gaya geser dasar","equivalent lateral force","elf","seismic coefficient","cs coefficient"],
+ kw_zh:["基底剪力","底部剪力","地震作用","水平地震"],
+ en:{title:"Seismic Base Shear — Equivalent Lateral Force",
+  sections:[
+   {h:"🇮🇩 SNI 1726:2019 §7.8 / 🇺🇸 ASCE 7-22 §12.8",pts:[
+    "<strong>V = Cs·W</strong>; Cs = SDS/(R/Ie)",
+    "Upper bound: Cs ≤ SD1/(T·R/Ie) (T ≤ TL); lower: Cs ≥ 0.044·SDS·Ie ≥ 0.01; if S1 ≥ 0.6g: ≥ 0.5·S1/(R/Ie)",
+    "Period: Ta = Ct·hn^x (RC frame Ct=0.0466, x=0.9; steel frame 0.0724, 0.8)",
+    "Distribution: Fx = V·wx·hx^k/Σwi·hi^k (k = 1→2 for T 0.5→2.5 s)"]},
+   {h:"🇨🇳 GB 50011-2010 §5.2 (底部剪力法)",pts:[
+    "<strong>FEk = α1·Geq</strong>, Geq = 0.85·GE (total representative gravity)",
+    "α1 from spectrum (αmax: 7° 0.08, 8° 0.16, 9° 0.32 — frequent EQ); Tg by site & group",
+    "Min storey shear coefficient λ (表5.2.5): 7°: <strong>0.016</strong>, 8°: 0.032, 9°: 0.064 (T<3.5s)",
+    "Top additional force δn·FEk for whiplash; design uses frequent (small) EQ + capacity adjustments by seismic grade"]}],
+  src:"SNI 1726:2019 §7.8 · ASCE 7-22 §12.8 · GB 50011-2010 §5.2.1, 表5.2.5"},
+ zh:{title:"地震基底剪力 — 等效侧力 / 底部剪力法",
+  sections:[
+   {h:"🇮🇩 SNI 1726:2019 §7.8 / 🇺🇸 ASCE 7-22 §12.8",pts:[
+    "<strong>V = Cs·W</strong>；Cs = SDS/(R/Ie)",
+    "上限 Cs ≤ SD1/(T·R/Ie)（T≤TL）；下限 ≥0.044·SDS·Ie ≥0.01；S1≥0.6g 时 ≥0.5·S1/(R/Ie)",
+    "周期 Ta = Ct·hn^x（RC 框架 0.0466/0.9；钢框架 0.0724/0.8）",
+    "竖向分配 Fx = V·wx·hx^k/Σwi·hi^k（k 随 T 由 1→2）"]},
+   {h:"🇨🇳 GB 50011-2010 §5.2（底部剪力法）",pts:[
+    "<strong>FEk = α1·Geq</strong>，Geq = 0.85·GE",
+    "α1 按反应谱（多遇 αmax：7 度 0.08、8 度 0.16、9 度 0.32）；Tg 按场地与分组",
+    "楼层最小剪力系数 λ（表5.2.5）：7 度 <strong>0.016</strong>、8 度 0.032、9 度 0.064（T<3.5s）",
+    "顶部附加 δn·FEk；小震弹性设计 + 按抗震等级的内力调整"]}],
+  src:"SNI 1726:2019 §7.8 · ASCE 7-22 §12.8 · GB 50011-2010 §5.2.1、表5.2.5"}},
+
+{id:"r-factor",
+ kw:["response modification","r factor","r value","faktor modifikasi respons","behavior factor","ductility factor","seismic force resisting system"],
+ kw_zh:["反应修正","延性系数","抗震等级"],
+ en:{title:"Response Modification R — System Comparison",
+  sections:[
+   {h:"🇮🇩 SNI 1726:2019 Tabel 12 / 🇺🇸 ASCE 7-22 Table 12.2-1",pts:[
+    "RC: SRPMK/SMF <strong>R=8</strong> (Ω0=3, Cd=5.5) · SRPMM R=5 · SRPMB R=3 · special shear wall R=5–6",
+    "Steel: SMF R=8 · IMF 4.5 · OMF 3.5 · SCBF 6 · EBF 8 · BRBF 8 · SPSW 7",
+    "Height & SDC limits apply (e.g. OMF/SRPMB prohibited in SDC D+)"]},
+   {h:"🇨🇳 GB 50011-2010 (different philosophy)",pts:[
+    "<strong>No R factor</strong> — members designed elastic for the frequent (≈63%/50yr) earthquake, ~1/2.8 of the design-basis shaking",
+    "Ductility via <strong>seismic grades 一~四 (I–IV)</strong>: internal-force amplification (强柱弱梁 ηc, 强剪弱弯 ηvb) + detailing",
+    "Deformation checked at rare EQ: elasto-plastic drift limits (frame 1/50)"]}],
+  src:"SNI 1726:2019 Tabel 12 · ASCE 7-22 Table 12.2-1 · GB 50011-2010 §3.4, §6.2"},
+ zh:{title:"反应修正系数 R — 体系对比",
+  sections:[
+   {h:"🇮🇩 SNI 1726:2019 表12 / 🇺🇸 ASCE 7-22 表12.2-1",pts:[
+    "混凝土：SRPMK/SMF <strong>R=8</strong>（Ω0=3、Cd=5.5）· SRPMM R=5 · SRPMB R=3 · 特殊剪力墙 5–6",
+    "钢：SMF R=8 · IMF 4.5 · OMF 3.5 · SCBF 6 · EBF 8 · BRBF 8 · SPSW 7",
+    "受高度与 SDC 限制（如 SDC D 以上禁用 OMF/SRPMB）"]},
+   {h:"🇨🇳 GB 50011-2010（不同设计哲学）",pts:[
+    "<strong>无 R 系数</strong> — 构件按多遇地震（约小震，≈设防的 1/2.8）弹性设计",
+    "延性通过<strong>抗震等级（一~四级）</strong>实现：内力调整（强柱弱梁 ηc、强剪弱弯 ηvb）+ 构造措施",
+    "罕遇地震校核弹塑性变形（框架 1/50）"]}],
+  src:"SNI 1726:2019 表12 · ASCE 7-22 表12.2-1 · GB 50011-2010 §3.4、§6.2"}},
+
+{id:"drift-limits",
+ kw:["drift limit","story drift","storey drift","interstory drift","simpangan","drift ratio","lateral displacement limit","sway limit"],
+ kw_zh:["层间位移","位移角","侧移限值","变形限值"],
+ en:{title:"Storey Drift Limits",
+  sections:[
+   {h:"🇮🇩 SNI 1726:2019 Tabel 20 / 🇺🇸 ASCE 7-22 Table 12.12-1 (design EQ, amplified Cd·δe/Ie)",pts:[
+    "Most structures ≥ 4 storeys: <strong>Δa = 0.020·hsx</strong> (Risk I/II) · 0.015 (III) · <strong>0.010 (IV)</strong>",
+    "Masonry shear-wall buildings: 0.007–0.010·hsx",
+    "Wind serviceability (customary, not code-mandated): <strong>H/400–H/500</strong>, storey H/300–H/400 (10-yr wind)"]},
+   {h:"🇨🇳 GB 50011-2010 表5.5.1 (frequent EQ, elastic θe)",pts:[
+    "RC frame <strong>1/550</strong> · frame-shear wall / frame-tube 1/800 · shear wall & tube-in-tube <strong>1/1000</strong> · steel frame 1/250",
+    "Rare EQ elasto-plastic (表5.5.5): RC frame <strong>1/50</strong>, frame-wall 1/100, walls 1/120, steel 1/50",
+    "Wind (JGJ 3 / GB 50017): tall RC 1/500–1/1000 by system; steel H/500 typical"]}],
+  src:"SNI 1726:2019 Tabel 20 · ASCE 7-22 Table 12.12-1, CC.2 · GB 50011-2010 表5.5.1, 表5.5.5 · JGJ 3-2010 §3.7"},
+ zh:{title:"层间位移角限值",
+  sections:[
+   {h:"🇮🇩 SNI 1726:2019 表20 / 🇺🇸 ASCE 7-22 表12.12-1（设计地震，放大 Cd·δe/Ie）",pts:[
+    "一般结构（≥4 层）：<strong>Δa = 0.020·hsx</strong>（I/II 类）· 0.015（III）· <strong>0.010（IV）</strong>",
+    "砌体抗震墙建筑：0.007–0.010·hsx",
+    "风（惯例非强制）：整体 <strong>H/400–H/500</strong>，层间 H/300–H/400（10 年风）"]},
+   {h:"🇨🇳 GB 50011-2010 表5.5.1（多遇地震弹性 θe）",pts:[
+    "钢筋混凝土框架 <strong>1/550</strong> · 框剪/框筒 1/800 · 剪力墙/筒中筒 <strong>1/1000</strong> · 钢框架 1/250",
+    "罕遇弹塑性（表5.5.5）：RC 框架 <strong>1/50</strong>、框剪 1/100、墙 1/120、钢 1/50",
+    "风（JGJ 3 / GB 50017）：高层混凝土按体系 1/500–1/1000；钢结构常取 H/500"]}],
+  src:"SNI 1726:2019 表20 · ASCE 7-22 表12.12-1 · GB 50011-2010 表5.5.1、表5.5.5 · JGJ 3-2010 §3.7"}},
+
+{id:"bolt-weld",
+ kw:["bolt capacity","bolt strength","bolt shear","weld strength","fillet weld","weld capacity","baut","las","kekuatan baut","high strength bolt","anchor bolt"],
+ kw_zh:["螺栓","焊缝","角焊缝","高强螺栓","抗剪承载"],
+ en:{title:"Bolt & Weld Design Strengths",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 / 🇺🇸 AISC 360-22 Table J3.2 (nominal Fnv, φ=0.75)",pts:[
+    "Group A (A325/M20-30): shear <strong>Fnv = 372 MPa</strong> (threads incl., -N) / 457 (excl., -X); tension Fnt = 620",
+    "Group B (A490): 457 / 579 MPa; tension 780",
+    "M20 A325-N single shear: φRn = 0.75×372×245 mm² ≈ <strong>68 kN</strong>",
+    "Bearing: φ·2.4·d·t·Fu (deformation-controlled); slip-critical per J3.8 (μ=0.30 Class A)"]},
+   {h:"🇨🇳 GB 50017-2017 (design values, built-in γ)",pts:[
+    "Ordinary bolts C-class (4.6/4.8): fvb = <strong>140 MPa</strong>; A/B class 5.6: 190; 8.8: <strong>250 MPa</strong>",
+    "High-strength friction-grip 8.8/10.9: by pre-tension P & μ — design slip resistance 0.9·k·nf·μ·P",
+    "Fillet welds: <strong>ffw = 160 MPa</strong> (E43 w/ Q235), 200 (E50 w/ Q355); throat he = 0.7hf",
+    "🇺🇸 fillet: φ0.75×0.6×FEXX → E70 (485 MPa): design ≈ 0.218·FEXX per throat area"]}],
+  src:"SNI 1729:2020 / AISC 360-22 Tables J3.2, J2.5 · GB 50017-2017 表11.4.2-1, 表11.5.2"},
+ zh:{title:"螺栓与焊缝设计强度",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 / 🇺🇸 AISC 360-22 表J3.2（名义 Fnv，φ=0.75）",pts:[
+    "A 组（A325）：抗剪 <strong>Fnv=372 MPa</strong>（含丝 -N）/457（不含丝 -X）；抗拉 620",
+    "B 组（A490）：457/579；抗拉 780",
+    "M20 A325-N 单剪：φRn = 0.75×372×245 ≈ <strong>68 kN</strong>",
+    "承压 φ·2.4·d·t·Fu；摩擦型按 J3.8（A 级面 μ=0.30）"]},
+   {h:"🇨🇳 GB 50017-2017（设计值，已含分项系数）",pts:[
+    "C 级普通螺栓（4.6/4.8）：fvb = <strong>140 MPa</strong>；A/B 级 5.6：190；8.8：<strong>250 MPa</strong>",
+    "高强摩擦型 8.8/10.9：按预拉力 P 与 μ — 抗滑移 0.9·k·nf·μ·P",
+    "角焊缝：<strong>ffw = 160 MPa</strong>（E43 配 Q235）、200（E50 配 Q355）；喉高 he=0.7hf",
+    "🇺🇸 角焊缝 φ0.75×0.6×FEXX → E70（485 MPa）"]}],
+  src:"SNI 1729:2020 / AISC 360-22 表J3.2、J2.5 · GB 50017-2017 表11.4.2-1、表11.5.2"}},
+
+{id:"slenderness",
+ kw:["slenderness","slenderness ratio","kl/r","kelangsingan","buckling length","effective length","unbraced length"],
+ kw_zh:["长细比","计算长度","容许长细比"],
+ en:{title:"Slenderness Limits — Steel Members",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 / 🇺🇸 AISC 360-22",pts:[
+    "Compression: <strong>KL/r ≤ 200</strong> (recommended, E2 user note)",
+    "Tension: L/r ≤ 300 (recommended, D1)",
+    "Seismic braces (AISC 341): SCBF KL/r ≤ 200; moderately ductile limits apply"]},
+   {h:"🇨🇳 GB 50017-2017 §7.4.6–7.4.7",pts:[
+    "Compression members: λ ≤ <strong>150</strong> (columns & main members), ≤ 200 (secondary, bracing)",
+    "Tension members: λ ≤ <strong>300</strong> (general structures), ≤ 250 (members under heavy crane duty), ≤ 400 (pre-tensioned rods exempt)",
+    "GB 50011 seismic braces: λ ≤ 120·√(235/fy) for concentric braces (Grade I–III)"]}],
+  src:"SNI 1729:2020 / AISC 360-22 §D1, §E2 · AISC 341-22 · GB 50017-2017 表7.4.6, 表7.4.7 · GB 50011-2010 §8.4"},
+ zh:{title:"钢构件容许长细比",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 / 🇺🇸 AISC 360-22",pts:[
+    "受压：<strong>KL/r ≤ 200</strong>（建议值，E2 注）",
+    "受拉：L/r ≤ 300（建议值，D1）",
+    "抗震支撑（AISC 341）：SCBF KL/r ≤ 200"]},
+   {h:"🇨🇳 GB 50017-2017 §7.4.6–7.4.7",pts:[
+    "受压构件：λ ≤ <strong>150</strong>（柱及主要构件）、≤200（次要构件、支撑）",
+    "受拉构件：λ ≤ <strong>300</strong>（一般）、≤250（重级吊车工作制）",
+    "GB 50011 抗震中心支撑：λ ≤ 120·√(235/fy)（一~三级）"]}],
+  src:"SNI 1729:2020 / AISC 360-22 §D1、§E2 · AISC 341-22 · GB 50017-2017 表7.4.6、7.4.7 · GB 50011-2010 §8.4"}},
+
+{id:"bearing-capacity",
+ kw:["bearing capacity","allowable bearing","daya dukung","soil bearing","qa allowable","ultimate bearing","foundation pressure"],
+ kw_zh:["承载力","地基承载力","承载力特征值"],
+ en:{title:"Shallow Foundation Bearing Capacity",
+  sections:[
+   {h:"🧮 Classic ultimate formula (SNI 8460:2017 §7 basis)",pts:[
+    "<strong>qu = c·Nc + q·Nq + 0.5·γ·B·Nγ</strong> (Terzaghi/Meyerhof; shape, depth, inclination factors apply)",
+    "Allowable qa = qu/FS, <strong>FS ≥ 3.0 static</strong>, ≥ 2.0 seismic (SNI 8460)",
+    "Typical presumptive qa: dense sand 300–600 kPa · medium sand 100–300 · stiff clay 150–300 · soft clay < 75"]},
+   {h:"🇨🇳 GB 50007-2011 §5.2 (characteristic-value method)",pts:[
+    "From load tests/SPT tables → fak, then corrected: <strong>fa = fak + ηb·γ·(b−3) + ηd·γm·(d−0.5)</strong>",
+    "ηb, ηd by soil type (表5.2.4): e.g. clay ηb=0.3, ηd=1.6; dense sand ηb=2.0, ηd=3.0",
+    "Verify: pk ≤ fa (axial) and pkmax ≤ 1.2·fa (eccentric edge)",
+    "Soft underlying layer check §5.2.7; eccentricity e ≤ b/6 recommended"]}],
+  src:"SNI 8460:2017 §7.4 · GB 50007-2011 §5.2, 表5.2.4 · Terzaghi/Meyerhof theory"},
+ zh:{title:"浅基础地基承载力",
+  sections:[
+   {h:"🧮 经典极限公式（SNI 8460:2017 §7 基础）",pts:[
+    "<strong>qu = c·Nc + q·Nq + 0.5·γ·B·Nγ</strong>（太沙基/迈耶霍夫；含形状、深度、倾斜修正）",
+    "容许值 qa = qu/FS，<strong>静载 FS ≥ 3.0</strong>、地震 ≥2.0（SNI 8460）",
+    "典型经验值：密砂 300–600 kPa · 中密砂 100–300 · 硬黏土 150–300 · 软黏土 <75"]},
+   {h:"🇨🇳 GB 50007-2011 §5.2（特征值法）",pts:[
+    "由载荷试验/查表得 fak，再修正：<strong>fa = fak + ηb·γ·(b−3) + ηd·γm·(d−0.5)</strong>",
+    "ηb、ηd 按土类（表5.2.4）：黏土 0.3/1.6；密砂 2.0/3.0",
+    "验算：pk ≤ fa（轴心）、pkmax ≤ 1.2·fa（偏心边缘）",
+    "软弱下卧层验算 §5.2.7；偏心距宜 e ≤ b/6"]}],
+  src:"SNI 8460:2017 §7.4 · GB 50007-2011 §5.2、表5.2.4 · 太沙基/迈耶霍夫理论"}},
+
+{id:"pile-capacity",
+ kw:["pile capacity","pile bearing","axial pile","kapasitas tiang","daya dukung tiang","pile design","skin friction","end bearing","pile load test"],
+ kw_zh:["单桩承载力","桩承载力","侧摩阻","端阻"],
+ en:{title:"Single Pile Axial Capacity",
+  sections:[
+   {h:"🇮🇩 SNI 8460:2017 §9 / general practice",pts:[
+    "<strong>Qu = Qs + Qp = Σ(fs·As) + qp·Ap</strong> (skin friction + end bearing)",
+    "Allowable Qa = Qu/FS: <strong>FS = 2.5–3.0</strong> (calculation only), 2.0 with static load test",
+    "SPT (Meyerhof, driven): qp ≈ 40·N·(L/D) ≤ 400·N kPa (sand); fs ≈ 2·N kPa (sand), α·cu (clay)",
+    "Static load test: ≥ 1 test or ≥ 1% of piles (min recommended); PDA dynamic as supplement"]},
+   {h:"🇨🇳 JGJ 94-2008 §5.3",pts:[
+    "Characteristic: <strong>Quk = u·Σqsik·li + qpk·Ap</strong> (qsik, qpk from 表5.3.5-1/2 by soil & pile type)",
+    "Design resistance <strong>Ra = Quk/K, K = 2.0</strong>",
+    "Negative skin friction on consolidating soft sites (§5.4); group effect & cap interaction per §5.2",
+    "Verification static load test: 1% of piles, ≥ 3 piles (JGJ 106)"]}],
+  src:"SNI 8460:2017 §9.3–9.5 · JGJ 94-2008 §5.2–5.4, 表5.3.5 · JGJ 106 (testing) · ACI 543R-12"},
+ zh:{title:"单桩轴向承载力",
+  sections:[
+   {h:"🇮🇩 SNI 8460:2017 §9 / 通用做法",pts:[
+    "<strong>Qu = Qs + Qp = Σ(fs·As) + qp·Ap</strong>（侧阻+端阻）",
+    "容许值 Qa = Qu/FS：仅计算 <strong>FS=2.5–3.0</strong>；有静载试验 2.0",
+    "SPT 法（迈耶霍夫，打入桩）：qp ≈ 40·N·(L/D) ≤ 400·N kPa（砂）；fs ≈ 2·N kPa（砂）、α·cu（黏土）",
+    "静载试验 ≥1% 桩数；PDA 动测作补充"]},
+   {h:"🇨🇳 JGJ 94-2008 §5.3",pts:[
+    "特征值：<strong>Quk = u·Σqsik·li + qpk·Ap</strong>（qsik、qpk 查表5.3.5-1/2）",
+    "设计取 <strong>Ra = Quk/K，K = 2.0</strong>",
+    "固结软土场地验算负摩阻力（§5.4）；群桩效应按 §5.2",
+    "静载检验：1% 且 ≥3 根（JGJ 106）"]}],
+  src:"SNI 8460:2017 §9.3–9.5 · JGJ 94-2008 §5.2–5.4、表5.3.5 · JGJ 106（检测） · ACI 543R-12"}},
+
+{id:"retaining-slope",
+ kw:["retaining wall","earth pressure","slope stability","dinding penahan","tekanan tanah","kestabilan lereng","active pressure","passive pressure","sliding overturning"],
+ kw_zh:["挡土墙","土压力","边坡稳定","抗滑移","抗倾覆"],
+ en:{title:"Retaining Walls & Slope Stability — Safety Factors",
+  sections:[
+   {h:"🌍 Earth pressure (all systems, Rankine/Coulomb)",pts:[
+    "Active <strong>Ka = tan²(45°−φ/2)</strong> · Passive Kp = tan²(45°+φ/2) · At-rest K0 = 1−sinφ",
+    "φ=30°: Ka=0.333, Kp=3.0, K0=0.50; add water pressure below GWT separately"]},
+   {h:"✅ Stability factors",pts:[
+    "🇮🇩 SNI 8460:2017: sliding <strong>FS ≥ 1.5</strong> · overturning ≥ 2.0 · bearing ≥ 3.0 · global slope ≥ 1.5 (static), ≥ 1.1–1.2 (seismic)",
+    "🇨🇳 GB 50007-2011 §6.7: anti-sliding <strong>Kc ≥ 1.3</strong> · anti-overturning Kt ≥ 1.6 (GB 55003: 1.35/1.6)",
+    "🇺🇸 practice (IBC/AASHTO): sliding 1.5, overturning 1.5–2.0; eccentricity within middle third",
+    "Seismic earth pressure: Mononobe–Okabe (SNI 8460 §10 / GB 50011 附录)"]}],
+  src:"SNI 8460:2017 §8, §11 · GB 50007-2011 §6.7 · GB 55003-2021 · IBC 2021 §1807"},
+ zh:{title:"挡土墙与边坡稳定 — 安全系数",
+  sections:[
+   {h:"🌍 土压力（朗肯/库仑，各体系通用）",pts:[
+    "主动 <strong>Ka = tan²(45°−φ/2)</strong> · 被动 Kp = tan²(45°+φ/2) · 静止 K0 = 1−sinφ",
+    "φ=30°：Ka=0.333、Kp=3.0、K0=0.50；地下水位以下另加水压"]},
+   {h:"✅ 稳定安全系数",pts:[
+    "🇮🇩 SNI 8460:2017：抗滑 <strong>FS ≥ 1.5</strong> · 抗倾覆 ≥2.0 · 地基承载 ≥3.0 · 整体边坡 ≥1.5（静）、≥1.1–1.2（震）",
+    "🇨🇳 GB 50007-2011 §6.7：抗滑移 <strong>Kc ≥ 1.3</strong> · 抗倾覆 Kt ≥ 1.6（GB 55003：1.35/1.6）",
+    "🇺🇸 惯例（IBC/AASHTO）：抗滑 1.5、抗倾覆 1.5–2.0；合力宜在中三分点内",
+    "地震土压力：Mononobe–Okabe 法（SNI 8460 §10 / GB 50011 附录）"]}],
+  src:"SNI 8460:2017 §8、§11 · GB 50007-2011 §6.7 · GB 55003-2021 · IBC 2021 §1807"}},
+
+{id:"rebar-areas",
+ kw:["rebar area","bar area","luas tulangan","diameter tulangan","rebar table","bar sizes","d16 area","reinforcement area per meter"],
+ kw_zh:["钢筋面积","钢筋直径","每米面积","钢筋表"],
+ en:{title:"Rebar Areas — Quick Table",
+  sections:[
+   {h:"Single bar areas (mm²) — Indonesian D / Chinese φ (same nominal)",pts:[
+    "D10/φ10: <strong>78.5</strong> · D13: 132.7 · φ12: 113.1 · D16/φ16: <strong>201.1</strong> · D19: 283.5 · φ20: 314.2",
+    "D22/φ22: 380.1 · D25/φ25: <strong>490.9</strong> · φ28: 615.8 · D29: 660.5 · D32/φ32: 804.2",
+    "US: #4 (12.7) = 129 · #5 = 200 · #6 = 284 · #8 = 510 mm²"]},
+   {h:"Per metre of slab: As = 1000·Ab/s",pts:[
+    "D10: @200 → 393 · @150 → <strong>523</strong> · @100 → 785 mm²/m",
+    "D13: @200 → 663 · @150 → 885 · D16: @200 → 1005 · @150 → <strong>1340</strong> mm²/m",
+    "Pick spacing so As ≥ As,min (e.g. 0.0018×120×1000 = 216 mm²/m → D10-300 OK)"]}],
+  src:"SNI 2052:2017 (bar series) · GB 1499.2 (HRB series) · ASTM A615 (#bars)"},
+ zh:{title:"钢筋面积速查表",
+  sections:[
+   {h:"单根面积（mm²）— 印尼 D / 中国 φ（同公称直径）",pts:[
+    "D10/φ10：<strong>78.5</strong> · D13：132.7 · φ12：113.1 · D16/φ16：<strong>201.1</strong> · D19：283.5 · φ20：314.2",
+    "D22/φ22：380.1 · D25/φ25：<strong>490.9</strong> · φ28：615.8 · D32/φ32：804.2",
+    "美标：#4=129 · #5=200 · #6=284 · #8=510 mm²"]},
+   {h:"板每米面积：As = 1000·Ab/s",pts:[
+    "D10：@200→393 · @150→<strong>523</strong> · @100→785 mm²/m",
+    "D13：@200→663 · @150→885；D16：@200→1005 · @150→<strong>1340</strong> mm²/m",
+    "按 As ≥ As,min 选间距（如 0.0018×120×1000=216 mm²/m → D10-300 即可）"]}],
+  src:"SNI 2052:2017 · GB 1499.2（HRB 系列） · ASTM A615（#钢筋）"}},
+
+{id:"concrete-cover-card",
+ kw:["concrete cover","selimut beton","cover requirement","clear cover","cover thickness"],
+ kw_zh:["保护层","保护层厚度","混凝土保护层"],
+ en:{title:"Concrete Cover — Quick Answer",
+  sections:[
+   {h:"🇮🇩🇺🇸 SNI 2847:2019 / ACI 318-19 (cast-in-place, non-prestressed)",pts:[
+    "Cast against earth: <strong>75 mm</strong> · exposed to weather: 50 mm (>D16) / 40 mm (≤D16)",
+    "Not exposed: beams/columns <strong>40 mm</strong> · slabs/walls 20 mm",
+    "Marine splash: 65 mm practice; corrosive environments per durability chapter"]},
+   {h:"🇨🇳 GB 50010-2010 表8.2.1 (C30+, to OUTERMOST bar incl. stirrup)",pts:[
+    "Env 一 (indoor dry): slab/wall <strong>15 mm</strong>, beam/column <strong>20 mm</strong>",
+    "二a: 20/25 · 二b: 25/35 · 三a: 30/40 · 三b: 40/50 mm",
+    "≤C25 concrete: +5 mm; foundations with blinding: ≥ 40 mm; note GB measures to stirrup, ACI/SNI to same (outermost reinforcement) — definitions align"]}],
+  src:"SNI 2847:2019 表20.6.1.3 · ACI 318-19 Table 20.6.1.3 · GB 50010-2010 表8.2.1"},
+ zh:{title:"混凝土保护层 — 快速解答",
+  sections:[
+   {h:"🇮🇩🇺🇸 SNI 2847:2019 / ACI 318-19（现浇非预应力）",pts:[
+    "直接浇筑于土壤：<strong>75 mm</strong> · 露天：50 mm（>D16）/40 mm（≤D16）",
+    "非露天：梁柱 <strong>40 mm</strong> · 板墙 20 mm",
+    "海洋浪溅区：惯例 65 mm；腐蚀环境按耐久性章节"]},
+   {h:"🇨🇳 GB 50010-2010 表8.2.1（C30 及以上，至最外层钢筋含箍筋）",pts:[
+    "一类（室内干燥）：板墙 <strong>15 mm</strong>、梁柱 <strong>20 mm</strong>",
+    "二a：20/25 · 二b：25/35 · 三a：30/40 · 三b：40/50 mm",
+    "≤C25 时 +5 mm；有垫层基础 ≥40 mm"]}],
+  src:"SNI 2847:2019 表20.6.1.3 · ACI 318-19 表20.6.1.3 · GB 50010-2010 表8.2.1"}},
+
+{id:"punching-shear",
+ kw:["punching shear","two way shear","flat slab shear","geser pons","punching capacity","drop panel"],
+ kw_zh:["冲切","抗冲切","板冲切"],
+ en:{title:"Punching (Two-Way) Shear — Flat Slabs & Footings",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §22.6 / 🇺🇸 ACI 318-19",pts:[
+    "Critical perimeter b0 at <strong>d/2</strong> from column face",
+    "vc = min( 0.33λ√fc′ , 0.17(1+2/β)λ√fc′ , 0.083(2+αs·d/b0)λ√fc′ ) — λs size factor in ACI 318-19",
+    "φ = 0.75; if vu > φvc → studrails/stirrups (max 0.66√fc′) or thicker slab/drop panel",
+    "Moment transfer: γv fraction adds shear stress (§8.4.4)"]},
+   {h:"🇨🇳 GB 50010-2010 §6.5",pts:[
+    "Critical section at <strong>h0/2</strong>; Fl ≤ 0.7·βh·ft·η·um·h0 (no shear reinforcement)",
+    "βh: 1.0 (h ≤ 800) → 0.9 (h ≥ 2000); η accounts for column position/eccentricity",
+    "With reinforcement: ≤ 1.2·ft·η·um·h0; capacity with studs/stirrups per §6.5.3"]}],
+  src:"SNI 2847:2019 §22.6 · ACI 318-19 §22.6.5 · GB 50010-2010 §6.5.1–6.5.3"},
+ zh:{title:"冲切（双向剪切）— 无梁板与基础",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §22.6 / 🇺🇸 ACI 318-19",pts:[
+    "临界周边 b0 距柱边 <strong>d/2</strong>",
+    "vc = min( 0.33λ√fc′ , 0.17(1+2/β)λ√fc′ , 0.083(2+αs·d/b0)λ√fc′ )（ACI 318-19 计入尺寸效应 λs）",
+    "φ=0.75；vu > φvc 时 → 抗冲切栓钉/箍筋（上限 0.66√fc′）或加厚板/柱帽",
+    "不平衡弯矩传递：γv 份额增加剪应力（§8.4.4）"]},
+   {h:"🇨🇳 GB 50010-2010 §6.5",pts:[
+    "临界截面距柱边 <strong>h0/2</strong>；无抗冲切钢筋：Fl ≤ 0.7·βh·ft·η·um·h0",
+    "βh：h≤800 取 1.0 → h≥2000 取 0.9；η 计入柱位置/偏心",
+    "配抗冲切钢筋时 ≤1.2·ft·η·um·h0；承载力按 §6.5.3"]}],
+  src:"SNI 2847:2019 §22.6 · ACI 318-19 §22.6.5 · GB 50010-2010 §6.5.1–6.5.3"}},
+
+{id:"concrete-test",
+ kw:["concrete test","slump","acceptance criteria","uji beton","slump test","cylinder test","sampling","quality control concrete","compressive test"],
+ kw_zh:["试块","验收","坍落度","混凝土试验","合格评定"],
+ en:{title:"Concrete Testing & Acceptance Criteria",
+  sections:[
+   {h:"🇮🇩🇺🇸 SNI 2847 §26.12 / ACI 318 (cylinder 150×300)",pts:[
+    "Sampling: ≥ 1 set per <strong>110 m³</strong> or 460 m² slab/wall per class per day (min 5 sets per project)",
+    "Acceptance: (a) every 3-consecutive average ≥ fc′ AND (b) no single result < fc′ − 3.5 MPa (fc′ ≤ 35) / < 0.9fc′ (fc′ > 35)",
+    "Slump (typical spec): 75 ± 25 mm conventional; SCC by flow table",
+    "ASTM C39 (test method) & C94 (ready-mix) govern procedure"]},
+   {h:"🇨🇳 GB 50107 / GB 50204 (cube 150)",pts:[
+    "Statistical method: mfcu − λ1·Sfcu ≥ fcu,k and fcu,min ≥ λ2·fcu,k",
+    "Non-statistical (small lots, <10 groups): mfcu ≥ <strong>1.15·fcu,k</strong> and fcu,min ≥ 0.95·fcu,k",
+    "Sampling: 1 group/100 m³ and per shift/floor; standard cure 28 d, 同条件 (field-cured) sets for formwork removal & seismic verification"]}],
+  src:"SNI 2847:2019 §26.12 · ACI 318-19 §26.12.3 · ASTM C39 / C94 (in library) · GB 50107-2010 · GB 50204-2015"},
+ zh:{title:"混凝土试验与合格评定",
+  sections:[
+   {h:"🇮🇩🇺🇸 SNI 2847 §26.12 / ACI 318（150×300 圆柱体）",pts:[
+    "取样：每 <strong>110 m³</strong> 或 460 m² 板墙、每等级每天 ≥1 组（工程 ≥5 组）",
+    "评定：(a) 任意连续 3 组平均 ≥ fc′ 且 (b) 单组不低于 fc′−3.5 MPa（fc′≤35）/0.9fc′（>35）",
+    "坍落度（常用规定）：普通 75±25 mm；自密实按扩展度",
+    "试验方法 ASTM C39、预拌 C94（库内有原文）"]},
+   {h:"🇨🇳 GB 50107 / GB 50204（150 立方体）",pts:[
+    "统计法：mfcu − λ1·Sfcu ≥ fcu,k 且 fcu,min ≥ λ2·fcu,k",
+    "非统计法（<10 组）：mfcu ≥ <strong>1.15·fcu,k</strong> 且 fcu,min ≥ 0.95·fcu,k",
+    "取样：每 100 m³ 且每台班/楼层 1 组；标养 28 d，同条件试件用于拆模与实体检验"]}],
+  src:"SNI 2847:2019 §26.12 · ACI 318-19 §26.12.3 · ASTM C39/C94 · GB 50107-2010 · GB 50204-2015"}}
+
+];
