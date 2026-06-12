@@ -217,6 +217,70 @@ canvas{max-width:100%;margin-top:10px}
 .loading{text-align:center;padding:40px;color:var(--text2)}
 .no-result{text-align:center;padding:40px;color:var(--text2);background:#fff;border-radius:12px;box-shadow:var(--card-shadow)}
 
+/* ================================================================
+   FULL-WIDTH LAYOUT + READABILITY OVERRIDES
+   - containers span the whole page instead of a centered 1200px box
+   - font sizes raised slightly for normal-website readability
+   ================================================================ */
+.container{max-width:none;width:100%;padding:26px clamp(20px,3.5vw,56px)}
+.hdr{max-width:none;padding:0 clamp(4px,1vw,20px)}
+.search-wrap{max-width:880px}
+nav button{font-size:14px}
+.logo-title{font-size:18px}
+.logo-sub{font-size:11.5px}
+.credit-bar{font-size:12px}
+.hero p{font-size:16px}
+#searchInput,#searchBtn{font-size:16px}
+.chip{font-size:13px}
+.badge{font-size:12.5px}
+.context-card h3{font-size:15px}
+.ctx-item label{font-size:11.5px}
+.ctx-item span{font-size:15px}
+.sec-title{font-size:14px}
+.std-card-hdr{font-size:14px}
+.std-item{font-size:14px}
+.param-row{font-size:14px}
+.module-card>summary{font-size:16px}
+.module-body h4{font-size:14px}
+.module-body p{font-size:14px}
+.mtable{font-size:13.5px}
+.mtable th{font-size:12.5px}
+.note-box{font-size:13.5px}
+.fa-table{font-size:13px}
+.missing-card h3{font-size:15px}
+.missing-item{font-size:14px}
+.ext-link{font-size:14px}
+.filter-btn{font-size:14px}
+.slc-code{font-size:14px}
+.slc-title{font-size:13px}
+.slc-tag{font-size:11.5px}
+.slc-btn{font-size:13px}
+.slc-details summary{font-size:13px}
+.slc-detail-body{font-size:13px}
+.kv-table{font-size:12.5px}
+.preview-text{font-size:12.5px}
+.hit-src{font-size:13px}
+.hit-text{font-size:14px}
+.no-result{font-size:14.5px}
+.about-card h2{font-size:18px}
+.about-card p{font-size:15px}
+.step-body{font-size:14px}
+.rsa-tool h3{font-size:16px}
+.rsa-field label{font-size:12px}
+.rsa-field input,.rsa-field select{font-size:14px}
+.rsa-btn{font-size:14px}
+#rsa-result{font-size:14px}
+.panel h3{font-size:15.5px}
+.map-legend{font-size:12.5px}
+.site-stat label{font-size:11.5px}
+.site-stat span{font-size:17px}
+.site-stat small{font-size:11.5px}
+#siteStatus{font-size:14px}
+.footnote{font-size:12px}
+/* Chinese standards card header — muted brick red (UI-friendly, less saturated
+   than the accent red used for tags/markers) */
+.std-card-hdr.cn{background:#b3574f}
+
 @media(max-width:760px){
   .std-grid{grid-template-columns:1fr}
   .search-wrap{flex-direction:column}
@@ -1723,8 +1787,10 @@ function getRelevantStandards(ctx){
 }
 
 function makeStdCard(cat,title,stds,ctx){
-  const cc=cat.toLowerCase().replace('american','amer');
-  let html=`<div class="std-card"><div class="std-card-hdr ${cc}"><span class="flag">${cat==='SNI'?'🇮🇩':cat==='American'?'🇺🇸':'🇨🇳'}</span>${title}</div><div class="std-card-body">`;
+  const cc=cat.toLowerCase().replace('american','amer').replace('chinese','cn');
+  // strip any flag emoji from the title — the header already renders its own flag span
+  const cleanTitle=title.replace(/(\ud83c[\udde6-\uddff]){2}\s*/g,'');
+  let html=`<div class="std-card"><div class="std-card-hdr ${cc}"><span class="flag">${cat==='SNI'?'🇮🇩':cat==='American'?'🇺🇸':'🇨🇳'}</span>${cleanTitle}</div><div class="std-card-body">`;
   stds.slice(0,7).forEach(s=>{
     html+=`<div class="std-item"><span class="bullet">▸</span><div><strong>${s.code}</strong> — ${stdTitle(s)}<br>`;
     const relevantParams=getRelevantParams(s,ctx);
@@ -1900,7 +1966,7 @@ function renderBrowse(filter){
     else stds=stds.filter(s=>(s.topic||[]).includes(filter));
   }
   container.innerHTML=stds.map(s=>{
-    const cc=s.cat.toLowerCase().replace('american','amer');
+    const cc=s.cat.toLowerCase().replace('american','amer').replace('chinese','cn');
     const firstTopic=(s.topic||[])[0]||'';
     const kp=s.key_params&&Object.keys(s.key_params).length?s.key_params:null;
     const preview=dynamicPreviewFor(s.id);
