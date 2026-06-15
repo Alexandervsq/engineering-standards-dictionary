@@ -740,6 +740,29 @@ standards: [
    scope:"Fire resistance testing of structural components (columns, beams, slabs). Follows ISO 834.",
    key_params:{"Min fire rating class A (residential)":"60 min","Office/commercial":"90 min","High-rise >14m":"120 min"}},
 
+  {id:"sni-03-1735-2000",code:"SNI 03-1735-2000",cat:"SNI",topic:["fire"],
+   title:"Tata Cara Perencanaan Akses Bangunan dan Akses Lingkungan untuk Pencegahan Bahaya Kebakaran pada Bangunan Gedung",
+   title_en:"Building & Environmental Access for Fire Prevention",year:2000,
+   scope:"Fire apparatus access roads, hardstanding (perkerasan), building-volume access ratios, yard hydrants (hidran halaman) & water supply, fire access openings",
+   key_params:{"Min hardstanding width":"6 m (length ≥ 15 m)","Other access road width":"≥ 4 m","Hardstanding load (floor >24m)":"44-tonne truck","Yard hydrant coverage":"≤ 50 m radius","Min water supply":"≥ 2400 L/min","Residential hydrant":"≥ 38 L/s @ 3.5 bar, 45 min","Access opening":"≥ 850×1000 mm","Clear height":"≥ 5 m"}},
+
+  {id:"sni-03-1736-2000",code:"SNI 03-1736-2000",cat:"SNI",topic:["fire"],
+   title:"Tata Cara Perencanaan Sistem Proteksi Pasif untuk Pencegahan Bahaya Kebakaran pada Bangunan Gedung",
+   title_en:"Passive Fire Protection System Design",year:2000,
+   scope:"Passive fire protection: compartmentation, fire resistance rating (TKA), fire walls, construction types, protection of openings, fire separation distance",
+   key_params:{"Construction types":"I–V","TKA notation":"adequacy/integrity/insulation (min)","Type I columns":"180 min","Type I floor":"120 min"}},
+
+  {id:"permen-26-2008",code:"Permen PUPR 26/2008",cat:"SNI",topic:["fire"],
+   title:"Persyaratan Teknis Sistem Proteksi Kebakaran pada Bangunan Gedung dan Lingkungan",
+   title_en:"Technical Requirements for Fire Protection Systems",year:2008,
+   scope:"Consolidated national fire code: construction types & TKA (Tabel 1), means of egress & travel distance, active systems, hydrants, sprinklers, extinguishers (APAR), fire access",
+   key_params:{"Exit access min width":"915 mm","Dead-end corridor":"≤ 6 m","APAR Class A travel":"≤ 23 m","APAR Class B travel":"≤ 15 m","APAR Class K travel":"≤ 9 m"}},
+
+  {id:"nfpa",code:"NFPA 1/10/13/14/101",cat:"American",topic:["fire"],
+   title:"NFPA Fire Codes (Fire Code, Extinguishers, Sprinklers, Standpipes, Life Safety)",year:2021,
+   scope:"NFPA 1 Fire Code · NFPA 10 portable extinguishers · NFPA 13 sprinkler systems · NFPA 14 standpipe & hose · NFPA 101 Life Safety Code. Referenced by IBC/IFC and the Indonesian SNI fire series.",
+   key_params:{"Apparatus access road width":"≥ 6.1 m (20 ft)","Vertical clearance":"≥ 4.1 m (13.5 ft)","Access within":"46 m (150 ft) of building","Sprinkler light hazard":"4.1 mm/min","Standpipe Class I":"500+250 gpm, 100 psi"}},
+
   {id:"sni-2827-2008",code:"SNI 2827:2008",cat:"SNI",topic:["geotechnical"],
    title:"Cara Uji Penetrasi Lapangan dengan Alat Sondir",title_en:"CPT (Cone Penetration Test) Procedure",
    year:2008,scope:"Field CPT test method, data interpretation, bearing capacity from qc values",
@@ -917,9 +940,9 @@ topics:{
     keywords:["load","beban","live load","beban hidup","dead load","beban mati","snow","floor load","roof load","minimum load","occupancy load","ASCE 7","SNI 1727"],
     standards:["sni-1727-2020","asce-7-22","gb-50009-2012"],
     required_info:["building_use","floor_area"]},
-  fire:{name:"Fire Protection",name_id:"Ketahanan Api",
-    keywords:["fire","kebakaran","fire resistance","ketahanan api","fire rating","fire load","sprinkler","egress","evacuation","compartment"],
-    standards:["sni-1741-2008","ibc-2021","gb-50016-2018"],
+  fire:{name:"Fire Protection",name_id:"Proteksi Kebakaran",
+    keywords:["fire","kebakaran","fire protection","proteksi kebakaran","fire resistance","ketahanan api","fire rating","tka","fire load","beban api","sprinkler","springkler","egress","evacuation","evakuasi","compartment","kompartemen","hydrant","hidran","hidran halaman","yard hydrant","standpipe","fire lane","fire access","akses pemadam","jalur lingkungan","fire road","apparatus access","hardstanding","perkerasan","travel distance","jarak tempuh","means of escape","exit","eksit","fire separation","fire wall","dinding api","smoke","asap","fire pump","apar","extinguisher","nfpa","fire flow","occupancy","passive protection","proteksi pasif","active protection"],
+    standards:["sni-03-1735-2000","sni-03-1736-2000","permen-26-2008","sni-1741-2008","ibc-2021","gb-50016-2018","nfpa"],
     required_info:["occupancy_type","building_height"]},
   precast:{name:"Precast / Prestressed",name_id:"Pracetak / Prategang",
     keywords:["precast","pracetak","prestress","prategang","hollow core","double tee","pretension","post-tension","camber"],
@@ -954,7 +977,8 @@ topicToModule:{
   wind:"wind",
   rain:"rain",
   purlin:"purlin",
-  foundation_type:"foundation_type"
+  foundation_type:"foundation_type",
+  fire:"fire"
 },
 
 // ================================================================
@@ -1327,6 +1351,94 @@ answer_modules:{
     ],
     sources:"SNI 8460:2017 §6 (investigation), §7 (shallow), §9 (piles), §10 (liquefaction) · GB 50007-2011 §5 (bearing K), Ch.6 (special soils), Table 5.3.4 (settlement) · JGJ 94-2008 §3.3 (spacing), Table 4.1.1 (reinforcement) · ACI 543R-12 (concrete piles) · ACI 336.2R (rafts) · G329-1~4 (waterproofing)",
     tool_link_site:true
+  },
+
+  fire:{
+    icon:"🔥", title:"Fire Protection — Design Parameters (Multi-Standard)",
+    sections:[
+      {h:"Fire Apparatus Access Roads & Hardstanding (SNI 03-1735-2000 §4)",
+       table:{cols:["Parameter","Requirement"],
+         rows:[
+           ["Hardstanding (perkerasan) — when required","Occupied floor &gt; 10 m above grade. Below 10 m: only a 4 m-wide operational strip, reachable ≤ 45 m from the fire-truck route"],
+           ["Min hardstanding size","<strong>Width ≥ 6 m, length ≥ 15 m</strong>; other access-road parts ≥ 4 m wide"],
+           ["Position from access opening","Nearest edge 2–10 m from the centre of the fire access opening (horizontal)"],
+           ["Load capacity","Buildings with occupied floor &gt; 24 m: hardstanding must carry a <strong>44-tonne fire truck</strong> static load on jack feet"],
+           ["Gradient","Hardstanding ≤ 1:15; access road ≤ 1:8.5"],
+           ["Length / turning","Hardstanding ≤ 46 m or provide a turning facility; outer turning radius ≥ 10.5 m"],
+           ["Clear height","≥ 5 m above hardstanding / fire-truck route"],
+           ["Access road (floor &gt; 10 m)","Width ≥ 6 m, ≥ 2 m from the building, on ≥ 2 sides"]
+         ]}},
+      {h:"Building Volume → Perimeter Access Ratio (SNI 03-1735-2000 Tabel 4.2.3)",
+       table:{center:true,cols:["Building Volume","Minimum Fire-Access Coverage"],
+         rows:[
+           ["&lt; 7,100 m³","1/6 of the yard perimeter"],
+           ["&gt; 7,100 m³","1/6 of the building perimeter"],
+           ["&gt; 28,000 m³","1/4 of the building perimeter"],
+           ["&gt; 56,800 m³","1/2 of the building perimeter"],
+           ["&gt; 85,200 m³","3/4 of the building perimeter"],
+           ["&gt; 113,600 m³","Full perimeter (all sides)"]
+         ]},
+       notes:["🇨🇳 GB 50016-2014 §7: fire lane (消防车道) clear width ≥ 4.0 m, clear height ≥ 4.0 m; high-rise needs a lane along ≥ 1 long side or ≥ 1/4 perimeter; courtyard &gt; 24 m wide needs a through-lane; dead-end turning area ≥ 12×12 m (15×15 / 18×18 m for high-rise).",
+              "🇺🇸 IFC / NFPA 1: fire apparatus access road ≥ 6.1 m (20 ft) wide, ≥ 4.1 m (13.5 ft) vertical clearance, within 46 m (150 ft) of all building portions; dead-end &gt; 46 m requires an approved turnaround."]},
+      {h:"Yard Hydrants & Water Supply (SNI 03-1735-2000 §5, Tabel 5.4)",
+       table:{cols:["Parameter","Requirement"],
+         rows:[
+           ["Coverage","Every part of the fire-truck access route must be ≤ <strong>50 m</strong> from a city hydrant; otherwise provide yard hydrants so every point is within a 50 m radius"],
+           ["Min supply (general)","≥ 2,400 L/min (§5.3)"],
+           ["Residential","1 hydrant — <strong>≥ 38 L/s at 3.5 bar</strong>, 45 min storage"],
+           ["Non-residential &lt; 1,000 m² (largest floor)","2 hydrants — 1st ≥ 38 L/s @ 3.5 bar + 2nd ≥ 19 L/s @ 3.5 bar, 45 min"],
+           ["Each additional 1,000 m²","+1 hydrant, +1,200 L/min public supply, 45 min"]
+         ]},
+       notes:["🇨🇳 GB 50974-2014: outdoor hydrant flow by volume/occupancy (typ. 15–40 L/s); hydrant spacing ≤ 120 m, ≤ 150 m from protected building, ≥ 5 m from wall. 🇺🇸 NFPA 24 / AWWA: hydrant flow & spacing per fire-flow demand (IFC Appendix B: 1,000–8,000 gpm)."]},
+      {h:"Fire Access Openings — Bukaan Akses (SNI 03-1735-2000 §6)",
+       table:{cols:["Parameter","Requirement"],
+         rows:[
+           ["Min opening size","≥ <strong>850 mm wide × 1,000 mm high</strong>, sill ≤ 1,000 mm above floor"],
+           ["Quantity (top floor ≤ 40 m)","1 opening per 620 m² of floor area; each floor ≥ 2 openings"],
+           ["Marking","Red triangle + “AKSES PEMADAM KEBAKARAN – JANGAN DIHALANGI”"]
+         ]}},
+      {h:"Passive Protection — Fire Resistance Rating / TKA (SNI 03-1736-2000 · Permen PUPR 26/2008 Tabel 1)",
+       table:{center:true,cols:["Element","🇮🇩 Type I (Permen 26)","🇨🇳 GB 50016 Class I (一级)","🇺🇸 IBC Type I-A"],
+         rows:[
+           ["Primary structure / columns","3 h","3.0 h","3 h"],
+           ["Beams / girders","2–3 h","2.0 h","2 h (floor framing)"],
+           ["Floor slab","2 h","1.5 h","2 h"],
+           ["Load-bearing exterior wall","3 h","3.0 h","3 h"],
+           ["Exit stair enclosure","2 h","1.5 h (non-comb.)","2 h"]
+         ]},
+       notes:["TKA notation is structural-adequacy / integrity / insulation in minutes, e.g. 180/180/180. Construction Types I–V (Permen 26) ↔ GB grades 一~四级 ↔ IBC Types I–V give progressively lower ratings.",
+              "Lower grades: 🇨🇳 GB Class II columns 2.5 h, beams 1.5 h, floor 1.0 h; Class III columns 2.0 h; Class IV columns 0.5 h."]},
+      {h:"Compartmentation & Fire Separation Distance",
+       table:{cols:["Parameter","🇨🇳 GB 50016-2014","🇺🇸 IBC / 🇮🇩 SNI 1736"],
+         rows:[
+           ["Max compartment area — single/multi-storey civil (Class I/II)","2,500 m² (×2 with sprinklers)","Per IBC Table 506.2 by occupancy & type; SNI by building class"],
+           ["Max compartment — high-rise civil","1,500 m² (×2 with sprinklers = 3,000)","Sprinklered high-rise per IBC 403/506"],
+           ["Max compartment — underground","500 m² (×2 with sprinklers)","—"],
+           ["Fire separation between buildings (Class I/II ↔ I/II)","≥ 6 m (≥ 7 m to III, ≥ 9 m to IV)","IBC by fire-separation distance & % unprotected openings"],
+           ["High-rise to high-rise separation","≥ 13 m","Per local code / exposure"]
+         ]}},
+      {h:"Means of Escape / Egress",
+       table:{cols:["Parameter","🇮🇩 SNI / Permen 26 (≈ NFPA 101)","🇨🇳 GB 50016-2014"],
+         rows:[
+           ["Min exit-access width","915 mm (new) / 710 mm (existing)","Door ≥ 0.90 m, corridor ≥ 1.10–1.40 m, stair ≥ 1.10–1.30 m"],
+           ["Dead-end corridor (袋形走道)","≤ 6 m","Room door → exit ≤ 20–22 m (+25% if sprinklered)"],
+           ["Travel distance to exit (sprinklered)","Office ≈ 60–76 m; assembly ≈ 45 m","Per Table 5.5.17 by occupancy"],
+           ["Travel distance (non-sprinklered)","Office ≈ 45 m; assembly ≈ 30 m","Reduced vs sprinklered"],
+           ["Exit width factor","Per 100 persons capacity","0.65–1.00 m per 100 persons (by storey/occupancy)"],
+           ["Min number of exits","≥ 2 from each storey/area (more by occupant load)","≥ 2 (single-exit allowed in limited cases)"]
+         ]}},
+      {h:"Active Systems — Sprinklers, Standpipes, Extinguishers",
+       table:{cols:["System","🇺🇸 NFPA / 🇮🇩 SNI","🇨🇳 GB"],
+         rows:[
+           ["Sprinkler design density — Light Hazard","0.10 gpm/ft² (≈ 4.1 mm/min) over 139 m² (NFPA 13 / SNI 03-3989)","GB 50084: 0.04–0.06 L/s·m², area 160 m²"],
+           ["Sprinkler — Ordinary Hazard","OH1 0.15 / OH2 0.20 gpm/ft² (6.1–8.1 mm/min)","0.06–0.16 L/s·m² by hazard"],
+           ["Sprinkler head coverage","Light ≤ 20.9 m²; Ordinary ≤ 12.1 m² per head","Light ≤ 20 m²; spacing ≤ 3.6–4.4 m"],
+           ["Standpipe / hydrant hose","30 m hose + 5 m throw reach (SNI 03-1745); Class I 500 gpm + 250 gpm each riser, 100 psi residual (NFPA 14)","Indoor hydrant: full coverage by 1 jet (≥ 2 for high-rise), ≥ 5 L/s/jet"],
+           ["Portable extinguishers (APAR) travel distance","Class A ≤ 23 m · Class B ≤ 15 m · Class K ≤ 9 m (Permen 26 §5.6 / NFPA 10)","GB 50140: light ≤ 25 m (A) / 15 m (B)"]
+         ]},
+       notes:["Required sprinkler/standpipe provision is triggered by building height, area and occupancy — e.g. SNI requires sprinklers for most buildings &gt; 8 storeys or &gt; 24 m; GB 50016 mandates automatic sprinklers for high-rise Class I civil buildings and large assembly/commercial occupancies."]},
+    ],
+    sources:"SNI 03-1735-2000 §4 (access roads & hardstanding), §5 + Tabel 5.4 (yard hydrants), §6 (access openings) · SNI 03-1736-2000 (passive protection) · Permen PUPR 26/PRT/M/2008 Tabel 1 (TKA), §3.11 (egress), §5.6 (APAR) · GB 50016-2014/2018 §5 (compartments/separation), §7 (fire lanes) · GB 50974-2014 / GB 50084 / GB 50140 · NFPA 1/10/13/14/24/101 · IBC 2018 Ch. 5–10"
   }
 
 },

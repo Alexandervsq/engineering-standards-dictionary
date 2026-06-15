@@ -649,6 +649,116 @@ window.QA_CARDS=[
     "统计法：mfcu − λ1·Sfcu ≥ fcu,k 且 fcu,min ≥ λ2·fcu,k",
     "非统计法（<10 组）：mfcu ≥ <strong>1.15·fcu,k</strong> 且 fcu,min ≥ 0.95·fcu,k",
     "取样：每 100 m³ 且每台班/楼层 1 组；标养 28 d，同条件试件用于拆模与实体检验"]}],
-  src:"SNI 2847:2019 §26.12 · ACI 318-19 §26.12.3 · ASTM C39/C94 · GB 50107-2010 · GB 50204-2015"}}
+  src:"SNI 2847:2019 §26.12 · ACI 318-19 §26.12.3 · ASTM C39/C94 · GB 50107-2010 · GB 50204-2015"}},
+
+{id:"fire-access-road",
+ kw:["fire access road","fire lane","fire apparatus access","access road fire","jalur lingkungan","jalan lingkungan","akses pemadam","hardstanding","perkerasan","fire truck access","jalur akses pemadam","environmental access"],
+ kw_zh:["消防车道","登高场地","扑救场地","消防车","环境消防"],
+ en:{title:"Fire Apparatus Access Roads & Hardstanding",
+  sections:[
+   {h:"🇮🇩 SNI 03-1735-2000 §4 (access roads & hardstanding / perkerasan)",pts:[
+    "Hardstanding required when top occupied floor <strong>&gt; 10 m</strong> above grade; below that only a 4 m operational strip reachable ≤ 45 m from the truck route",
+    "Hardstanding: <strong>width ≥ 6 m, length ≥ 15 m</strong>; other access-road parts ≥ 4 m; nearest edge 2–10 m from the access opening centre",
+    "Floor &gt; 24 m: must carry a <strong>44-tonne</strong> fire truck on jack feet; gradient ≤ 1:15 (road ≤ 1:8.5); clear height ≥ 5 m; turning radius ≥ 10.5 m",
+    "Access road (floor &gt; 10 m): ≥ 6 m wide, ≥ 2 m off the building, on ≥ 2 sides",
+    "Perimeter coverage by building volume (Tabel 4.2.3): &lt;7,100 m³ → 1/6; &gt;28,000 → 1/4; &gt;56,800 → 1/2; &gt;85,200 → 3/4; <strong>&gt;113,600 m³ → full perimeter</strong>"]},
+   {h:"🇨🇳 GB 50016-2014 §7 / 🇺🇸 IFC · NFPA 1",pts:[
+    "GB fire lane (消防车道): clear width ≥ <strong>4.0 m</strong>, clear height ≥ 4.0 m; high-rise needs a lane on ≥ 1 long side or ≥ 1/4 perimeter; turnaround ≥ 12×12 m (15×15 / 18×18 m high-rise)",
+    "US apparatus access road: ≥ <strong>6.1 m (20 ft)</strong> wide, ≥ 4.1 m (13.5 ft) clear, within 46 m (150 ft) of all building portions; dead-end &gt; 46 m → turnaround"]}],
+  src:"SNI 03-1735-2000 §4 & Tabel 4.2.3 · GB 50016-2014 §7.1–7.2 · IFC/NFPA 1 §503 (in library: Permen 26/2008)"},
+ zh:{title:"消防车道与登高扑救场地",
+  sections:[
+   {h:"🇮🇩 SNI 03-1735-2000 §4（消防车道与硬地 / perkerasan）",pts:[
+    "最高居住楼面 <strong>&gt; 10 m</strong> 时须设扑救硬地；10 m 以下仅需 4 m 操作带，且距消防车道 ≤ 45 m",
+    "硬地：<strong>宽 ≥ 6 m、长 ≥ 15 m</strong>；通道其他部位 ≥ 4 m；最近边距扑救口中心 2–10 m",
+    "楼面 &gt; 24 m：须承受 <strong>44 吨</strong> 消防车支腿载；坡度 ≤ 1:15（车道 ≤ 1:8.5）；净高 ≥ 5 m；回转半径 ≥ 10.5 m",
+    "消防车道（楼面 &gt; 10 m）：宽 ≥ 6 m，距建筑 ≥ 2 m，≥ 2 侧设置",
+    "按体积的周长覆盖（表4.2.3）：&lt;7,100 m³→1/6；&gt;28,000→1/4；&gt;56,800→1/2；&gt;85,200→3/4；<strong>&gt;113,600 m³→全周长</strong>"]},
+   {h:"🇨🇳 GB 50016-2014 §7 / 🇺🇸 IFC · NFPA 1",pts:[
+    "GB 消防车道：净宽 ≥ <strong>4.0 m</strong>、净高 ≥ 4.0 m；高层沿 ≥ 1 长边或 ≥ 1/4 周长；回车场 ≥ 12×12 m（高层 15×15 / 18×18 m）",
+    "美标消防车道：净宽 ≥ <strong>6.1 m</strong>、净高 ≥ 4.1 m，距各部位 ≤ 46 m；尽头 &gt; 46 m 设回车场"]}],
+  src:"SNI 03-1735-2000 §4、表4.2.3 · GB 50016-2014 §7.1–7.2 · IFC/NFPA 1 §503"}},
+
+{id:"fire-hydrant",
+ kw:["yard hydrant","fire hydrant","hidran","hidran halaman","fire water supply","hydrant water supply","hydrant spacing","outdoor hydrant","fire flow","water supply fire","fire pump","standpipe"],
+ kw_zh:["消火栓","室外消火栓","消防给水","消防用水","消防水量","消火栓间距"],
+ en:{title:"Fire Hydrants & Water Supply",
+  sections:[
+   {h:"🇮🇩 SNI 03-1735-2000 §5 (yard hydrants / hidran halaman, Tabel 5.4)",pts:[
+    "Every part of the fire-truck route must be ≤ <strong>50 m</strong> from a city hydrant, else provide yard hydrants within 50 m radius",
+    "Minimum supply ≥ 2,400 L/min (§5.3)",
+    "Residential: 1 hydrant, <strong>≥ 38 L/s @ 3.5 bar</strong>, 45 min storage",
+    "Non-residential &lt; 1,000 m²: 2 hydrants — 38 L/s + 19 L/s @ 3.5 bar, 45 min; <strong>each +1,000 m² → +1 hydrant +1,200 L/min</strong>"]},
+   {h:"🇨🇳 GB 50974-2014 / 🇺🇸 NFPA 24 · IFC App. B",pts:[
+    "GB outdoor hydrant flow ≈ 15–40 L/s by volume/occupancy; spacing ≤ <strong>120 m</strong>, ≤ 150 m from building, ≥ 5 m from wall, ≤ 40 m from pumper inlet",
+    "US required fire flow (IFC App. B): <strong>1,000–8,000 gpm</strong> by area & construction; hydrant spacing per Table C102.1 (typ. 90–150 m)",
+    "Indoor standpipe (NFPA 14 Class I): 500 gpm first riser + 250 gpm each additional, 100 psi residual at top"]}],
+  src:"SNI 03-1735-2000 §5 & Tabel 5.4 · GB 50974-2014 · NFPA 14/24 · IFC Appendix B/C"},
+ zh:{title:"消火栓与消防给水",
+  sections:[
+   {h:"🇮🇩 SNI 03-1735-2000 §5（室外消火栓 / hidran halaman，表5.4）",pts:[
+    "消防车道各部位距市政消火栓 ≤ <strong>50 m</strong>，否则在 50 m 半径内设室外消火栓",
+    "最小供水 ≥ 2,400 L/min（§5.3）",
+    "住宅：1 个，<strong>≥ 38 L/s @ 3.5 bar</strong>，储水 45 min",
+    "非住宅 &lt; 1,000 m²：2 个 — 38 L/s + 19 L/s @ 3.5 bar，45 min；<strong>每增 1,000 m²→+1 个 +1,200 L/min</strong>"]},
+   {h:"🇨🇳 GB 50974-2014 / 🇺🇸 NFPA 24 · IFC 附录 B",pts:[
+    "GB 室外消火栓流量约 15–40 L/s（按体积/功能）；间距 ≤ <strong>120 m</strong>，距建筑 ≤ 150 m，距墙 ≥ 5 m，距水泵接合器 ≤ 40 m",
+    "美标消防用水量（IFC 附录 B）：按面积与构造 <strong>1,000–8,000 gpm</strong>；间距按表 C102.1（约 90–150 m）",
+    "室内消火栓（NFPA 14 I 类）：首立管 500 gpm + 每增 250 gpm，顶部剩余 100 psi"]}],
+  src:"SNI 03-1735-2000 §5、表5.4 · GB 50974-2014 · NFPA 14/24 · IFC 附录 B/C"}},
+
+{id:"fire-resistance-rating",
+ kw:["fire resistance rating","fire rating","fire resistance","tka","tingkat ketahanan api","ketahanan api","construction type fire","fire resistance hours","compartment","fire separation","fire wall"],
+ kw_zh:["耐火等级","耐火极限","防火分区","防火间距","防火墙","构件耐火"],
+ en:{title:"Fire Resistance Rating, Compartments & Separation",
+  sections:[
+   {h:"Fire resistance — highest grade (h)",pts:[
+    "🇮🇩 Permen 26/2008 Type I & SNI 1736: columns/load-bearing walls <strong>3 h</strong>, beams 2–3 h, floor 2 h, stair enclosure 2 h (TKA = adequacy/integrity/insulation in min)",
+    "🇨🇳 GB 50016 Class I (一级): columns <strong>3.0 h</strong>, beams 2.0 h, floor 1.5 h; Class II 2.5/1.5/1.0 h; Class III 2.0 h columns; Class IV 0.5 h",
+    "🇺🇸 IBC Type I-A: primary structure 3 h, floor 2 h; I-B 2 h; II-A 1 h"]},
+   {h:"Compartment area & fire separation (🇨🇳 GB 50016-2014)",pts:[
+    "Max compartment: single/multi-storey civil (一/二级) <strong>2,500 m²</strong>; high-rise 1,500 m²; underground 500 m² — all <strong>×2 with sprinklers</strong>",
+    "Fire separation between buildings: Class I/II↔I/II ≥ <strong>6 m</strong> (≥7 m to III, ≥9 m to IV); high-rise↔high-rise ≥ 13 m",
+    "🇺🇸 IBC: allowable area per Table 506.2; separation by fire-separation distance & % unprotected openings (Table 705.8)"]}],
+  src:"SNI 03-1736-2000 · Permen 26/2008 Tabel 1 · GB 50016-2014 §5.1–5.3, §5.2.2 · IBC 2018 Tables 506.2, 601, 705.8"},
+ zh:{title:"耐火极限、防火分区与防火间距",
+  sections:[
+   {h:"耐火极限 — 最高等级（h）",pts:[
+    "🇮🇩 条例 26/2008 I 型与 SNI 1736：柱/承重墙 <strong>3 h</strong>，梁 2–3 h，楼板 2 h，楼梯间 2 h（TKA = 承载/完整性/隔热，分钟）",
+    "🇨🇳 GB 50016 一级：柱 <strong>3.0 h</strong>，梁 2.0 h，楼板 1.5 h；二级 2.5/1.5/1.0 h；三级柱 2.0 h；四级 0.5 h",
+    "🇺🇸 IBC I-A 型：主要结构 3 h，楼板 2 h；I-B 2 h；II-A 1 h"]},
+   {h:"防火分区面积与防火间距（🇨🇳 GB 50016-2014）",pts:[
+    "最大防火分区：单/多层民用（一/二级）<strong>2,500 m²</strong>；高层 1,500 m²；地下 500 m² — 设喷淋均 <strong>×2</strong>",
+    "建筑间防火间距：一/二级↔一/二级 ≥ <strong>6 m</strong>（至三级 ≥7 m，至四级 ≥9 m）；高层↔高层 ≥ 13 m",
+    "🇺🇸 IBC：允许面积按表 506.2；间距按防火间距与未保护洞口比例（表 705.8）"]}],
+  src:"SNI 03-1736-2000 · 条例 26/2008 表1 · GB 50016-2014 §5.1–5.3、§5.2.2 · IBC 2018 表 506.2、601、705.8"}},
+
+{id:"fire-egress",
+ kw:["travel distance","egress","means of escape","exit access","jarak tempuh","evacuation distance","dead end corridor","exit width","number of exits","escape route","jalur evakuasi","eksit"],
+ kw_zh:["疏散距离","安全疏散","袋形走道","安全出口","疏散宽度","疏散通道","疏散人数"],
+ en:{title:"Means of Escape / Egress",
+  sections:[
+   {h:"🇮🇩 SNI / Permen 26/2008 (≈ NFPA 101)",pts:[
+    "Exit-access min width <strong>915 mm</strong> (new) / 710 mm (existing); ≥ 2 exits per storey/area",
+    "<strong>Dead-end corridor ≤ 6 m</strong>",
+    "Travel distance to exit: office ≈ 45 m (non-sprinklered) / 60–76 m (sprinklered); assembly ≈ 30 / 45 m",
+    "Extinguisher (APAR) travel: Class A ≤ 23 m · Class B ≤ 15 m · Class K ≤ 9 m"]},
+   {h:"🇨🇳 GB 50016-2014 §5.5",pts:[
+    "Door ≥ <strong>0.90 m</strong>, corridor ≥ 1.10–1.40 m, stair ≥ 1.10–1.30 m",
+    "Dead-end (袋形走道): room door → nearest exit ≤ <strong>20–22 m</strong> (+25% with sprinklers)",
+    "Evacuation width ≈ 0.65–1.00 m per 100 persons (by storey & occupancy); ≥ 2 safe exits (single exit only in limited cases)"]}],
+  src:"Permen 26/2008 §3.11 & §5.6 · NFPA 101 · GB 50016-2014 §5.5.8–5.5.18, Table 5.5.17"},
+ zh:{title:"安全疏散",
+  sections:[
+   {h:"🇮🇩 SNI / 条例 26/2008（≈ NFPA 101）",pts:[
+    "疏散通道最小宽度 <strong>915 mm</strong>（新）/ 710 mm（既有）；每层/区 ≥ 2 个安全出口",
+    "<strong>袋形走道 ≤ 6 m</strong>",
+    "至出口疏散距离：办公约 45 m（未喷淋）/ 60–76 m（设喷淋）；集会约 30 / 45 m",
+    "灭火器（APAR）保护距离：A 类 ≤ 23 m · B 类 ≤ 15 m · K 类 ≤ 9 m"]},
+   {h:"🇨🇳 GB 50016-2014 §5.5",pts:[
+    "门 ≥ <strong>0.90 m</strong>，走道 ≥ 1.10–1.40 m，楼梯 ≥ 1.10–1.30 m",
+    "袋形走道：房间门 → 最近安全出口 ≤ <strong>20–22 m</strong>（设喷淋 +25%）",
+    "疏散宽度 ≈ 每 100 人 0.65–1.00 m（按层与功能）；≥ 2 个安全出口（个别情况可 1 个）"]}],
+  src:"条例 26/2008 §3.11、§5.6 · NFPA 101 · GB 50016-2014 §5.5.8–5.5.18、表 5.5.17"}}
 
 ];
