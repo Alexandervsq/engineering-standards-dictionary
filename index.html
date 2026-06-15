@@ -7,6 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
+/* Windows does not render country-flag emoji — polyfill font covering only
+   the regional-indicator codepoints so 🇮🇩 🇺🇸 🇨🇳 🇬🇧 render as real flags */
+@font-face{
+  font-family:'TwemojiFlags';
+  unicode-range:U+1F1E6-1F1FF;
+  src:url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1.8/dist/TwemojiCountryFlags.woff2') format('woff2');
+  font-display:swap;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#0d2137;--blue:#1a5276;--blue2:#2196F3;--accent:#e67e22;
@@ -32,7 +40,8 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .credit-bar{background:rgba(0,0,0,.22);border-top:1px solid rgba(255,255,255,.08);text-align:center;padding:5px 16px;font-size:11.5px;letter-spacing:.4px;color:rgba(255,255,255,.75);font-weight:400}
 .credit-bar strong{color:#f0c674;font-weight:600}
 .lang-switch{display:flex;gap:0;border:1px solid rgba(255,255,255,.3);border-radius:6px;overflow:hidden;margin-left:8px;flex-shrink:0}
-.lang-btn{background:transparent;border:none;color:#fff;padding:6px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;transition:.2s;opacity:.65}
+.lang-btn{background:transparent;border:none;color:#fff;padding:6px 12px;font-size:13px;font-family:inherit;cursor:pointer;transition:.2s;opacity:.6;display:inline-flex;align-items:center;gap:6px}
+.lang-btn svg{display:block;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.25)}
 .lang-btn.active{background:var(--accent);opacity:1;font-weight:600}
 .lang-btn:hover{opacity:1}
 
@@ -222,6 +231,14 @@ canvas{max-width:100%;margin-top:10px}
 #seismicMap{height:420px;border-radius:8px;overflow:hidden;border:1px solid var(--gray2);margin-top:10px}
 #view-site{display:none}
 #siteMap{height:340px;border-radius:8px;overflow:hidden;border:1px solid var(--gray2);margin-top:10px}
+/* properly-proportioned result charts — not full-width-huge, not tiny */
+.chart-box{position:relative;width:100%;max-width:560px;height:240px;margin:12px auto 4px}
+.chart-box canvas{position:absolute;inset:0}
+.chart-cap{text-align:center;font-size:12px;color:var(--text2);margin-top:2px}
+#siteTopoMap{height:300px;border-radius:8px;overflow:hidden;border:1px solid var(--gray2);margin-top:10px}
+.topo-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+@media(max-width:820px){.topo-grid{grid-template-columns:1fr}}
+.leaflet-container{font:inherit}
 .site-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0}
 .site-stat{background:var(--gray);border-radius:8px;padding:10px 12px}
 .site-stat label{font-size:10.5px;color:var(--text2);font-weight:600;display:block;text-transform:uppercase;letter-spacing:.4px}
@@ -339,8 +356,8 @@ nav button{font-size:14px}
       <button onclick="showView('site',this)" data-i18n="nav.site">Site Analysis</button>
       <button onclick="showView('about',this)" data-i18n="nav.about">About / Deploy</button>
       <div class="lang-switch">
-        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">🇬🇧 EN</button>
-        <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">🇨🇳 中文</button>
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')" title="English"><svg viewBox="0 0 60 30" width="22" height="11" aria-label="UK flag"><clipPath id="ukf"><rect width="60" height="30"/></clipPath><g clip-path="url(#ukf)"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/></g></svg>EN</button>
+        <button class="lang-btn" data-lang="zh" onclick="setLang('zh')" title="简体中文"><svg viewBox="0 0 30 20" width="22" height="14" aria-label="China flag"><defs><path id="cnstar" d="M0,-1 L0.2245,-0.309 L0.9511,-0.309 L0.3633,0.118 L0.5878,0.809 L0,0.382 L-0.5878,0.809 L-0.3633,0.118 L-0.9511,-0.309 L-0.2245,-0.309 Z"/></defs><rect width="30" height="20" fill="#DE2910"/><g fill="#FFDE00"><use href="#cnstar" transform="translate(5,5) scale(3)"/><use href="#cnstar" transform="translate(10,2) scale(1) rotate(23)"/><use href="#cnstar" transform="translate(12,4.5) scale(1) rotate(46)"/><use href="#cnstar" transform="translate(12,7.5) scale(1) rotate(70)"/><use href="#cnstar" transform="translate(10,10) scale(1) rotate(21)"/></g></svg>中文</button>
       </div>
     </nav>
   </div>
@@ -2516,7 +2533,8 @@ function renderSiteResults(d){
       <div class="site-stat"><label>${T('st.windiest','Windiest month')}</label><span>${ML[agg.monthlyWind.indexOf(Math.max(...agg.monthlyWind))]}</span><small>${Math.max(...agg.monthlyWind).toFixed(1)} ${T('st.avgDailyMax','m/s avg daily max')}</small></div>
       <div class="site-stat"><label>${T('st.calmest','Calmest month')}</label><span>${ML[agg.monthlyWind.indexOf(Math.min(...agg.monthlyWind))]}</span><small>${Math.min(...agg.monthlyWind).toFixed(1)} ${T('st.avgDailyMax','m/s avg daily max')}</small></div>
     </div>
-    <canvas id="siteWindChart" height="160"></canvas>`;
+    <div class="chart-box"><canvas id="siteWindChart"></canvas></div>
+    <div class="chart-cap">${T('st.windChartLabel','Avg daily max wind (m/s, 10 m)')}</div>`;
   }else{
     html+=`<p style="font-size:13px;color:var(--text2)">${T('st.windUnavail','Live wind history unavailable — regional estimate: typical basic wind speed')} ${windLo}–${windHi} m/s ${T('st.gust3s','(3-s gust)')}.</p>`;
   }
@@ -2539,7 +2557,8 @@ function renderSiteResults(d){
       <div class="site-stat"><label>${T('st.driest','Driest month')}</label><span>${ML[driest]}</span><small>${Math.round(agg.monthlyRain[driest])} mm ${T('st.avg','avg')}</small></div>
       <div class="site-stat"><label>${T('st.wetSeason','Wet season (regional)')}</label><span style="font-size:13px">${geo?((LANG==='zh'&&geo.wet_zh)?geo.wet_zh:geo.wet):T('st.wetDefault','Oct–Apr typical')}</span><small>${T('st.planNote','plan earthworks/concrete pours')}</small></div>
     </div>
-    <canvas id="siteRainChart" height="160"></canvas>`;
+    <div class="chart-box"><canvas id="siteRainChart"></canvas></div>
+    <div class="chart-cap">${T('st.rainChartLabel','Avg monthly rainfall (mm)')}</div>`;
   }else{
     html+=`<p style="font-size:13px;color:var(--text2)">${T('st.rainUnavail','Live rainfall history unavailable — regional estimate:')} ${geo?geo.rain[0]+'–'+geo.rain[1]:'1500–3000'} ${T('st.rainPerYr','mm/yr; wet season')} ${geo?((LANG==='zh'&&geo.wet_zh)?geo.wet_zh:geo.wet):'Oct–Apr'}.</p>`;
   }
@@ -2556,9 +2575,24 @@ function renderSiteResults(d){
     <div class="site-stat-grid">
       <div class="site-stat"><label>${T('st.elevLabel','Site elevation')}</label><span>${elev!=null?Math.round(elev)+' m':'n/a'}</span><small>${T('st.demSrc','Copernicus DEM 90 m (Open-Meteo)')}</small></div>
       <div class="site-stat"><label>${T('st.coord','Coordinates')}</label><span style="font-size:13px">${lat.toFixed(4)}, ${lon.toFixed(4)}</span><small>WGS84</small></div>
+      <div class="site-stat" id="topoReliefStat"><label>${T('st.relief','Local relief (±3 km)')}</label><span>${T('st.computing','computing…')}</span><small>${T('st.reliefSub','max − min along transect')}</small></div>
+      <div class="site-stat" id="topoTerrainStat"><label>${T('st.terrain','Terrain')}</label><span>—</span><small>${T('st.terrainSub','from elevation profile')}</small></div>
     </div>
-    <div class="note-box">${T('st.kztNote','If the site sits on a hill crest, ridge or escarpment with H/Lh ≥ 0.2 and H ≥ 4.5 m, apply topographic factor <strong>Kzt = (1 + K1·K2·K3)² &gt; 1.0</strong> (SNI 1727:2020 / ASCE 7-22 §26.8; GB 50009 §8.2.2 hilltop η). Obtain the contour profile from the BIG Geoportal below to evaluate H and Lh.')}</div>
+    <div class="topo-grid">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:2px">${T('st.contourMap','Topographic contour map')}</div>
+        <div id="siteTopoMap"></div>
+        <div class="chart-cap">${T('st.contourSrc','Contours: OpenTopoMap (SRTM, CC-BY-SA) — live')}</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:2px">${T('st.profileTitle','Terrain cross-section (West → East through site)')}</div>
+        <div class="chart-box" style="max-width:none;height:300px;margin-top:0"><canvas id="siteTopoProfile"></canvas></div>
+        <div class="chart-cap" id="topoProfileCap">${T('st.profileLoading','Sampling elevation transect…')}</div>
+      </div>
+    </div>
+    <div class="note-box" style="margin-top:14px">${T('st.kztNote','If the site sits on a hill crest, ridge or escarpment with H/Lh ≥ 0.2 and H ≥ 4.5 m, apply topographic factor <strong>Kzt = (1 + K1·K2·K3)² &gt; 1.0</strong> (SNI 1727:2020 / ASCE 7-22 §26.8; GB 50009 §8.2.2 hilltop η). Obtain the contour profile from the BIG Geoportal below to evaluate H and Lh.')}</div>
     <div class="src-links">
+      <a class="ext-link" href="https://opentopomap.org/#marker=15/${lat.toFixed(4)}/${lon.toFixed(4)}" target="_blank">${T('st.openTopoLink','⛰ Open full contour map (OpenTopoMap)')}</a>
       <a class="ext-link" href="https://geoportal.big.go.id/#/viewer" target="_blank">${T('st.bigLink','⛰ BIG Geoportal — contour / DEMNAS')}</a>
       <a class="ext-link" href="https://www.freemaptools.com/elevation-finder.htm" target="_blank">${T('st.elevVerify','📐 Elevation Finder (verify)')}</a>
     </div></div>`;
@@ -2596,13 +2630,82 @@ function renderSiteResults(d){
     const wc=document.getElementById('siteWindChart');
     if(wc)siteWindChart=new Chart(wc.getContext('2d'),{type:'bar',
       data:{labels:ML,datasets:[{label:T('st.windChartLabel','Avg daily max wind (m/s, 10 m)'),data:agg.monthlyWind.map(x=>+x.toFixed(2)),backgroundColor:'rgba(33,150,243,.55)',borderColor:'#2196F3',borderWidth:1}]},
-      options:{plugins:{legend:{labels:{font:{size:11}}}},scales:{y:{title:{display:true,text:'m/s'},min:0}}}});
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:'m/s'},min:0},x:{ticks:{font:{size:11}}}}}});
     const rc=document.getElementById('siteRainChart');
     if(rc)siteRainChart=new Chart(rc.getContext('2d'),{type:'bar',
       data:{labels:ML,datasets:[{label:T('st.rainChartLabel','Avg monthly rainfall (mm)'),data:agg.monthlyRain.map(x=>Math.round(x)),backgroundColor:'rgba(39,174,96,.55)',borderColor:'#27ae60',borderWidth:1}]},
-      options:{plugins:{legend:{labels:{font:{size:11}}}},scales:{y:{title:{display:true,text:'mm'},min:0}}}});
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:'mm'},min:0},x:{ticks:{font:{size:11}}}}}});
   }
+  // topography: live contour map + terrain cross-section drawing
+  initTopoMap(lat,lon,elev);
+  drawTopoProfile(lat,lon,elev);
   R.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Topography: OpenTopoMap contour mini-map ───────────────────
+let topoMapInst=null;
+function initTopoMap(lat,lon,elev){
+  if(!window.L)return;
+  const el=document.getElementById('siteTopoMap');
+  if(!el)return;
+  if(topoMapInst){topoMapInst.remove();topoMapInst=null;}
+  topoMapInst=L.map('siteTopoMap',{zoomControl:true,attributionControl:true}).setView([lat,lon],14);
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{
+    maxZoom:17,subdomains:['a','b','c'],
+    attribution:'© OpenTopoMap (CC-BY-SA)'
+  }).addTo(topoMapInst);
+  L.marker([lat,lon]).addTo(topoMapInst)
+    .bindPopup(`${T('st.projSite','Project site')}<br>${lat.toFixed(4)}, ${lon.toFixed(4)}${elev!=null?'<br>'+Math.round(elev)+' m':''}`);
+  setTimeout(()=>topoMapInst&&topoMapInst.invalidateSize(),250);
+}
+
+// ── Topography: terrain cross-section drawn from open elevation data ──
+let topoProfileChart=null;
+async function drawTopoProfile(lat,lon,centerElev){
+  const cap=document.getElementById('topoProfileCap');
+  const N=41, span=0.03; // ±0.03° ≈ ±3.3 km, W→E transect through the site
+  const lats=[],lons=[];
+  for(let i=0;i<N;i++){lats.push(lat.toFixed(5));lons.push((lon-span+(2*span)*i/(N-1)).toFixed(5));}
+  let elev=null;
+  try{
+    const url=`https://api.open-meteo.com/v1/elevation?latitude=${lats.join(',')}&longitude=${lons.join(',')}`;
+    const r=await fetch(url).then(x=>x.json());
+    if(r&&r.elevation&&r.elevation.length===N)elev=r.elevation;
+  }catch(e){}
+  if(!elev){if(cap)cap.textContent=T('st.profileFail','Elevation transect unavailable (offline).');return;}
+  const stepKm=(2*span*111.32*Math.cos(lat*Math.PI/180))/(N-1);
+  const labels=elev.map((_,i)=>(((i-(N-1)/2)*stepKm)).toFixed(1));
+  const eMax=Math.max(...elev),eMin=Math.min(...elev),relief=eMax-eMin;
+  const mid=elev[(N-1)/2];
+  // update the relief + terrain stat chips
+  const rs=document.getElementById('topoReliefStat');
+  if(rs)rs.querySelector('span').textContent=Math.round(relief)+' m';
+  const ts=document.getElementById('topoTerrainStat');
+  if(ts){
+    let terr;
+    if(relief<8)terr=T('st.terrFlat','Flat');
+    else if(relief<30)terr=T('st.terrGentle','Gently undulating');
+    else if(relief<80)terr=T('st.terrRolling','Rolling / hilly');
+    else terr=T('st.terrSteep','Steep / mountainous');
+    ts.querySelector('span').textContent=terr;
+    ts.querySelector('span').style.fontSize='15px';
+  }
+  if(cap)cap.textContent=T('st.profileCap','Elevation along a 6.6 km West–East line · Copernicus DEM (Open-Meteo)');
+  const cv=document.getElementById('siteTopoProfile');
+  if(!cv||!window.Chart)return;
+  if(topoProfileChart)topoProfileChart.destroy();
+  topoProfileChart=new Chart(cv.getContext('2d'),{type:'line',
+    data:{labels,datasets:[
+      {label:T('st.elevM','Elevation (m)'),data:elev.map(e=>Math.round(e)),
+       borderColor:'#8d6e63',backgroundColor:'rgba(141,110,99,.28)',borderWidth:2,pointRadius:0,fill:true,tension:.3},
+      {label:T('st.projSite','Project site'),data:labels.map((l,i)=>i===(N-1)/2?Math.round(mid):null),
+       borderColor:'#e67e22',backgroundColor:'#e67e22',pointRadius:5,pointHoverRadius:6,showLine:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:11}}},
+        tooltip:{callbacks:{title:it=>(T('st.distFromSite','Distance')+': '+(it[0]?.label??'')+' km')}}},
+      scales:{x:{title:{display:true,text:T('st.distFromSite','Distance from site (km)'),font:{size:11}},ticks:{maxTicksLimit:9,font:{size:10}}},
+        y:{title:{display:true,text:T('st.elevM','Elevation (m)'),font:{size:11}}}}}});
 }
 
 // Init
