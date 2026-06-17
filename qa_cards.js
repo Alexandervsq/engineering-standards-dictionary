@@ -352,8 +352,8 @@ window.QA_CARDS=[
   src:"SNI 1726:2019 §7.8 · ASCE 7-22 §12.8 · GB 50011-2010 §5.2.1、表5.2.5"}},
 
 {id:"r-factor",
- kw:["response modification","r factor","r value","faktor modifikasi respons","behavior factor","ductility factor","seismic force resisting system"],
- kw_zh:["反应修正","延性系数","抗震等级"],
+ kw:["response modification","r factor","r value","faktor modifikasi respons","behavior factor","ductility factor","seismic force resisting system","design coefficient","design coefficients","seismic coefficient factor","overstrength factor","omega0","omega 0","deflection amplification","cd factor","tabel 12","table 12.2-1","force resisting system","structural system factor","height limit seismic"],
+ kw_zh:["反应修正","延性系数","抗震等级","设计系数","超强系数","位移放大系数","抗震体系系数","表12","侧力体系"],
  en:{title:"Response Modification R — System Comparison",
   sections:[
    {h:"🇮🇩 SNI 1726:2019 Tabel 12 / 🇺🇸 ASCE 7-22 Table 12.2-1",pts:[
