@@ -1871,11 +1871,9 @@ function buildResponse(ctx){
   if(loc)html+=`<p style="font-size:12px;margin-top:6px;color:var(--text2)">📍 ${locNote(loc)}</p>`;
   html+=`</div>`;
 
-  // 2) Topic answer modules (Bug 3 fix) — show full comprehensive data first
+  // 2) Topic answer modules (Bug 3 fix) — design parameters
+  //    (the step-by-step procedure is rendered first, in handleSearch)
   html+=buildTopicModuleHTML(topics);
-
-  // 2b) Step-by-step design procedure / guideline for the element
-  html+=buildProcedureHTML(topics);
 
   // 3) Standards cards — always when topics detected
   const relevantStds=getRelevantStandards(ctx);
@@ -1976,7 +1974,7 @@ function renderProcedure(proc){
   let steps='';
   p.steps.forEach(s=>{steps+=`<li>${s.t}${s.ref?`<span class="proc-ref">▪ ${s.ref}</span>`:''}</li>`;});
   let alt=p.alt?`<div class="proc-alt">${p.alt}</div>`:'';
-  return `<details class="proc-card">
+  return `<details class="proc-card" open>
     <summary><span class="mtitle"><span class="micon">${proc.icon||'📋'}</span>${p.title}</span><span class="twist">▸</span></summary>
     <div class="proc-body">
       <div class="proc-std"><strong>${T('proc.per','Per:')}</strong> ${p.standard}</div>
@@ -2333,7 +2331,8 @@ function handleSearch(){
   if(!q)return;
   lastQuery=q;
   const ctx=analyzeQuery(q);
-  const html=buildAIAnswerHTML(ctx)+buildResponse(ctx);
+  // Order: Design Procedure (shown first, expanded) → AI answer → Query Analysis → Design Parameters → Standards
+  const html=buildProcedureHTML(ctx.topics)+buildAIAnswerHTML(ctx)+buildResponse(ctx);
   const res=document.getElementById('results');
   res.innerHTML=html;
   res.style.display='block';
