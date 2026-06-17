@@ -125,6 +125,24 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .ai-spin{display:inline-block;width:13px;height:13px;border:2px solid #d4c5f9;border-top-color:#7c5cbf;border-radius:50%;animation:aispin .8s linear infinite;vertical-align:-2px;margin-right:6px}
 @keyframes aispin{to{transform:rotate(360deg)}}
 
+/* DESIGN PROCEDURE CARD */
+.proc-card{background:#fff;border-radius:12px;margin-bottom:20px;box-shadow:var(--card-shadow);overflow:hidden;border-left:4px solid var(--green)}
+.proc-card>summary{list-style:none;cursor:pointer;padding:15px 20px;font-weight:700;font-size:15.5px;color:var(--navy);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#f2fbf5,#eafaf0);user-select:none}
+.proc-card>summary::-webkit-details-marker{display:none}
+.proc-card>summary .twist{font-size:13px;color:var(--green);font-weight:600;transition:.2s}
+.proc-card[open]>summary .twist{transform:rotate(90deg)}
+.proc-card>summary .mtitle{display:flex;align-items:center;gap:10px}
+.proc-card>summary .micon{font-size:20px}
+.proc-body{padding:8px 20px 20px}
+.proc-std{font-size:12.5px;color:var(--text2);margin:8px 0 12px;padding-bottom:8px;border-bottom:1px dashed var(--gray)}
+.proc-std strong{color:var(--green)}
+ol.proc-steps{margin:0;padding:0;counter-reset:pstep;list-style:none}
+ol.proc-steps li{position:relative;padding:9px 0 9px 40px;border-bottom:1px solid var(--gray);font-size:14px;line-height:1.6}
+ol.proc-steps li:last-child{border-bottom:none}
+ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position:absolute;left:0;top:8px;width:26px;height:26px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
+.proc-ref{display:block;font-size:11.5px;color:var(--blue2);margin-top:3px;font-weight:500}
+.proc-alt{background:#f2fbf5;border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text2);line-height:1.65;margin-top:14px}
+
 .missing-card{background:#fffbf0;border:1px solid #f0c040;border-radius:12px;padding:18px;margin-bottom:20px}
 .missing-card h3{color:#b8860b;font-size:14px;font-weight:600;margin-bottom:10px}
 .missing-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:13px}
@@ -490,7 +508,7 @@ nav button{font-size:14px}
 
     <div class="panel">
       <h3 data-i18n="s.spectrum">Design Response Spectrum</h3>
-      <canvas id="specChart" height="300"></canvas>
+      <div class="chart-box" style="max-width:680px;height:340px"><canvas id="specChart"></canvas></div>
       <div id="specTable"></div>
     </div>
 
@@ -629,6 +647,7 @@ git push -u origin main</pre>
 <script src="standards_data.js" onerror="console.log('No dynamic index — using built-in KB')"></script>
 <script src="standards_manifest.js" onerror="console.log('No PDF manifest — download links unavailable')"></script>
 <script src="qa_cards.js" charset="utf-8" onerror="console.log('QA cards not loaded — extractive answers only')"></script>
+<script src="procedures.js" charset="utf-8" onerror="console.log('Procedures not loaded')"></script>
 <script>
 // ================================================================
 // I18N — language state & helpers (Chinese pack: i18n_zh.js)
@@ -1688,7 +1707,7 @@ function drawChart(SDS,SD1,T0,Ts,TL,Ie){
       vline(T0,'#27ae60','T0'),
       vline(Ts,'#e74c3c','Ts')
     ]},
-    options:{responsive:true,interaction:{intersect:false,mode:'index'},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
       scales:{x:{type:'linear',title:{display:true,text:T('spec.T','Period T (s)')},max:4},y:{title:{display:true,text:'Sa (g)'},min:0}},
       plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:11}}},
         tooltip:{callbacks:{title:items=>'T = '+(items[0]?.parsed.x ?? 0).toFixed(2)+' s'}},
@@ -1855,6 +1874,9 @@ function buildResponse(ctx){
   // 2) Topic answer modules (Bug 3 fix) — show full comprehensive data first
   html+=buildTopicModuleHTML(topics);
 
+  // 2b) Step-by-step design procedure / guideline for the element
+  html+=buildProcedureHTML(topics);
+
   // 3) Standards cards — always when topics detected
   const relevantStds=getRelevantStandards(ctx);
   if(relevantStds.SNI.length||relevantStds.American.length||relevantStds.Chinese.length){
@@ -1930,6 +1952,38 @@ function buildTopicModuleHTML(topics){
     html+=renderModule(modKey,mod);
   });
   return html;
+}
+
+// ── Step-by-step design procedures ─────────────────────────────
+function buildProcedureHTML(topics){
+  if(!window.PROCEDURES)return'';
+  const shown=new Set();
+  let html='';
+  topics.forEach(t=>{
+    let key=KB.topicToModule[t]||t;
+    let proc=window.PROCEDURES[key];
+    if(proc&&proc.ref){key=proc.ref;proc=window.PROCEDURES[key];} // alias e.g. foundation_type→geotechnical
+    if(!proc||shown.has(key))return;
+    shown.add(key);
+    html+=renderProcedure(proc);
+  });
+  return html;
+}
+
+function renderProcedure(proc){
+  const p=(LANG==='zh'&&proc.zh)?proc.zh:proc.en;
+  if(!p)return'';
+  let steps='';
+  p.steps.forEach(s=>{steps+=`<li>${s.t}${s.ref?`<span class="proc-ref">▪ ${s.ref}</span>`:''}</li>`;});
+  let alt=p.alt?`<div class="proc-alt">${p.alt}</div>`:'';
+  return `<details class="proc-card">
+    <summary><span class="mtitle"><span class="micon">${proc.icon||'📋'}</span>${p.title}</span><span class="twist">▸</span></summary>
+    <div class="proc-body">
+      <div class="proc-std"><strong>${T('proc.per','Per:')}</strong> ${p.standard}</div>
+      <ol class="proc-steps">${steps}</ol>
+      ${alt}
+    </div>
+  </details>`;
 }
 
 function renderModule(key,mod){

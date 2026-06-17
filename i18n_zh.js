@@ -203,6 +203,7 @@ window.ZH = {
   "fb.tip2":"添加<strong>项目类型</strong>（电厂、医院、学校…）与<strong>位置</strong>（省 / 市）可获得风险类别、Ie 及区域地震与气候信息。",
   "fb.none":"知识库与标准全文库中均未找到匹配内容。<br><br>可尝试：<strong>“混凝土保护层要求”</strong>、<strong>“檩条挠度限值”</strong>、<strong>“软土基础类型”</strong>、<strong>“风荷载”</strong>或<strong>“设计活荷载”</strong>。<br><br>需要按位置查询风 / 雨 / 土壤数据，请打开 <a onclick=\"showView('site',null)\" style=\"cursor:pointer\"><strong>📡 场地分析</strong></a> 页。",
   "mod.sources":"来源：",
+  "proc.per":"依据：",
   // AI answer engine
   "ai.title":"工程解答",
   "ai.badgeLocal":"内置知识引擎",
