@@ -287,6 +287,62 @@ window.QA_CARDS=[
     "挠度限值表3.4.3：L≤7 m：<strong>L/200</strong>；7–9 m：L/250；>9 m：L/300"]}],
   src:"SNI 2847:2019 表7.3.1.1、8.3.1.1、24.2.2 · ACI 318-19 · GB 50010-2010 §9.1.2、表3.4.3"}},
 
+{id:"live-load-reduction",
+ kw:["live load reduction","reduce live load","reduced live load","reduksi beban hidup","kll","tributary area live","live load element factor","reduction factor live"],
+ kw_zh:["活荷载折减","折减系数","从属面积","活荷载折减系数"],
+ en:{title:"Live Load Reduction",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §4.7 / 🇺🇸 ASCE 7-16 §4.7",pts:[
+    "<strong>L = Lo·(0.25 + 4.57/√(KLL·AT))</strong> (SI; AT in m²) — applies only where KLL·AT ≥ 37.2 m² (400 ft²)",
+    "Lower bound: <strong>L ≥ 0.50·Lo</strong> (one floor) / <strong>0.40·Lo</strong> (≥ two floors)",
+    "KLL (Tabel 4.7-1): interior cols 4 · exterior cols w/o cantilever 4 · edge cols w/ cantilever 3 · corner cols w/ cantilever 2 · interior & edge beams 2 · slabs & other members 1",
+    "No reduction: assembly occupancies, Lo &gt; 4.79 kN/m² (heavy), passenger-car garages — except −20% max for members carrying ≥ 2 floors",
+    "Roof live (§4.8): Lr = Lo·R1·R2, between 0.58 and 0.96 kN/m² by tributary area & slope"]},
+   {h:"🇨🇳 GB 50009-2012 §5.1.2 (different method)",pts:[
+    "Reduction by a coefficient on the load <strong>area</strong>, not a continuous formula: e.g. office/residential floors reduce when tributary &gt; 25 m²; column/foundation reduction factor by number of floors above (0.85–1.0)",
+    "Storage, archives & heavy occupancies: no reduction"]}],
+  src:"SNI 1727:2020 §4.7, Tabel 4.7-1, §4.8 · ASCE 7-16 §4.7–4.8 · GB 50009-2012 §5.1.2"},
+ zh:{title:"活荷载折减",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §4.7 / 🇺🇸 ASCE 7-16 §4.7",pts:[
+    "<strong>L = Lo·(0.25 + 4.57/√(KLL·AT))</strong>（SI；AT 单位 m²）— 仅当 KLL·AT ≥ 37.2 m²（400 ft²）适用",
+    "下限：<strong>L ≥ 0.50·Lo</strong>（单层）/ <strong>0.40·Lo</strong>（≥ 两层）",
+    "KLL（表4.7-1）：内柱 4 · 无悬挑外柱 4 · 有悬挑边柱 3 · 有悬挑角柱 2 · 内梁与边梁 2 · 板及其他构件 1",
+    "不折减：集会场所、Lo &gt; 4.79 kN/m²（重载）、小汽车库 — 但承托 ≥ 2 层构件最多 −20%",
+    "屋面活载（§4.8）：Lr = Lo·R1·R2，按从属面积与坡度取 0.58–0.96 kN/m²"]},
+   {h:"🇨🇳 GB 50009-2012 §5.1.2（方法不同）",pts:[
+    "按荷载<strong>面积</strong>用折减系数（非连续公式）：如办公/住宅楼面从属面积 &gt; 25 m² 时折减；柱/基础按上部层数取折减系数（0.85–1.0）",
+    "储藏、档案及重载：不折减"]}],
+  src:"SNI 1727:2020 §4.7、表4.7-1、§4.8 · ASCE 7-16 §4.7–4.8 · GB 50009-2012 §5.1.2"}},
+
+{id:"flood-load",
+ kw:["flood load","flood","hydrostatic load","hydrodynamic load","beban banjir","design flood elevation","dfe","breakaway wall","wave load","buoyancy uplift"],
+ kw_zh:["洪水荷载","洪水","静水压","动水压","浮力","波浪荷载"],
+ en:{title:"Flood Loads",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 Pasal 5 / 🇺🇸 ASCE 7-16 Ch.5",pts:[
+    "Design to the <strong>Design Flood Elevation (DFE)</strong> in flood-hazard areas (§5.4.1)",
+    "Hydrostatic: full water depth to DFE on all affected surfaces; both-sides-wet → design depth + 0.30 m (§5.4.2)",
+    "Hydrodynamic (V ≤ 3.05 m/s): equivalent static head <strong>dh = a·V²/(2g)</strong>, drag a ≥ 1.25, g = 9.81 m/s² (Eq 5.4-1)",
+    "Buoyancy/uplift: check flotation of empty tanks/basements; breakaway-wall collapse load ≤ 0.96 kN/m² (§5.3.3)",
+    "Wave loads: breaking-wave + debris impact per §5.4.4; combine with other loads per Pasal 2"]},
+   {h:"Cross-reference",pts:[
+    "🇨🇳 No dedicated flood chapter in GB 50009; hydrostatic/hydrodynamic per hydraulic-structure codes (e.g. SL/GB water-resources standards)",
+    "🇺🇸 FEMA P-259 / ASCE 24 (flood-resistant design) supplement ASCE 7 Ch.5"]}],
+  src:"SNI 1727:2020 Pasal 5 (§5.3–5.4, Eq 5.4-1) · ASCE 7-16 Ch.5 · ASCE 24 / FEMA P-259"},
+ zh:{title:"洪水荷载",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 第5章 / 🇺🇸 ASCE 7-16 第5章",pts:[
+    "洪泛区按<strong>设计洪水位（DFE）</strong>设计（§5.4.1）",
+    "静水压：至 DFE 的全水深作用于各受影响面；两侧均浸水 → 设计水深 + 0.30 m（§5.4.2）",
+    "动水压（V ≤ 3.05 m/s）：等效静水头 <strong>dh = a·V²/(2g)</strong>，拖曳系数 a ≥ 1.25，g = 9.81 m/s²（式5.4-1）",
+    "浮力/上托：验算空罐/地下室抗浮；可破断墙体破坏荷载 ≤ 0.96 kN/m²（§5.3.3）",
+    "波浪荷载：破碎波 + 漂浮物撞击按 §5.4.4；按第2章与其他荷载组合"]},
+   {h:"对照",pts:[
+    "🇨🇳 GB 50009 无专门洪水章节；静/动水压按水工结构规范（SL/GB 水利标准）",
+    "🇺🇸 ASCE 24 / FEMA P-259（抗洪设计）补充 ASCE 7 第5章"]}],
+  src:"SNI 1727:2020 第5章（§5.3–5.4、式5.4-1） · ASCE 7-16 第5章 · ASCE 24 / FEMA P-259"}},
+
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
  kw_zh:["荷载组合","荷载分项系数","组合"],
