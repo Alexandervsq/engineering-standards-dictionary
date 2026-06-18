@@ -343,6 +343,98 @@ window.QA_CARDS=[
     "🇺🇸 ASCE 24 / FEMA P-259（抗洪设计）补充 ASCE 7 第5章"]}],
   src:"SNI 1727:2020 第5章（§5.3–5.4、式5.4-1） · ASCE 7-16 第5章 · ASCE 24 / FEMA P-259"}},
 
+{id:"guardrail-loads",
+ kw:["guardrail load","handrail load","railing load","guard load","balustrade","barrier load","vehicle barrier","grab bar","fixed ladder load","parapet load","railing design force","pegangan tangga","pagar pengaman","penghalang kendaraan"],
+ kw_zh:["栏杆荷载","护栏荷载","扶手荷载","防撞","车辆防撞","栏杆设计"],
+ en:{title:"Handrail, Guardrail & Barrier Loads",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §4.5 / 🇺🇸 ASCE 7-16 §4.5",pts:[
+    "Top rail (handrail/guard): <strong>0.89 kN</strong> concentrated, any direction, any point — OR <strong>0.73 kN/m</strong> uniform (not concurrent)",
+    "Guard infill (balusters/panels): <strong>0.22 kN</strong> on 305 × 305 mm",
+    "Grab-bar system: 1.11 kN concentrated",
+    "Vehicle barrier (passenger cars): <strong>26.70 kN</strong> horizontal at 460–686 mm height, on 305 × 305 mm",
+    "Fixed ladder: 1.33 kN + one per 3.05 m of height; rail extension 0.445 kN",
+    "Uniform 0.73 kN/m waived: 1–2 family dwellings; factories/warehouses ≤ 50 occupants"]},
+   {h:"🇨🇳 GB 50009-2012 §5.5 (horizontal rail load)",pts:[
+    "Residential/office/school top rail horizontal line load: <strong>1.0 kN/m</strong>",
+    "Assembly, stadium, viewing platforms, high-traffic: <strong>1.5 kN/m</strong> (+ 1.2 kN/m vertical)",
+    "🇺🇸 IBC 1607.8 matches ASCE 7: 0.89 kN concentrated / 0.73 kN/m"]}],
+  src:"SNI 1727:2020 §4.5.1–4.5.4 · ASCE 7-16 §4.5 / IBC 1607.8 · GB 50009-2012 §5.5"},
+ zh:{title:"栏杆、护栏与防撞荷载",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §4.5 / 🇺🇸 ASCE 7-16 §4.5",pts:[
+    "顶杆（扶手/护栏）：<strong>0.89 kN</strong> 集中、任意方向、任意点 — 或 <strong>0.73 kN/m</strong> 均布（不同时）",
+    "护栏填充件（栏杆柱/面板）：<strong>0.22 kN</strong> 作用于 305 × 305 mm",
+    "抓杆系统：1.11 kN 集中",
+    "车辆防撞栏（小汽车）：<strong>26.70 kN</strong> 水平、距地 460–686 mm、作用于 305 × 305 mm",
+    "固定爬梯：1.33 kN + 每 3.05 m 高一处；扶手延伸 0.445 kN",
+    "0.73 kN/m 均布可免：一/二户住宅；≤ 50 人厂房/仓库"]},
+   {h:"🇨🇳 GB 50009-2012 §5.5（栏杆水平荷载）",pts:[
+    "住宅/办公/学校顶部水平线荷载：<strong>1.0 kN/m</strong>",
+    "集会、体育场、看台、人流密集：<strong>1.5 kN/m</strong>（另加竖向 1.2 kN/m）",
+    "🇺🇸 IBC 1607.8 与 ASCE 7 一致：0.89 kN 集中 / 0.73 kN/m"]}],
+  src:"SNI 1727:2020 §4.5.1–4.5.4 · ASCE 7-16 §4.5 / IBC 1607.8 · GB 50009-2012 §5.5"}},
+
+{id:"crane-impact-loads",
+ kw:["crane load","crane impact","runway beam","bridge crane","monorail","impact load","impact factor","machine impact","beban derek","beban impak","gaya lateral derek","hoist load","wheel load"],
+ kw_zh:["吊车荷载","吊车冲击","起重机","冲击系数","机械冲击","吊车横向","轨道梁"],
+ en:{title:"Crane & Impact Loads",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §4.9 Crane (≈ ASCE 7-16 §4.9)",pts:[
+    "Vertical impact on max wheel load: monorail (powered) +<strong>25%</strong>; cab/remote bridge (powered) +25%; pendant bridge (powered) +10%; hand-geared +0%",
+    "Lateral force = <strong>20%</strong> of (rated capacity + hoist + trolley weight), at the rail top, ⟂ to runway",
+    "Longitudinal force = <strong>10%</strong> of max wheel loads, parallel to runway",
+    "Max wheel load = bridge self-weight + (capacity + trolley) placed for max effect"]},
+   {h:"🇮🇩 §4.6 Impact / 🇨🇳 GB 50009 §6 (动力系数)",pts:[
+    "Light shaft/motor machinery +20%; reciprocating/power-driven +50%; elevators per ASME A17.1; façade hoist support 2.5× rated",
+    "🇨🇳 GB: crane vertical dynamic factor by working class (A1–A8); soft-hook cranes lateral per code; impact factor μ = 1.05–1.1 for monorail/light cranes",
+    "🇺🇸 IBC 1607.6 / AISC Design Guide 7 follow ASCE 7 crane provisions"]}],
+  src:"SNI 1727:2020 §4.6 & §4.9 · ASCE 7-16 §4.9 / AISC DG7 · GB 50009-2012 §6 (动力系数), GB/T 3811 (crane design)"},
+ zh:{title:"吊车与冲击荷载",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §4.9 吊车（≈ ASCE 7-16 §4.9）",pts:[
+    "对最大轮压的竖向冲击：单轨（电动）+<strong>25%</strong>；司机室/遥控桥式（电动）+25%；悬挂桥式（电动）+10%；手动 +0%",
+    "横向力 = <strong>20%</strong> ×（额定起重量+吊具+小车重），作用于轨顶、垂直轨道",
+    "纵向力 = 最大轮压的 <strong>10%</strong>，平行轨道",
+    "最大轮压 = 桥架自重 +（起重量+小车）置于最不利位置"]},
+   {h:"🇮🇩 §4.6 冲击 / 🇨🇳 GB 50009 §6（动力系数）",pts:[
+    "轻型轴/电机机械 +20%；往复/动力驱动 +50%；电梯按 ASME A17.1；幕墙吊架 2.5× 额定",
+    "🇨🇳 GB：吊车竖向动力系数按工作级别（A1–A8）；软钩吊车横向按规范；单轨/轻型冲击系数 μ = 1.05–1.1",
+    "🇺🇸 IBC 1607.6 / AISC 设计指南 7 遵循 ASCE 7 吊车规定"]}],
+  src:"SNI 1727:2020 §4.6 与 §4.9 · ASCE 7-16 §4.9 / AISC DG7 · GB 50009-2012 §6（动力系数）、GB/T 3811"}},
+
+{id:"soil-lateral-pressure",
+ kw:["lateral soil pressure","lateral earth pressure soil load","basement wall pressure","soil load on wall","equivalent fluid pressure","tekanan tanah lateral","beban tanah","at-rest pressure design","retaining wall soil load","backfill pressure"],
+ kw_zh:["侧向土压力","土压力","地下室墙","回填土压力","等效流体压力"],
+ en:{title:"Design Lateral Soil Pressure (Basement & Retaining Walls)",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 Tabel 3.2-1 (kN/m² per m depth)",pts:[
+    "Clean gravels & sands (GW/GP/GM/SW/SP): <strong>5.50</strong> (rigid wall 9.43)",
+    "Clayey gravel / silty sand (GC/SM): <strong>7.07</strong> (rigid 9.43)",
+    "Silty-clayey sands & inorganic silts (SC/SM-SC/ML): <strong>13.35</strong> (rigid 15.71)",
+    "Inorganic clay, low–med plasticity (CL): <strong>15.71</strong>",
+    "Organic/high-plasticity (OL/MH/CH/OH): not suitable as backfill",
+    "\"Rigid\" = wall restrained at top (braced by floor); submerged soil → buoyant weight + full hydrostatic; design below-grade slabs for uplift"]},
+   {h:"Theory & cross-reference",pts:[
+    "These equate to an equivalent-fluid density; at-rest K0 = 1−sinφ, active Ka = tan²(45−φ/2)",
+    "🇨🇳 GB 50007 §6.7 / pit-support codes use Ka, K0, surcharge & water explicitly",
+    "Final design: site-specific geotechnical analysis per SNI 8460:2017 (see Geotechnical module)"]}],
+  src:"SNI 1727:2020 Tabel 3.2-1 (§3.2.1) · ASCE 7-16 Table 3.2-1 · SNI 8460:2017 · GB 50007-2011 §6.7"},
+ zh:{title:"设计侧向土压力（地下室与挡土墙）",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 表 3.2-1（kN/m² 每米深）",pts:[
+    "洁净砾石与砂（GW/GP/GM/SW/SP）：<strong>5.50</strong>（刚性墙 9.43）",
+    "含黏土砾石/含粉土砂（GC/SM）：<strong>7.07</strong>（刚性 9.43）",
+    "粉黏砂与无机粉土（SC/SM-SC/ML）：<strong>13.35</strong>（刚性 15.71）",
+    "低-中塑性无机黏土（CL）：<strong>15.71</strong>",
+    "有机/高塑性（OL/MH/CH/OH）：不适合作回填",
+    "“刚性” = 顶部受约束的墙（被楼板支撑）；浸水土 → 浮重度 + 全水压；地面以下板须抗浮"]},
+   {h:"原理与对照",pts:[
+    "相当于等效流体重度；静止 K0 = 1−sinφ，主动 Ka = tan²(45−φ/2)",
+    "🇨🇳 GB 50007 §6.7 / 基坑支护规范 明确采用 Ka、K0、超载与水",
+    "最终设计：按 SNI 8460:2017 场地专项分析（见岩土模块）"]}],
+  src:"SNI 1727:2020 表 3.2-1（§3.2.1） · ASCE 7-16 表 3.2-1 · SNI 8460:2017 · GB 50007-2011 §6.7"}},
+
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
  kw_zh:["荷载组合","荷载分项系数","组合"],

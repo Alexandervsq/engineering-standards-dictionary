@@ -952,8 +952,8 @@ topics:{
     standards:["sni-1729-2020","aisc-360-22","aisc-341-22","gb-50017-2017"],
     required_info:["steel_grade","loading","system_type"]},
   geotechnical:{name:"Geotechnical / Foundation",name_id:"Geoteknik / Pondasi",
-    keywords:["foundation","pondasi","footing","bearing capacity","daya dukung","settlement","penurunan","pile","tiang","bored pile","driven pile","micropile","SPT","CPT","sondir","soil investigation","penyelidikan tanah","liquefaction","slope stability","retaining","borehole"],
-    standards:["sni-8460-2017","gb-50007-2011","jgj-94-2008","aci-543r-12"],
+    keywords:["foundation","pondasi","footing","bearing capacity","daya dukung","settlement","penurunan","pile","tiang","bored pile","driven pile","micropile","SPT","CPT","sondir","soil investigation","penyelidikan tanah","liquefaction","slope stability","retaining","borehole","lateral soil pressure","tekanan tanah lateral","earth pressure","basement wall","backfill","soil load","beban tanah","equivalent fluid"],
+    standards:["sni-8460-2017","gb-50007-2011","jgj-94-2008","aci-543r-12","sni-1727-2020"],
     required_info:["soil_data","N_SPT","groundwater_depth"]},
   design_loads:{name:"Design Loads",name_id:"Beban Desain",
     keywords:["load","beban","live load","beban hidup","dead load","beban mati","snow","floor load","roof load","minimum load","occupancy load","ASCE 7","SNI 1727","live load reduction","reduksi beban hidup","concentrated load","beban terpusat","tributary area","kll","flood load","beban banjir","flood","hydrostatic","hydrodynamic","material density","self weight","berat sendiri","dead weight"],
@@ -1142,8 +1142,24 @@ answer_modules:{
            ["Micropiles (tiang mini)","< 300 mm diameter"]
          ]},
        notes:["Pile group efficiency (Converse-Labarre): η = 1 − [arctan(d/s)/90°] × (m+n−2)/(m×n), where d = pile diameter, s = spacing, m×n = pile array."]},
+      {h:"Design Lateral Soil Pressure (SNI 1727:2020 Tabel 3.2-1) — basement & retaining walls",
+       table:{center:true,cols:["Soil type (USCS)","Lateral pressure (kN/m² per m depth)"],
+         rows:[
+           ["GW / GP — clean gravels, sand-gravel mixes","5.50 (rigid wall: 9.43)"],
+           ["GM — silty gravels","5.50 (rigid: 9.43)"],
+           ["SW / SP — clean sands, gravel-sand mixes","5.50 (rigid: 9.43)"],
+           ["GC — clayey gravels","7.07 (rigid: 9.43)"],
+           ["SM — silty sands","7.07 (rigid: 9.43)"],
+           ["SM-SC / SC — silty-clayey & clayey sands","13.35 (rigid: 15.71)"],
+           ["ML / ML-CL — inorganic silts & silt-clay","13.35 (rigid: 15.71)"],
+           ["CL — inorganic clays (low–medium plasticity)","15.71"],
+           ["OL, MH, CH, OH — organic / high-plasticity","Not suitable as backfill"]
+         ]},
+       notes:["Values are equivalent-fluid lateral loads for moist soil at optimum density (active/unrestrained). \"Rigid wall\" = wall restrained against movement (e.g. braced by a floor); a basement wall ≤ 2.44 m deep on a light floor is NOT considered rigid.",
+              "Submerged / saturated soil: use buoyant (reduced) soil weight PLUS full hydrostatic pressure. Below-grade slabs & foundations must also resist water uplift (§3.2.2).",
+              "These are minimum presumptive values; a site-specific geotechnical analysis (Ka, K0, surcharge, water) per SNI 8460:2017 governs for final design."]},
     ],
-    sources:"SNI 8460:2017 §6 (investigation), §8.6 (settlement) · SNI 1726:2019 §5.3 & Tabel 3 (site class) · GB 50007-2011 (FS, settlement) · SNI 2827:2008 (CPT)"
+    sources:"SNI 8460:2017 §6 (investigation), §8.6 (settlement) · SNI 1727:2020 Tabel 3.2-1 (lateral soil, extracted from PDF) · SNI 1726:2019 §5.3 & Tabel 3 (site class) · GB 50007-2011 (FS, settlement) · SNI 2827:2008 (CPT)"
   },
 
   design_loads:{
@@ -1211,6 +1227,34 @@ answer_modules:{
            ["Breakaway walls","Design collapse load ≤ 0.96 kN/m²; foundation & superstructure must survive flood + other loads (§5.3.3)"],
            ["Wave loads","Breaking-wave, uplift & debris-impact per §5.4.4 (analytical / numerical / physical model)"]
          ]}},
+      {h:"Handrail, Guardrail, Barrier & Ladder Loads (SNI 1727:2020 §4.5)",
+       table:{cols:["Element","Design Load"],
+         rows:[
+           ["Handrail / guardrail top rail — concentrated","<strong>0.89 kN</strong> single load, any direction, at any point (§4.5.1)"],
+           ["Handrail / guardrail top rail — uniform","<strong>0.73 kN/m</strong> any direction (NOT concurrent with the 0.89 kN); waived for 1–2 family dwellings & factories/warehouses ≤ 50 occupants (§4.5.1.1)"],
+           ["Guard infill (balusters, panels, intermediate rails)","0.22 kN on a 305 × 305 mm area (§4.5.1.2)"],
+           ["Grab-bar system","1.11 kN single concentrated load (§4.5.2)"],
+           ["Vehicle barrier (passenger cars)","<strong>26.70 kN</strong> horizontal, any direction, at 460–686 mm above floor, on 305 × 305 mm (§4.5.3)"],
+           ["Fixed ladder","1.33 kN concentrated + one per 3.05 m of height; rail extension 0.445 kN (§4.5.4)"]
+         ]}},
+      {h:"Impact & Crane Loads (SNI 1727:2020 §4.6 & §4.9)",
+       table:{center:true,cols:["Source","Increase / Load"],
+         rows:[
+           ["Ordinary impact","Already included in the §4.3 tabulated live loads"],
+           ["Light machinery (shaft/motor-driven)","+20% of weight (§4.6.3)"],
+           ["Reciprocating / power-driven machinery","+50% of weight (§4.6.3)"],
+           ["Elevators","Per ASME A17.1 (§4.6.2)"],
+           ["Façade-maintenance hoist support","2.5 × rated (or max) hoist load (§4.6.4)"],
+           ["Fall-arrest / lifeline anchor","13.8 kN (3,100 lb) live load (§4.6.5)"],
+           ["Crane vertical impact — monorail (powered)","+25% of max wheel load (§4.9.3)"],
+           ["Crane vertical impact — cab/remote bridge (powered)","+25%"],
+           ["Crane vertical impact — pendant bridge (powered)","+10%"],
+           ["Crane vertical impact — hand-geared","+0%"],
+           ["Crane lateral force","20% of (rated capacity + hoist + trolley weight) (§4.9.4)"],
+           ["Crane longitudinal force","10% of max wheel loads (§4.9.5)"],
+           ["Parking — passenger car concentrated","13.35 kN on 114 × 114 mm (§4.10.1)"],
+           ["Helipad — concentrated","2 loads of 0.75 × max take-off weight, 2.44 m apart, on 200 × 200 mm; plus a single 13.35 kN; no reduction (§4.11)"]
+         ]}},
       {h:"Indicative Dead Loads & Material Densities",
        table:{cols:["Component","Load"],
          rows:[
@@ -1225,7 +1269,7 @@ answer_modules:{
            ["Water","9.81 kN/m³"]
          ]}},
     ],
-    sources:"SNI 1727:2020 Tabel 4.3-1 (uniform + concentrated), §4.7 & Tabel 4.7-1 (reduction, KLL), §4.8 (roof), Pasal 5 (flood) — extracted from PDF · = ASCE 7-16 Ch.4 & Ch.5 · GB 50009-2012 Table 5.1.1"
+    sources:"SNI 1727:2020 Tabel 4.3-1 (uniform + concentrated), §4.5 (rails/barriers), §4.6 & §4.9 (impact/crane), §4.7 & Tabel 4.7-1 (reduction, KLL), §4.8 (roof), §4.10–4.11 (parking/helipad), Pasal 5 (flood) — extracted from PDF · = ASCE 7-16 Ch.4 & Ch.5 · GB 50009-2012 Table 5.1.1"
   },
 
   seismic:{
