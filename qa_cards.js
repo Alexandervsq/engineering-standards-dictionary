@@ -436,7 +436,7 @@ window.QA_CARDS=[
   src:"SNI 1727:2020 表 3.2-1（§3.2.1） · ASCE 7-16 表 3.2-1 · SNI 8460:2017 · GB 50007-2011 §6.7"}},
 
 {id:"wind-coefficients",
- kw:["velocity pressure","exposure coefficient","kz","kh","wind coefficient","exposure category","directionality kd","internal pressure","gcpi","external pressure coefficient","cp wall","enclosure classification","koefisien tekanan","tekanan velositas","faktor arah angin","gust effect factor","qz wind"],
+ kw:["velocity pressure","exposure coefficient","kz","kh","wind coefficient","exposure category","directionality kd","internal pressure","gcpi","external pressure coefficient","cp wall","enclosure classification","koefisien tekanan","tekanan velositas","faktor arah angin","gust effect factor","qz wind","components and cladding","c&c","cladding pressure","gcp","rooftop equipment","rooftop wind","force coefficient cf","freestanding wall wind","chimney wind","effective wind area"],
  kw_zh:["风压系数","风荷载系数","速度压","暴露系数","暴露类别","风向系数","内压","体型系数","封闭分类","阵风系数"],
  en:{title:"Wind Pressure Coefficients (Kz, Kd, GCpi, Cp)",
   sections:[
@@ -466,6 +466,38 @@ window.QA_CARDS=[
     "主体风压：<strong>p = q·G·Cp − qi·(GCpi)</strong>；最小墙 0.77 + 屋面 0.38 kN/m²",
     "🇨🇳 GB 50009：wk = βz·μs·μz·w₀ — μz 暴露 A–D、μs 体型（迎风 +0.8、背风 −0.5）、βz 风振"]}],
   src:"SNI 1727:2020 表26.6-1/26.10-1/26.11-1/26.13-1、图27.3-1 · ASCE 7-16 第26–27章 · GB 50009-2012 §8"}},
+
+{id:"serviceability-limits",
+ kw:["serviceability","deflection limit","deflection limits","drift limit","vibration limit","floor vibration","occupant comfort","kemampuan layan","lendutan izin","batas defleksi","batas drift","l/360","l/240","interstorey drift","sag limit","span deflection limit"],
+ kw_zh:["正常使用","挠度限值","位移限值","层间位移","楼盖振动","舒适度","变形限值"],
+ en:{title:"Serviceability — Deflection, Drift & Vibration Limits",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 App. CC / 🇺🇸 ASCE 7-16 App. CC",pts:[
+    "Vertical deflection: <strong>L/360</strong> floors (full live load) · <strong>L/240</strong> roof · L/300 visible/cladding · L/200 doors-windows · cantilever L/150",
+    "Absolute: ≤ <strong>10 mm</strong> to non-load-bearing partitions",
+    "Wind drift: <strong>H/600 to H/400</strong> of building/storey height (smaller for brittle cladding); absolute interstorey ≤ 10 mm",
+    "Serviceability combos: D+L (short-term), D+0.5L (long-term creep), D+0.5L+Wa (wind, 10-yr MRI typical)",
+    "Floor vibration: peak accel 0.005–0.01 g (offices/residences annoying), 0.02–0.05 g (active areas); activity 2–6 Hz, target floor freq &gt; 7–8 Hz"]},
+   {h:"🇨🇳 GB 50010-2010 Table 3.4.3 (explicit RC deflection)",pts:[
+    "Span L ≤ 7 m → <strong>L/200</strong> (L/250 with higher requirement)",
+    "7 m &lt; L ≤ 9 m → L/250 (L/300)",
+    "L &gt; 9 m → <strong>L/300</strong> (L/400); crane girders L/500–L/600",
+    "Seismic drift (GB 50011 Table 5.5.1): RC frame 1/550, frame-wall 1/800, wall 1/1000 (elastic)"]}],
+  src:"SNI 1727:2020 App. CC (§CC.2.1–2.3) · ASCE 7-16 App. CC · GB 50010-2010 Table 3.4.3 · GB 50011 Table 5.5.1 · SNI 1726:2019 Tabel 20 · AISC DG11"},
+ zh:{title:"正常使用 — 挠度、位移与振动限值",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 附录 CC / 🇺🇸 ASCE 7-16 附录 CC",pts:[
+    "竖向挠度：<strong>L/360</strong> 楼面（满活载）· <strong>L/240</strong> 屋面 · L/300 可见/围护 · L/200 门窗 · 悬臂 L/150",
+    "绝对值：对非承重隔墙 ≤ <strong>10 mm</strong>",
+    "风致位移：建筑/层高的 <strong>H/600 至 H/400</strong>（脆性围护取小值）；层间绝对值 ≤ 10 mm",
+    "正常使用组合：D+L（短期）、D+0.5L（长期徐变）、D+0.5L+Wa（风，一般 10 年重现期）",
+    "楼盖振动：峰值加速度 0.005–0.01 g（办公/住宅不适）、0.02–0.05 g（活动区）；活动 2–6 Hz，楼面基频宜 &gt; 7–8 Hz"]},
+   {h:"🇨🇳 GB 50010-2010 表3.4.3（明确钢筋混凝土挠度）",pts:[
+    "跨度 L ≤ 7 m → <strong>L/200</strong>（较高要求 L/250）",
+    "7 m &lt; L ≤ 9 m → L/250（L/300）",
+    "L &gt; 9 m → <strong>L/300</strong>（L/400）；吊车梁 L/500–L/600",
+    "地震位移（GB 50011 表5.5.1）：RC 框架 1/550、框剪 1/800、墙 1/1000（弹性）"]}],
+  src:"SNI 1727:2020 附录 CC（§CC.2.1–2.3） · ASCE 7-16 附录 CC · GB 50010-2010 表3.4.3 · GB 50011 表5.5.1 · SNI 1726:2019 表20 · AISC DG11"}},
 
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],

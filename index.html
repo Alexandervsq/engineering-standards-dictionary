@@ -982,6 +982,10 @@ topics:{
   foundation_type:{name:"Foundation Type Selection",name_id:"Pemilihan Jenis Pondasi",
     keywords:["foundation type","jenis pondasi","tipe pondasi","shallow foundation","pondasi dangkal","deep foundation","pondasi dalam","spread footing","strip footing","isolated footing","raft","mat foundation","pile cap","driven pile","bored pile","tiang pancang","tiang bor","micropile","caisson","pondasi tiang","foundation selection","footing type","桩基础"],
     standards:["sni-8460-2017","gb-50007-2011","jgj-94-2008","aci-543r-12"],
+    required_info:[]},
+  serviceability:{name:"Serviceability (Deflection/Drift/Vibration)",name_id:"Kemampuan Layan",
+    keywords:["serviceability","deflection","deflection limit","drift","drift limit","vibration","floor vibration","kemampuan layan","lendutan","defleksi","simpangan","getaran","sag","camber","occupant comfort","l/360","l/240","span deflection","interstorey drift","ponding deflection"],
+    standards:["sni-1727-2020","gb-50010-2010","sni-1726-2019"],
     required_info:[]}
 },
 
@@ -997,7 +1001,8 @@ topicToModule:{
   rain:"rain",
   purlin:"purlin",
   foundation_type:"foundation_type",
-  fire:"fire"
+  fire:"fire",
+  serviceability:"serviceability"
 },
 
 // ================================================================
@@ -1272,6 +1277,42 @@ answer_modules:{
     sources:"SNI 1727:2020 Tabel 4.3-1 (uniform + concentrated), §4.5 (rails/barriers), §4.6 & §4.9 (impact/crane), §4.7 & Tabel 4.7-1 (reduction, KLL), §4.8 (roof), §4.10–4.11 (parking/helipad), Pasal 5 (flood) — extracted from PDF · = ASCE 7-16 Ch.4 & Ch.5 · GB 50009-2012 Table 5.1.1"
   },
 
+  serviceability:{
+    icon:"📏", title:"Serviceability — Deflection, Drift & Vibration",
+    sections:[
+      {h:"Vertical Deflection Limits (SNI 1727:2020 Lampiran CC.2.1 = ASCE 7-16 App. CC)",
+       table:{center:true,cols:["Condition","Recommended limit"],
+         rows:[
+           ["Floor members — full nominal live load","<strong>L/360</strong>"],
+           ["Roof members","<strong>L/240</strong>"],
+           ["Visible deflection / general architectural damage / cladding leakage","L/300 (cantilever L/150)"],
+           ["Impairs operation of doors, windows, sliding partitions","L/200"],
+           ["Absolute limit — non-load-bearing partitions","≤ 10 mm (unless detailed for differential movement)"]
+         ]},
+       notes:["Serviceability load combinations: short-term <strong>D + L</strong> (CC.2-1); long-term creep/settlement <strong>D + 0.5L</strong> (CC.2-2). D may be taken as the dead load applied AFTER the non-structural elements are installed.",
+              "🇨🇳 GB 50010 Table 3.4.3 gives explicit RC limits: L ≤ 7 m → L/200; 7–9 m → L/250; &gt; 9 m → L/300. 🇮🇩🇺🇸 limits above are recommendations, not absolute code values."]},
+      {h:"Lateral Drift Limits (SNI 1727:2020 Lampiran CC.2.2)",
+       table:{cols:["Item","Provision"],
+         rows:[
+           ["Wind drift — building & storey","<strong>H/600 to H/400</strong> of building or storey height (use smaller for brittle cladding)"],
+           ["Serviceability wind combination","D + 0.5L + Wa, where Wa = serviceability wind (CC.2-3)"],
+           ["Wind MRI for drift check","10-yr (typical buildings) · 50-yr or 100-yr (drift-sensitive)"],
+           ["Absolute interstorey limit","≤ 10 mm to protect partitions, cladding & glazing (unless detailed)"],
+           ["Seismic drift","Per SNI 1726:2019 Tabel 20: 0.020/0.015/0.010·hsx by risk category (Cd·δxe/Ie)"]
+         ]}},
+      {h:"Floor Vibration & Occupant Comfort (SNI 1727:2020 Lampiran CC.2.3)",
+       table:{center:true,cols:["Condition","Peak acceleration (g)"],
+         rows:[
+           ["Continuous vibration — quiet activities (offices, residences)","0.005–0.01 g annoying"],
+           ["Continuous — active / spectator areas","0.02–0.05 g tolerable"],
+           ["Transient (well-damped finished floor, ζ ≥ 5%)","0.05–0.10 g tolerable"],
+           ["Human-activity forcing frequency","2–6 Hz (rhythmic: dancing, aerobics, cheering → resonance)"]
+         ]},
+       notes:["Keep the floor fundamental frequency above ~2× the activity frequency (commonly target &gt; 7–8 Hz for rhythmic activity floors). Static deflection checks alone do not guarantee acceptable vibration — mass & damping also matter (AISC Design Guide 11 for detailed assessment)."]},
+    ],
+    sources:"SNI 1727:2020 Lampiran C & CC (§CC.2.1 deflection, CC.2.2 drift, CC.2.3 vibration) — extracted from PDF · = ASCE 7-16 Appendix CC · GB 50010-2010 Table 3.4.3 · SNI 1726:2019 Tabel 20 (seismic drift) · AISC Design Guide 11 (floor vibration)"
+  },
+
   seismic:{
     icon:"🌍", title:"Seismic Design — Multi-Standard Parameters",
     sections:[
@@ -1440,8 +1481,28 @@ answer_modules:{
            ["Side walls (all L/B)","−0.7","qh"]
          ]},
        notes:["Roof Cp depends on h/L and roof angle θ (Gambar 27.3-1): windward roof ranges −0.9 to +0.4, leeward roof −0.3 to −0.6. G (gust-effect factor) = 0.85 for rigid buildings (n1 ≥ 1 Hz); compute Gf for flexible buildings (§26.11)."]},
+      {h:"Components & Cladding — C&C (SNI 1727:2020 Pasal 30)",
+       table:{cols:["Item","Provision"],
+         rows:[
+           ["Design pressure (h ≤ 18.3 m)","<strong>p = qh·[(GCp) − (GCpi)]</strong> (N/m²)"],
+           ["Effective wind area","Span × the greater of (tributary width, span/3) — larger area → smaller |GCp|"],
+           ["Wall GCp — Zone 4 (interior)","≈ +0.9 / −0.99 at 1 m² → +0.7 / −0.8 at 50 m² (Gambar 30.3-1)"],
+           ["Wall GCp — Zone 5 (corner)","≈ +0.9 / −1.26 at 1 m² → +0.7 / −0.8 at 50 m² (more negative suction)"],
+           ["Roof GCp (flat, θ ≤ 7°)","Zone 1 interior −1.3 · Zone 2 edge −1.8 · Zone 3 corner −2.8 (uplift, small areas)"],
+           ["Minimum C&C pressure","|p| ≥ 0.77 kN/m² (16 psf)"]
+         ]},
+       notes:["Corner/edge zones (3 & 5) get the highest suctions — critical for cladding fasteners and roofing. Risk Category IV glazing in wind-borne-debris regions must be impact-rated (ASTM E1996). Full zone curves are in Gambar 30.3-1 to 30.6."]},
+      {h:"Other Structures & Rooftop Equipment (SNI 1727:2020 Pasal 29)",
+       table:{cols:["Element","Design force"],
+         rows:[
+           ["Other structures (chimneys, tanks, signs, towers)","<strong>F = qz·G·Cf·Af</strong> (N) — Cf from Gambar 29.4-1…4, Af = projected area"],
+           ["Rooftop equipment — lateral","Fh = qh·(GCr)·Af; <strong>GCr = 1.9</strong> for Af &lt; 0.1·Bh, reducing linearly to 1.0 at Af = Bh"],
+           ["Rooftop equipment — vertical uplift","Fv = qh·(GCr)·Ar; <strong>GCr = 1.5</strong> for Ar &lt; 0.1·BL, reducing to 1.0 at Ar = BL"],
+           ["Freestanding solid walls / signs","F = qh·G·Cf·As; Cf ≈ 1.2–2.0 by clearance ratio & aspect (Gambar 29.3-1)"],
+           ["Chimneys / round tanks","Cf ≈ 0.5–0.7 (round, smooth) to 1.3–2.0 (square) by h/D & roughness"]
+         ]}},
     ],
-    sources:"SNI 1727:2020 Tabel 26.6-1 (Kd), §26.7 (exposure), Tabel 26.10-1 (Kz), Tabel 26.11-1 (zg/α), Tabel 26.13-1 (GCpi), Gambar 27.3-1 (Cp), §26.10.2 & §27.1.5 (min pressure) — extracted from PDF · = ASCE 7-16 Ch.26–27 · GB 50009-2012 §8.1 (w₀), Table 8.2.1 (μz), §8.2.2 (terrain/hill), §8.4 (βz)",
+    sources:"SNI 1727:2020 Tabel 26.6-1 (Kd), §26.7 (exposure), Tabel 26.10-1 (Kz), Tabel 26.11-1 (zg/α), Tabel 26.13-1 (GCpi), Gambar 27.3-1 (Cp), Pasal 29 (Cf, rooftop GCr), Pasal 30 (C&C GCp), §26.10.2 & §27.1.5 (min pressure) — extracted from PDF · = ASCE 7-16 Ch.26–30 · GB 50009-2012 §8",
     tool_link_site:true
   },
 
