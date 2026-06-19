@@ -435,6 +435,38 @@ window.QA_CARDS=[
     "最终设计：按 SNI 8460:2017 场地专项分析（见岩土模块）"]}],
   src:"SNI 1727:2020 表 3.2-1（§3.2.1） · ASCE 7-16 表 3.2-1 · SNI 8460:2017 · GB 50007-2011 §6.7"}},
 
+{id:"wind-coefficients",
+ kw:["velocity pressure","exposure coefficient","kz","kh","wind coefficient","exposure category","directionality kd","internal pressure","gcpi","external pressure coefficient","cp wall","enclosure classification","koefisien tekanan","tekanan velositas","faktor arah angin","gust effect factor","qz wind"],
+ kw_zh:["风压系数","风荷载系数","速度压","暴露系数","暴露类别","风向系数","内压","体型系数","封闭分类","阵风系数"],
+ en:{title:"Wind Pressure Coefficients (Kz, Kd, GCpi, Cp)",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §26 / 🇺🇸 ASCE 7-16 Ch.26",pts:[
+    "Velocity pressure: <strong>qz = 0.613·Kz·Kzt·Kd·Ke·V²</strong> (N/m², V in m/s)",
+    "Exposure: <strong>B</strong> urban/suburban · <strong>C</strong> open (default) · <strong>D</strong> water/flat — over 45° sectors each side of the wind direction",
+    "Kz (Exp C): 0.85 @ ≤4.6 m → 0.98 @ 9.1 m → 1.13 @ 18 m → 1.26 @ 30.5 m → 1.46 @ 61 m (Tabel 26.10-1); Kz = 2.01(z/zg)^(2/α)",
+    "Directionality <strong>Kd = 0.85</strong> (buildings), 0.90 square tanks, 0.95 trussed towers (Tabel 26.6-1)",
+    "Gust effect <strong>G = 0.85</strong> (rigid, n1 ≥ 1 Hz); Gf for flexible"]},
+   {h:"Internal & external coefficients",pts:[
+    "Internal pressure <strong>GCpi = ±0.18</strong> (enclosed), <strong>±0.55</strong> (partially enclosed), 0 (open) — Tabel 26.13-1",
+    "External wall Cp: windward <strong>+0.8</strong> (qz); leeward −0.5/−0.3/−0.2 by L/B (qh); side <strong>−0.7</strong> (qh)",
+    "MWFRS pressure: <strong>p = q·G·Cp − qi·(GCpi)</strong>; min 0.77 kN/m² walls + 0.38 kN/m² roof",
+    "🇨🇳 GB 50009: wk = βz·μs·μz·w₀ — μz exposure A–D, μs shape factor (windward +0.8, leeward −0.5), βz gust"]}],
+  src:"SNI 1727:2020 Tabel 26.6-1/26.10-1/26.11-1/26.13-1, Gambar 27.3-1 · ASCE 7-16 Ch.26–27 · GB 50009-2012 §8"},
+ zh:{title:"风压系数（Kz、Kd、GCpi、Cp）",
+  sections:[
+   {h:"🇮🇩 SNI 1727:2020 §26 / 🇺🇸 ASCE 7-16 第26章",pts:[
+    "速度压：<strong>qz = 0.613·Kz·Kzt·Kd·Ke·V²</strong>（N/m²，V 单位 m/s）",
+    "暴露：<strong>B</strong> 城市/郊区 · <strong>C</strong> 开阔（默认）· <strong>D</strong> 水面/平坦 — 在风向两侧各 45° 扇区确定",
+    "Kz（C 类）：≤4.6 m 取 0.85 → 9.1 m 0.98 → 18 m 1.13 → 30.5 m 1.26 → 61 m 1.46（表26.10-1）；Kz = 2.01(z/zg)^(2/α)",
+    "风向系数 <strong>Kd = 0.85</strong>（建筑）、方形罐 0.90、桁架塔 0.95（表26.6-1）",
+    "阵风系数 <strong>G = 0.85</strong>（刚性，n1 ≥ 1 Hz）；柔性取 Gf"]},
+   {h:"内压与外压系数",pts:[
+    "内压 <strong>GCpi = ±0.18</strong>（封闭）、<strong>±0.55</strong>（部分封闭）、0（敞开）— 表26.13-1",
+    "外墙 Cp：迎风 <strong>+0.8</strong>（qz）；背风 −0.5/−0.3/−0.2（按 L/B，qh）；侧墙 <strong>−0.7</strong>（qh）",
+    "主体风压：<strong>p = q·G·Cp − qi·(GCpi)</strong>；最小墙 0.77 + 屋面 0.38 kN/m²",
+    "🇨🇳 GB 50009：wk = βz·μs·μz·w₀ — μz 暴露 A–D、μs 体型（迎风 +0.8、背风 −0.5）、βz 风振"]}],
+  src:"SNI 1727:2020 表26.6-1/26.10-1/26.11-1/26.13-1、图27.3-1 · ASCE 7-16 第26–27章 · GB 50009-2012 §8"}},
+
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
  kw_zh:["荷载组合","荷载分项系数","组合"],

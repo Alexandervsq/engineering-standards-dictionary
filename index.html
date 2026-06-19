@@ -968,7 +968,7 @@ topics:{
     standards:["sni-7833-2012","aci-318-19"],
     required_info:["span","load","environment"]},
   wind:{name:"Wind Load Design",name_id:"Beban Angin",
-    keywords:["wind","angin","wind load","beban angin","wind speed","kecepatan angin","gust","wind pressure","tekanan angin","exposure category","kzt","topographic factor","topografi","topography","basic wind","velocity pressure","typhoon","hurricane","cyclone","风荷载"],
+    keywords:["wind","angin","wind load","beban angin","wind speed","kecepatan angin","gust","wind pressure","tekanan angin","exposure category","kzt","topographic factor","topografi","topography","basic wind","velocity pressure","typhoon","hurricane","cyclone","风荷载","kz","kh","kd","directionality","gcpi","internal pressure","external pressure coefficient","cp","pressure coefficient","koefisien tekanan","exposure coefficient","koefisien eksposur","enclosure","gust effect","ke factor","mwfrs","components and cladding"],
     standards:["sni-1727-2020","asce-7-22","gb-50009-2012"],
     required_info:[]},
   rain:{name:"Rain Load / Rainfall",name_id:"Beban Hujan / Curah Hujan",
@@ -1375,8 +1375,73 @@ answer_modules:{
            ["40","0.83","0.50"]
          ]},
        notes:["GB equivalent column converts 3-s gust to 10-min mean (÷1.42) then w₀ = v₀²/1600. Values below GB's 0.30 kN/m² floor must be raised to 0.30."]},
+      {h:"Design Pressure Equation & Procedure (SNI 1727:2020 Pasal 26–27)",
+       table:{cols:["Step","Expression / Value"],
+         rows:[
+           ["Velocity pressure","<strong>qz = 0.613·Kz·Kzt·Kd·Ke·V²</strong> (N/m², V in m/s) — Eq 26.10-1"],
+           ["MWFRS design pressure","<strong>p = q·G·Cp − qi·(GCpi)</strong> (N/m²) — windward uses qz, leeward/side/roof use qh"],
+           ["Components & Cladding (h ≤ 18.3 m)","p = qh·[(GCp) − (GCpi)]"],
+           ["Ke — ground elevation factor","Ke = e^(−0.000119·zg), zg = site elevation (m); conservatively Ke = 1.0"],
+           ["Minimum design wind load","Walls ≥ 0.77 kN/m² + roof ≥ 0.38 kN/m² (applied simultaneously); open buildings ≥ 0.77 kN/m²·Af"]
+         ]}},
+      {h:"Exposure Categories (SNI 1727:2020 §26.7)",
+       table:{cols:["Exposure","Terrain (upwind surface roughness)"],
+         rows:[
+           ["B","Urban/suburban, wooded, or closely-spaced obstructions ≥ single-family-house size — must persist &gt; 457 m upwind (or &gt; 792 m for buildings &gt; 9.1 m tall)"],
+           ["C (default)","Open terrain with scattered obstructions &lt; 9.1 m high; flat open country & grassland"],
+           ["D","Flat unobstructed areas & water surfaces; smooth mud flats, salt flats, unbroken ice"]
+         ]},
+       notes:["Determine exposure for each wind direction over a 45° sector each side; the exposure giving the highest load governs that direction."]},
+      {h:"Velocity Pressure Exposure Coefficient Kz / Kh (SNI 1727:2020 Tabel 26.10-1)",
+       table:{center:true,cols:["Height z (m)","Exp B","Exp C","Exp D"],
+         rows:[
+           ["0–4.6","0.57 (0.70*)","0.85","1.03"],
+           ["6.1","0.62 (0.70*)","0.90","1.08"],
+           ["9.1","0.70","0.98","1.16"],
+           ["12.2","0.76","1.04","1.22"],
+           ["15.2","0.81","1.09","1.27"],
+           ["18.0","0.85","1.13","1.31"],
+           ["24.4","0.93","1.21","1.38"],
+           ["30.5","0.99","1.26","1.43"],
+           ["48.8","1.13","1.39","1.55"],
+           ["61.0","1.20","1.46","1.61"],
+           ["91.4","1.35","1.59","1.73"],
+           ["152.4","1.56","1.77","1.89"]
+         ]},
+       notes:["Formula: Kz = 2.01·(z/zg)^(2/α) for 4.6 m ≤ z ≤ zg; Kz = 2.01·(4.6/zg)^(2/α) below 4.6 m. zg & α from Tabel 26.11-1 (Exp B: zg=365.76 m, α=7.0 · C: 274.32, 9.5 · D: 213.36, 11.5). *Use 0.70 in Pasal 28 (low-rise) Exp B where z &lt; 9.1 m."]},
+      {h:"Wind Directionality Factor Kd (SNI 1727:2020 Tabel 26.6-1)",
+       table:{center:true,cols:["Structure type","Kd"],
+         rows:[
+           ["Buildings — MWFRS & C&C","0.85"],
+           ["Arched roofs","0.85"],
+           ["Chimneys/tanks — square","0.90"],
+           ["Chimneys/tanks — hexagonal / round","0.95 / 1.0"],
+           ["Solid freestanding walls & signs","0.85"],
+           ["Open signs / single-plane frames","0.85"],
+           ["Trussed towers — triangular/square/rectangular","0.85"],
+           ["Trussed towers — all other cross-sections","0.95"]
+         ]}},
+      {h:"Enclosure & Internal Pressure GCpi (SNI 1727:2020 Tabel 26.13-1)",
+       table:{center:true,cols:["Enclosure classification","GCpi"],
+         rows:[
+           ["Enclosed building","±0.18"],
+           ["Partially enclosed building","±0.55"],
+           ["Partially open building","±0.18"],
+           ["Open building (each wall ≥ 80% open)","0.00"]
+         ]},
+       notes:["+ and − act toward and away from the internal surfaces; both the positive and negative case must be checked. Glazing in Risk Category IV must meet ASTM E1996 impact protection (wind-borne debris)."]},
+      {h:"External Wall Pressure Coefficients Cp (SNI 1727:2020 Gambar 27.3-1, MWFRS)",
+       table:{center:true,cols:["Surface","Cp","Use with"],
+         rows:[
+           ["Windward wall","+0.8","qz"],
+           ["Leeward wall (L/B ≤ 1)","−0.5","qh"],
+           ["Leeward wall (L/B = 2)","−0.3","qh"],
+           ["Leeward wall (L/B ≥ 4)","−0.2","qh"],
+           ["Side walls (all L/B)","−0.7","qh"]
+         ]},
+       notes:["Roof Cp depends on h/L and roof angle θ (Gambar 27.3-1): windward roof ranges −0.9 to +0.4, leeward roof −0.3 to −0.6. G (gust-effect factor) = 0.85 for rigid buildings (n1 ≥ 1 Hz); compute Gf for flexible buildings (§26.11)."]},
     ],
-    sources:"SNI 1727:2020 §26–§31 (= ASCE 7-16) · ASCE 7-22 Ch. 26 (Kz, Kzt, Kd, qz), §26.10.2 (min pressure) · GB 50009-2012 §8.1 (w₀), Table 8.2.1 (μz), §8.2.2 (terrain/hill), §8.4 (βz)",
+    sources:"SNI 1727:2020 Tabel 26.6-1 (Kd), §26.7 (exposure), Tabel 26.10-1 (Kz), Tabel 26.11-1 (zg/α), Tabel 26.13-1 (GCpi), Gambar 27.3-1 (Cp), §26.10.2 & §27.1.5 (min pressure) — extracted from PDF · = ASCE 7-16 Ch.26–27 · GB 50009-2012 §8.1 (w₀), Table 8.2.1 (μz), §8.2.2 (terrain/hill), §8.4 (βz)",
     tool_link_site:true
   },
 
@@ -1921,14 +1986,37 @@ function buildMissingInfo(ctx){
 // ================================================================
 // RESPONSE BUILDER
 // ================================================================
+// Query Analysis card (Topics Detected) — rendered FIRST, before the
+// design procedure and the design parameters.
+function buildContextCard(ctx){
+  const{topics,projType,loc}=ctx;
+  if(!topics.length&&!projType&&!loc)return'';
+  const pt=projType?KB.project_types[projType]:null;
+  let html=`<div class="context-card"><h3>${T('q.analysis','Query Analysis')}</h3><div class="context-grid">`;
+  if(topics.length) html+=`<div class="ctx-item" style="grid-column:1/-1"><label>${T('q.topics','Topics Detected')}</label><span>${topics.map(t=>topicName(t)).join(' · ')}</span></div>`;
+  if(pt) html+=`<div class="ctx-item hi"><label>${T('q.ptype','Project Type')}</label><span>${(LANG==='zh'&&pt.name_zh)?pt.name_zh:pt.name}</span></div>
+    <div class="ctx-item hi"><label>${T('q.risk','Risk Category')}</label><span>${pt.risk_category}</span></div>
+    <div class="ctx-item hi"><label>${T('q.ie','Importance Factor Ie')}</label><span>${pt.ie}</span></div>`;
+  if(loc) html+=`<div class="ctx-item"><label>${T('q.loc','Location')}</label><span>${locName(loc)}</span></div>
+    <div class="ctx-item ${loc.seismic==='very_high'?'hi':loc.seismic==='high'?'med':''}"><label>${T('q.hazard','Seismic Hazard')}</label><span>${hazardLabel(loc.seismic)}</span></div>
+    <div class="ctx-item"><label>${T('q.ss','Typical Ss')}</label><span>${loc.typical_Ss?loc.typical_Ss[0]+'–'+loc.typical_Ss[1]+' g':'—'}</span></div>
+    <div class="ctx-item"><label>${T('q.s1','Typical S1')}</label><span>${loc.typical_S1?loc.typical_S1[0]+'–'+loc.typical_S1[1]+' g':'—'}</span></div>`;
+  html+=`</div>`;
+  if(pt)html+=`<p style="font-size:12px;margin-top:10px;color:var(--text2)">${(LANG==='zh'&&pt.note_zh)?pt.note_zh:pt.note}</p>`;
+  if(loc)html+=`<p style="font-size:12px;margin-top:6px;color:var(--text2)">📍 ${locNote(loc)}</p>`;
+  html+=`</div>`;
+  return html;
+}
+
 function buildResponse(ctx){
   const{topics,projType,loc}=ctx;
   if(!topics.length&&!projType&&!loc){
-    // FREE-TEXT FALLBACK: no curated topic matched — search the full extracted
-    // text of the standards library for related / equivalent context
+    // FREE-TEXT FALLBACK: no curated topic matched — show the AI/extractive
+    // answer then search the full extracted text of the standards library
+    const aiHtml=buildAIAnswerHTML(ctx);
     const hits=searchDynamic(ctx.raw);
     if(hits.length){
-      let html=`<div class="context-card"><h3>${T('fb.title','Full-Text Search — Standards Library')}</h3>
+      let html=aiHtml+`<div class="context-card"><h3>${T('fb.title','Full-Text Search — Standards Library')}</h3>
         <p style="font-size:13px;color:var(--text2);line-height:1.6">${LANG==='zh'
           ?`${T('fb.desc1','')}“<strong>${escapeHtml(ctx.raw)}</strong>”${T('fb.desc2','')}`
           :`No curated topic module matches "<strong>${escapeHtml(ctx.raw)}</strong>", but the following passages inside the standards documents are related or equivalent in context. Open the PDF from Browse Standards for the full clause.`}</p></div>
@@ -1941,29 +2029,17 @@ function buildResponse(ctx){
         <div class="missing-item"><div>${T('fb.tip2','Add a <strong>project type</strong> (power plant, hospital, school…) and a <strong>location</strong> (province / city) for risk category, Ie, and regional seismic + climate context.')}</div></div></div>`;
       return html;
     }
-    return`<div class="no-result">${T('fb.none','No matching content found in the knowledge base or the full-text standards library.<br><br>Try: <strong>"concrete cover requirements"</strong>, <strong>"purlin deflection limits"</strong>, <strong>"foundation type for soft soil"</strong>, <strong>"wind load Cilegon"</strong>, or <strong>"design live loads"</strong>.<br><br>For location-based wind / rainfall / soil data, open the <a onclick="showView(\'site\',null)" style="cursor:pointer"><strong>📡 Site Analysis</strong></a> tab.')}</div>`;
+    return aiHtml+`<div class="no-result">${T('fb.none','No matching content found in the knowledge base or the full-text standards library.<br><br>Try: <strong>"concrete cover requirements"</strong>, <strong>"purlin deflection limits"</strong>, <strong>"foundation type for soft soil"</strong>, <strong>"wind load Cilegon"</strong>, or <strong>"design live loads"</strong>.<br><br>For location-based wind / rainfall / soil data, open the <a onclick="showView(\'site\',null)" style="cursor:pointer"><strong>📡 Site Analysis</strong></a> tab.')}</div>`;
   }
   const pt=projType?KB.project_types[projType]:null;
   let html='';
 
-  // 1) Context card
-  html+=`<div class="context-card"><h3>${T('q.analysis','Query Analysis')}</h3><div class="context-grid">`;
-  if(pt) html+=`<div class="ctx-item hi"><label>${T('q.ptype','Project Type')}</label><span>${(LANG==='zh'&&pt.name_zh)?pt.name_zh:pt.name}</span></div>
-    <div class="ctx-item hi"><label>${T('q.risk','Risk Category')}</label><span>${pt.risk_category}</span></div>
-    <div class="ctx-item hi"><label>${T('q.ie','Importance Factor Ie')}</label><span>${pt.ie}</span></div>`;
-  if(loc) html+=`<div class="ctx-item"><label>${T('q.loc','Location')}</label><span>${locName(loc)}</span></div>
-    <div class="ctx-item ${loc.seismic==='very_high'?'hi':loc.seismic==='high'?'med':''}"><label>${T('q.hazard','Seismic Hazard')}</label><span>${hazardLabel(loc.seismic)}</span></div>
-    <div class="ctx-item"><label>${T('q.ss','Typical Ss')}</label><span>${loc.typical_Ss?loc.typical_Ss[0]+'–'+loc.typical_Ss[1]+' g':'—'}</span></div>
-    <div class="ctx-item"><label>${T('q.s1','Typical S1')}</label><span>${loc.typical_S1?loc.typical_S1[0]+'–'+loc.typical_S1[1]+' g':'—'}</span></div>`;
-  if(topics.length) html+=`<div class="ctx-item" style="grid-column:1/-1"><label>${T('q.topics','Topics Detected')}</label><span>${topics.map(t=>topicName(t)).join(' · ')}</span></div>`;
-  html+=`</div>`;
-  if(pt)html+=`<p style="font-size:12px;margin-top:10px;color:var(--text2)">${(LANG==='zh'&&pt.note_zh)?pt.note_zh:pt.note}</p>`;
-  if(loc)html+=`<p style="font-size:12px;margin-top:6px;color:var(--text2)">📍 ${locNote(loc)}</p>`;
-  html+=`</div>`;
-
-  // 2) Topic answer modules (Bug 3 fix) — design parameters
-  //    (the step-by-step procedure is rendered first, in handleSearch)
+  // 1) Design parameters (answer modules). Query Analysis & the design
+  //    procedure are rendered before this, in handleSearch.
   html+=buildTopicModuleHTML(topics);
+
+  // 2) AI answer (comprehensive explanation) — after the design parameters
+  html+=buildAIAnswerHTML(ctx);
 
   // 3) Standards cards — always when topics detected
   const relevantStds=getRelevantStandards(ctx);
@@ -2421,8 +2497,8 @@ function handleSearch(){
   if(!q)return;
   lastQuery=q;
   const ctx=analyzeQuery(q);
-  // Order: Design Procedure (shown first, expanded) → AI answer → Query Analysis → Design Parameters → Standards
-  const html=buildProcedureHTML(ctx.topics)+buildAIAnswerHTML(ctx)+buildResponse(ctx);
+  // Order: Query Analysis (Topics Detected) → Design Procedure → Design Parameters → AI answer → Standards
+  const html=buildContextCard(ctx)+buildProcedureHTML(ctx.topics)+buildResponse(ctx);
   const res=document.getElementById('results');
   res.innerHTML=html;
   res.style.display='block';
