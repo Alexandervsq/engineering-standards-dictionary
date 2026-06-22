@@ -499,6 +499,92 @@ window.QA_CARDS=[
     "地震位移（GB 50011 表5.5.1）：RC 框架 1/550、框剪 1/800、墙 1/1000（弹性）"]}],
   src:"SNI 1727:2020 附录 CC（§CC.2.1–2.3） · ASCE 7-16 附录 CC · GB 50010-2010 表3.4.3 · GB 50011 表5.5.1 · SNI 1726:2019 表20 · AISC DG11"}},
 
+{id:"steel-compression",
+ kw:["steel column","compression member","column buckling","flexural buckling","critical stress fcr","axial compression steel","column capacity","tekuk lentur","kekuatan tekan","kolom baja","kc/r","euler buckling","slenderness column"],
+ kw_zh:["钢柱","受压构件","弯曲屈曲","临界应力","轴压","柱承载力","欧拉屈曲"],
+ en:{title:"Steel Compression Member Design (Flexural Buckling)",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 BAB E3 / 🇺🇸 AISC 360-16 E3",pts:[
+    "Nominal strength <strong>Pn = Fcr·Ag</strong>, φc = 0.90 (Ω = 1.67)",
+    "Elastic buckling stress <strong>Fe = π²·E / (Lc/r)²</strong>, E = 200,000 MPa, Lc = K·L",
+    "If Lc/r ≤ 4.71√(E/Fy) (Fy/Fe ≤ 2.25): <strong>Fcr = [0.658^(Fy/Fe)]·Fy</strong> (inelastic)",
+    "If Lc/r &gt; 4.71√(E/Fy): <strong>Fcr = 0.877·Fe</strong> (elastic)",
+    "Threshold 4.71√(E/Fy) = 113 (Fy=345) / 134 (Fy=250); preferred KL/r ≤ 200; check torsional/FT buckling (E4)"]},
+   {h:"🇨🇳 GB 50017-2017 §7.2",pts:[
+    "Stability: <strong>N / (φ·A·f) ≤ 1.0</strong>, φ = stability factor from class a/b/c/d curves (Appendix tables) by λ = Lc/i",
+    "Design strength f = fy/γR (Q235 f≈215, Q355 f≈305 MPa); slenderness λ ≤ 150 (main compression members)"]}],
+  src:"SNI 1729:2020 BAB E3 (Pn, Fcr, Fe) · AISC 360-16 E3 · GB 50017-2017 §7.2, App. D"},
+ zh:{title:"钢受压构件设计（弯曲屈曲）",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 第 E3 章 / 🇺🇸 AISC 360-16 E3",pts:[
+    "名义强度 <strong>Pn = Fcr·Ag</strong>，φc = 0.90（Ω = 1.67）",
+    "弹性屈曲应力 <strong>Fe = π²·E / (Lc/r)²</strong>，E = 200,000 MPa，Lc = K·L",
+    "Lc/r ≤ 4.71√(E/Fy)（Fy/Fe ≤ 2.25）：<strong>Fcr = [0.658^(Fy/Fe)]·Fy</strong>（非弹性）",
+    "Lc/r &gt; 4.71√(E/Fy)：<strong>Fcr = 0.877·Fe</strong>（弹性）",
+    "分界 4.71√(E/Fy) = 113（Fy=345）/ 134（Fy=250）；宜 KL/r ≤ 200；验算扭转/弯扭屈曲（E4）"]},
+   {h:"🇨🇳 GB 50017-2017 §7.2",pts:[
+    "稳定：<strong>N / (φ·A·f) ≤ 1.0</strong>，φ = 稳定系数（a/b/c/d 类曲线，附录表）按 λ = Lc/i",
+    "设计强度 f = fy/γR（Q235 f≈215、Q355 f≈305 MPa）；主受压构件 λ ≤ 150"]}],
+  src:"SNI 1729:2020 第 E3 章 · AISC 360-16 E3 · GB 50017-2017 §7.2、附录 D"}},
+
+{id:"steel-flexure",
+ kw:["steel beam","flexural member","beam design","lateral torsional buckling","ltb","plastic moment","mp fy zx","lp lr","cb factor","beam capacity","balok baja","kekuatan lentur","tekuk torsi lateral","unbraced length"],
+ kw_zh:["钢梁","受弯构件","弯扭屈曲","塑性弯矩","梁承载力","无支撑长度"],
+ en:{title:"Steel Flexural Member Design (Beam, LTB)",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 BAB F2 / 🇺🇸 AISC 360-16 F2 (doubly-symmetric I)",pts:[
+    "Plastic moment <strong>Mn = Mp = Fy·Zx</strong>, φb = 0.90 (when Lb ≤ Lp and section compact)",
+    "Lp (yield limit) = <strong>1.76·ry·√(E/Fy)</strong>",
+    "Lp &lt; Lb ≤ Lr: Mn = Cb·[Mp − (Mp − 0.7Fy·Sx)·(Lb − Lp)/(Lr − Lp)] ≤ Mp (inelastic LTB)",
+    "Lb &gt; Lr: Mn = Fcr·Sx ≤ Mp (elastic LTB)",
+    "Cb = 12.5Mmax/(2.5Mmax + 3MA + 4MB + 3MC) ≥ 1.0 (conservatively 1.0)"]},
+   {h:"🇨🇳 GB 50017-2017 §6",pts:[
+    "Strength: <strong>Mx/(γx·Wnx·f) ≤ 1.0</strong>; overall stability Mx/(φb·Wx·f) ≤ 1.0",
+    "φb = overall stability factor (Appendix C); deflection limits per Table (e.g. L/250–L/400)"]}],
+  src:"SNI 1729:2020 BAB F2 (Mp, Lp, Lr, Cb) · AISC 360-16 F2 · GB 50017-2017 §6"},
+ zh:{title:"钢受弯构件设计（梁、弯扭屈曲）",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 第 F2 章 / 🇺🇸 AISC 360-16 F2（双轴对称 I 型）",pts:[
+    "塑性弯矩 <strong>Mn = Mp = Fy·Zx</strong>，φb = 0.90（Lb ≤ Lp 且截面厚实时）",
+    "Lp（屈服限）= <strong>1.76·ry·√(E/Fy)</strong>",
+    "Lp &lt; Lb ≤ Lr：Mn = Cb·[Mp − (Mp − 0.7Fy·Sx)·(Lb − Lp)/(Lr − Lp)] ≤ Mp（非弹性 LTB）",
+    "Lb &gt; Lr：Mn = Fcr·Sx ≤ Mp（弹性 LTB）",
+    "Cb = 12.5Mmax/(2.5Mmax + 3MA + 4MB + 3MC) ≥ 1.0（偏保守取 1.0）"]},
+   {h:"🇨🇳 GB 50017-2017 第 6 章",pts:[
+    "强度：<strong>Mx/(γx·Wnx·f) ≤ 1.0</strong>；整体稳定 Mx/(φb·Wx·f) ≤ 1.0",
+    "φb = 整体稳定系数（附录 C）；挠度限值按表（如 L/250–L/400）"]}],
+  src:"SNI 1729:2020 第 F2 章 · AISC 360-16 F2 · GB 50017-2017 第 6 章"}},
+
+{id:"steel-tension-classification",
+ kw:["steel tension member","tension capacity","gross net section","shear lag","effective net area","section classification","compact noncompact slender","width thickness ratio","lambda p lambda r","kekuatan tarik","penampang kompak","klasifikasi penampang"],
+ kw_zh:["受拉构件","净截面","剪力滞后","截面分类","厚实","宽厚比"],
+ en:{title:"Steel Tension Members & Section Classification",
+  sections:[
+   {h:"Tension — SNI 1729:2020 BAB D2 / AISC D2",pts:[
+    "Yielding (gross): φt·Pn = <strong>0.90·Fy·Ag</strong> (Ω = 1.67)",
+    "Rupture (net): φt·Pn = <strong>0.75·Fu·Ae</strong> (Ω = 2.00), Ae = U·An",
+    "Shear-lag U: 1.0 (all elements connected); U = 1 − x̄/L general; bolt holes = db + 2 mm in An",
+    "Preferred slenderness L/r ≤ 300"]},
+   {h:"Section classification — BAB B4.1 / AISC Table B4.1 (λ = b/t)",pts:[
+    "I-flange flexure: λp = <strong>0.38√(E/Fy)</strong>, λr = 1.00√(E/Fy)",
+    "I-web flexure: λp = <strong>3.76√(E/Fy)</strong>, λr = 5.70√(E/Fy)",
+    "Compression: flange λr = 0.56√(E/Fy), web λr = 1.49√(E/Fy)",
+    "Compact ⇒ full Mp; noncompact/slender ⇒ local-buckling reduction. 🇨🇳 GB 50017 §3.5 uses width-thickness classes S1–S5"]}],
+  src:"SNI 1729:2020 BAB D2, BAB B4.1 (Tabel B4.1) · AISC 360-16 D2, Table B4.1 · GB 50017-2017 §3.5, §7.1"},
+ zh:{title:"钢受拉构件与截面分类",
+  sections:[
+   {h:"受拉 — SNI 1729:2020 第 D2 章 / AISC D2",pts:[
+    "屈服（毛截面）：φt·Pn = <strong>0.90·Fy·Ag</strong>（Ω = 1.67）",
+    "断裂（净截面）：φt·Pn = <strong>0.75·Fu·Ae</strong>（Ω = 2.00），Ae = U·An",
+    "剪力滞后 U：1.0（全部板件相连）；通式 U = 1 − x̄/L；螺栓孔 = db + 2 mm 计入 An",
+    "宜 L/r ≤ 300"]},
+   {h:"截面分类 — 第 B4.1 章 / AISC 表 B4.1（λ = b/t）",pts:[
+    "I 翼缘受弯：λp = <strong>0.38√(E/Fy)</strong>，λr = 1.00√(E/Fy)",
+    "I 腹板受弯：λp = <strong>3.76√(E/Fy)</strong>，λr = 5.70√(E/Fy)",
+    "受压：翼缘 λr = 0.56√(E/Fy)，腹板 λr = 1.49√(E/Fy)",
+    "厚实 ⇒ 全截面 Mp；非厚实/细长 ⇒ 局部屈曲折减。🇨🇳 GB 50017 §3.5 用 S1–S5 宽厚比等级"]}],
+  src:"SNI 1729:2020 第 D2、B4.1 章（表 B4.1） · AISC 360-16 D2、表 B4.1 · GB 50017-2017 §3.5、§7.1"}},
+
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
  kw_zh:["荷载组合","荷载分项系数","组合"],
