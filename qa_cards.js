@@ -643,6 +643,72 @@ window.QA_CARDS=[
     "钢管混凝土：GB 50936；型钢混凝土（SRC）：JGJ 138 / YB 9082"]}],
   src:"SNI 1729:2020 第 I 章（I2 柱、I3 梁、I8 栓钉） · AISC 360-16 第 I 章 · GB 50017-2017 §14 · GB 50936（钢管混凝土） · JGJ 138（型钢混凝土）"}},
 
+{id:"steel-secondorder-bracing",
+ kw:["second order analysis","b1 b2","amplification factor","p-delta","p delta","stability bracing","brace strength stiffness","notional load","direct analysis method","effective length","cm factor","analisis orde kedua","pengekangan","amplifikasi momen"],
+ kw_zh:["二阶分析","放大系数","稳定支撑","支撑刚度","概念荷载","直接分析","计算长度"],
+ en:{title:"Steel Second-Order Analysis (B1/B2) & Stability Bracing",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 Lampiran 8 / 🇺🇸 AISC App.8",pts:[
+    "Amplified: Mr = B1·Mnt + B2·Mlt; Pr = Pnt + B2·Plt",
+    "<strong>B1 = Cm / (1 − α·Pr/Pe1) ≥ 1</strong>, α = 1.0 (LRFD); Cm = 0.6 − 0.4·(M1/M2)",
+    "<strong>B2 = 1 / (1 − α·Pstory/Pe,story) ≥ 1</strong> (sway amplification)",
+    "Direct Analysis Method (BAB C): reduced stiffness 0.8·τb·EI + notional load Ni = 0.002·Yi; K = 1.0"]},
+   {h:"Stability bracing — Lampiran 6",pts:[
+    "Column panel brace: Vbr = <strong>0.005·Pr</strong>, βbr = (1/φ)·(2Pr/Lbr)",
+    "Column point brace: Pbr = <strong>0.01·Pr</strong>, βbr = (1/φ)·(8Pr/Lbr)",
+    "Beam point brace: Pbr = 0.02·Mr·Cd/ho",
+    "Bracing must provide BOTH strength and stiffness (φ = 0.75)",
+    "🇨🇳 GB 50017 §5: second-order via amplified-sway or P-Δ; brace per §7.5"]}],
+  src:"SNI 1729:2020 Lampiran 8 (B1/B2), Lampiran 6 (bracing), BAB C (direct analysis) · AISC 360-16 App.6, App.8, Ch.C · GB 50017-2017 §5.1, §7.5"},
+ zh:{title:"钢结构二阶分析（B1/B2）与稳定支撑",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 附录 8 / 🇺🇸 AISC 附录 8",pts:[
+    "放大：Mr = B1·Mnt + B2·Mlt；Pr = Pnt + B2·Plt",
+    "<strong>B1 = Cm / (1 − α·Pr/Pe1) ≥ 1</strong>，α = 1.0（LRFD）；Cm = 0.6 − 0.4·(M1/M2)",
+    "<strong>B2 = 1 / (1 − α·Pstory/Pe,story) ≥ 1</strong>（侧移放大）",
+    "直接分析法（C 章）：折减刚度 0.8·τb·EI + 概念荷载 Ni = 0.002·Yi；K = 1.0"]},
+   {h:"稳定支撑 — 附录 6",pts:[
+    "柱节间支撑：Vbr = <strong>0.005·Pr</strong>，βbr = (1/φ)·(2Pr/Lbr)",
+    "柱节点支撑：Pbr = <strong>0.01·Pr</strong>，βbr = (1/φ)·(8Pr/Lbr)",
+    "梁节点支撑：Pbr = 0.02·Mr·Cd/ho",
+    "支撑须同时满足强度与刚度（φ = 0.75）",
+    "🇨🇳 GB 50017 §5：二阶用放大侧移或 P-Δ；支撑按 §7.5"]}],
+  src:"SNI 1729:2020 附录 8（B1/B2）、附录 6（支撑）、C 章（直接分析） · AISC 360-16 附录 6、8、C 章 · GB 50017-2017 §5.1、§7.5"}},
+
+{id:"steel-fatigue-fire",
+ kw:["fatigue steel","fatigue design","stress range","stress category","fatigue life","fire design steel","elevated temperature steel","critical temperature","structural fire","fatik","kelelahan","desain kebakaran baja","temperatur kritis"],
+ kw_zh:["疲劳","应力幅","疲劳寿命","抗火设计","高温钢材","临界温度"],
+ en:{title:"Steel Fatigue & Fire Design",
+  sections:[
+   {h:"Fatigue — SNI 1729:2020 Lampiran 3 / AISC App.3",pts:[
+    "Required when live-load stress cycles &gt; <strong>20,000</strong>; use net applied stress range from service loads",
+    "Allowable stress range <strong>FSR = (6900·Cf/nSR)^0.333 ≥ FTH</strong> MPa (Cat. A–E')",
+    "Shear (Cat. F): FSR = (690·Cf/nSR)^0.167 ≥ 55 MPa",
+    "Threshold FTH (no check below): Cat. A 165, Cat. C 69, Cat. E' 18 MPa",
+    "Detail category A (base metal) → E' (worst welded); good detailing & NDE reduce category severity"]},
+   {h:"Fire — SNI 1729:2020 Lampiran 4 / AISC App.4",pts:[
+    "Two methods: structural analysis at elevated temperature, or qualification (fire-rating) testing",
+    "Steel retention: at 538°C E ≈ 0.60E, Fy ≈ 0.66Fy; at 600°C ≈ 0.31E, 0.47Fy",
+    "Fire load combination: <strong>1.2D + 0.5L + T</strong> (thermal actions)",
+    "Fire-resistance ratings (TKA) themselves are in SNI 1741 / Permen 26 — see the Fire module",
+    "🇨🇳 GB 51249 (steel structure fire) / GB 50017 §17; fatigue GB 50017 §16"]}],
+  src:"SNI 1729:2020 Lampiran 3 (fatigue), Lampiran 4 (fire) · AISC 360-16 App.3, App.4 · GB 50017-2017 §16–17 · GB 51249 (fire)"},
+ zh:{title:"钢结构疲劳与抗火设计",
+  sections:[
+   {h:"疲劳 — SNI 1729:2020 附录 3 / AISC 附录 3",pts:[
+    "活载应力循环 &gt; <strong>20,000</strong> 次时需验算；采用使用荷载净应力幅",
+    "容许应力幅 <strong>FSR = (6900·Cf/nSR)^0.333 ≥ FTH</strong> MPa（A–E′ 类）",
+    "受剪（F 类）：FSR = (690·Cf/nSR)^0.167 ≥ 55 MPa",
+    "门槛 FTH（以下不验算）：A 类 165、C 类 69、E′ 类 18 MPa",
+    "细节类别 A（母材）→ E′（最不利焊接）；良好构造与无损检测可降低类别严重度"]},
+   {h:"抗火 — SNI 1729:2020 附录 4 / AISC 附录 4",pts:[
+    "两种方法：高温下结构分析，或耐火（耐火等级）试验鉴定",
+    "钢材保留：538°C 时 E ≈ 0.60E、Fy ≈ 0.66Fy；600°C 约 0.31E、0.47Fy",
+    "火灾荷载组合：<strong>1.2D + 0.5L + T</strong>（温度作用）",
+    "耐火极限（TKA）本身见 SNI 1741 / 条例 26 — 见消防模块",
+    "🇨🇳 GB 51249（钢结构防火）/ GB 50017 §17；疲劳 GB 50017 §16"]}],
+  src:"SNI 1729:2020 附录 3（疲劳）、附录 4（抗火） · AISC 360-16 附录 3、4 · GB 50017-2017 §16–17 · GB 51249（防火）"}},
+
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
  kw_zh:["荷载组合","荷载分项系数","组合"],

@@ -157,8 +157,14 @@ ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position
 .module-card>summary .mtitle{display:flex;align-items:center;gap:10px}
 .module-card>summary .micon{font-size:20px}
 .module-body{padding:6px 20px 20px}
-.module-body h4{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px}
+.module-body h4{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
 .module-body h4:first-child{margin-top:8px}
+/* systematic-ordering helpers: lead-in note, numbered params, extra divider */
+.mod-systematic{background:#f2fbf5;border-left:3px solid var(--green);border-radius:6px;padding:9px 13px;font-size:12.5px;color:var(--text2);line-height:1.55;margin:4px 0 6px}
+.param-step{flex-shrink:0;background:var(--blue2);color:#fff;width:22px;height:22px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Inter',sans-serif}
+.mod-extra-divider{display:flex;align-items:center;text-align:center;margin:22px 0 6px;color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.mod-extra-divider::before,.mod-extra-divider::after{content:"";flex:1;border-top:1.5px dashed var(--gray2)}
+.mod-extra-divider span{padding:0 12px}
 .module-body p{font-size:13px;color:var(--text2);line-height:1.6;margin:6px 0}
 .module-body .src{font-size:11px;color:var(--gray2);margin-top:14px;border-top:1px dashed var(--gray);padding-top:8px;line-height:1.5}
 .mtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0}
@@ -948,7 +954,7 @@ topics:{
     standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
-    keywords:["steel","baja","moment frame","braced frame","SMRF","SMF","SCBF","EBF","seismic steel","AISC","connection","welding","weld","bolt","buckling","stability","LRFD","ASD","BJ37","A992","Q235","Q355","compression member","tension member","flexural member","steel column","steel beam","flexural buckling","lateral torsional buckling","ltb","critical stress","fcr","plastic moment","section classification","compact","noncompact","slender","width thickness","shear lag","kekuatan tekan","kekuatan tarik","kekuatan lentur","tekuk","klasifikasi penampang","kolom baja","balok baja","resistance factor","sni 1729","block shear","geser blok","bearing strength","tear out","slip critical","pretension","fillet weld","groove weld","fnv","fnt","fexx","composite member","composite column","composite beam","shear stud","headed stud","shear connector","gusset plate","edge distance","komposit","penghubung geser"],
+    keywords:["steel","baja","moment frame","braced frame","SMRF","SMF","SCBF","EBF","seismic steel","AISC","connection","welding","weld","bolt","buckling","stability","LRFD","ASD","BJ37","A992","Q235","Q355","compression member","tension member","flexural member","steel column","steel beam","flexural buckling","lateral torsional buckling","ltb","critical stress","fcr","plastic moment","section classification","compact","noncompact","slender","width thickness","shear lag","kekuatan tekan","kekuatan tarik","kekuatan lentur","tekuk","klasifikasi penampang","kolom baja","balok baja","resistance factor","sni 1729","block shear","geser blok","bearing strength","tear out","slip critical","pretension","fillet weld","groove weld","fnv","fnt","fexx","composite member","composite column","composite beam","shear stud","headed stud","shear connector","gusset plate","edge distance","komposit","penghubung geser","second order","b1 b2","amplification","p-delta","stability bracing","notional load","direct analysis","fatigue","stress range","fatik","fire design","elevated temperature","critical temperature","temperatur kritis","pengekangan"],
     standards:["sni-1729-2020","aisc-360-22","aisc-341-22","gb-50017-2017"],
     required_info:["steel_grade","loading","system_type"]},
   geotechnical:{name:"Geotechnical / Foundation",name_id:"Geoteknik / Pondasi",
@@ -1196,7 +1202,43 @@ answer_modules:{
            ["Encased / filled composite columns","Pno with steel + concrete + rebar; min steel ratio 1% (encased)"],
            ["Concrete bearing","φ·1.7·f'c·A1 (φ = 0.65) for direct bearing transfer"]
          ]}},
-      {h:"Seismic Provisions (AISC 341-22 / SNI 1729:2020 seismic chapter)",
+      {h:"Approximate Second-Order Analysis — B1/B2 (SNI 1729:2020 Lampiran 8)",extra:true,
+       table:{cols:["Item","Expression"],
+         rows:[
+           ["Amplified moments / forces","Mr = B1·Mnt + B2·Mlt; Pr = Pnt + B2·Plt"],
+           ["B1 (P-δ, member)","<strong>B1 = Cm / (1 − α·Pr/Pe1) ≥ 1</strong>, α = 1.0 (LRFD)"],
+           ["Cm (no transverse load)","Cm = 0.6 − 0.4·(M1/M2); = 1.0 with transverse load between supports"],
+           ["Pe1 (member elastic buckling)","Pe1 = π²·EI* / (Lc1)², EI* = 0.8·τb·EI (direct analysis)"],
+           ["B2 (P-Δ, storey)","<strong>B2 = 1 / (1 − α·Pstory/Pe,story) ≥ 1</strong>, Pe,story = RM·HL/ΔH"]
+         ]},
+       notes:["B1 amplifies non-sway (gravity) moments; B2 amplifies sway (lateral) effects. Direct Analysis Method (BAB C) uses reduced stiffness 0.8·EI and a notional load Ni = 0.002·Yi."]},
+      {h:"Member Stability Bracing (SNI 1729:2020 Lampiran 6)",extra:true,
+       table:{center:true,cols:["Brace type","Required strength","Required stiffness"],
+         rows:[
+           ["Column — panel bracing","Vbr = 0.005·Pr","βbr = (1/φ)·(2·Pr/Lbr), φ = 0.75"],
+           ["Column — point bracing","Pbr = 0.01·Pr","βbr = (1/φ)·(8·Pr/Lbr)"],
+           ["Beam — point (lateral) bracing","Pbr = 0.02·Mr·Cd/ho","βbr = (1/φ)·(10·Mr·Cd)/(Lbr·ho)"]
+         ]},
+       notes:["Pr / Mr = required axial / flexural strength of the braced member. Bracing must provide BOTH strength and stiffness; inadequate stiffness invalidates the assumed unbraced length."]},
+      {h:"Fatigue Design (SNI 1729:2020 Lampiran 3)",extra:true,
+       table:{cols:["Item","Provision"],
+         rows:[
+           ["When required","Live-load stress cycles &gt; 20,000; check only the net applied stress range from service loads"],
+           ["Allowable stress range (Cat. A–E')","<strong>FSR = (6900·Cf/nSR)^0.333 ≥ FTH</strong> (MPa); Cf = category constant, nSR = cycles"],
+           ["Shear (Cat. F)","FSR = (690·Cf/nSR)^0.167 ≥ 55 MPa"],
+           ["Threshold FTH","Below FTH no fatigue check needed (e.g. Cat. A 165, Cat. C 69, Cat. E' 18 MPa)"],
+           ["Detail categories","A (base metal) → E' (worst welded detail); fabrication & NDE per §3.5–3.6"]
+         ]}},
+      {h:"Fire Design (SNI 1729:2020 Lampiran 4)",extra:true,
+       table:{cols:["Item","Provision"],
+         rows:[
+           ["Two methods","(a) by structural analysis at elevated temperature; (b) by qualification testing (fire-rating)"],
+           ["Steel property retention (≈)","At 538°C: E ≈ 0.60·E, Fy ≈ 0.66·Fy; at 600°C ≈ 0.31·E, 0.47·Fy (Tabel A-4.2.1)"],
+           ["Critical temperature","Temperature at which the member reaches its limit state under the fire load combination"],
+           ["Fire load combination","1.2D + 0.5L + T (elevated-temperature actions), per Lampiran 4.1.4"],
+           ["Cross-ref","SNI 1729 covers structural fire engineering; SNI 1741/Permen 26 cover fire-resistance ratings (TKA) — see the Fire module"]
+         ]}},
+      {h:"Seismic Provisions (AISC 341-22 / SNI 1729:2020 seismic chapter)",extra:true,
        table:{cols:["System","Key Requirement"],
          rows:[
            ["SMF — Special Moment Frame","Ry = 1.1 (A992); highly ductile columns max Pu/φc·Pn = 0.75"],
@@ -1205,7 +1247,7 @@ answer_modules:{
          ]},
        notes:["Ry = ratio of expected to specified minimum yield stress, used in capacity design of seismic systems."]},
     ],
-    sources:"SNI 1729:2020 (= AISC 360-16): BAB B3/B4 (φ/Ω, classification), BAB D (tension), BAB E3 (compression Fcr), BAB F2 (flexure Mp/Lp/Lr/Cb), BAB G2 (shear), BAB H1 (combined), BAB I (composite, I8 studs), BAB J2 (welds), Tabel J3.2 (bolts), J3 (bearing/slip), BAB J4 (block shear) — extracted from PDF · AISC 360-22 Tables B4.1, J3.2, J2.5 · AISC 341-22 (seismic) · GB 50017-2017 (Q-grades, design strength f = fy/γR, §11 connections)"
+    sources:"SNI 1729:2020 (= AISC 360-16): BAB B–K member & connection design, Lampiran 3 (fatigue), Lampiran 4 (fire), Lampiran 6 (stability bracing), Lampiran 8 (B1/B2 second-order) — extracted from PDF · AISC 360-22 · AISC 341-22 (seismic) · GB 50017-2017 (Q-grades, f = fy/γR, §11 connections, §16 fatigue, §17 fire)"
   },
 
   geotechnical:{
@@ -2314,9 +2356,24 @@ function renderProcedure(proc){
 function renderModule(key,mod){
   // pick the Chinese version of the module content when 中文 is active
   const m=(LANG==='zh'&&mod.zh)?mod.zh:mod;
+  // does this topic have a step-by-step procedure shown above?
+  const procKey=(window.PROCEDURES&&window.PROCEDURES[key]&&window.PROCEDURES[key].ref)?window.PROCEDURES[key].ref:key;
+  const hasProc=!!(window.PROCEDURES&&window.PROCEDURES[procKey]&&!window.PROCEDURES[procKey].ref);
   let body='';
-  m.sections.forEach(sec=>{
-    body+=`<h4>${sec.h}</h4>`;
+  if(hasProc){
+    body+=`<div class="mod-systematic">${T('mod.systematic','📋 The design parameters below are arranged to follow the design procedure above — work through them in order. Additional considerations are grouped at the end.')}</div>`;
+  }
+  let coreN=0, dividerDone=false;
+  m.sections.forEach((sec,i)=>{
+    // the "extra" (additional-consideration) flag lives on the base/EN section
+    const isExtra=!!(mod.sections[i]&&mod.sections[i].extra);
+    if(isExtra&&!dividerDone){
+      dividerDone=true;
+      body+=`<div class="mod-extra-divider"><span>${T('mod.additional','⊕ Additional design considerations')}</span></div>`;
+    }
+    let tag='';
+    if(!isExtra&&hasProc){coreN++;tag=`<span class="param-step">${coreN}</span>`;}
+    body+=`<h4>${tag}${sec.h}</h4>`;
     if(sec.table)body+=renderModTable(sec.table);
     if(sec.notes)sec.notes.forEach(n=>body+=`<div class="note-box">${n}</div>`);
   });
