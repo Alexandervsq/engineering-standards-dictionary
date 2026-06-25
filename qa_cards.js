@@ -585,6 +585,64 @@ window.QA_CARDS=[
     "厚实 ⇒ 全截面 Mp；非厚实/细长 ⇒ 局部屈曲折减。🇨🇳 GB 50017 §3.5 用 S1–S5 宽厚比等级"]}],
   src:"SNI 1729:2020 第 D2、B4.1 章（表 B4.1） · AISC 360-16 D2、表 B4.1 · GB 50017-2017 §3.5、§7.1"}},
 
+{id:"block-shear-bearing",
+ kw:["block shear","block shear rupture","bolt bearing","bearing strength","tear out","tearout","connecting element","gusset plate","edge distance","bolt spacing","geser blok","kekuatan tumpu","jarak tepi","whitmore","connection strength steel"],
+ kw_zh:["块状剪切","承压","撕裂","节点板","边距","螺栓间距","连接强度"],
+ en:{title:"Block Shear, Bolt Bearing & Connecting Elements",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 BAB J4 / 🇺🇸 AISC J4",pts:[
+    "Block shear: <strong>Rn = 0.60·Fu·Anv + Ubs·Fu·Ant ≤ 0.60·Fy·Agv + Ubs·Fu·Ant</strong> (φ = 0.75)",
+    "Ubs = 1.0 (uniform tension, e.g. gusset/angle) · 0.5 (non-uniform, e.g. coped beam)",
+    "Element shear yielding 0.60·Fy·Agv (φ=1.00); rupture 0.60·Fu·Anv (φ=0.75)",
+    "Gusset plates: limit tension to the Whitmore-section effective area"]},
+   {h:"Bolt bearing & layout — BAB J3",pts:[
+    "Bearing: <strong>Rn = 2.4·d·t·Fu</strong> (deformation a consideration); tear-out Rn = 1.2·lc·t·Fu (φ = 0.75)",
+    "Min spacing ≥ 2⅔·d (3·d preferred); min edge distance per Tabel J3.4",
+    "Net area: deduct hole = bolt d + 2 mm (standard holes)",
+    "🇨🇳 GB 50017 §11.4: bearing-type bolt 承压 Nc = d·Σt·fcb; check 端距/边距 per §11.5"]}],
+  src:"SNI 1729:2020 BAB J4 (block shear), J3.10 (bearing), J3.3–3.5 (spacing/edge) · AISC 360-16 J3–J4 · GB 50017-2017 §11.4–11.5"},
+ zh:{title:"块状剪切、螺栓承压与连接板件",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 第 J4 章 / 🇺🇸 AISC J4",pts:[
+    "块状剪切：<strong>Rn = 0.60·Fu·Anv + Ubs·Fu·Ant ≤ 0.60·Fy·Agv + Ubs·Fu·Ant</strong>（φ = 0.75）",
+    "Ubs = 1.0（均匀受拉，如节点板/角钢）· 0.5（不均匀，如切角梁）",
+    "板件剪切屈服 0.60·Fy·Agv（φ=1.00）；断裂 0.60·Fu·Anv（φ=0.75）",
+    "节点板：受拉按 Whitmore 截面有效面积限制"]},
+   {h:"螺栓承压与排布 — 第 J3 章",pts:[
+    "承压：<strong>Rn = 2.4·d·t·Fu</strong>（考虑变形）；撕裂 Rn = 1.2·lc·t·Fu（φ = 0.75）",
+    "最小间距 ≥ 2⅔·d（宜 3·d）；最小边距按表 J3.4",
+    "净截面：扣孔 = 螺栓 d + 2 mm（标准孔）",
+    "🇨🇳 GB 50017 §11.4：承压型螺栓 Nc = d·Σt·fcb；端距/边距按 §11.5"]}],
+  src:"SNI 1729:2020 第 J4 章（块状剪切）、J3.10（承压）、J3.3–3.5（间距/边距） · AISC 360-16 J3–J4 · GB 50017-2017 §11.4–11.5"}},
+
+{id:"composite-steel",
+ kw:["composite member","composite column","composite beam","shear stud","headed stud","shear connector","steel concrete composite","encased column","filled tube","cft","komposit","penghubung geser","angkur stud","baja beton komposit"],
+ kw_zh:["组合构件","组合柱","组合梁","栓钉","抗剪连接件","钢管混凝土","型钢混凝土"],
+ en:{title:"Composite Steel-Concrete Members",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 BAB I / 🇺🇸 AISC 360-16 Ch.I",pts:[
+    "Headed stud anchor shear: <strong>Qn = 0.5·Asa·√(f'c·Ec) ≤ Rg·Rp·Asa·Fu</strong> (I8-1)",
+    "Rg = 1.0 (no deck) / 0.85 / 0.7; Rp = 0.75 (no deck) / 0.6 (perpendicular deck)",
+    "Composite beam ΣQn = least of 0.85·f'c·Ac, Fy·As (full composite if ΣQn ≥ this)",
+    "Filled/encased columns: Pno from steel + concrete + rebar; encased min steel ratio 1%, min 4 bars",
+    "Concrete bearing transfer φ·1.7·f'c·A1 (φ = 0.65)"]},
+   {h:"🇨🇳 GB 50017-2017 §14 / JGJ 138 / GB 50936 (CFST)",pts:[
+    "Composite beams (组合梁) per GB 50017 §14: stud connectors Nv^c = 0.43·As·√(Ec·fc) ≤ 0.7·As·γ·f",
+    "Concrete-filled steel tube (钢管混凝土): GB 50936; encased SRC: JGJ 138 / YB 9082"]}],
+  src:"SNI 1729:2020 BAB I (I2 columns, I3 beams, I8 studs) · AISC 360-16 Ch.I · GB 50017-2017 §14 · GB 50936 (CFST) · JGJ 138 (SRC)"},
+ zh:{title:"钢-混凝土组合构件",
+  sections:[
+   {h:"🇮🇩 SNI 1729:2020 第 I 章 / 🇺🇸 AISC 360-16 第 I 章",pts:[
+    "栓钉抗剪：<strong>Qn = 0.5·Asa·√(f'c·Ec) ≤ Rg·Rp·Asa·Fu</strong>（I8-1）",
+    "Rg = 1.0（无压型板）/ 0.85 / 0.7；Rp = 0.75（无板）/ 0.6（垂直压型板）",
+    "组合梁 ΣQn = 取 0.85·f'c·Ac、Fy·As 中较小者（ΣQn ≥ 此值为完全组合）",
+    "填充/包覆柱：Pno 计入 钢+混凝土+钢筋；包覆柱含钢率 ≥ 1%、≥ 4 根纵筋",
+    "混凝土承压传递 φ·1.7·f'c·A1（φ = 0.65）"]},
+   {h:"🇨🇳 GB 50017-2017 §14 / JGJ 138 / GB 50936（钢管混凝土）",pts:[
+    "组合梁按 GB 50017 §14：栓钉连接件 Nv^c = 0.43·As·√(Ec·fc) ≤ 0.7·As·γ·f",
+    "钢管混凝土：GB 50936；型钢混凝土（SRC）：JGJ 138 / YB 9082"]}],
+  src:"SNI 1729:2020 第 I 章（I2 柱、I3 梁、I8 栓钉） · AISC 360-16 第 I 章 · GB 50017-2017 §14 · GB 50936（钢管混凝土） · JGJ 138（型钢混凝土）"}},
+
 {id:"load-combinations",
  kw:["load combination","load combinations","kombinasi beban","load factor","faktor beban","ultimate load","factored load","lrfd combinations"],
  kw_zh:["荷载组合","荷载分项系数","组合"],
@@ -702,8 +760,8 @@ window.QA_CARDS=[
   src:"SNI 1726:2019 表20 · ASCE 7-22 表12.12-1 · GB 50011-2010 表5.5.1、表5.5.5 · JGJ 3-2010 §3.7"}},
 
 {id:"bolt-weld",
- kw:["bolt capacity","bolt strength","bolt shear","weld strength","fillet weld","weld capacity","baut","las","kekuatan baut","high strength bolt","anchor bolt"],
- kw_zh:["螺栓","焊缝","角焊缝","高强螺栓","抗剪承载"],
+ kw:["bolt capacity","bolt strength","bolt shear","weld strength","fillet weld","weld capacity","baut","las","kekuatan baut","high strength bolt","anchor bolt","slip critical","slip-critical","pretension bolt","faying surface","bolt tension","fnv","fnt"],
+ kw_zh:["螺栓","焊缝","角焊缝","高强螺栓","抗剪承载","摩擦型","预拉力","螺栓抗拉"],
  en:{title:"Bolt & Weld Design Strengths",
   sections:[
    {h:"🇮🇩 SNI 1729:2020 / 🇺🇸 AISC 360-22 Table J3.2 (nominal Fnv, φ=0.75)",pts:[

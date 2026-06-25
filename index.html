@@ -948,7 +948,7 @@ topics:{
     standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
-    keywords:["steel","baja","moment frame","braced frame","SMRF","SMF","SCBF","EBF","seismic steel","AISC","connection","welding","weld","bolt","buckling","stability","LRFD","ASD","BJ37","A992","Q235","Q355","compression member","tension member","flexural member","steel column","steel beam","flexural buckling","lateral torsional buckling","ltb","critical stress","fcr","plastic moment","section classification","compact","noncompact","slender","width thickness","shear lag","kekuatan tekan","kekuatan tarik","kekuatan lentur","tekuk","klasifikasi penampang","kolom baja","balok baja","resistance factor","sni 1729"],
+    keywords:["steel","baja","moment frame","braced frame","SMRF","SMF","SCBF","EBF","seismic steel","AISC","connection","welding","weld","bolt","buckling","stability","LRFD","ASD","BJ37","A992","Q235","Q355","compression member","tension member","flexural member","steel column","steel beam","flexural buckling","lateral torsional buckling","ltb","critical stress","fcr","plastic moment","section classification","compact","noncompact","slender","width thickness","shear lag","kekuatan tekan","kekuatan tarik","kekuatan lentur","tekuk","klasifikasi penampang","kolom baja","balok baja","resistance factor","sni 1729","block shear","geser blok","bearing strength","tear out","slip critical","pretension","fillet weld","groove weld","fnv","fnt","fexx","composite member","composite column","composite beam","shear stud","headed stud","shear connector","gusset plate","edge distance","komposit","penghubung geser"],
     standards:["sni-1729-2020","aisc-360-22","aisc-341-22","gb-50017-2017"],
     required_info:["steel_grade","loading","system_type"]},
   geotechnical:{name:"Geotechnical / Foundation",name_id:"Geoteknik / Pondasi",
@@ -1146,6 +1146,56 @@ answer_modules:{
            ["Combined axial + flexure (H1-1)","Pr/Pc ≥ 0.2: Pr/Pc + 8/9·(Mrx/Mcx + Mry/Mcy) ≤ 1.0"],
            ["","Pr/Pc &lt; 0.2: Pr/(2Pc) + (Mrx/Mcx + Mry/Mcy) ≤ 1.0"]
          ]}},
+      {h:"Bolt Design — Nominal Stresses (SNI 1729:2020 Tabel J3.2)",
+       table:{center:true,cols:["Fastener","Fnt — tension (MPa)","Fnv — shear (MPa)"],
+         rows:[
+           ["A307","310","186"],
+           ["Group A (A325) — threads IN shear plane (-N)","620","372"],
+           ["Group A (A325) — threads EXCLUDED (-X)","620","469"],
+           ["Group B (A490) — threads IN shear plane (-N)","780","469"],
+           ["Group B (A490) — threads EXCLUDED (-X)","780","579"],
+           ["Group C (F3043) — threads in shear","1040","620"],
+           ["Threaded parts (A3.4) — threads in / excluded","0.75·Fu","0.450·Fu / 0.563·Fu"]
+         ]},
+       notes:["Bolt strength Rn = Fn·Ab, φ = 0.75 (Ω = 2.00). M20 A325-N single shear: 0.75 × 372 × 245 mm² ≈ 68 kN. Combined tension+shear: use F'nt = 1.3·Fnt − (Fnt/φFnv)·frv ≤ Fnt (J3-3a)."]},
+      {h:"Bolt Bearing, Tear-out & Slip-Critical (SNI 1729:2020 BAB J3)",
+       table:{cols:["Limit state","Strength (φ = 0.75)"],
+         rows:[
+           ["Bearing at bolt hole (deformation a consideration)","Rn = <strong>2.4·d·t·Fu</strong> (3.0·d·t·Fu if deformation not a consideration)"],
+           ["Tear-out (edge/spacing)","Rn = <strong>1.2·lc·t·Fu</strong> (1.5·lc·t·Fu if deformation not a consideration); lc = clear distance"],
+           ["Min spacing","≥ 2⅔·d (3·d preferred), centre-to-centre"],
+           ["Min edge distance","per Tabel J3.4 (e.g. ~1.25·d to 1.75·d by bolt size)"],
+           ["Slip-critical resistance","Rn = μ·Du·hf·Tb·ns; <strong>μ = 0.30 (Class A)</strong> / 0.50 (Class B); Du = 1.13; φ = 1.00 (standard holes)"],
+           ["Min pretension Tb","Tabel J3.1 (e.g. M20 A325 = 142 kN, M24 = 205 kN)"]
+         ]}},
+      {h:"Weld Design (SNI 1729:2020 BAB J2)",
+       table:{cols:["Item","Provision"],
+         rows:[
+           ["Fillet weld strength","Rn = Fnw·Awe, <strong>Fnw = 0.60·FEXX</strong>, φ = 0.75 (Ω = 2.00)"],
+           ["Directional increase","Fnw = 0.60·FEXX·(1.0 + 0.50·sin¹·⁵θ), θ = angle of load to weld axis"],
+           ["Effective throat (fillet)","te = <strong>0.707·(leg size)</strong> for equal-leg, manual welds"],
+           ["Effective area Awe","te × effective length; end returns & length-reduction β = 1.2 − 0.002(L/w) ≤ 1.0 for L &gt; 100·w"],
+           ["CJP groove weld — tension/compression ⟂ axis","Strength = base metal (matched filler)"],
+           ["Min fillet size","Tabel J2.4 by thinner part: 3 mm (t ≤ 6 mm) → 8 mm (t &gt; 50 mm); max along edge t (&lt;6 mm) or t−2 mm"]
+         ]},
+       notes:["E70 (FEXX = 485 MPa) fillet design shear per unit throat = 0.75 × 0.60 × 485 = 218 N/mm². Filler metal classification FEXX must match/exceed the base steel."]},
+      {h:"Block Shear & Connecting-Element Strength (SNI 1729:2020 BAB J4)",
+       table:{cols:["Limit state","Strength"],
+         rows:[
+           ["Block shear rupture","Rn = <strong>0.60·Fu·Anv + Ubs·Fu·Ant ≤ 0.60·Fy·Agv + Ubs·Fu·Ant</strong> (φ = 0.75); Ubs = 1.0 uniform tension, 0.5 non-uniform"],
+           ["Element shear yielding","Rn = 0.60·Fy·Agv (φ = 1.00)"],
+           ["Element shear rupture","Rn = 0.60·Fu·Anv (φ = 0.75)"],
+           ["Element tension","yielding 0.90·Fy·Ag / rupture 0.75·Fu·Ae (Whitmore section for gusset plates)"]
+         ]}},
+      {h:"Composite Members (SNI 1729:2020 BAB I)",
+       table:{cols:["Item","Provision"],
+         rows:[
+           ["Headed stud anchor shear","Qn = <strong>0.5·Asa·√(f'c·Ec) ≤ Rg·Rp·Asa·Fu</strong> (I8-1)"],
+           ["Rg / Rp factors","Rg = 1.0 (no deck) / 0.85 / 0.7; Rp = 0.75 (no deck) / 0.6 (perpendicular deck)"],
+           ["Composite beam horizontal shear ΣQn","Lesser of 0.85·f'c·Ac, Fy·As, or ΣQn (degree of composite action)"],
+           ["Encased / filled composite columns","Pno with steel + concrete + rebar; min steel ratio 1% (encased)"],
+           ["Concrete bearing","φ·1.7·f'c·A1 (φ = 0.65) for direct bearing transfer"]
+         ]}},
       {h:"Seismic Provisions (AISC 341-22 / SNI 1729:2020 seismic chapter)",
        table:{cols:["System","Key Requirement"],
          rows:[
@@ -1155,7 +1205,7 @@ answer_modules:{
          ]},
        notes:["Ry = ratio of expected to specified minimum yield stress, used in capacity design of seismic systems."]},
     ],
-    sources:"SNI 1729:2020 (= AISC 360-16): BAB B3/B4 (φ/Ω, classification), BAB D (tension), BAB E3 (compression Fcr), BAB F2 (flexure Mp/Lp/Lr/Cb), BAB G2 (shear), BAB H1 (combined) — extracted from PDF · AISC 360-22 Tables B4.1, J3.2 · AISC 341-22 (seismic) · GB 50017-2017 Table 4.4.1 (Q-grades), §6 (design strength f = fy/γR)"
+    sources:"SNI 1729:2020 (= AISC 360-16): BAB B3/B4 (φ/Ω, classification), BAB D (tension), BAB E3 (compression Fcr), BAB F2 (flexure Mp/Lp/Lr/Cb), BAB G2 (shear), BAB H1 (combined), BAB I (composite, I8 studs), BAB J2 (welds), Tabel J3.2 (bolts), J3 (bearing/slip), BAB J4 (block shear) — extracted from PDF · AISC 360-22 Tables B4.1, J3.2, J2.5 · AISC 341-22 (seismic) · GB 50017-2017 (Q-grades, design strength f = fy/γR, §11 connections)"
   },
 
   geotechnical:{
