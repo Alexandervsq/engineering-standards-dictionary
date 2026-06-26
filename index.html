@@ -1007,7 +1007,7 @@ topics:{
     standards:["sni-1726-2019","asce-7-22","gb-50011-2010","aisc-341-22"],
     required_info:["location_coords","site_class","building_type"]},
   structural_concrete:{name:"Structural Concrete",name_id:"Beton Struktural",
-    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress"],
+    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress","concrete wall","wall thickness","bearing wall","dinding beton","tebal dinding","footing","footing design","spread footing","isolated footing","pile cap","raft","mat foundation","fondasi telapak","one way shear","beam shear","member thickness","min thickness slab"],
     standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
@@ -1188,6 +1188,30 @@ answer_modules:{
            ["Two-way flat plate — exterior / interior","ln/30 · ln/33 (min 125 mm)"]
          ]},
        notes:["For fy ≠ 420 MPa, multiply by (0.4 + fy/700). Lightweight concrete: extra factor per §7.3.1.1.2. If thinner, compute deflections and limit to Tabel 24.2.2 (L/180 immediate roof, L/360 live, L/240 total, L/480 supporting brittle elements)."]},
+      {h:"Walls (SNI 2847:2019 Pasal 11)",
+       table:{cols:["Parameter","Requirement"],
+         rows:[
+           ["Min thickness — bearing wall","greater of 100 mm and 1/25 × least(unsupported length, height) (Tabel 11.3.1.1)"],
+           ["Min thickness — non-bearing wall","greater of 100 mm and 1/30 × least(length, height)"],
+           ["Min thickness — basement / foundation wall","≥ 190 mm"],
+           ["Min vertical reinforcement ρℓ","0.0012 (deformed ≤ D16, fy ≥ 420); else 0.0015"],
+           ["Min horizontal reinforcement ρt","0.0020 (deformed ≤ D16, fy ≥ 420); else 0.0025"],
+           ["Max spacing of wall bars","≤ 3·h and ≤ 450 mm; two layers required if h &gt; 250 mm"],
+           ["Axial design (simplified §11.5.3)","φPn = 0.55·φ·fc'·Ag·[1 − (k·ℓc/32h)²], φ = 0.65"]
+         ]},
+       notes:["Special structural (shear) walls for seismic add boundary elements & higher ρ per Ch.18.10. 🇨🇳 GB 50010 §9.4 / JGJ 3: min wall thickness 160–200 mm, distributed ρ ≥ 0.20–0.25%."]},
+      {h:"Foundations (SNI 2847:2019 Pasal 13)",
+       table:{cols:["Item","Requirement"],
+         rows:[
+           ["Foundation types covered","Strip, isolated (spread), combined, raft/mat, grade beam (sloof), pile cap, piles, drilled piers, caissons (§13.1.1)"],
+           ["Min footing depth above bottom bars","<strong>≥ 150 mm</strong> (footings on soil); <strong>≥ 300 mm</strong> (footings on piles) (§13.3.1.2)"],
+           ["Critical section for Mu","At the face of the column / wall (Tabel 13.2.7.1)"],
+           ["One-way (beam) shear","Checked at distance d from the column face; Vc = 0.17·λ·√fc'·bw·d"],
+           ["Two-way (punching) shear","Checked on a perimeter at d/2 from the column — see the Punching Shear card"],
+           ["Min flexural reinforcement","As,min = 0.0018·Ag (shrinkage/temperature), distributed per §13.3"],
+           ["Force transfer at base","Dowels through the interface; min dowel area 0.005·Ag (§16.3)"]
+         ]},
+       notes:["Geotechnical bearing capacity & settlement are governed by SNI 8460:2017 (see the Foundation Type & Geotechnical modules). 🇨🇳 GB 50007 governs Chinese foundation design; ACI 318 Ch.13 = SNI 2847 Pasal 13."]},
       {h:"Seismic Detailing — System Classification (SNI 2847:2019 Ch.18 / ACI 318-19 Ch.18)",extra:true,
        table:{cols:["Indonesian System","Equivalent SDC","Requirements"],
          rows:[

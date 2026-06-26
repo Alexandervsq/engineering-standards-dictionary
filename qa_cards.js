@@ -243,6 +243,66 @@ window.QA_CARDS=[
     "保护层随环境类别增大（表 8.2.1）"]}],
   src:"SNI 2847:2019 §19.3、表 19.3.1.1 与 19.3.2.1 · ACI 318-19 表 19.3.1.1、19.3.2.1 · GB 50010-2010 §3.5、表3.5.3"}},
 
+{id:"concrete-wall",
+ kw:["concrete wall","wall thickness","wall reinforcement","bearing wall","dinding beton","tebal dinding","shear wall design","wall minimum","structural wall"],
+ kw_zh:["混凝土墙","墙厚","墙配筋","承重墙","剪力墙设计"],
+ en:{title:"Concrete Wall Design",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 Pasal 11 / 🇺🇸 ACI 318-19 Ch.11",pts:[
+    "Min thickness — bearing: greater of <strong>100 mm and 1/25</strong> × least(length, height); non-bearing 1/30; basement ≥ 190 mm",
+    "Min vertical ρℓ = <strong>0.0012</strong> (deformed ≤ D16, fy ≥ 420) / 0.0015 others",
+    "Min horizontal ρt = <strong>0.0020</strong> / 0.0025; bar spacing ≤ 3h ≤ 450 mm",
+    "Two reinforcement layers if h &gt; 250 mm",
+    "Simplified axial: φPn = 0.55·φ·fc'·Ag·[1 − (kℓc/32h)²], φ = 0.65"]},
+   {h:"🇨🇳 GB 50010-2010 §9.4 / JGJ 3-2010 (shear walls)",pts:[
+    "Min wall thickness: 160 mm (≥ 1/25 storey height); high-rise core ≥ 200 mm",
+    "Distributed reinforcement ρ ≥ <strong>0.20%</strong> (each direction); seismic 0.25%",
+    "Boundary elements at wall ends for axial-compression & seismic (JGJ 3 §7.2)"]}],
+  src:"SNI 2847:2019 Pasal 11, Tabel 11.3.1.1, §11.6 · ACI 318-19 Ch.11 · GB 50010-2010 §9.4 · JGJ 3-2010 §7"},
+ zh:{title:"混凝土墙设计",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 第 11 章 / 🇺🇸 ACI 318-19 第 11 章",pts:[
+    "最小厚度 — 承重：取 <strong>100 mm 与 1/25</strong> × min(长度, 高度) 较大者；非承重 1/30；地下室 ≥ 190 mm",
+    "最小竖向 ρℓ = <strong>0.0012</strong>（带肋 ≤ D16，fy ≥ 420）/ 0.0015",
+    "最小水平 ρt = <strong>0.0020</strong> / 0.0025；筋间距 ≤ 3h ≤ 450 mm",
+    "h &gt; 250 mm 时双层配筋",
+    "简化轴力：φPn = 0.55·φ·fc'·Ag·[1 − (kℓc/32h)²]，φ = 0.65"]},
+   {h:"🇨🇳 GB 50010-2010 §9.4 / JGJ 3-2010（剪力墙）",pts:[
+    "最小墙厚：160 mm（≥ 1/25 层高）；高层核心筒 ≥ 200 mm",
+    "分布钢筋 ρ ≥ <strong>0.20%</strong>（每向）；抗震 0.25%",
+    "墙端设边缘构件（轴压与抗震，JGJ 3 §7.2）"]}],
+  src:"SNI 2847:2019 第 11 章、表 11.3.1.1、§11.6 · ACI 318-19 第 11 章 · GB 50010-2010 §9.4 · JGJ 3-2010 §7"}},
+
+{id:"concrete-footing",
+ kw:["footing design","spread footing","isolated footing","footing thickness","footing depth","fondasi telapak","pile cap design","raft foundation concrete","mat foundation","combined footing","footing reinforcement","footing shear"],
+ kw_zh:["基础设计","独立基础","承台","筏板","基础厚度","基础配筋"],
+ en:{title:"Concrete Footing / Foundation Design (Structural)",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 Pasal 13 / 🇺🇸 ACI 318-19 Ch.13",pts:[
+    "Min footing depth above bottom bars: <strong>≥ 150 mm</strong> (on soil), <strong>≥ 300 mm</strong> (on piles)",
+    "Critical section for moment: at the <strong>face of the column/wall</strong> (Tabel 13.2.7.1)",
+    "One-way shear at distance d; two-way (punching) shear on a perimeter at d/2",
+    "Min flexural reinforcement As,min = 0.0018·Ag (shrinkage/temp), distributed",
+    "Force transfer to footing via dowels, min 0.005·Ag (§16.3)"]},
+   {h:"Geotechnical sizing (separate)",pts:[
+    "Bearing capacity & settlement: 🇮🇩 SNI 8460:2017 (FS ≥ 3.0 static) · 🇨🇳 GB 50007-2011 · see the Foundation Type module",
+    "Pile caps & piles: ACI 543R / JGJ 94-2008",
+    "🇨🇳 GB 50010 Ch.8 + GB 50007 govern Chinese footing structural + geotechnical design"]}],
+  src:"SNI 2847:2019 Pasal 13 (§13.2.7.1, §13.3.1.2) · ACI 318-19 Ch.13 · GB 50007-2011 · SNI 8460:2017"},
+ zh:{title:"混凝土基础设计（结构）",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 第 13 章 / 🇺🇸 ACI 318-19 第 13 章",pts:[
+    "底筋以上最小基础高度：<strong>≥ 150 mm</strong>（置于土上）、<strong>≥ 300 mm</strong>（置于桩上）",
+    "弯矩临界截面：<strong>柱/墙边缘处</strong>（表 13.2.7.1）",
+    "距 d 处单向受剪；距 d/2 周边双向（冲切）受剪",
+    "最小受弯钢筋 As,min = 0.0018·Ag（收缩/温度），分布布置",
+    "经插筋向基础传力，最小 0.005·Ag（§16.3）"]},
+   {h:"地基尺寸（另行）",pts:[
+    "承载力与沉降：🇮🇩 SNI 8460:2017（静载 FS ≥ 3.0）· 🇨🇳 GB 50007-2011 · 见基础类型模块",
+    "承台与桩：ACI 543R / JGJ 94-2008",
+    "🇨🇳 GB 50010 第8章 + GB 50007 控制中国基础结构+地基设计"]}],
+  src:"SNI 2847:2019 第 13 章（§13.2.7.1、§13.3.1.2） · ACI 318-19 第 13 章 · GB 50007-2011 · SNI 8460:2017"}},
+
 {id:"concrete-grade",
  kw:["concrete grade","concrete class","concrete strength","mutu beton","kelas beton","k300","k250","k350","cylinder cube","fc conversion","cube strength","compressive strength concrete"],
  kw_zh:["混凝土强度","强度等级","立方体强度","换算"],
