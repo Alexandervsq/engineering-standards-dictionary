@@ -80,6 +80,13 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .proj-params select{padding:6px 10px;border-radius:7px;border:1px solid var(--gray2);font-size:13px;font-family:inherit;background:#fff;color:var(--text)}
 .ctrl-derived{margin-top:10px;font-size:13px;color:var(--text);background:#eef7ff;border-radius:7px;padding:8px 12px;line-height:1.7}
 .ctrl-derived strong{color:var(--navy)}
+.ctrl-proceed{margin-top:14px;padding-top:12px;border-top:1px dashed var(--gray);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.proceed-btn{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:11px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.proceed-btn:hover{background:#d35400}
+.proceed-hint{font-size:12.5px;color:var(--text2);line-height:1.5;flex:1;min-width:200px}
+.proceed-active{font-size:13px;color:var(--green);font-weight:600}
+.proceed-active strong{color:var(--navy)}
+.proc-country{background:#fff7ef;border-left:3px solid var(--accent);border-radius:6px;padding:9px 13px;font-size:12.5px;color:var(--text2);line-height:1.55;margin-bottom:10px}
 
 /* COLLAPSIBLE PDF EXTRACTS */
 .extracts-card{background:#fff;border-radius:12px;margin-bottom:20px;box-shadow:var(--card-shadow);overflow:hidden;border-left:4px solid var(--gray2)}
@@ -689,6 +696,27 @@ let lastQuery='', lastSiteData=null;
 let selectedStd='all';
 // optional project parameters the user can supply for design procedures
 let userRiskCat='', userSiteClass='';
+// results are revealed only after the user clicks "Proceed" (per topic query)
+let proceeded=false;
+
+// Detect which national standard system(s) a piece of text references.
+function stdCountryOf(text){
+  const t=' '+String(text).toLowerCase()+' ';
+  const id=/\bsni\b|pd[\s-]?t|\bsk[\s-]?sni\b|indonesia|\bbjt|srpm[bkm]/.test(t);
+  const us=/\baci\b|\baisc\b|\basce\b|\bastm\b|\bibc\b|\bnfpa\b|\bsei\b|\bfema\b|\baashto\b|american|\baisi\b/.test(t);
+  const cn=/\bgb\b|\bjgj\b|\bgb[\s\-\/]?t\b|\byb\b|\bjtg\b|chinese|\bchina\b|国标/.test(t);
+  return{id,us,cn};
+}
+// the country key for the active filter ('id'|'us'|'cn') or null for 'all'
+function activeCountryKey(){return selectedStd==='SNI'?'id':selectedStd==='American'?'us':selectedStd==='Chinese'?'cn':null;}
+// keep a column/section whose header references the active country, or is generic
+function matchesActiveStd(text){
+  const ck=activeCountryKey();
+  if(!ck)return true;
+  const d=stdCountryOf(text);
+  if(!d.id&&!d.us&&!d.cn)return true; // generic — keep
+  return d[ck];
+}
 function T(key,en){const z=window.ZH;return(LANG==='zh'&&z&&z[key])?z[key]:en;}
 function locName(v){return(LANG==='zh'&&v.name_zh)?v.name_zh:v.name;}
 function locNote(v){return(LANG==='zh'&&v.note_zh)?v.note_zh:(v.note||'');}
@@ -1138,6 +1166,28 @@ answer_modules:{
            ["C0 / C1 / C2 (corrosion)","— / — / 0.40","17 / 17 / 35","Chloride exposure of reinforcement (max Cl⁻ limits apply)"]
          ]},
        notes:["Select the most severe applicable class in each category (F, S, W, C). Air-entrainment required for F1–F3; sulfate-resisting cement (Type II/V) for S1–S3. Cover requirements also increase with exposure (Tabel 20.6.1.3)."]},
+      {h:"One-Way Shear Design (SNI 2847:2019 §22.5 / ACI 318 Ch.22)",
+       table:{cols:["Item","Expression"],
+         rows:[
+           ["Design basis","φ·Vn ≥ Vu; Vn = Vc + Vs; φ = 0.75"],
+           ["Concrete shear (simplified)","Vc = <strong>0.17·λ·√fc'·bw·d</strong> (§22.5.5.1)"],
+           ["Stirrup shear (vertical)","Vs = <strong>Av·fyt·d / s</strong>"],
+           ["Maximum Vs","≤ 0.66·√fc'·bw·d (else enlarge the section)"],
+           ["Min shear reinforcement (Vu &gt; 0.5φVc)","Av,min/s = max(0.062·√fc'·bw/fyt , 0.35·bw/fyt)"],
+           ["Max stirrup spacing","≤ d/2 ≤ 600 mm; ≤ d/4 ≤ 300 mm if Vs &gt; 0.33·√fc'·bw·d"]
+         ]},
+       notes:["λ = 1.0 (normal-weight), 0.75 (all-lightweight). For two-way (punching) shear see the Punching Shear card. 🇨🇳 GB 50010: V ≤ 0.7·βh·ft·b·h0 + fyv·Asv·h0/s (§6.3)."]},
+      {h:"Member Sizing — Min Thickness for Deflection Control (SNI 2847:2019 Ch.7–9)",
+       table:{center:true,cols:["Member / support","Min h (fy = 420 MPa)"],
+         rows:[
+           ["One-way slab — simply supported","ℓ/20"],
+           ["One-way slab — one end continuous","ℓ/24"],
+           ["One-way slab — both ends continuous","ℓ/28"],
+           ["One-way slab — cantilever","ℓ/10"],
+           ["Beam — simple / one-cont / both-cont / cantilever","ℓ/16 · ℓ/18.5 · ℓ/21 · ℓ/8"],
+           ["Two-way flat plate — exterior / interior","ln/30 · ln/33 (min 125 mm)"]
+         ]},
+       notes:["For fy ≠ 420 MPa, multiply by (0.4 + fy/700). Lightweight concrete: extra factor per §7.3.1.1.2. If thinner, compute deflections and limit to Tabel 24.2.2 (L/180 immediate roof, L/360 live, L/240 total, L/480 supporting brittle elements)."]},
       {h:"Seismic Detailing — System Classification (SNI 2847:2019 Ch.18 / ACI 318-19 Ch.18)",extra:true,
        table:{cols:["Indonesian System","Equivalent SDC","Requirements"],
          rows:[
@@ -2336,10 +2386,18 @@ function buildControls(ctx){
       html+=`<div class="ctrl-derived">${T('ctrl.using','Using your data:')} ${userRiskCat?`<strong>${T('q.risk','Risk Category')} ${userRiskCat}</strong> → Ie ${ie}`:''}${userRiskCat&&userSiteClass?' · ':''}${userSiteClass?`<strong>${T('q.site','Site Class')} ${userSiteClass}</strong>`:''}${(topics.includes('seismic'))?` · <a class="ext-link" style="padding:3px 9px" onclick="openSpectrumWithParams()">${T('ctrl.calc','⚙ open spectrum with these')}</a>`:''}</div>`;
     }
   }
+  // Proceed button — reveal the procedure & parameters only after the user
+  // has chosen the standard system (and optional project data)
+  if(!proceeded){
+    html+=`<div class="ctrl-proceed"><button class="proceed-btn" onclick="doProceed()">${T('ctrl.proceed','Proceed →')}</button><span class="proceed-hint">${T('ctrl.proceedHint','Choose a standard system (and optional project data) above, then proceed to see the design procedure & parameters.')}</span></div>`;
+  }else{
+    html+=`<div class="ctrl-proceed"><span class="proceed-active">${T('ctrl.showing','✓ Showing results for:')} <strong>${selectedStd==='all'?T('ctrl.all','All'):selectedStd==='SNI'?T('ctrl.id','🇮🇩 Indonesian'):selectedStd==='American'?T('ctrl.us','🇺🇸 American'):T('ctrl.cn','🇨🇳 Chinese')}</strong></span></div>`;
+  }
   html+=`</div>`;
   return html;
 }
 
+function doProceed(){proceeded=true;if(lastQuery)handleSearch();}
 function setStd(s){selectedStd=s;if(lastQuery)handleSearch();}
 function setProjParam(){
   const r=document.getElementById('upRisk'), s=document.getElementById('upSite');
@@ -2488,15 +2546,24 @@ function buildProcedureHTML(topics){
 function renderProcedure(proc){
   const p=(LANG==='zh'&&proc.zh)?proc.zh:proc.en;
   if(!p)return'';
+  const ck=activeCountryKey();
+  let banner='';
+  if(ck==='cn')banner=`<div class="proc-country">${T('proc.cnNote','🇨🇳 Chinese standards selected — the GB workflow is summarised first; the numbered steps are the SNI/ASCE-equivalent sequence shown for reference.')}</div>`;
+  else if(ck==='us')banner=`<div class="proc-country">${T('proc.usNote','🇺🇸 American standards selected — SNI adopts ASCE/ACI, so this sequence applies; clause numbers map to the ASCE/ACI equivalents.')}</div>`;
+  else if(ck==='id')banner=`<div class="proc-country">${T('proc.idNote','🇮🇩 Indonesian standards (SNI / Pd-T) — clause numbers below are the governing SNI references.')}</div>`;
   let steps='';
   p.steps.forEach(s=>{steps+=`<li>${s.t}${s.ref?`<span class="proc-ref">▪ ${s.ref}</span>`:''}</li>`;});
-  let alt=p.alt?`<div class="proc-alt">${p.alt}</div>`:'';
+  const alt=p.alt?`<div class="proc-alt">${p.alt}</div>`:'';
+  const altTop=(ck==='cn')?alt:'';     // for Chinese, lead with the GB workflow note
+  const altBottom=(ck==='cn')?'':alt;
   return `<details class="proc-card" open>
     <summary><span class="mtitle"><span class="micon">${proc.icon||'📋'}</span>${p.title}</span><span class="twist">▸</span></summary>
     <div class="proc-body">
+      ${banner}
       <div class="proc-std"><strong>${T('proc.per','Per:')}</strong> ${p.standard}</div>
+      ${altTop}
       <ol class="proc-steps">${steps}</ol>
-      ${alt}
+      ${altBottom}
     </div>
   </details>`;
 }
@@ -2512,9 +2579,13 @@ function renderModule(key,mod){
     body+=`<div class="mod-systematic">${T('mod.systematic','📋 The design parameters below are arranged to follow the design procedure above — work through them in order. Additional considerations are grouped at the end.')}</div>`;
   }
   let coreN=0, dividerDone=false;
+  let shownAny=false;
   m.sections.forEach((sec,i)=>{
-    // the "extra" (additional-consideration) flag lives on the base/EN section
-    const isExtra=!!(mod.sections[i]&&mod.sections[i].extra);
+    const base=mod.sections[i]||sec; // EN/base section carries flags & standard codes
+    // country filter: skip sections that reference only OTHER national standards
+    if(!matchesActiveStd(base.h))return;
+    shownAny=true;
+    const isExtra=!!base.extra;
     if(isExtra&&!dividerDone){
       dividerDone=true;
       body+=`<div class="mod-extra-divider"><span>${T('mod.additional','⊕ Additional design considerations')}</span></div>`;
@@ -2525,6 +2596,7 @@ function renderModule(key,mod){
     if(sec.table)body+=renderModTable(sec.table);
     if(sec.notes)sec.notes.forEach(n=>body+=`<div class="note-box">${n}</div>`);
   });
+  if(!shownAny){body+=`<div class="note-box">${T('mod.noStd','No dedicated parameters for the selected standard system in this module — switch to “All” or another standard, or see the comparison cards above.')}</div>`;}
   if(mod.tool_link){
     body+=`<div class="ext-links" style="margin-top:14px"><a class="ext-link" onclick="showView('seismic',null)">${T('mod.openSeis','⚙ Open Seismic Spectrum Calculator')}</a></div>`;
   }
@@ -2540,11 +2612,21 @@ function renderModule(key,mod){
 }
 
 function renderModTable(t){
+  let cols=t.cols, rows=t.rows;
+  // country filter: drop columns that reference ONLY other national standards
+  if(activeCountryKey()){
+    const keep=cols.map((c,i)=>i===0?true:matchesActiveStd(c));
+    // only filter if it actually removes a data column (and leaves ≥1 data column)
+    if(keep.some(k=>!k)&&keep.filter((k,i)=>k&&i>0).length>=1){
+      cols=cols.filter((c,i)=>keep[i]);
+      rows=rows.map(r=>r.filter((c,i)=>keep[i]));
+    }
+  }
   const cls='mtable'+(t.center?' center':'');
   let h=`<div class="tablewrap"><table class="${cls}"><thead><tr>`;
-  t.cols.forEach(c=>h+=`<th>${c}</th>`);
+  cols.forEach(c=>h+=`<th>${c}</th>`);
   h+=`</tr></thead><tbody>`;
-  t.rows.forEach(r=>{h+='<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>';});
+  rows.forEach(r=>{h+='<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>';});
   h+=`</tbody></table></div>`;
   return h;
 }
@@ -2694,6 +2776,11 @@ function renderQACard(card,related,ctx){
   const c=(LANG==='zh'&&card.zh)?card.zh:card.en;
   const pri=detectStdPriority(ctx.raw.toLowerCase());
   let secs=c.sections.slice();
+  // country filter: show only the selected standard system's sections
+  if(activeCountryKey()){
+    const f=secs.filter(s=>matchesActiveStd(s.h));
+    if(f.length)secs=f; // keep all if the filter would empty the card
+  }
   if(pri){
     secs.sort((a,b)=>{const af=a.h.includes(pri)?0:1,bf=b.h.includes(pri)?0:1;return af-bf;});
   }
@@ -2861,13 +2948,18 @@ async function maybeAskClaude(ctx){
 function handleSearch(){
   const q=document.getElementById('searchInput').value.trim();
   if(!q)return;
-  // reset standard filter & project params only when this is a genuinely new query
-  // (filter/param clicks re-call handleSearch with q === lastQuery, preserving them)
-  if(q!==lastQuery){selectedStd='all';userRiskCat='';userSiteClass='';}
+  // reset filter, project params & proceed-state only on a genuinely new query
+  // (filter/param/proceed clicks re-call handleSearch with q === lastQuery)
+  if(q!==lastQuery){selectedStd='all';userRiskCat='';userSiteClass='';proceeded=false;}
   lastQuery=q;
   const ctx=analyzeQuery(q);
-  // Order: Query Analysis → Standard/Project controls → Procedure → Design Parameters → AI answer → Standards
-  const html=buildContextCard(ctx)+buildControls(ctx)+buildProcedureHTML(ctx.topics)+buildResponse(ctx);
+  const hasTopics=ctx.topics.length||ctx.projType||ctx.loc;
+  // Query Analysis → Standard/Project controls; the procedure, parameters,
+  // standards & extracts appear only after the user clicks "Proceed".
+  let html=buildContextCard(ctx)+buildControls(ctx);
+  if(!hasTopics||proceeded){
+    html+=buildProcedureHTML(ctx.topics)+buildResponse(ctx);
+  }
   const res=document.getElementById('results');
   res.innerHTML=html;
   res.style.display='block';

@@ -154,8 +154,8 @@ window.QA_CARDS=[
   src:"SNI 2847:2019 §25.5.2 · ACI 318-19 表25.5.2.1 · GB 50010-2010 §8.4.3–8.4.4 表8.4.4"}},
 
 {id:"stirrup-shear",
- kw:["stirrup","shear reinforcement","stirrup spacing","hoop spacing","sengkang","jarak sengkang","transverse reinforcement","shear links","confinement"],
- kw_zh:["箍筋","箍筋间距","加密区","抗剪钢筋"],
+ kw:["stirrup","shear reinforcement","stirrup spacing","hoop spacing","sengkang","jarak sengkang","transverse reinforcement","shear links","confinement","one way shear","concrete shear strength","vc","vs shear","beam shear","geser balok","kuat geser beton"],
+ kw_zh:["箍筋","箍筋间距","加密区","抗剪钢筋","单向受剪","混凝土抗剪","梁受剪","抗剪承载力"],
  en:{title:"Stirrups / Hoops — Minimums & Spacing",
   sections:[
    {h:"🇮🇩 SNI 2847:2019 / 🇺🇸 ACI 318-19",pts:[
