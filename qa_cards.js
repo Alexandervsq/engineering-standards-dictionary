@@ -183,6 +183,66 @@ window.QA_CARDS=[
     "柱加密区：一级 s ≤ min(6d、100)；二级 8d/100；体积配箍率按 λv 表"]}],
   src:"SNI 2847:2019 §9.6.3、§18.6–18.7 · ACI 318-19 · GB 50010-2010 §9.2.9 · GB 50011-2010 §6.3.3–6.3.9"}},
 
+{id:"phi-factors-concrete",
+ kw:["strength reduction factor","phi factor concrete","resistance factor concrete","tension controlled","compression controlled","net tensile strain","faktor reduksi kekuatan","epsilon t","equivalent stress block","beta1","whitney block","stress block"],
+ kw_zh:["强度折减系数","受拉控制","受压控制","净受拉应变","等效应力图","折减系数 混凝土"],
+ en:{title:"Concrete Strength Reduction Factors φ & Stress Block",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 Tabel 21.2.1–21.2.2 / 🇺🇸 ACI 318-19",pts:[
+    "Moment/axial: <strong>φ = 0.90 tension-controlled (εt ≥ 0.005)</strong>; 0.65 (ties) / 0.75 (spiral) compression-controlled (εt ≤ εty)",
+    "Transition: φ = 0.65 + 0.25·(εt−εty)/(0.005−εty) for ties",
+    "Shear φ = 0.75 · Torsion 0.75 · Bearing 0.65 · Strut-and-tie 0.75 · Plain concrete 0.60",
+    "εty = fy/Es ≈ 0.0021 (Grade 420); design beams as tension-controlled"]},
+   {h:"Equivalent stress block (§22.2)",pts:[
+    "Max concrete strain <strong>εcu = 0.003</strong>; a = β1·c; stress = 0.85·fc' over depth a",
+    "β1 = <strong>0.85</strong> (17 ≤ fc' ≤ 28); 0.85 − 0.05(fc'−28)/7 (28–55); 0.65 (≥55 MPa)",
+    "Ec = 4700√fc'; fr = 0.62λ√fc'; min structural fc' = 17 MPa",
+    "🇨🇳 GB 50010: γ0·M ≤ α1·fc·b·x·(h0−x/2); α1 = 1.0 (≤C50), x = ξ·h0; γRE for seismic"]}],
+  src:"SNI 2847:2019 Tabel 21.2.1, 21.2.2, §22.2, Tabel 22.2.2.4.3 (β1) · ACI 318-19 · GB 50010-2010 §6.2"},
+ zh:{title:"混凝土强度折减系数 φ 与等效应力图",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 表 21.2.1–21.2.2 / 🇺🇸 ACI 318-19",pts:[
+    "弯矩/轴力：<strong>φ = 0.90 受拉控制（εt ≥ 0.005）</strong>；受压控制（εt ≤ εty）箍筋 0.65 / 螺旋 0.75",
+    "过渡：箍筋 φ = 0.65 + 0.25·(εt−εty)/(0.005−εty)",
+    "受剪 φ = 0.75 · 受扭 0.75 · 承压 0.65 · 拉压杆 0.75 · 素混凝土 0.60",
+    "εty = fy/Es ≈ 0.0021（420 级）；梁宜设计为受拉控制"]},
+   {h:"等效应力图（§22.2）",pts:[
+    "混凝土极限应变 <strong>εcu = 0.003</strong>；a = β1·c；受压区 a 内应力 = 0.85·fc'",
+    "β1 = <strong>0.85</strong>（17 ≤ fc' ≤ 28）；0.85 − 0.05(fc'−28)/7（28–55）；0.65（≥55 MPa）",
+    "Ec = 4700√fc'；fr = 0.62λ√fc'；结构最小 fc' = 17 MPa",
+    "🇨🇳 GB 50010：γ0·M ≤ α1·fc·b·x·(h0−x/2)；α1 = 1.0（≤C50），x = ξ·h0；抗震 γRE"]}],
+  src:"SNI 2847:2019 表 21.2.1、21.2.2、§22.2、表 22.2.2.4.3（β1） · ACI 318-19 · GB 50010-2010 §6.2"}},
+
+{id:"concrete-durability",
+ kw:["durability","exposure class","exposure category","sulfate exposure","freeze thaw","chloride exposure","water cementitious ratio","w/cm","kategori eksposur","durabilitas","ketahanan beton","corrosion exposure"],
+ kw_zh:["耐久性","暴露等级","硫酸盐","冻融","氯化物","水胶比"],
+ en:{title:"Concrete Durability — Exposure Classes",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 Pasal 19 / 🇺🇸 ACI 318-19 Ch.19 (Tabel 19.3.2.1)",pts:[
+    "Freeze-thaw F: F1 w/cm 0.55 / fc' 24 · F2 0.45 / 31 · <strong>F3 0.40 / 35 MPa</strong> (air-entrained)",
+    "Sulfate S: S1 0.50 / 28 (Type II) · S2 0.45 / 31 (Type V) · S3 0.45 / 31",
+    "Water W: W2 0.50 / 28 MPa (low permeability)",
+    "Corrosion C: <strong>C2 0.40 / 35 MPa</strong> + chloride limits (marine/de-icing)",
+    "Pick the most severe class per category; min structural fc' = 17 MPa"]},
+   {h:"🇨🇳 GB 50010-2010 §3.5 (environment categories)",pts:[
+    "一 (indoor dry) → 五 (severe corrosion); each sets min fc', max w/cm, min cover",
+    "二a/二b: min C25/C30, w/cm 0.55/0.50; 三a/三b: C30/C35, 0.50/0.45",
+    "Cover increases with environment class (表 8.2.1)"]}],
+  src:"SNI 2847:2019 Pasal 19.3, Tabel 19.3.1.1 & 19.3.2.1 · ACI 318-19 Tables 19.3.1.1, 19.3.2.1 · GB 50010-2010 §3.5, 表3.5.3"},
+ zh:{title:"混凝土耐久性 — 暴露等级",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 第 19 章 / 🇺🇸 ACI 318-19 第 19 章（表 19.3.2.1）",pts:[
+    "冻融 F：F1 水胶比 0.55 / fc' 24 · F2 0.45 / 31 · <strong>F3 0.40 / 35 MPa</strong>（引气）",
+    "硫酸盐 S：S1 0.50 / 28（II 型）· S2 0.45 / 31（V 型）· S3 0.45 / 31",
+    "水 W：W2 0.50 / 28 MPa（低渗透）",
+    "腐蚀 C：<strong>C2 0.40 / 35 MPa</strong> + 氯化物限值（海洋/除冰盐）",
+    "各类别取最不利等级；结构最小 fc' = 17 MPa"]},
+   {h:"🇨🇳 GB 50010-2010 §3.5（环境类别）",pts:[
+    "一（室内干燥）→ 五（严重腐蚀）；各设最小 fc'、最大水胶比、最小保护层",
+    "二a/二b：最小 C25/C30，水胶比 0.55/0.50；三a/三b：C30/C35，0.50/0.45",
+    "保护层随环境类别增大（表 8.2.1）"]}],
+  src:"SNI 2847:2019 §19.3、表 19.3.1.1 与 19.3.2.1 · ACI 318-19 表 19.3.1.1、19.3.2.1 · GB 50010-2010 §3.5、表3.5.3"}},
+
 {id:"concrete-grade",
  kw:["concrete grade","concrete class","concrete strength","mutu beton","kelas beton","k300","k250","k350","cylinder cube","fc conversion","cube strength","compressive strength concrete"],
  kw_zh:["混凝土强度","强度等级","立方体强度","换算"],

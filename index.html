@@ -66,6 +66,31 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 /* MAIN CONTENT */
 .container{max-width:1200px;margin:0 auto;padding:24px}
 
+/* QUERY CONTROLS: standard selector + project params */
+.controls-card{background:#fff;border-radius:12px;padding:14px 18px;margin-bottom:20px;box-shadow:var(--card-shadow);border-left:4px solid var(--navy)}
+.ctrl-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ctrl-label{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;min-width:120px}
+.std-picker{display:inline-flex;border:1px solid var(--gray2);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.std-pick{background:#fff;border:none;border-right:1px solid var(--gray2);padding:7px 14px;font-size:13px;font-family:inherit;cursor:pointer;color:var(--text2);transition:.15s}
+.std-pick:last-child{border-right:none}
+.std-pick:hover{background:var(--gray)}
+.std-pick.on{background:var(--navy);color:#fff;font-weight:600}
+.proj-params{display:inline-flex;gap:14px;flex-wrap:wrap}
+.proj-params label{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px;font-weight:600}
+.proj-params select{padding:6px 10px;border-radius:7px;border:1px solid var(--gray2);font-size:13px;font-family:inherit;background:#fff;color:var(--text)}
+.ctrl-derived{margin-top:10px;font-size:13px;color:var(--text);background:#eef7ff;border-radius:7px;padding:8px 12px;line-height:1.7}
+.ctrl-derived strong{color:var(--navy)}
+
+/* COLLAPSIBLE PDF EXTRACTS */
+.extracts-card{background:#fff;border-radius:12px;margin-bottom:20px;box-shadow:var(--card-shadow);overflow:hidden;border-left:4px solid var(--gray2)}
+.extracts-card>summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;font-size:14px;color:var(--text2);display:flex;align-items:center;gap:9px;user-select:none}
+.extracts-card>summary::-webkit-details-marker{display:none}
+.extracts-card>summary .ex-icon{font-size:17px}
+.extracts-card>summary .ex-count{color:var(--gray2);font-weight:500}
+.extracts-card>summary .ex-twist{margin-left:auto;color:var(--blue2);font-weight:600;transition:.2s}
+.extracts-card[open]>summary .ex-twist{transform:rotate(90deg)}
+.extracts-card .search-hits{padding:0 18px 16px}
+
 /* RESULTS */
 #results{display:none}
 .context-card{background:#fff;border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:var(--card-shadow);border-left:4px solid var(--accent)}
@@ -660,6 +685,10 @@ git push -u origin main</pre>
 // ================================================================
 let LANG=(function(){try{return localStorage.getItem('esd_lang')||'en'}catch(e){return 'en'}})();
 let lastQuery='', lastSiteData=null;
+// active standard-system filter: 'all' | 'SNI' | 'American' | 'Chinese'
+let selectedStd='all';
+// optional project parameters the user can supply for design procedures
+let userRiskCat='', userSiteClass='';
 function T(key,en){const z=window.ZH;return(LANG==='zh'&&z&&z[key])?z[key]:en;}
 function locName(v){return(LANG==='zh'&&v.name_zh)?v.name_zh:v.name;}
 function locNote(v){return(LANG==='zh'&&v.note_zh)?v.note_zh:(v.note||'');}
@@ -950,7 +979,7 @@ topics:{
     standards:["sni-1726-2019","asce-7-22","gb-50011-2010","aisc-341-22"],
     required_info:["location_coords","site_class","building_type"]},
   structural_concrete:{name:"Structural Concrete",name_id:"Beton Struktural",
-    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40"],
+    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress"],
     standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
@@ -1067,7 +1096,49 @@ answer_modules:{
            ["Grade 60","ASTM A615","420","620"],
            ["A706 Grade 60","ASTM A706 (seismic, weldable)","420","550 min"]
          ]}},
-      {h:"Seismic Detailing — System Classification (SNI 2847:2019 Ch.18 / ACI 318-19 Ch.18)",
+      {h:"Strength Reduction Factors φ (SNI 2847:2019 Tabel 21.2.1)",
+       table:{center:true,cols:["Action / element","φ"],
+         rows:[
+           ["Moment, axial, or combined","0.65 – 0.90 (per Tabel 21.2.2, by εt)"],
+           ["Shear","0.75"],
+           ["Torsion","0.75"],
+           ["Bearing","0.65"],
+           ["Post-tensioned anchorage zone","0.85"],
+           ["Brackets & corbels","0.75"],
+           ["Strut-and-tie models (Pasal 23)","0.75"],
+           ["Plain concrete","0.60"],
+           ["Anchors in concrete","0.45 – 0.75 (per Pasal 17)"]
+         ]}},
+      {h:"φ Transition by Net Tensile Strain εt (SNI 2847:2019 Tabel 21.2.2)",
+       table:{center:true,cols:["εt at extreme tension steel","Classification","φ (ties)","φ (spiral)"],
+         rows:[
+           ["εt ≤ εty (≈0.002 for fy420)","Compression-controlled","0.65","0.75"],
+           ["εty &lt; εt &lt; 0.005","Transition","0.65 + 0.25·(εt−εty)/(0.005−εty)","0.75 + 0.15·(εt−εty)/(0.005−εty)"],
+           ["εt ≥ 0.005","Tension-controlled","0.90","0.90"]
+         ]},
+       notes:["εty = fy/Es (≈0.0021 for Grade 420). Tension-controlled sections (εt ≥ 0.005) are the ductile target for flexural design; ρmax is set so εt ≥ 0.004 minimum for beams."]},
+      {h:"Equivalent Stress Block & Design Assumptions (SNI 2847:2019 §22.2)",
+       table:{cols:["Item","Value"],
+         rows:[
+           ["Max concrete strain εcu","0.003"],
+           ["Equivalent stress block depth","a = β1·c; concrete stress = 0.85·fc' over depth a"],
+           ["β1 — 17 ≤ fc' ≤ 28 MPa","0.85"],
+           ["β1 — 28 &lt; fc' &lt; 55 MPa","0.85 − 0.05·(fc'−28)/7"],
+           ["β1 — fc' ≥ 55 MPa","0.65"],
+           ["Modulus of elasticity Ec","4700·√fc' MPa (normal weight); 0.043·wc^1.5·√fc'"],
+           ["Modulus of rupture fr","0.62·λ·√fc' MPa"],
+           ["Min fc' — structural concrete","17 MPa (§19.2.1.1)"]
+         ]}},
+      {h:"Durability — Exposure Classes (SNI 2847:2019 Pasal 19, Tabel 19.3.2.1)",
+       table:{center:true,cols:["Exposure class","Max w/cm","Min fc' (MPa)","Condition"],
+         rows:[
+           ["F0 / F1 / F2 / F3 (freeze-thaw)","— / 0.55 / 0.45 / 0.40","17 / 24 / 31 / 35","Freezing & thawing, de-icing salts"],
+           ["S0 / S1 / S2 / S3 (sulfate)","— / 0.50 / 0.45 / 0.45","17 / 28 / 31 / 31","Water-soluble sulfate in soil/water"],
+           ["W0 / W1 / W2 (water)","— / — / 0.50","17 / 17 / 28","Concrete in contact with water, low permeability"],
+           ["C0 / C1 / C2 (corrosion)","— / — / 0.40","17 / 17 / 35","Chloride exposure of reinforcement (max Cl⁻ limits apply)"]
+         ]},
+       notes:["Select the most severe applicable class in each category (F, S, W, C). Air-entrainment required for F1–F3; sulfate-resisting cement (Type II/V) for S1–S3. Cover requirements also increase with exposure (Tabel 20.6.1.3)."]},
+      {h:"Seismic Detailing — System Classification (SNI 2847:2019 Ch.18 / ACI 318-19 Ch.18)",extra:true,
        table:{cols:["Indonesian System","Equivalent SDC","Requirements"],
          rows:[
            ["SRPMK (Special)","SDC D / E / F","Min ρ = 0.01, max ρ = 0.025, min fc' = 28 MPa"],
@@ -1077,7 +1148,7 @@ answer_modules:{
        notes:["Seismic column confinement (SRPMK): minimum hoop spacing = min(b_col/4, 6·d_b, 150 mm) within the confinement length Lₒ.",
               "Lₒ = max(member depth, L_clear/6, 450 mm) per SNI 2847:2019 §18.7.5."]},
     ],
-    sources:"SNI 2847:2019 Tabel 20.6.1.3 (cover), §4.10 (min fc'), Ch.18 (seismic) · SNI 2052:2017 (rebar) · GB 50010-2010 Table 4.1.3 (fck) & 4.1.5 (Ec) · ACI 318-19 Table 19.2.1.1 (Ec), Table 20.6.1.3 (cover), Ch.18"
+    sources:"SNI 2847:2019 Tabel 21.2.1 & 21.2.2 (φ), §22.2 & Tabel 22.2.2.4.3 (β1, εcu), §19.2–19.3 (durability, Tabel 19.3.2.1), Tabel 20.6.1.3 (cover), Ch.18 (seismic) — extracted from PDF · SNI 2052:2017 (rebar) · GB 50010-2010 Table 4.1.3 (fck) & 4.1.5 (Ec) · ACI 318-19 (= SNI 2847)"
   },
 
   steel:{
@@ -2144,11 +2215,21 @@ function tryEmbedRSA(){
 // ================================================================
 // QUERY ENGINE
 // ================================================================
+// Keyword match: short/ambiguous keywords (≤3 chars, e.g. "ss","ie","s1")
+// require a word boundary so they don't match inside unrelated words
+// ("ss" must not match "pre·ss·ure"). Longer keywords use substring.
+function kwMatch(ql,w){
+  const wl=w.toLowerCase();
+  if(wl.length<=3&&/[a-z]/.test(wl)){
+    return new RegExp('(^|[^a-z0-9])'+wl.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'($|[^a-z0-9])','i').test(ql);
+  }
+  return ql.includes(wl);
+}
 function analyzeQuery(q){
   const ql=q.toLowerCase();
   const topicScores={};
   for(const[k,v] of Object.entries(KB.topics)){
-    topicScores[k]=v.keywords.filter(w=>ql.includes(w.toLowerCase())).length;
+    topicScores[k]=v.keywords.filter(w=>kwMatch(ql,w)).length;
   }
   const topics=Object.entries(topicScores).filter(([,s])=>s>0).sort((a,b)=>b[1]-a[1]).map(([k])=>k);
   // Project type
@@ -2211,6 +2292,68 @@ function buildContextCard(ctx){
   return html;
 }
 
+// Topics that involve a code-based design procedure needing building risk
+// category and seismic site class (shown only for these).
+const PARAM_TOPICS=['seismic','structural_concrete','steel_structure','geotechnical','foundation_type'];
+
+// Standard selector + optional project-parameter inputs, shown after Query Analysis
+function buildControls(ctx){
+  const{topics,projType,loc}=ctx;
+  if(!topics.length&&!projType&&!loc)return'';
+  // 1) Standard-system selector (which country's standards to show)
+  const opt=(v,label)=>`<button class="std-pick${selectedStd===v?' on':''}" onclick="setStd('${v}')">${label}</button>`;
+  let html=`<div class="controls-card">
+    <div class="ctrl-row"><span class="ctrl-label">${T('ctrl.std','Standard system')}</span>
+      <div class="std-picker">
+        ${opt('all',T('ctrl.all','All'))}
+        ${opt('SNI',T('ctrl.id','🇮🇩 Indonesian'))}
+        ${opt('American',T('ctrl.us','🇺🇸 American'))}
+        ${opt('Chinese',T('ctrl.cn','🇨🇳 Chinese'))}
+      </div>
+    </div>`;
+  // 2) Project parameters — only for design procedures that use them
+  const needsParams=topics.some(t=>PARAM_TOPICS.includes(t));
+  if(needsParams){
+    const ro=(v,l)=>`<option value="${v}"${userRiskCat===v?' selected':''}>${l}</option>`;
+    const so=(v,l)=>`<option value="${v}"${userSiteClass===v?' selected':''}>${l}</option>`;
+    html+=`<div class="ctrl-row" style="margin-top:10px">
+      <span class="ctrl-label">${T('ctrl.proj','Project data (optional)')}</span>
+      <div class="proj-params">
+        <label>${T('ctrl.risk','Risk Category')}
+          <select id="upRisk" onchange="setProjParam()">
+            ${ro('',T('ctrl.auto','— auto —'))}${ro('I','I — Ie 1.00')}${ro('II','II — Ie 1.00')}${ro('III','III — Ie 1.25')}${ro('IV','IV — Ie 1.50')}
+          </select>
+        </label>
+        <label>${T('ctrl.site','Site Class')}
+          <select id="upSite" onchange="setProjParam()">
+            ${so('',T('ctrl.auto','— auto —'))}${so('SA','SA')}${so('SB','SB')}${so('SC','SC')}${so('SD','SD')}${so('SE','SE')}${so('SF','SF')}
+          </select>
+        </label>
+      </div>
+    </div>`;
+    if(userRiskCat||userSiteClass){
+      const ie=userRiskCat==='IV'?'1.50':userRiskCat==='III'?'1.25':userRiskCat?'1.00':'—';
+      html+=`<div class="ctrl-derived">${T('ctrl.using','Using your data:')} ${userRiskCat?`<strong>${T('q.risk','Risk Category')} ${userRiskCat}</strong> → Ie ${ie}`:''}${userRiskCat&&userSiteClass?' · ':''}${userSiteClass?`<strong>${T('q.site','Site Class')} ${userSiteClass}</strong>`:''}${(topics.includes('seismic'))?` · <a class="ext-link" style="padding:3px 9px" onclick="openSpectrumWithParams()">${T('ctrl.calc','⚙ open spectrum with these')}</a>`:''}</div>`;
+    }
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function setStd(s){selectedStd=s;if(lastQuery)handleSearch();}
+function setProjParam(){
+  const r=document.getElementById('upRisk'), s=document.getElementById('upSite');
+  if(r)userRiskCat=r.value; if(s)userSiteClass=s.value;
+  if(lastQuery)handleSearch();
+}
+function openSpectrumWithParams(){
+  showView('seismic',null);
+  if(userSiteClass&&userSiteClass!=='SF'){const el=document.getElementById('rSite');if(el)el.value=userSiteClass;}
+  const ieMap={'IV':'1.50','III':'1.25','II':'1.00','I':'1.00'};
+  if(userRiskCat&&ieMap[userRiskCat]){const el=document.getElementById('rIe');if(el)el.value=ieMap[userRiskCat];}
+  calcSpectrum();
+}
+
 function buildResponse(ctx){
   const{topics,projType,loc}=ctx;
   if(!topics.length&&!projType&&!loc){
@@ -2244,13 +2387,16 @@ function buildResponse(ctx){
   // 2) AI answer (comprehensive explanation) — after the design parameters
   html+=buildAIAnswerHTML(ctx);
 
-  // 3) Standards cards — always when topics detected
+  // 3) Standards cards — filtered to the selected standard system (country)
   const relevantStds=getRelevantStandards(ctx);
-  if(relevantStds.SNI.length||relevantStds.American.length||relevantStds.Chinese.length){
+  const showSNI=(selectedStd==='all'||selectedStd==='SNI')&&relevantStds.SNI.length;
+  const showAmer=(selectedStd==='all'||selectedStd==='American')&&relevantStds.American.length;
+  const showCn=(selectedStd==='all'||selectedStd==='Chinese')&&relevantStds.Chinese.length;
+  if(showSNI||showAmer||showCn){
     html+=`<div class="sec-title">${T('sec.applicable','Applicable Standards')}</div><div class="std-grid">`;
-    if(relevantStds.SNI.length)html+=makeStdCard('SNI',T('card.sni','🇮🇩 Indonesian Standards (SNI)'),relevantStds.SNI,ctx);
-    if(relevantStds.American.length)html+=makeStdCard('American',T('card.amer','🇺🇸 American Standards (ACI/AISC/ASCE)'),relevantStds.American,ctx);
-    if(relevantStds.Chinese.length)html+=makeStdCard('Chinese',T('card.cn','🇨🇳 Chinese Standards (GB/JGJ)'),relevantStds.Chinese,ctx);
+    if(showSNI)html+=makeStdCard('SNI',T('card.sni','🇮🇩 Indonesian Standards (SNI)'),relevantStds.SNI,ctx);
+    if(showAmer)html+=makeStdCard('American',T('card.amer','🇺🇸 American Standards (ACI/AISC/ASCE)'),relevantStds.American,ctx);
+    if(showCn)html+=makeStdCard('Chinese',T('card.cn','🇨🇳 Chinese Standards (GB/JGJ)'),relevantStds.Chinese,ctx);
     html+=`</div>`;
   }
 
@@ -2291,16 +2437,18 @@ function buildResponse(ctx){
     }
   }
 
-  // 6) Full-text search results from dynamic index
+  // 6) Full-text search results from dynamic index — collapsed (click to open)
   if(window.DYNAMIC_INDEX&&window.DYNAMIC_INDEX.chunks&&ctx.raw){
-    const hits=searchDynamic(ctx.raw);
+    let hits=searchDynamic(ctx.raw);
+    // respect the active standard filter (only that country's documents)
+    if(selectedStd!=='all')hits=hits.filter(h=>h.cat===selectedStd);
     if(hits.length){
-      html+=`<div class="sec-title">${T('sec.extracts','Relevant Extracts from Your PDF Library')}</div><div class="search-hits">`;
+      let inner='';
       hits.slice(0,8).forEach(h=>{
         const hl=highlight(h.t,ctx.raw);
-        html+=`<div class="hit-card"><div class="hit-src">${h.code} — ${T('hit.page','page ~')}${h.pg}</div><div class="hit-text">${hl}</div></div>`;
+        inner+=`<div class="hit-card"><div class="hit-src">${h.code} <span class="tag-${h.cat==='SNI'?'sni':h.cat==='American'?'amer':'cn'}">${h.cat}</span> — ${T('hit.page','page ~')}${h.pg}</div><div class="hit-text">${hl}</div></div>`;
       });
-      html+=`</div>`;
+      html+=`<details class="extracts-card"><summary><span class="ex-icon">📄</span>${T('sec.extracts','Relevant Extracts from Your PDF Library')} <span class="ex-count">(${hits.length})</span><span class="ex-twist">▸</span></summary><div class="search-hits" style="margin-top:10px">${inner}</div></details>`;
     }
   }
   return html;
@@ -2713,10 +2861,13 @@ async function maybeAskClaude(ctx){
 function handleSearch(){
   const q=document.getElementById('searchInput').value.trim();
   if(!q)return;
+  // reset standard filter & project params only when this is a genuinely new query
+  // (filter/param clicks re-call handleSearch with q === lastQuery, preserving them)
+  if(q!==lastQuery){selectedStd='all';userRiskCat='';userSiteClass='';}
   lastQuery=q;
   const ctx=analyzeQuery(q);
-  // Order: Query Analysis (Topics Detected) → Design Procedure → Design Parameters → AI answer → Standards
-  const html=buildContextCard(ctx)+buildProcedureHTML(ctx.topics)+buildResponse(ctx);
+  // Order: Query Analysis → Standard/Project controls → Procedure → Design Parameters → AI answer → Standards
+  const html=buildContextCard(ctx)+buildControls(ctx)+buildProcedureHTML(ctx.topics)+buildResponse(ctx);
   const res=document.getElementById('results');
   res.innerHTML=html;
   res.style.display='block';
