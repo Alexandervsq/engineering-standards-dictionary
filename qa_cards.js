@@ -303,6 +303,36 @@ window.QA_CARDS=[
     "🇨🇳 GB 50010 第8章 + GB 50007 控制中国基础结构+地基设计"]}],
   src:"SNI 2847:2019 第 13 章（§13.2.7.1、§13.3.1.2） · ACI 318-19 第 13 章 · GB 50007-2011 · SNI 8460:2017"}},
 
+{id:"srpmk-seismic-detailing",
+ kw:["srpmk","special moment frame concrete","seismic detailing concrete","strong column weak beam","column confinement","hoop spacing seismic","plastic hinge","ash confinement","joint shear","beam column joint","balok kolom khusus","pendetailan gempa","sengkang pengekang"],
+ kw_zh:["特殊抗弯框架","强柱弱梁","柱约束","抗震构造","塑性铰","节点受剪","加密区"],
+ en:{title:"SRPMK Concrete Seismic Detailing (Special Moment Frame)",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §18.6–18.8 / 🇺🇸 ACI 318-19 Ch.18",pts:[
+    "Beams: ρ ≤ <strong>0.025</strong>, ≥2 continuous top &amp; bottom; hoops over 2h from column face; spacing ≤ min(<strong>d/4, 6db, 150 mm</strong>); first hoop ≤ 50 mm (§18.6)",
+    "Columns: least side ≥ <strong>300 mm</strong>; strong-column–weak-beam <strong>ΣMnc ≥ 1.2·ΣMnb</strong>; Ast 1–6%; Lo = max(depth, hclear/6, 450 mm) (§18.7)",
+    "Column confinement Ash ≥ max(0.3(Ag/Ach−1)fc'/fyt, 0.09fc'/fyt); spacing ≤ min(b/4, 6db, so); so = 100+(350−hx)/3 ∈ [100,150] mm",
+    "Joints: <strong>Vn = 1.7√fc'·Aj</strong> (4-face confined) / 1.25 (3 or 2-opposite) / 1.0 (other); φ = 0.85 (§18.8)",
+    "Capacity-design shear from Mpr (1.25fy) at member ends"]},
+   {h:"🇨🇳 GB 50011-2010 (seismic grades 一~四)",pts:[
+    "Strong-column–weak-beam: ΣMc ≥ ηc·ΣMb (ηc = 1.7/1.5/1.3/1.2 by grade)",
+    "Beam-end densified zone (1.5–2hb): spacing ≤ min(hb/4, 8d, 100 mm) Grade I; volumetric hoop ratio λv table",
+    "Column axial-compression-ratio limits; joint shear per GB 50011 §6.3.9"]}],
+  src:"SNI 2847:2019 §18.6–18.8, Tabel 18.7.5.4 · ACI 318-19 Ch.18 · GB 50011-2010 §6.3"},
+ zh:{title:"SRPMK 混凝土抗震构造（特殊抗弯框架）",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §18.6–18.8 / 🇺🇸 ACI 318-19 第18章",pts:[
+    "梁：ρ ≤ <strong>0.025</strong>，顶/底各 ≥2 根通长；箍筋加密自柱面 2h；间距 ≤ min(<strong>d/4、6db、150 mm</strong>)；首箍 ≤ 50 mm（§18.6）",
+    "柱：最小边 ≥ <strong>300 mm</strong>；强柱弱梁 <strong>ΣMnc ≥ 1.2·ΣMnb</strong>；Ast 1–6%；Lo = max(柱高、净高/6、450 mm)（§18.7）",
+    "柱约束 Ash ≥ max(0.3(Ag/Ach−1)fc'/fyt, 0.09fc'/fyt)；间距 ≤ min(b/4、6db、so)；so = 100+(350−hx)/3 ∈ [100,150] mm",
+    "节点：<strong>Vn = 1.7√fc'·Aj</strong>（四面约束）/ 1.25（三面或两相对面）/ 1.0（其他）；φ = 0.85（§18.8）",
+    "能力设计剪力由梁端概率弯矩 Mpr（1.25fy）"]},
+   {h:"🇨🇳 GB 50011-2010（抗震等级 一~四级）",pts:[
+    "强柱弱梁：ΣMc ≥ ηc·ΣMb（ηc 按等级 1.7/1.5/1.3/1.2）",
+    "梁端加密区（1.5–2hb）：一级间距 ≤ min(hb/4、8d、100 mm)；体积配箍率按 λv 表",
+    "柱轴压比限值；节点受剪按 GB 50011 §6.3.9"]}],
+  src:"SNI 2847:2019 §18.6–18.8、表 18.7.5.4 · ACI 318-19 第18章 · GB 50011-2010 §6.3"}},
+
 {id:"concrete-grade",
  kw:["concrete grade","concrete class","concrete strength","mutu beton","kelas beton","k300","k250","k350","cylinder cube","fc conversion","cube strength","compressive strength concrete"],
  kw_zh:["混凝土强度","强度等级","立方体强度","换算"],

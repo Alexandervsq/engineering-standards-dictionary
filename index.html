@@ -1007,8 +1007,8 @@ topics:{
     standards:["sni-1726-2019","asce-7-22","gb-50011-2010","aisc-341-22"],
     required_info:["location_coords","site_class","building_type"]},
   structural_concrete:{name:"Structural Concrete",name_id:"Beton Struktural",
-    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress","concrete wall","wall thickness","bearing wall","dinding beton","tebal dinding","footing","footing design","spread footing","isolated footing","pile cap","raft","mat foundation","fondasi telapak","one way shear","beam shear","member thickness","min thickness slab"],
-    standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20"],
+    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress","concrete wall","wall thickness","bearing wall","dinding beton","tebal dinding","footing","footing design","spread footing","isolated footing","pile cap","raft","mat foundation","fondasi telapak","one way shear","beam shear","member thickness","min thickness slab","SRPMK","SRPMM","special moment frame","seismic detailing","strong column weak beam","column confinement","plastic hinge","sengkang pengekang","hoop spacing","confinement reinforcement","joint shear","beam column joint","Ash","transverse reinforcement","detailing seismik","pendetailan gempa","ductile detailing"],
+    standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20","gb-50011-2010"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
     keywords:["steel","baja","moment frame","braced frame","SMRF","SMF","SCBF","EBF","seismic steel","AISC","connection","welding","weld","bolt","buckling","stability","LRFD","ASD","BJ37","A992","Q235","Q355","compression member","tension member","flexural member","steel column","steel beam","flexural buckling","lateral torsional buckling","ltb","critical stress","fcr","plastic moment","section classification","compact","noncompact","slender","width thickness","shear lag","kekuatan tekan","kekuatan tarik","kekuatan lentur","tekuk","klasifikasi penampang","kolom baja","balok baja","resistance factor","sni 1729","block shear","geser blok","bearing strength","tear out","slip critical","pretension","fillet weld","groove weld","fnv","fnt","fexx","composite member","composite column","composite beam","shear stud","headed stud","shear connector","gusset plate","edge distance","komposit","penghubung geser","second order","b1 b2","amplification","p-delta","stability bracing","notional load","direct analysis","fatigue","stress range","fatik","fire design","elevated temperature","critical temperature","temperatur kritis","pengekangan"],
@@ -1219,10 +1219,41 @@ answer_modules:{
            ["SRPMM (Intermediate)","SDC C","Reduced seismic detailing"],
            ["SRPMB (Ordinary / Biasa)","SDC A / B","Standard non-seismic detailing"]
          ]},
-       notes:["Seismic column confinement (SRPMK): minimum hoop spacing = min(b_col/4, 6·d_b, 150 mm) within the confinement length Lₒ.",
-              "Lₒ = max(member depth, L_clear/6, 450 mm) per SNI 2847:2019 §18.7.5."]},
+       notes:["SRPMK ≈ ACI 318 Special Moment Frame. The detailed beam / column / joint requirements follow below."]},
+      {h:"SRPMK Special Moment Frame — Beams (SNI 2847:2019 §18.6)",extra:true,
+       table:{cols:["Parameter","Requirement"],
+         rows:[
+           ["Geometry","Clear span ≥ 4d; width ≥ 0.3h and ≥ 250 mm (§18.6.2)"],
+           ["Longitudinal reinforcement","ρ = As/(bw·d): ≥ As,min (0.25√fc'/fy &amp; 1.4/fy), ≤ <strong>0.025</strong>; ≥ 2 continuous bars top &amp; bottom (§18.6.3.1)"],
+           ["Positive moment at joint face","≥ 0.5 × negative moment capacity there (§18.6.3.2)"],
+           ["Hoop zones","Over <strong>2h from each column face</strong> and 2h either side of any flexural-yield section (§18.6.4.1)"],
+           ["First hoop","≤ 50 mm from the column face"],
+           ["Hoop spacing in hinge zone","≤ min(<strong>d/4, 6·db, 150 mm</strong>) (§18.6.4.4)"],
+           ["Stirrup spacing outside hinge","≤ d/2 (seismic hooks both ends) (§18.6.4.6)"]
+         ]},
+       notes:["Design shear from probable moments Mpr (using 1.25·fy) at beam ends + gravity (capacity design, §18.6.5); take Vc = 0 in the hinge zone if earthquake shear ≥ 0.5·Vu and Pu &lt; Ag·fc'/20."]},
+      {h:"SRPMK Special Moment Frame — Columns (SNI 2847:2019 §18.7)",extra:true,
+       table:{cols:["Parameter","Requirement"],
+         rows:[
+           ["Geometry","Least cross-section ≥ <strong>300 mm</strong>; ratio short/long side ≥ 0.4 (§18.7.2)"],
+           ["Strong column–weak beam","<strong>ΣMnc ≥ (1.2)·ΣMnb</strong> at every joint (§18.7.3.2)"],
+           ["Longitudinal reinforcement","0.01·Ag ≤ Ast ≤ 0.06·Ag (§18.7.4.1)"],
+           ["Confinement length Lo","greater of: column depth at joint, clear height/6, 450 mm (§18.7.5.1)"],
+           ["Hoop spacing in Lo","≤ min(b/4, 6·db, so); so = 100 + (350−hx)/3, with 100 ≤ so ≤ 150 mm (§18.7.5.3)"],
+           ["Confinement amount Ash (rect.)","≥ greater of 0.3·(Ag/Ach−1)·fc'/fyt and 0.09·fc'/fyt (Tabel 18.7.5.4)"],
+           ["Spiral ratio ρs","≥ greater of 0.45·(Ag/Ach−1)·fc'/fyt and 0.12·fc'/fyt"]
+         ]},
+       notes:["For Pu &gt; 0.3·Ag·fc' or fc' &gt; 70 MPa, additional confinement factors kf and kn apply (Tabel 18.7.5.4). hx = max horizontal spacing of laterally-supported bars ≤ 350 mm."]},
+      {h:"SRPMK Beam–Column Joints (SNI 2847:2019 §18.8)",extra:true,
+       table:{center:true,cols:["Joint confinement","Nominal shear Vn"],
+         rows:[
+           ["Confined by beams on all 4 faces","<strong>1.7·√fc'·Aj</strong>"],
+           ["Confined on 3 faces or 2 opposite faces","1.25·√fc'·Aj"],
+           ["Other (unconfined) joints","1.0·√fc'·Aj"]
+         ]},
+       notes:["Aj = effective joint area; φ = 0.85 for joint shear. Column transverse reinforcement continues through the joint; beam-bar development into the joint ldh per §18.8.5."]},
     ],
-    sources:"SNI 2847:2019 Tabel 21.2.1 & 21.2.2 (φ), §22.2 & Tabel 22.2.2.4.3 (β1, εcu), §19.2–19.3 (durability, Tabel 19.3.2.1), Tabel 20.6.1.3 (cover), Ch.18 (seismic) — extracted from PDF · SNI 2052:2017 (rebar) · GB 50010-2010 Table 4.1.3 (fck) & 4.1.5 (Ec) · ACI 318-19 (= SNI 2847)"
+    sources:"SNI 2847:2019 Tabel 21.2.1 & 21.2.2 (φ), §22.2 (β1, εcu), §19.2–19.3 (durability), §22.5 (shear), Ch.7–9 (sizing), Pasal 11 (walls), Pasal 13 (foundations), §18.6–18.8 (SRPMK beams/columns/joints), Tabel 18.7.5.4 (confinement) — extracted from PDF · SNI 2052:2017 (rebar) · GB 50010-2010 & GB 50011 · ACI 318-19 (= SNI 2847)"
   },
 
   steel:{
