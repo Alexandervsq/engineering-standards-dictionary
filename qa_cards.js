@@ -153,6 +153,72 @@ window.QA_CARDS=[
     "d>28 mm 宜用机械连接"]}],
   src:"SNI 2847:2019 §25.5.2 · ACI 318-19 表25.5.2.1 · GB 50010-2010 §8.4.3–8.4.4 表8.4.4"}},
 
+{id:"concrete-torsion",
+ kw:["torsion","torsional","torque","torsion design","threshold torsion","cracking torsion","Tcr","Tth","space truss","closed stirrup torsion"],
+ kw_zh:["扭转","受扭","扭矩","开裂扭矩","抗扭","空间桁架"],
+ en:{title:"Torsion Design of Concrete Members",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §22.7 / 🇺🇸 ACI 318-19 §22.7 (space-truss)",pts:[
+    "Neglect torsion if Tu < φ·Tth; <strong>Tth = 0.083·λ·√fc′·(Acp²/pcp)</strong> (solid, non-PT), φ = 0.75",
+    "Cracking torsion <strong>Tcr = 0.33·λ·√fc′·(Acp²/pcp)</strong>",
+    "Nominal <strong>Tn = min[ 2·Ao·At·fyt·cotθ/s , 2·Ao·Al·fy·cotθ/ph ]</strong>; Ao = 0.85·Aoh, θ = 45° typical",
+    "Section limit: √[(Vu/bwd)² + (Tu·ph/1.7Aoh²)²] ≤ φ(Vc/bwd + 0.66√fc′); √fc′ ≤ 8.3 MPa, fy,fyt ≤ 420 MPa",
+    "Concrete carries zero torsion — all resisted by closed stirrups + longitudinal bars"]},
+   {h:"🇨🇳 GB 50010-2010 §6.4",pts:[
+    "Combined shear+torsion: check T/(0.7ft·Wt) + V/(0.7ft·b·h0) ≤ conditions before detailing",
+    "Torsional strength from stirrups (Ast1) + longitudinal bars; ratio ζ = fyv·Ast1·s / (fy·Astl·ucor), <strong>0.6 ≤ ζ ≤ 1.7</strong> (≈1.2 optimal)",
+    "Reduce concrete shear term by βt factor when torsion coexists with shear",
+    "Minimum torsional reinforcement required whenever T > 0.7ft·Wt"]}],
+  src:"SNI 2847:2019 §22.7 (Tabel 22.7.4.1, 22.7.5.1, Pers. 22.7.6.1) · ACI 318-19 §22.7 · GB 50010-2010 §6.4.1–6.4.12"},
+ zh:{title:"混凝土构件扭转设计",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 §22.7 / 🇺🇸 ACI 318-19 §22.7（空间桁架）",pts:[
+    "若 Tu < φ·Tth 可忽略扭转；<strong>Tth = 0.083·λ·√fc′·(Acp²/pcp)</strong>（实心非预应力），φ = 0.75",
+    "开裂扭矩 <strong>Tcr = 0.33·λ·√fc′·(Acp²/pcp)</strong>",
+    "名义 <strong>Tn = min[ 2·Ao·At·fyt·cotθ/s , 2·Ao·Al·fy·cotθ/ph ]</strong>；Ao = 0.85·Aoh，θ 常取 45°",
+    "截面限值：√[(Vu/bwd)² + (Tu·ph/1.7Aoh²)²] ≤ φ(Vc/bwd + 0.66√fc′)；√fc′ ≤ 8.3 MPa，fy,fyt ≤ 420 MPa",
+    "混凝土不承担扭矩 — 全部由封闭箍筋 + 纵筋承担"]},
+   {h:"🇨🇳 GB 50010-2010 §6.4",pts:[
+    "剪扭共同作用：先按 T/(0.7ft·Wt) + V/(0.7ft·b·h0) 验算截面条件",
+    "受扭承载力由箍筋(Ast1) + 纵筋提供；配筋强度比 ζ = fyv·Ast1·s/(fy·Astl·ucor)，<strong>0.6 ≤ ζ ≤ 1.7</strong>（约 1.2 最优）",
+    "剪扭并存时以 βt 折减混凝土受剪项",
+    "当 T > 0.7ft·Wt 时须配置最小受扭钢筋"]}],
+  src:"SNI 2847:2019 §22.7（表 22.7.4.1、22.7.5.1、式 22.7.6.1） · ACI 318-19 §22.7 · GB 50010-2010 §6.4.1–6.4.12"}},
+
+{id:"strut-tie-shear-friction",
+ kw:["strut and tie","strut-and-tie","strut tie model","deep beam","corbel","bracket","pile cap design","D-region","shear friction","interface shear","bearing strength","nodal zone"],
+ kw_zh:["拉压杆","拉压杆模型","深梁","牛腿","挑耳","桩承台","剪摩擦","界面受剪","承压","节点区"],
+ en:{title:"Strut-and-Tie, Shear-Friction & Bearing",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 Pasal 23 — Strut-and-Tie (D-regions)",pts:[
+    "Strut Fns = fce·Acs, <strong>fce = 0.85·βs·fc′</strong>; βs = 1.0 (prismatic), 0.75 (bottle + crack reinf), 0.60λ (bottle no reinf), 0.40 (tension zone)",
+    "Nodal zone <strong>fce = 0.85·βn·fc′</strong>; βn = 1.0 (C-C-C), 0.80 (C-C-T, one tie), 0.60 (C-T-T, ≥2 ties)",
+    "Tie Fnt = Ats·fy; strut–tie angle ≥ 25°; φ = 0.75. Use for deep beams, corbels (a/d ≤ 2), pile caps"]},
+   {h:"🇮🇩 §22.9 Shear-Friction & §22.8 Bearing",pts:[
+    "<strong>Vn = μ·Avf·fy</strong>; μ = 1.4λ monolithic, 1.0λ roughened joint, 0.6λ smooth joint, 0.7λ to steel",
+    "Vn cap (roughened, NWC): min(0.2fc′·Ac, (3.3+0.08fc′)·Ac, 11·Ac)",
+    "Bearing Bn = 0.85fc′·A1 (φ=0.65); confined support × min(√(A2/A1), 2)"]},
+   {h:"🇨🇳 GB 50010-2010",pts:[
+    "Deep beams / deep flexural members: Annex G (附录G) — 深受弯构件 with distributed web reinforcement ρsh, ρsv ≥ 0.2%–0.3%",
+    "Corbel (牛腿) §9.3: tie As ≥ max from Fv·a/(0.85·fy·h0) + horizontal Fh; crack-control horizontal stirrups",
+    "Interface shear: dowel + roughened-surface provisions; no explicit μ-table (design by 抗剪 across joint)"]}],
+  src:"SNI 2847:2019 Pasal 23 (Tabel 23.4.3, 23.9.2), §22.8, §22.9 (Tabel 22.9.4.2, 22.9.4.4) · ACI 318-19 Ch.23 · GB 50010-2010 附录G, §9.3"},
+ zh:{title:"拉压杆、剪摩擦与承压",
+  sections:[
+   {h:"🇮🇩 SNI 2847:2019 第23章 — 拉压杆（D 区）",pts:[
+    "压杆 Fns = fce·Acs，<strong>fce = 0.85·βs·fc′</strong>；βs = 1.0（棱柱）、0.75（瓶形+裂缝钢筋）、0.60λ（瓶形无筋）、0.40（受拉区）",
+    "节点区 <strong>fce = 0.85·βn·fc′</strong>；βn = 1.0（C-C-C）、0.80（C-C-T，一根拉杆）、0.60（C-T-T，≥2 根）",
+    "拉杆 Fnt = Ats·fy；压杆–拉杆夹角 ≥ 25°；φ = 0.75。用于深梁、牛腿（a/d ≤ 2）、桩承台"]},
+   {h:"🇮🇩 §22.9 剪摩擦与 §22.8 承压",pts:[
+    "<strong>Vn = μ·Avf·fy</strong>；μ = 1.4λ 整体浇筑、1.0λ 凿毛缝、0.6λ 光面缝、0.7λ 锚于钢材",
+    "Vn 上限（凿毛、普通混凝土）：min(0.2fc′·Ac, (3.3+0.08fc′)·Ac, 11·Ac)",
+    "承压 Bn = 0.85fc′·A1（φ=0.65）；有约束支承 × min(√(A2/A1), 2)"]},
+   {h:"🇨🇳 GB 50010-2010",pts:[
+    "深受弯构件：附录 G — 配分布腹筋 ρsh、ρsv ≥ 0.2%–0.3%",
+    "牛腿 §9.3：拉筋 As ≥ Fv·a/(0.85·fy·h0) + 水平力 Fh；配水平箍筋控裂",
+    "界面受剪：销栓 + 凿毛面构造；无明确 μ 表（按跨缝抗剪设计）"]}],
+  src:"SNI 2847:2019 第23章（表 23.4.3、23.9.2）、§22.8、§22.9（表 22.9.4.2、22.9.4.4） · ACI 318-19 第23章 · GB 50010-2010 附录G、§9.3"}},
+
 {id:"stirrup-shear",
  kw:["stirrup","shear reinforcement","stirrup spacing","hoop spacing","sengkang","jarak sengkang","transverse reinforcement","shear links","confinement","one way shear","concrete shear strength","vc","vs shear","beam shear","geser balok","kuat geser beton"],
  kw_zh:["箍筋","箍筋间距","加密区","抗剪钢筋","单向受剪","混凝土抗剪","梁受剪","抗剪承载力"],

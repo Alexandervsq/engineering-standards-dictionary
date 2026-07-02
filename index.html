@@ -174,6 +174,10 @@ ol.proc-steps li:last-child{border-bottom:none}
 ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position:absolute;left:0;top:8px;width:26px;height:26px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
 .proc-ref{display:block;font-size:11.5px;color:var(--blue2);margin-top:3px;font-weight:500}
 .proc-alt{background:#f2fbf5;border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text2);line-height:1.65;margin-top:14px}
+.proc-seismic{background:#fef4f4;border:1px solid #f3c9c4;border-left:4px solid #d9534f;border-radius:8px;padding:11px 14px 6px;margin-top:14px}
+.proc-seismic-h{font-size:13.5px;font-weight:700;color:#b23b34;margin-bottom:4px}
+.proc-seismic-note{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:6px}
+.proc-seismic .proc-steps{margin:0}
 
 .missing-card{background:#fffbf0;border:1px solid #f0c040;border-radius:12px;padding:18px;margin-bottom:20px}
 .missing-card h3{color:#b8860b;font-size:14px;font-weight:600;margin-bottom:10px}
@@ -1007,7 +1011,7 @@ topics:{
     standards:["sni-1726-2019","asce-7-22","gb-50011-2010","aisc-341-22"],
     required_info:["location_coords","site_class","building_type"]},
   structural_concrete:{name:"Structural Concrete",name_id:"Beton Struktural",
-    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress","concrete wall","wall thickness","bearing wall","dinding beton","tebal dinding","footing","footing design","spread footing","isolated footing","pile cap","raft","mat foundation","fondasi telapak","one way shear","beam shear","member thickness","min thickness slab","SRPMK","SRPMM","special moment frame","seismic detailing","strong column weak beam","column confinement","plastic hinge","sengkang pengekang","hoop spacing","confinement reinforcement","joint shear","beam column joint","Ash","transverse reinforcement","detailing seismik","pendetailan gempa","ductile detailing"],
+    keywords:["concrete","beton","reinforcement","tulangan","column","kolom","beam","balok","slab","pelat","shear wall","dinding geser","flexure","shear","ductility","cover","selimut","fc","fy","rebar","ACI","SNI 2847","C30","C40","strength reduction factor","phi factor","tension controlled","compression controlled","net tensile strain","stress block","beta1","durability","exposure class","sulfate","freeze thaw","chloride","faktor reduksi","durabilitas","kategori eksposur","epsilon","εcu","modulus of rupture","equivalent stress","concrete wall","wall thickness","bearing wall","dinding beton","tebal dinding","footing","footing design","spread footing","isolated footing","pile cap","raft","mat foundation","fondasi telapak","one way shear","beam shear","member thickness","min thickness slab","SRPMK","SRPMM","special moment frame","seismic detailing","strong column weak beam","column confinement","plastic hinge","sengkang pengekang","hoop spacing","confinement reinforcement","joint shear","beam column joint","Ash","transverse reinforcement","detailing seismik","pendetailan gempa","ductile detailing","development length","panjang penyaluran","ld","ldh","ldc","anchorage","penyaluran","standard hook","kait standar","hooked bar","lap splice","sambungan lewatan","splice","class b splice","bar bend","bend diameter","torsion","torsi","Tcr","Tth","space truss","shear friction","geser friksi","coefficient of friction","bearing strength","kekuatan tumpu","serviceability","kemampuan layan","deflection","lendutan","deflection limit","crack control","kontrol retak","crack width","effective moment of inertia","Ie","long term deflection","strut and tie","strut-and-tie","model strut","D-region","deep beam","balok tinggi","corbel","bracket","nodal zone","psi factor","modification factor"],
     standards:["sni-2847-2019","aci-318-19","gb-50010-2010","aci-mnl-66-20","gb-50011-2010"],
     required_info:["fc_prime","fy","exposure_class"]},
   steel_structure:{name:"Steel Structure",name_id:"Struktur Baja",
@@ -1252,8 +1256,90 @@ answer_modules:{
            ["Other (unconfined) joints","1.0·√fc'·Aj"]
          ]},
        notes:["Aj = effective joint area; φ = 0.85 for joint shear. Column transverse reinforcement continues through the joint; beam-bar development into the joint ldh per §18.8.5."]},
+      {h:"Development Length in Tension — Deformed Bars (SNI 2847:2019 §25.4.2)",extra:true,
+       table:{center:true,cols:["Quantity","Expression / value"],
+         rows:[
+           ["General equation ℓd","ℓd = [ fy·ψt·ψe·ψs / (1.1·λ·√fc'·((cb+Ktr)/db)) ]·db"],
+           ["Confinement term (cb+Ktr)/db","≤ 2.5 (larger values → pull-out, no benefit)"],
+           ["Transverse reinf index Ktr","Ktr = 40·Atr / (s·n); Ktr = 0 permitted (conservative)"],
+           ["Simplified (D19 & smaller, ample spacing)","ℓd = [ fy·ψt·ψe / (2.1·λ·√fc') ]·db"],
+           ["Simplified (D22 & larger, ample spacing)","ℓd = [ fy·ψt·ψe / (1.7·λ·√fc') ]·db"],
+           ["Absolute minimum","ℓd ≥ 300 mm"]
+         ]},
+       notes:["Modification factors: ψt = 1.3 (top bars, >300 mm fresh concrete cast below) else 1.0; ψe = 1.5 (epoxy, cover<3db or clear spacing<6db) / 1.2 (other epoxy) / 1.0 (uncoated); ψs = 0.8 (D19 & smaller) / 1.0 (D22 & larger); λ = 0.75 lightweight, 1.0 normal-weight. Product ψt·ψe ≤ 1.7.","Worked example (fc'=28 MPa, Grade 420, normal-weight, uncoated, D22): ℓd ≈ 47·db (favourable spacing) to 72·db (cb+Ktr/db=1.0)."]},
+      {h:"Development — Standard Hooks & Compression Bars (SNI 2847:2019 §25.4.3 / §25.4.9)",extra:true,
+       table:{center:true,cols:["Anchorage type","Development length"],
+         rows:[
+           ["Standard hook in tension ℓdh","ℓdh = [ 0.24·ψe·ψc·ψr·fy / (λ·√fc') ]·db ≥ max(8db, 150 mm)"],
+           ["  ψe (epoxy)","1.2 epoxy / 1.0 uncoated"],
+           ["  ψc (cover)","0.7 for D36 & smaller, side cover ≥65 mm & 90° tail cover ≥50 mm; else 1.0"],
+           ["  ψr (confinement)","0.8 if enclosed by ties/stirrups ⊥ at s ≤ 3db; else 1.0"],
+           ["Compression ℓdc","max( [0.24·fy·ψr/(λ·√fc')]·db , 0.043·fy·ψr·db ) ≥ 200 mm"],
+           ["  ψr (compression, confined)","0.75 if spiral / ties D13 @≤100 mm / hoops @≤100 mm; else 1.0"]
+         ]},
+       notes:["Standard hook geometry (Tabel 25.3.1): 90° hook = bend + 12db straight extension; 180° hook = bend + max(4db, 65 mm) extension. Minimum inside bend diameter: 6db (D10–D25), 8db (D29–D36), 10db (D43–D57). Stirrup/tie/hoop bends (Tabel 25.3.2): 4db bend for D16 & smaller, 6db for D19–D25; seismic hook = 135° bend + 6db (≥75 mm) extension."]},
+      {h:"Lap Splices (SNI 2847:2019 §25.5)",extra:true,
+       table:{center:true,cols:["Splice type","Required lap length"],
+         rows:[
+           ["Tension — Class A","1.0·ℓd ≥ 300 mm — allowed only if As,provided/As,required ≥ 2 AND ≤ 50% of bars spliced within lap"],
+           ["Tension — Class B (default)","1.3·ℓd ≥ 300 mm"],
+           ["Compression (fy ≤ 420 MPa)","ℓsc = max( 0.071·fy·db , 300 mm )"],
+           ["Compression (fy > 420 MPa)","ℓsc = max( (0.13·fy − 24)·db , 300 mm )"],
+           ["Compression, fc' < 21 MPa","increase ℓsc by 1/3"],
+           ["Mechanical / welded splice","must develop ≥ 1.25·fy of the bar"]
+         ]},
+       notes:["ℓd here uses §25.4.2.1(a) with NO excess-reinforcement reduction. Lap splices not permitted for bars larger than D36 except as noted (§25.5.5.3). Non-contact lap transverse spacing ≤ min(ℓsplice/5, 150 mm)."]},
+      {h:"Torsion Design (SNI 2847:2019 §22.7 — space-truss analogy)",extra:true,
+       table:{center:true,cols:["Quantity","Expression"],
+         rows:[
+           ["Threshold torsion Tth (solid, non-PT)","φ·0.083·λ·√fc'·(Acp²/pcp) — if Tu < φ·Tth, torsion may be neglected"],
+           ["Cracking torsion Tcr","0.33·λ·√fc'·(Acp²/pcp)"],
+           ["Nominal torsion Tn","min[ 2·Ao·At·fyt·cotθ / s ,  2·Ao·Al·fy·cotθ / ph ]"],
+           ["Gross area enclosed Ao","0.85·Aoh (Aoh = area within outermost closed tie centreline)"],
+           ["Compression diagonal angle θ","30°–60° (45° typical for non-prestressed)"],
+           ["Section adequacy limit","√[(Vu/bw·d)² + (Tu·ph/1.7·Aoh²)²] ≤ φ·(Vc/bw·d + 0.66·√fc')"]
+         ]},
+       notes:["φ = 0.75 (torsion). √fc' limited to 8.3 MPa and fy, fyt ≤ 420 MPa for torsion calcs. Concrete contributes zero to Tn — all torsion carried by closed stirrups + longitudinal bars. Equilibrium torsion cannot be redistributed; compatibility torsion may be capped at φ·Tcr."]},
+      {h:"Bearing & Shear-Friction (SNI 2847:2019 §22.8 / §22.9)",extra:true,
+       table:{center:true,cols:["Check","Nominal strength"],
+         rows:[
+           ["Bearing — general","Bn = 0.85·fc'·A1  (φ = 0.65)"],
+           ["Bearing — support wider on all sides","Bn = min(√(A2/A1), 2)·0.85·fc'·A1"],
+           ["Shear-friction (reinf ⊥ plane)","Vn = μ·Avf·fy  →  Avf = Vu / (φ·μ·fy)"],
+           ["μ — monolithic concrete","1.4·λ"],
+           ["μ — roughened cold joint (~6 mm amplitude)","1.0·λ"],
+           ["μ — not intentionally roughened joint","0.6·λ"],
+           ["μ — concrete anchored to rolled steel","0.7·λ"]
+         ]},
+       notes:["λ = 1.0 normal-weight, 0.75 lightweight. Vn upper limit (normal-weight on roughened surface): min(0.2·fc'·Ac, (3.3+0.08·fc')·Ac, 11·Ac); other cases min(0.2·fc'·Ac, 5.5·Ac). Permanent net compression across the plane may be added to Avf·fy. Shear-friction reinforcement must be developed for fy on both sides of the plane."]},
+      {h:"Serviceability — Deflection & Crack Control (SNI 2847:2019 Pasal 24)",extra:true,
+       table:{center:true,cols:["Member / condition","Computed deflection limit"],
+         rows:[
+           ["Flat roof, no nonstructural elements","ℓ/180 (immediate Lr + R)"],
+           ["Floor, no nonstructural elements","ℓ/360 (immediate L)"],
+           ["Roof/floor supporting elements likely damaged","ℓ/480 (long-term + immediate LL after install)"],
+           ["Roof/floor supporting elements not likely damaged","ℓ/240"],
+           ["Effective inertia Ie","(Mcr/Ma)³·Ig + [1−(Mcr/Ma)³]·Icr ≤ Ig"],
+           ["Cracking moment Mcr","fr·Ig / yt,  fr = 0.62·λ·√fc'"],
+           ["Long-term multiplier λΔ","ξ / (1 + 50·ρ')"]
+         ]},
+       notes:["Time factor ξ = 1.0 (3 mo) / 1.2 (6 mo) / 1.4 (12 mo) / 2.0 (≥5 yr). Crack control (§24.3.2): max bar spacing s = min[ 380·(280/fs) − 2.5·cc , 300·(280/fs) ], where fs may be taken as (2/3)·fy and cc = clear cover to the nearest surface."]},
+      {h:"Strut-and-Tie Method — D-Regions (SNI 2847:2019 Pasal 23)",extra:true,
+       table:{center:true,cols:["Element","Effective concrete strength / coefficient"],
+         rows:[
+           ["Strut nominal strength Fns","fce·Acs (+ As'·fs' if reinforced);  fce = 0.85·βs·fc'"],
+           ["βs — prismatic (uniform) strut","1.0"],
+           ["βs — bottle strut WITH crack reinf (§23.5)","0.75"],
+           ["βs — bottle strut WITHOUT crack reinf","0.60·λ"],
+           ["βs — strut in tension member / tension zone","0.40"],
+           ["Nodal zone strength","fce = 0.85·βn·fc'"],
+           ["βn — C-C-C (bounded by struts/bearing)","1.0"],
+           ["βn — C-C-T (anchoring one tie)","0.80"],
+           ["βn — C-T-T (anchoring ≥ two ties)","0.60"]
+         ]},
+       notes:["φ = 0.75 for strut-and-tie. Angle between a strut and tie entering a node ≥ 25°. Ties yield: Fnt = Ats·fy (+ prestress). Used for deep beams, corbels/brackets (a/d ≤ 2), pile caps, and other discontinuity (D-) regions where plane-sections assumptions do not apply."]},
     ],
-    sources:"SNI 2847:2019 Tabel 21.2.1 & 21.2.2 (φ), §22.2 (β1, εcu), §19.2–19.3 (durability), §22.5 (shear), Ch.7–9 (sizing), Pasal 11 (walls), Pasal 13 (foundations), §18.6–18.8 (SRPMK beams/columns/joints), Tabel 18.7.5.4 (confinement) — extracted from PDF · SNI 2052:2017 (rebar) · GB 50010-2010 & GB 50011 · ACI 318-19 (= SNI 2847)"
+    sources:"SNI 2847:2019 Tabel 21.2.1 & 21.2.2 (φ), §22.2 (β1, εcu), §19.2–19.3 (durability), §22.5 (shear), §22.7 (torsion), §22.8 (bearing), §22.9 (shear-friction), Pasal 23 (strut-and-tie), Pasal 24 (serviceability/deflection/crack), §25.4 (development), §25.5 (splices), Tabel 25.3.1–25.3.2 (standard hooks), Ch.7–9 (sizing), Pasal 11 (walls), Pasal 13 (foundations), §18.6–18.8 (SRPMK) — extracted from PDF · SNI 2052:2017 (rebar) · GB 50010-2010 & GB 50011 · ACI 318-19 (= SNI 2847)"
   },
 
   steel:{
@@ -2611,6 +2697,19 @@ function renderProcedure(proc){
   const alt=p.alt?`<div class="proc-alt">${p.alt}</div>`:'';
   const altTop=(ck==='cn')?alt:'';     // for Chinese, lead with the GB workflow note
   const altBottom=(ck==='cn')?'':alt;
+  // Seismic design parameters woven into this procedure (shown whenever the
+  // procedure carries them — concrete / steel / load design all interact with
+  // the SNI 1726 seismic parameters, so they are explained here in full).
+  let seismicBlock='';
+  if(p.seismic&&p.seismic.length){
+    let items='';
+    p.seismic.forEach(s=>{items+=`<li>${s.t}${s.ref?`<span class="proc-ref">▪ ${s.ref}</span>`:''}</li>`;});
+    seismicBlock=`<div class="proc-seismic">
+      <div class="proc-seismic-h">🌍 ${T('proc.seismicH','Seismic design parameters within this procedure')}</div>
+      <div class="proc-seismic-note">${T('proc.seismicNote','When the structure is seismic (SDC ≥ C), the parameters below from SNI 1726 / 1727 / 1729 / 2847 combine with the steps above and must be satisfied simultaneously.')}</div>
+      <ol class="proc-steps">${items}</ol>
+    </div>`;
+  }
   return `<details class="proc-card" open>
     <summary><span class="mtitle"><span class="micon">${proc.icon||'📋'}</span>${p.title}</span><span class="twist">▸</span></summary>
     <div class="proc-body">
@@ -2618,6 +2717,7 @@ function renderProcedure(proc){
       <div class="proc-std"><strong>${T('proc.per','Per:')}</strong> ${p.standard}</div>
       ${altTop}
       <ol class="proc-steps">${steps}</ol>
+      ${seismicBlock}
       ${altBottom}
     </div>
   </details>`;
