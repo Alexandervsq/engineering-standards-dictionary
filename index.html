@@ -220,9 +220,8 @@ ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position
 .fa-table tr:nth-child(even) td{background:#f8f9fa}
 .fa-table .site-col{font-weight:600;background:var(--gray);text-align:left;padding-left:12px}
 
-/* DESIGN VIEW (separate function from the Dictionary) */
-#view-design{display:none}
-.hero.design-hero{background:linear-gradient(160deg,#7a3d0b 0%,#a2560f 100%)}
+/* DESIGN VIEW (separate function from the Dictionary; landing view) */
+#view-search{display:none}
 .design-cta{background:linear-gradient(135deg,#fff6ec 0%,#ffeedd 100%);border:1px solid #f0c9a0;border-left:5px solid var(--accent);border-radius:12px;padding:18px 22px;margin:22px 0 4px;box-shadow:var(--card-shadow)}
 .design-cta h3{font-size:16px;color:#8a4b0c;margin-bottom:6px}
 .design-cta p{font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:13px}
@@ -422,8 +421,8 @@ nav button{font-size:14px}
     </div>
     <button class="menu-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">☰</button>
     <nav id="mainNav">
-      <button class="active" onclick="showView('search',this)" data-i18n="nav.search">📖 Dictionary</button>
-      <button onclick="showView('design',this)" data-i18n="nav.design">📐 Design</button>
+      <button class="active" onclick="showView('design',this)" data-i18n="nav.design">📐 Design</button>
+      <button onclick="showView('search',this)" data-i18n="nav.search">📖 Dictionary</button>
       <button onclick="showView('browse',this)" data-i18n="nav.browse">Browse Standards</button>
       <button onclick="showView('seismic',this)" data-i18n="nav.seismic">Seismic Tool</button>
       <button onclick="showView('site',this)" data-i18n="nav.site">Site Analysis</button>
@@ -460,6 +459,7 @@ nav button{font-size:14px}
       <span class="chip" onclick="quickSearch('rain load and rainfall design')" data-i18n="chip.rain">🌧 Rain Load</span>
       <span class="chip" onclick="quickSearch('purlin design requirements')" data-i18n="chip.purlin">🏠 Purlin</span>
       <span class="chip" onclick="quickSearch('foundation type selection criteria')" data-i18n="chip.ftype">🧱 Foundation Type</span>
+      <span class="chip" onclick="quickSearch('SMKK construction safety keselamatan konstruksi')" data-i18n="chip.hse">🦺 HSE / SMKK</span>
       <span class="chip" onclick="quickSearch('power plant structural design North Maluku')" data-i18n="chip.pp">⚡ Power Plant (Example)</span>
       <span class="chip" style="background:rgba(230,126,34,.35);border-color:rgba(230,126,34,.6)" onclick="showView('site',null)" data-i18n="chip.site">📡 Site Analysis (Wind · Rain · Soil)</span>
     </div>
@@ -477,14 +477,15 @@ nav button{font-size:14px}
 
 <!-- ===================== DESIGN VIEW ===================== -->
 <div id="view-design">
-  <div class="hero design-hero">
-    <h1 data-i18n="dz.h1">📐 Design Function</h1>
-    <p data-i18n="dz.p">Full step-by-step design procedure with every design parameter, seismic provisions included. Project data (Risk Category, Site Class) is entirely optional — leave it blank if not yet determined.</p>
+  <div class="hero">
+    <h1 data-i18n="dz.h1">Engineering Design Workspace</h1>
+    <p data-i18n="dz.p">Full step-by-step design procedure with every design parameter and the seismic provisions that apply. Project data (Risk Category, Site Class) is entirely optional — leave it blank if not yet determined.</p>
     <div class="search-wrap">
       <input id="designInput" type="text" data-i18n-ph="dz.ph" autocomplete="off"
-        placeholder="e.g. reinforced concrete beam design · steel column design · foundation design · seismic base shear · design load combinations"
+        placeholder="e.g. reinforced concrete beam design · steel column design · foundation design · seismic base shear · construction safety SMKK"
         onkeydown="if(event.key==='Enter')handleDesignSearch()">
-      <button id="designBtn" onclick="handleDesignSearch()" data-i18n="dz.btn">Start Design</button>
+      <button id="designBtn" onclick="handleDesignSearch()" data-i18n="dz.btn">Design</button>
+      <button class="ai-toggle" onclick="toggleAI()" title="Connect your own Claude API key for live AI answers">✨ AI</button>
       <button class="reset-btn" onclick="resetDesign()" data-i18n="dz.reset" title="Clear this page">↻</button>
     </div>
     <div class="chips">
@@ -496,6 +497,7 @@ nav button{font-size:14px}
       <span class="chip" onclick="quickDesign('wind load design pressure')" data-i18n="dz.chip.wind">🌬 Wind Load Design</span>
       <span class="chip" onclick="quickDesign('purlin design cold formed')" data-i18n="dz.chip.purlin">🏠 Purlin Design</span>
       <span class="chip" onclick="quickDesign('fire protection design egress hydrant')" data-i18n="dz.chip.fire">🔥 Fire Protection</span>
+      <span class="chip" onclick="quickDesign('SMKK construction safety plan RKK risk level')" data-i18n="dz.chip.hse">🦺 HSE / SMKK Safety</span>
     </div>
     <div class="badges">
       <span class="badge sni" data-i18n="badge.sni">🇮🇩 SNI (Indonesian)</span>
@@ -896,6 +898,12 @@ standards: [
    scope:"Consolidated national fire code: construction types & TKA (Tabel 1), means of egress & travel distance, active systems, hydrants, sprinklers, extinguishers (APAR), fire access",
    key_params:{"Exit access min width":"915 mm","Dead-end corridor":"≤ 6 m","APAR Class A travel":"≤ 23 m","APAR Class B travel":"≤ 15 m","APAR Class K travel":"≤ 9 m"}},
 
+  {id:"permen-pupr-10-2021",code:"Permen PUPR 10/2021",cat:"SNI",topic:["hse_safety"],
+   title:"Pedoman Sistem Manajemen Keselamatan Konstruksi (SMKK)",
+   title_en:"Guidelines for the Construction Safety Management System (SMKK / HSE)",year:2021,
+   scope:"Indonesia's governing construction-safety (HSE / K3) regulation: duties of Pengguna & Penyedia Jasa, PMPM quality assurance, the five mandatory SMKK documents (Rancangan Konseptual SMKK, RKK, RMPK, Program Mutu, RKPPL, RMLLP), IBPRP hazard identification, construction-safety risk levels (Kecil/Sedang/Besar), the 5 RKK elements, UKK safety unit organisation, safety personnel qualification, and SMKK implementation cost",
+   key_params:{"Risk level":"Kecil / Sedang / Besar","Risk score":"TR = K × A (Kekerapan × Keparahan)","Multi-risk categories":"5 (pekerja, peralatan, material, publik, lingkungan)","RKK elements":"5","Control hierarchy":"5 levels (eliminasi→APD)","AKK required":"risiko sedang & besar","SMKK cost components":"9","Housekeeping":"5R"}},
+
   {id:"nfpa",code:"NFPA 1/10/13/14/101",cat:"American",topic:["fire"],
    title:"NFPA Fire Codes (Fire Code, Extinguishers, Sprinklers, Standpipes, Life Safety)",year:2021,
    scope:"NFPA 1 Fire Code · NFPA 10 portable extinguishers · NFPA 13 sprinkler systems · NFPA 14 standpipe & hose · NFPA 101 Life Safety Code. Referenced by IBC/IFC and the Indonesian SNI fire series.",
@@ -1105,6 +1113,10 @@ topics:{
   serviceability:{name:"Serviceability (Deflection/Drift/Vibration)",name_id:"Kemampuan Layan",
     keywords:["serviceability","deflection","deflection limit","drift","drift limit","vibration","floor vibration","kemampuan layan","lendutan","defleksi","simpangan","getaran","sag","camber","occupant comfort","l/360","l/240","span deflection","interstorey drift","ponding deflection"],
     standards:["sni-1727-2020","gb-50010-2010","sni-1726-2019"],
+    required_info:[]},
+  hse_safety:{name:"HSE / Construction Safety (SMKK)",name_id:"Keselamatan Konstruksi (SMKK)",
+    keywords:["hse","k3","smkk","smk3","safety","keselamatan","keselamatan konstruksi","construction safety","health and safety","kesehatan kerja","occupational safety","rkk","rencana keselamatan konstruksi","rmpk","rkppl","rmllp","program mutu","rancangan konseptual","ibprp","identifikasi bahaya","hazard identification","risk assessment","penilaian risiko","tingkat risiko","risk level","akk","analisis keselamatan konstruksi","job safety analysis","jsa","ukk","unit keselamatan konstruksi","ahli k3","petugas keselamatan","apd","ppe","alat pelindung diri","apk","hierarchy of control","hirarki pengendalian","eliminasi","substitusi","toolbox meeting","safety induction","induksi keselamatan","tanggap darurat","emergency response","p3k","first aid","kecelakaan kerja","work accident","near miss","permit to work","izin kerja","5r","housekeeping","biaya smkk","safety cost","iso 45001","ohsas","osha","permen pupr 10","zero accident","pengguna jasa","penyedia jasa","audit keselamatan","inspeksi keselamatan"],
+    standards:["permen-pupr-10-2021"],
     required_info:[]}
 },
 
@@ -1121,7 +1133,8 @@ topicToModule:{
   purlin:"purlin",
   foundation_type:"foundation_type",
   fire:"fire",
-  serviceability:"serviceability"
+  serviceability:"serviceability",
+  hse_safety:"hse"
 },
 
 // ================================================================
@@ -2166,6 +2179,87 @@ answer_modules:{
        notes:["Required sprinkler/standpipe provision is triggered by building height, area and occupancy — e.g. SNI requires sprinklers for most buildings &gt; 8 storeys or &gt; 24 m; GB 50016 mandates automatic sprinklers for high-rise Class I civil buildings and large assembly/commercial occupancies."]},
     ],
     sources:"SNI 03-1735-2000 §4 (access roads & hardstanding), §5 + Tabel 5.4 (yard hydrants), §6 (access openings) · SNI 03-1736-2000 (passive protection) · Permen PUPR 26/PRT/M/2008 Tabel 1 (TKA), §3.11 (egress), §5.6 (APAR) · GB 50016-2014/2018 §5 (compartments/separation), §7 (fire lanes) · GB 50974-2014 / GB 50084 / GB 50140 · NFPA 1/10/13/14/24/101 · IBC 2018 Ch. 5–10"
+  },
+
+  hse:{
+    title:"HSE / Construction Safety — SMKK (Sistem Manajemen Keselamatan Konstruksi)",
+    sections:[
+      {h:"SMKK Framework — The Mandatory Safety Documents (Permen PUPR 10/2021, Lampiran)",
+       table:{center:true,cols:["Document","Prepared by / when","Purpose"],
+         rows:[
+           ["<strong>Rancangan Konseptual SMKK</strong>","Consultant (pengkajian / perencanaan / perancangan stage)","Conceptual safety design: hazard identification against the DED, risk-level statement, safety cost & personnel needs, O&amp;M safety guide"],
+           ["<strong>RKK</strong> — Rencana Keselamatan Konstruksi","Penyedia Jasa — submitted at tender, finalised at contract","The core construction safety plan; 5 elements (see below). Variants: RKK Pengawasan (supervision) and RKK Pelaksanaan (execution)"],
+           ["<strong>RMPK</strong> — Rencana Mutu Pekerjaan Konstruksi","Penyedia Jasa (execution)","Work method, ITP inspection & test plan, quality control of each work stage"],
+           ["<strong>Program Mutu</strong>","Consultant (konsultansi konstruksi)","Quality programme for consultancy services"],
+           ["<strong>RKPPL</strong> — Rencana Kerja Pengelolaan dan Pemantauan Lingkungan","Penyedia Jasa","Environmental management & monitoring work plan"],
+           ["<strong>RMLLP</strong> — Rencana Manajemen Lalu Lintas Pekerjaan","Penyedia Jasa","Work traffic-management plan (based on 2-way daily traffic data)"]
+         ]},
+       notes:["SMKK applies to the whole delivery cycle — pengkajian → perencanaan → perancangan → pengadaan → pelaksanaan → pemanfaatan. Two organisational layers govern it: <strong>Penyelenggara Infrastruktur</strong> (policy, technical guidance, oversight — assures safety) and <strong>Penyelenggara Proyek</strong> (PPK, pengendali/direksi lapangan, pengawas, penyedia — controls safety in the field)."]},
+      {h:"Construction Safety Risk Level — IBPRP (Permen PUPR 10/2021, Lampiran C & D)",
+       table:{center:true,cols:["Item","Provision"],
+         rows:[
+           ["Risk score","<strong>TR = K × A</strong> — Kekerapan (likelihood) × Keparahan (severity)"],
+           ["Risk levels","<strong>Kecil / Sedang / Besar</strong> (small / medium / large), formally declared in a signed <em>Pernyataan Penetapan Tingkat Risiko</em>"],
+           ["Assessed against 5 receptors","Pekerja (workers) · Peralatan (equipment) · Material · Publik · Lingkungan hidup (environment) — a multi-risk analysis, each scored K, A and TR"],
+           ["Purpose of the risk level","Determines the <strong>required safety personnel</strong> (Ahli K3/Keselamatan Konstruksi vs Petugas Keselamatan Konstruksi) and the UKK structure — explicitly NOT market segmentation or work complexity"],
+           ["IBPRP table","Identifikasi Bahaya → Penilaian Risiko → Pengendalian Risiko → Rencana Tindakan, signed by the Ahli Keselamatan Konstruksi / Ahli K3 Konstruksi"],
+           ["AKK (Analisis Keselamatan Konstruksi)","Mandatory for <strong>risiko sedang and besar</strong>, together with a special work permit (izin kerja khusus)"]
+         ]},
+       notes:["Hazard identification must be derived from the actual work method, and the control analysis must be integrated across engineering control, administrative control, human-behaviour aspects and change management (manajemen perubahan)."]},
+      {h:"Hierarchy of Risk Control (Permen PUPR 10/2021, Lampiran D.2)",
+       table:{center:true,cols:["Order","Control level","Meaning"],
+         rows:[
+           ["1","<strong>Eliminasi</strong>","Remove the hazard entirely"],
+           ["2","<strong>Substitusi</strong>","Replace with a less hazardous method/material"],
+           ["3","<strong>Rekayasa teknis</strong>","Engineering control (guarding, barriers, design change)"],
+           ["4","<strong>Pengendalian administratif</strong>","Procedures, permits, training, signage, rotation"],
+           ["5","<strong>APD &amp; APK</strong>","Personal protective equipment + work protective equipment — the last resort"]
+         ]},
+       notes:["Residual risk must be re-assessed after control (pengendalian risiko lanjutan) — additional measures are required where residual risk remains unacceptable."]},
+      {h:"The Five RKK Elements (Permen PUPR 10/2021, Lampiran D.2)",
+       table:{center:true,cols:["#","Element","Minimum sub-elements"],
+         rows:[
+           ["1","<strong>Kepemimpinan &amp; Partisipasi Tenaga Kerja</strong>","Leadership commitment to internal/external issues; SMKK organisation chart (UKK) with duties; worker consultation &amp; participation"],
+           ["2","<strong>Perencanaan</strong> (Planning)","IBPRP; sasaran &amp; program (general + specific for medium/large priority risks); compliance with safety laws &amp; standards"],
+           ["3","<strong>Dukungan</strong> (Support)","Resources — technology &amp; plant (permits, licences, operator certificates), materials (imported list, B3/MSDS), <strong>SMKK cost with 9 components</strong>; worker competence; safety awareness &amp; training; communication (safety induction, toolbox meeting); documented information"],
+           ["4","<strong>Operasi</strong> (Operation)","RKK implementation &amp; organisation; operational control — AKK + special permits, work-environment security, lifting/hoisting &amp; plant permits, PPE procedures, subcontractor/supplier control, occupational health &amp; social protection, environmental management (5R, pollution prevention, waste); emergency preparedness &amp; response; construction accident investigation"],
+           ["5","<strong>Evaluasi Kinerja</strong> (Performance evaluation)","Monitoring/inspection against a set schedule &amp; checklist; audit against RKK criteria; compliance evaluation; management review; continual improvement"]
+         ]},
+       notes:["Direct appointment (penunjukan langsung) still requires a full RKK. For swakelola (self-managed) works the RKK must at minimum contain IBPRP, AKK, the inspection schedule and the APD/APK procurement; for swakelola supervision, hazard identification plus sasaran &amp; program."]},
+      {h:"UKK — Construction Safety Unit &amp; Personnel (Permen PUPR 10/2021, Lampiran A &amp; D)",
+       table:{center:true,cols:["Risk level","UKK leadership","Typical personnel"],
+         rows:[
+           ["<strong>Risiko kecil</strong>","UKK leadership is attached to the highest project leader (no separate unit)","Petugas Keselamatan Konstruksi; Petugas P3K"],
+           ["<strong>Risiko sedang &amp; besar</strong>","A <strong>separate Pimpinan UKK</strong> coordinating directly with the project leader","Ahli Keselamatan Konstruksi / Ahli K3 Konstruksi; Koordinator Keselamatan Konstruksi; Koordinator Tanggap Darurat; anggota UKK"]
+         ]},
+       notes:["Standard UKK roster (Tabel 8): Personil Keselamatan Konstruksi · Petugas P3K · Petugas tanggap darurat · Flagman · Tenaga kesehatan · Personil Penjamin Mutu. Role duties (Lampiran D): the Pimpinan UKK ensures SMKK requirements are met; Petugas Keselamatan Konstruksi sets safety targets, runs inductions, performs inspections, coordinates and reports incidents; Petugas Tanggap Darurat announces emergencies and reports to the safety manager; Tenaga kesehatan performs first aid and liaises with clinics; Petugas pengelola lalu lintas prepares and enforces the RMLLP; Petugas pengelola lingkungan prepares the environmental plan and inspects the site.","In supervision consultancy (RKK Pengawasan) the personnel list must include Ahli K3/Keselamatan Konstruksi, Petugas K3/Keselamatan Konstruksi and the relevant technical experts, each with certificates (e.g. Sertifikat Ahli Muda K3 Konstruksi)."]},
+      {h:"Operational Safety Controls &amp; Environment (Permen PUPR 10/2021, Lampiran D.2 element 4)",extra:true,
+       table:{cols:["Area","Required control"],
+         rows:[
+           ["Plant &amp; lifting","Procedure for pesawat angkat/angkut &amp; other construction plant, with equipment fitness permits (izin kelaikan) and operator licences"],
+           ["Work security","Work-system safety procedures/instructions; site security; a <strong>stop-work procedure</strong> when a dangerous condition is found"],
+           ["PPE","Procedure/instruction for APD use; APD &amp; APK procurement planned in the RKK"],
+           ["Supply chain","Subcontractor &amp; supplier control, integrated with the RMPK"],
+           ["Occupational health","Social protection (BPJS-type) for all construction workers + worker health examinations"],
+           ["Environment","Pollution-prevention procedure; housekeeping to <strong>5R</strong> (Ringkas, Rapih, Resik, Rawat, Rajin); waste &amp; effluent management; reuse/reduce/recycle improvement — integrated into the RKPPL"],
+           ["Emergency","Emergency-response procedure matched to the nature and classification of the works"],
+           ["Investigation","Procedure for investigating incidents, dangerous occurrences and occupational disease"]
+         ]},
+       notes:["Building reliability management is integrated with the RMPK; site-perimeter security and traffic control with the RMLLP; environmental control with the RKPPL — the SMKK documents are explicitly cross-referenced, not standalone."]},
+      {h:"International Equivalents — HSE Management Systems",extra:true,
+       table:{cols:["🇮🇩 Indonesia (SMKK)","🇺🇸 United States","🇨🇳 China"],
+         rows:[
+           ["Permen PUPR 10/2021 — SMKK","OSHA 29 CFR 1926 (Construction) + ISO 45001","GB/T 45001 · GB 50656-2011 (施工企业安全生产管理规范)"],
+           ["RKK — Rencana Keselamatan Konstruksi","Site-Specific Safety Plan (SSSP) / Safety &amp; Health Program","安全生产管理计划 / 施工组织设计 (safety chapter)"],
+           ["IBPRP hazard identification &amp; risk assessment","Job Hazard Analysis (JHA) / AHA","危险源辨识与风险评价 (JGJ 59-2011 checklist scoring)"],
+           ["AKK + izin kerja khusus (medium/large risk)","Permit-to-work: confined space, hot work, excavation, LOTO","危险性较大的分部分项工程 专项施工方案 (expert review over threshold)"],
+           ["UKK — Unit Keselamatan Konstruksi","Competent Person / site safety manager","专职安全生产管理人员 (by contract value &amp; area)"],
+           ["Hierarchy: eliminasi→substitusi→rekayasa→administratif→APD","NIOSH Hierarchy of Controls (identical 5 levels)","消除→替代→工程控制→管理控制→个体防护"],
+           ["Safety cost as a separate paid item (9 components)","Separate pay item for safety in the bid schedule","安全文明施工费 — statutory, non-negotiable percentage"]
+         ]},
+       notes:["The SMKK cost is a <strong>reimbursable, separately-priced item</strong> — Permen PUPR 10/2021 requires the SMKK implementation cost to contain at least 9 components and to sit outside the expert-remuneration budget, so safety provisions cannot be competed away in tender."]}
+    ],
+    sources:"Permen PUPR 10/2021 Lampiran A (roles of Pengguna/Penyedia Jasa, UKK), B (PMPM), C (Rancangan Konseptual SMKK — Tabel 5 risk scoring, Tabel 6 IBPRP, Tabel 8 personnel), D (RKK formats &amp; the 5 elements) — extracted from PDF pp. 1–100 · UU 2/2017 Jasa Konstruksi · PP 14/2021 · ISO 45001 · OSHA 29 CFR 1926 · GB 50656-2011 / JGJ 59-2011"
   }
 
 },
@@ -3108,8 +3202,8 @@ function toggleAI(){
   if(lastQuery)handleSearch();
 }
 function syncAIToggle(){
-  const b=document.getElementById('aiToggle');
-  if(b)b.classList.toggle('on',aiOn());
+  // both functions (Dictionary + Design) carry an AI toggle — keep them in sync
+  document.querySelectorAll('.ai-toggle').forEach(b=>b.classList.toggle('on',aiOn()));
 }
 function clearAIKey(){
   try{localStorage.removeItem('esd_claude_key');localStorage.setItem('esd_ai_on','0')}catch(e){}
@@ -3225,13 +3319,13 @@ function handleDesignSearch(){
 }
 
 function quickSearch(q){
-  showView('search',document.querySelectorAll('nav button')[0]);
+  showView('search',navBtn(VIEWS.indexOf('search')));
   document.getElementById('searchInput').value=q;
   handleSearch();
 }
 
 function quickDesign(q){
-  showView('design',document.querySelectorAll('nav button')[1]);
+  showView('design',navBtn(VIEWS.indexOf('design')));
   document.getElementById('designInput').value=q;
   // seed designQuery so handleDesignSearch does not treat this as a brand-new
   // query and clear the proceed flag we are setting on purpose
@@ -3242,7 +3336,7 @@ function quickDesign(q){
 // Hand-off: carry the dictionary question into the Design function
 function goToDesign(){
   const q=(lastQuery||document.getElementById('searchInput').value||'').trim();
-  showView('design',document.querySelectorAll('nav button')[1]);
+  showView('design',navBtn(VIEWS.indexOf('design')));
   if(q){
     document.getElementById('designInput').value=q;
     designQuery=q;designProceeded=true;  // the user already asked to design — show it all
@@ -3275,7 +3369,9 @@ function resetAllState(){
 function resetDictionary(){selectedStd='all';clearDictionary();window.scrollTo({top:0,behavior:'smooth'});}
 function resetDesign(){selectedStd='all';clearDesign();window.scrollTo({top:0,behavior:'smooth'});}
 
-const VIEWS=['search','design','browse','seismic','site','about'];
+// order must match the nav buttons — Design is the first/landing function
+const VIEWS=['design','search','browse','seismic','site','about'];
+const navBtn=i=>document.querySelectorAll('nav button')[i];
 function showView(v,btn){
   // moving to another function discards whatever the previous one held
   resetAllState();

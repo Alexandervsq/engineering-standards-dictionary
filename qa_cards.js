@@ -1397,6 +1397,56 @@ window.QA_CARDS=[
     "门 ≥ <strong>0.90 m</strong>，走道 ≥ 1.10–1.40 m，楼梯 ≥ 1.10–1.30 m",
     "袋形走道：房间门 → 最近安全出口 ≤ <strong>20–22 m</strong>（设喷淋 +25%）",
     "疏散宽度 ≈ 每 100 人 0.65–1.00 m（按层与功能）；≥ 2 个安全出口（个别情况可 1 个）"]}],
-  src:"条例 26/2008 §3.11、§5.6 · NFPA 101 · GB 50016-2014 §5.5.8–5.5.18、表 5.5.17"}}
+  src:"条例 26/2008 §3.11、§5.6 · NFPA 101 · GB 50016-2014 §5.5.8–5.5.18、表 5.5.17"}},
+
+{id:"smkk-hse",
+ kw:["smkk","smk3","hse","k3","construction safety","keselamatan konstruksi","safety management system","sistem manajemen keselamatan","rkk","rmpk","rkppl","rmllp","ibprp","risk level construction","tingkat risiko keselamatan","ukk","ahli k3","petugas keselamatan","akk","safety plan","permen pupr 10"],
+ kw_zh:["施工安全","安全管理体系","安全生产","危险源辨识","风险等级","安全计划","专项方案","安全员","职业健康安全"],
+ en:{title:"SMKK — Construction Safety Management System (HSE)",
+  sections:[
+   {h:"🇮🇩 Permen PUPR 10/2021 — the SMKK framework",pts:[
+    "Mandatory documents: <strong>Rancangan Konseptual SMKK</strong> (design stage) → <strong>RKK</strong> (safety plan, tender + contract) → <strong>RMPK</strong> (method + ITP) → <strong>RKPPL</strong> (environment) → <strong>RMLLP</strong> (traffic); Program Mutu for consultancy",
+    "Risk level from <strong>TR = K × A</strong> (likelihood × severity) over 5 receptors — workers, equipment, material, public, environment → <strong>Kecil / Sedang / Besar</strong>, formally declared and signed",
+    "<strong>AKK + special work permit</strong> mandatory for medium & large risk activities",
+    "RKK has <strong>5 elements</strong>: leadership & participation · planning (IBPRP + targets) · support (resources, competence, communication, SMKK cost with 9 components) · operation · performance evaluation",
+    "Control hierarchy: <strong>eliminasi → substitusi → rekayasa teknis → administratif → APD/APK</strong>",
+    "UKK: risiko kecil → function held by the top project leader; risiko sedang/besar → separate Pimpinan UKK + Ahli K3/Keselamatan Konstruksi, P3K, emergency, flagman, health staff",
+    "SMKK cost is a <strong>separately-priced, non-competed</strong> item outside expert remuneration"]},
+   {h:"🇺🇸 OSHA 29 CFR 1926 / ISO 45001",pts:[
+    "Site-Specific Safety Plan + <strong>Job Hazard Analysis (JHA/AHA)</strong> per task",
+    "Competent Person required for inspections (excavation, scaffold, fall protection)",
+    "Permit-to-work: confined space (1926.1200), hot work, excavation, LOTO (1910.147)",
+    "Fall protection above <strong>6 ft (1.8 m)</strong> in construction; hard hats, eye/face protection per Subpart E",
+    "Recordkeeping on OSHA 300/300A logs; ISO 45001 adds the Plan-Do-Check-Act management system"]},
+   {h:"🇨🇳 GB 50656-2011 · JGJ 59-2011",pts:[
+    "<strong>安全生产管理体系</strong> — 专职安全生产管理人员 staffed by contract value & floor area",
+    "<strong>危险源辨识与风险评价</strong>; JGJ 59-2011 gives the site safety inspection scoring checklist",
+    "<strong>专项施工方案</strong> for 危险性较大的分部分项工程 (deep excavation, formwork support, lifting, high scaffolding) — expert review (专家论证) required above threshold",
+    "<strong>安全文明施工费</strong> — statutory, non-negotiable percentage, cannot be reduced in bidding",
+    "三级安全教育 (company / project / team-level safety induction) for every new worker"]}],
+  src:"Permen PUPR 10/2021 Lampiran A–D (pp. 1–100) · UU 2/2017 · PP 14/2021 · OSHA 29 CFR 1926 · ISO 45001:2018 · GB 50656-2011 · JGJ 59-2011"},
+ zh:{title:"SMKK — 印尼施工安全管理体系（HSE）",
+  sections:[
+   {h:"🇮🇩 部长条例 PUPR 10/2021 — SMKK 体系",pts:[
+    "强制文件：<strong>SMKK 概念设计</strong>（设计阶段）→ <strong>RKK</strong>（安全计划，投标+签约）→ <strong>RMPK</strong>（施工方法+ITP）→ <strong>RKPPL</strong>（环境）→ <strong>RMLLP</strong>（交通）；咨询服务另编质量纲要",
+    "风险等级按 <strong>TR = K × A</strong>（频率 × 严重度），针对 5 类受体 — 人员、设备、材料、公众、环境 → <strong>小 / 中 / 大</strong>，须正式签署声明",
+    "中、大风险作业强制编制 <strong>AKK 并办理专项作业许可</strong>",
+    "RKK 含 <strong>五大要素</strong>：领导力与参与 · 策划（IBPRP+目标）· 支持（资源、能力、沟通、含 9 项组成的 SMKK 费用）· 运行 · 绩效评价",
+    "控制层级：<strong>消除 → 替代 → 工程技术 → 管理 → 个体防护</strong>",
+    "UKK：小风险由项目最高负责人兼任；中/大风险单设 UKK 负责人 + K3/施工安全专家、急救、应急、交通指挥、医护人员",
+    "SMKK 费用<strong>单列计价、不参与竞价</strong>，且不计入专家酬金"]},
+   {h:"🇺🇸 OSHA 29 CFR 1926 / ISO 45001",pts:[
+    "现场专项安全计划 + 逐项作业 <strong>工作危害分析（JHA/AHA）</strong>",
+    "巡检须由主管人员（Competent Person）实施（开挖、脚手架、防坠落）",
+    "作业许可：受限空间（1926.1200）、动火、开挖、上锁挂牌（1910.147）",
+    "建筑业 <strong>6 ft（1.8 m）</strong> 以上高处作业须防坠落；按 Subpart E 配安全帽与眼面防护",
+    "按 OSHA 300/300A 台账记录；ISO 45001 增加 PDCA 管理体系要求"]},
+   {h:"🇨🇳 GB 50656-2011 · JGJ 59-2011",pts:[
+    "<strong>安全生产管理体系</strong> — 按合同额与建筑面积配备专职安全生产管理人员",
+    "<strong>危险源辨识与风险评价</strong>；JGJ 59-2011 提供施工安全检查评分表",
+    "危险性较大的分部分项工程（深基坑、模板支撑、起重吊装、高大脚手架）须编<strong>专项施工方案</strong>，超过一定规模须<strong>专家论证</strong>",
+    "<strong>安全文明施工费</strong> — 法定计取、不可竞价压减",
+    "新进人员须完成<strong>三级安全教育</strong>（公司、项目、班组）"]}],
+  src:"部长条例 PUPR 10/2021 附件 A–D（第 1–100 页） · UU 2/2017 · PP 14/2021 · OSHA 29 CFR 1926 · ISO 45001:2018 · GB 50656-2011 · JGJ 59-2011"}}
 
 ];
