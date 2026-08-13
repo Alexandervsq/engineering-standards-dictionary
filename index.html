@@ -220,6 +220,18 @@ ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position
 .fa-table tr:nth-child(even) td{background:#f8f9fa}
 .fa-table .site-col{font-weight:600;background:var(--gray);text-align:left;padding-left:12px}
 
+/* DESIGN VIEW (separate function from the Dictionary) */
+#view-design{display:none}
+.hero.design-hero{background:linear-gradient(160deg,#7a3d0b 0%,#a2560f 100%)}
+.design-cta{background:linear-gradient(135deg,#fff6ec 0%,#ffeedd 100%);border:1px solid #f0c9a0;border-left:5px solid var(--accent);border-radius:12px;padding:18px 22px;margin:22px 0 4px;box-shadow:var(--card-shadow)}
+.design-cta h3{font-size:16px;color:#8a4b0c;margin-bottom:6px}
+.design-cta p{font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:13px}
+.design-cta .proceed-btn{padding:12px 30px}
+.design-cta .cta-note{display:block;font-size:12px;color:var(--text2);margin-top:9px;line-height:1.55}
+.opt-note{font-size:12px;color:var(--text2);line-height:1.55;margin-top:7px;background:#f5f8fb;border-radius:7px;padding:8px 11px}
+.reset-btn{background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:9px;padding:0 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
+.reset-btn:hover{background:rgba(255,255,255,.18)}
+
 /* BROWSE */
 #view-browse{display:none}
 .filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
@@ -410,7 +422,8 @@ nav button{font-size:14px}
     </div>
     <button class="menu-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">☰</button>
     <nav id="mainNav">
-      <button class="active" onclick="showView('search',this)" data-i18n="nav.search">Search</button>
+      <button class="active" onclick="showView('search',this)" data-i18n="nav.search">📖 Dictionary</button>
+      <button onclick="showView('design',this)" data-i18n="nav.design">📐 Design</button>
       <button onclick="showView('browse',this)" data-i18n="nav.browse">Browse Standards</button>
       <button onclick="showView('seismic',this)" data-i18n="nav.seismic">Seismic Tool</button>
       <button onclick="showView('site',this)" data-i18n="nav.site">Site Analysis</button>
@@ -430,11 +443,12 @@ nav button{font-size:14px}
     <h1 data-i18n="hero.h1">Engineering Standards Reference</h1>
     <p data-i18n="hero.p">Search across 80+ Indonesian, American, and Chinese standards. Ask in plain language.</p>
     <div class="search-wrap">
-      <input id="searchInput" type="text" data-i18n-ph="hero.ph"
+      <input id="searchInput" type="text" data-i18n-ph="hero.ph" autocomplete="off"
         placeholder="e.g. concrete cover requirements · steel seismic detailing · foundation bearing capacity · power plant in North Maluku"
         onkeydown="if(event.key==='Enter')handleSearch()">
       <button id="searchBtn" onclick="handleSearch()" data-i18n="hero.btn">Search</button>
       <button id="aiToggle" class="ai-toggle" onclick="toggleAI()" title="Connect your own Claude API key for live AI answers">✨ AI</button>
+      <button class="reset-btn" onclick="resetDictionary()" data-i18n="hero.reset" title="Clear this page">↻</button>
     </div>
     <div class="chips">
       <span class="chip" onclick="quickSearch('concrete cover and strength requirements')" data-i18n="chip.concrete">🏗 Concrete</span>
@@ -458,6 +472,40 @@ nav button{font-size:14px}
 
   <div class="container">
     <div id="results"></div>
+  </div>
+</div>
+
+<!-- ===================== DESIGN VIEW ===================== -->
+<div id="view-design">
+  <div class="hero design-hero">
+    <h1 data-i18n="dz.h1">📐 Design Function</h1>
+    <p data-i18n="dz.p">Full step-by-step design procedure with every design parameter, seismic provisions included. Project data (Risk Category, Site Class) is entirely optional — leave it blank if not yet determined.</p>
+    <div class="search-wrap">
+      <input id="designInput" type="text" data-i18n-ph="dz.ph" autocomplete="off"
+        placeholder="e.g. reinforced concrete beam design · steel column design · foundation design · seismic base shear · design load combinations"
+        onkeydown="if(event.key==='Enter')handleDesignSearch()">
+      <button id="designBtn" onclick="handleDesignSearch()" data-i18n="dz.btn">Start Design</button>
+      <button class="reset-btn" onclick="resetDesign()" data-i18n="dz.reset" title="Clear this page">↻</button>
+    </div>
+    <div class="chips">
+      <span class="chip" onclick="quickDesign('reinforced concrete beam design flexure shear')" data-i18n="dz.chip.concrete">🏗 Concrete Design</span>
+      <span class="chip" onclick="quickDesign('steel member design compression flexure')" data-i18n="dz.chip.steel">🔩 Steel Design</span>
+      <span class="chip" onclick="quickDesign('foundation design bearing capacity pile')" data-i18n="dz.chip.foundation">🏚 Foundation Design</span>
+      <span class="chip" onclick="quickDesign('seismic design base shear response spectrum')" data-i18n="dz.chip.seismic">🌍 Seismic Design</span>
+      <span class="chip" onclick="quickDesign('design load determination combinations')" data-i18n="dz.chip.loads">📐 Load Determination</span>
+      <span class="chip" onclick="quickDesign('wind load design pressure')" data-i18n="dz.chip.wind">🌬 Wind Load Design</span>
+      <span class="chip" onclick="quickDesign('purlin design cold formed')" data-i18n="dz.chip.purlin">🏠 Purlin Design</span>
+      <span class="chip" onclick="quickDesign('fire protection design egress hydrant')" data-i18n="dz.chip.fire">🔥 Fire Protection</span>
+    </div>
+    <div class="badges">
+      <span class="badge sni" data-i18n="badge.sni">🇮🇩 SNI (Indonesian)</span>
+      <span class="badge amer" data-i18n="badge.amer">🇺🇸 ACI/AISC/ASCE (American)</span>
+      <span class="badge cn" data-i18n="badge.cn">🇨🇳 GB/JGJ (Chinese)</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="designResults"></div>
   </div>
 </div>
 
@@ -698,10 +746,13 @@ let LANG=(function(){try{return localStorage.getItem('esd_lang')||'en'}catch(e){
 let lastQuery='', lastSiteData=null;
 // active standard-system filter: 'all' | 'SNI' | 'American' | 'Chinese'
 let selectedStd='all';
-// optional project parameters the user can supply for design procedures
+// OPTIONAL project parameters — only ever offered inside the Design function,
+// never required: a project often has no Risk Category / Site Class up front.
 let userRiskCat='', userSiteClass='';
-// results are revealed only after the user clicks "Proceed" (per topic query)
-let proceeded=false;
+// DESIGN function state (separate from the Dictionary function)
+let designQuery='', designProceeded=false;
+// which function the shared renderers are currently building for: 'dict'|'design'
+let renderMode='dict';
 
 // Detect which national standard system(s) a piece of text references.
 function stdCountryOf(text){
@@ -765,6 +816,7 @@ function applyLanguage(){
   updateAboutIndexStat();
   renderBrowse(currentBrowseFilter);
   if(lastQuery){document.getElementById('searchInput').value=lastQuery;handleSearch();}
+  if(designQuery){document.getElementById('designInput').value=designQuery;handleDesignSearch();}
   if(chartInst)calcSpectrum();
   if(lastSiteData)renderSiteResults(lastSiteData);
 }
@@ -2487,10 +2539,13 @@ function buildContextCard(ctx){
 // category and seismic site class (shown only for these).
 const PARAM_TOPICS=['seismic','structural_concrete','steel_structure','geotechnical','foundation_type'];
 
-// Standard selector + optional project-parameter inputs, shown after Query Analysis
-function buildControls(ctx){
+// Standard selector (both functions) + OPTIONAL project data (Design only).
+// mode: 'dict'  → standard-system filter only, results shown immediately
+//       'design'→ standard filter + optional project data + Proceed
+function buildControls(ctx,mode){
   const{topics,projType,loc}=ctx;
   if(!topics.length&&!projType&&!loc)return'';
+  const design=(mode==='design');
   // 1) Standard-system selector (which country's standards to show)
   const opt=(v,label)=>`<button class="std-pick${selectedStd===v?' on':''}" onclick="setStd('${v}')">${label}</button>`;
   let html=`<div class="controls-card">
@@ -2502,9 +2557,13 @@ function buildControls(ctx){
         ${opt('Chinese',T('ctrl.cn','🇨🇳 Chinese'))}
       </div>
     </div>`;
-  // 2) Project parameters — only for design procedures that use them
-  const needsParams=topics.some(t=>PARAM_TOPICS.includes(t));
-  if(needsParams){
+  if(!design){
+    html+=`</div>`;
+    return html;   // Dictionary: nothing else is asked of the user
+  }
+  // 2) Project data — Design function only, and always optional
+  const usesParams=topics.some(t=>PARAM_TOPICS.includes(t));
+  if(usesParams){
     const ro=(v,l)=>`<option value="${v}"${userRiskCat===v?' selected':''}>${l}</option>`;
     const so=(v,l)=>`<option value="${v}"${userSiteClass===v?' selected':''}>${l}</option>`;
     html+=`<div class="ctrl-row" style="margin-top:10px">
@@ -2512,25 +2571,26 @@ function buildControls(ctx){
       <div class="proj-params">
         <label>${T('ctrl.risk','Risk Category')}
           <select id="upRisk" onchange="setProjParam()">
-            ${ro('',T('ctrl.auto','— auto —'))}${ro('I','I — Ie 1.00')}${ro('II','II — Ie 1.00')}${ro('III','III — Ie 1.25')}${ro('IV','IV — Ie 1.50')}
+            ${ro('',T('ctrl.notyet','— not determined yet —'))}${ro('I','I — Ie 1.00')}${ro('II','II — Ie 1.00')}${ro('III','III — Ie 1.25')}${ro('IV','IV — Ie 1.50')}
           </select>
         </label>
         <label>${T('ctrl.site','Site Class')}
           <select id="upSite" onchange="setProjParam()">
-            ${so('',T('ctrl.auto','— auto —'))}${so('SA','SA')}${so('SB','SB')}${so('SC','SC')}${so('SD','SD')}${so('SE','SE')}${so('SF','SF')}
+            ${so('',T('ctrl.notyet','— not determined yet —'))}${so('SA','SA')}${so('SB','SB')}${so('SC','SC')}${so('SD','SD')}${so('SE','SE')}${so('SF','SF')}
           </select>
         </label>
       </div>
-    </div>`;
+    </div>
+    <div class="opt-note">${T('ctrl.optNote','ℹ Both fields are optional. If your project has not determined them yet, leave them blank — the full design procedure and every design parameter are shown either way, and the procedure explains how Risk Category and Site Class are derived when you reach that step.')}</div>`;
     if(userRiskCat||userSiteClass){
       const ie=userRiskCat==='IV'?'1.50':userRiskCat==='III'?'1.25':userRiskCat?'1.00':'—';
       html+=`<div class="ctrl-derived">${T('ctrl.using','Using your data:')} ${userRiskCat?`<strong>${T('q.risk','Risk Category')} ${userRiskCat}</strong> → Ie ${ie}`:''}${userRiskCat&&userSiteClass?' · ':''}${userSiteClass?`<strong>${T('q.site','Site Class')} ${userSiteClass}</strong>`:''}${(topics.includes('seismic'))?` · <a class="ext-link" style="padding:3px 9px" onclick="openSpectrumWithParams()">${T('ctrl.calc','⚙ open spectrum with these')}</a>`:''}</div>`;
     }
   }
-  // Proceed button — reveal the procedure & parameters only after the user
-  // has chosen the standard system (and optional project data)
-  if(!proceeded){
-    html+=`<div class="ctrl-proceed"><button class="proceed-btn" onclick="doProceed()">${T('ctrl.proceed','Proceed →')}</button><span class="proceed-hint">${T('ctrl.proceedHint','Choose a standard system (and optional project data) above, then proceed to see the design procedure & parameters.')}</span></div>`;
+  // Proceed — reveals the full procedure & parameters (never blocked by the
+  // optional project data above)
+  if(!designProceeded){
+    html+=`<div class="ctrl-proceed"><button class="proceed-btn" onclick="doProceed()">${T('ctrl.proceed','Proceed →')}</button><span class="proceed-hint">${T('ctrl.proceedHint2','Pick a standard system above (project data optional), then proceed to the full design procedure & parameters.')}</span></div>`;
   }else{
     html+=`<div class="ctrl-proceed"><span class="proceed-active">${T('ctrl.showing','✓ Showing results for:')} <strong>${selectedStd==='all'?T('ctrl.all','All'):selectedStd==='SNI'?T('ctrl.id','🇮🇩 Indonesian'):selectedStd==='American'?T('ctrl.us','🇺🇸 American'):T('ctrl.cn','🇨🇳 Chinese')}</strong></span></div>`;
   }
@@ -2538,18 +2598,34 @@ function buildControls(ctx){
   return html;
 }
 
-function doProceed(){proceeded=true;if(lastQuery)handleSearch();}
-function setStd(s){selectedStd=s;if(lastQuery)handleSearch();}
+// Dictionary → Design hand-off card, offered after every dictionary answer
+function buildDesignCTA(q){
+  return `<div class="design-cta">
+    <h3>${T('cta.h','📐 Continue to the Design function?')}</h3>
+    <p>${T('cta.p','The answer above is the reference information from the standards. To work this into an actual design, switch to the Design function — it keeps every detail shown here and adds the complete step-by-step design procedure, the full set of design parameters, and the seismic provisions that apply.')}</p>
+    <button class="proceed-btn" onclick="goToDesign()">${T('cta.btn','Proceed to Design →')}</button>
+    <span class="cta-note">${T('cta.note','Your question is carried over automatically. Risk Category and Site Class stay optional there.')}</span>
+  </div>`;
+}
+
+function doProceed(){designProceeded=true;if(designQuery)handleDesignSearch();}
+function setStd(s){
+  selectedStd=s;
+  if(renderMode==='design'){if(designQuery)handleDesignSearch();}
+  else if(lastQuery)handleSearch();
+}
 function setProjParam(){
   const r=document.getElementById('upRisk'), s=document.getElementById('upSite');
   if(r)userRiskCat=r.value; if(s)userSiteClass=s.value;
-  if(lastQuery)handleSearch();
+  if(designQuery)handleDesignSearch();
 }
 function openSpectrumWithParams(){
+  // capture first — switching views clears the transient design state
+  const sc=userSiteClass, rc=userRiskCat;
   showView('seismic',null);
-  if(userSiteClass&&userSiteClass!=='SF'){const el=document.getElementById('rSite');if(el)el.value=userSiteClass;}
+  if(sc&&sc!=='SF'){const el=document.getElementById('rSite');if(el)el.value=sc;}
   const ieMap={'IV':'1.50','III':'1.25','II':'1.00','I':'1.00'};
-  if(userRiskCat&&ieMap[userRiskCat]){const el=document.getElementById('rIe');if(el)el.value=ieMap[userRiskCat];}
+  if(rc&&ieMap[rc]){const el=document.getElementById('rIe');if(el)el.value=ieMap[rc];}
   calcSpectrum();
 }
 
@@ -2726,9 +2802,10 @@ function renderProcedure(proc){
 function renderModule(key,mod){
   // pick the Chinese version of the module content when 中文 is active
   const m=(LANG==='zh'&&mod.zh)?mod.zh:mod;
-  // does this topic have a step-by-step procedure shown above?
+  // Is a step-by-step procedure shown above? Only the Design function renders
+  // one, so the systematic numbering belongs to that mode.
   const procKey=(window.PROCEDURES&&window.PROCEDURES[key]&&window.PROCEDURES[key].ref)?window.PROCEDURES[key].ref:key;
-  const hasProc=!!(window.PROCEDURES&&window.PROCEDURES[procKey]&&!window.PROCEDURES[procKey].ref);
+  const hasProc=(renderMode==='design')&&!!(window.PROCEDURES&&window.PROCEDURES[procKey]&&!window.PROCEDURES[procKey].ref);
   let body='';
   if(hasProc){
     body+=`<div class="mod-systematic">${T('mod.systematic','📋 The design parameters below are arranged to follow the design procedure above — work through them in order. Additional considerations are grouped at the end.')}</div>`;
@@ -3100,21 +3177,23 @@ async function maybeAskClaude(ctx){
 // ================================================================
 // UI CONTROLLER
 // ================================================================
+// ── DICTIONARY function ────────────────────────────────────────
+// A query returns the detailed engineering information straight away — no
+// project data is requested, nothing is gated. A hand-off card at the end
+// lets the user carry the question into the Design function.
 function handleSearch(){
   const q=document.getElementById('searchInput').value.trim();
   if(!q)return;
-  // reset filter, project params & proceed-state only on a genuinely new query
-  // (filter/param/proceed clicks re-call handleSearch with q === lastQuery)
-  if(q!==lastQuery){selectedStd='all';userRiskCat='';userSiteClass='';proceeded=false;}
+  renderMode='dict';
+  // reset the standard filter only on a genuinely new query
+  // (filter clicks re-call handleSearch with q === lastQuery)
+  if(q!==lastQuery)selectedStd='all';
   lastQuery=q;
   const ctx=analyzeQuery(q);
   const hasTopics=ctx.topics.length||ctx.projType||ctx.loc;
-  // Query Analysis → Standard/Project controls; the procedure, parameters,
-  // standards & extracts appear only after the user clicks "Proceed".
-  let html=buildContextCard(ctx)+buildControls(ctx);
-  if(!hasTopics||proceeded){
-    html+=buildProcedureHTML(ctx.topics)+buildResponse(ctx);
-  }
+  // Query Analysis → standard-system filter → the full reference answer
+  let html=buildContextCard(ctx)+buildControls(ctx,'dict')+buildResponse(ctx);
+  if(hasTopics)html+=buildDesignCTA(q);
   const res=document.getElementById('results');
   res.innerHTML=html;
   res.style.display='block';
@@ -3122,25 +3201,98 @@ function handleSearch(){
   maybeAskClaude(ctx);
 }
 
+// ── DESIGN function ────────────────────────────────────────────
+// Keeps everything the dictionary shows and adds the step-by-step design
+// procedure. Risk Category / Site Class are offered but never required.
+function handleDesignSearch(){
+  const q=document.getElementById('designInput').value.trim();
+  if(!q)return;
+  renderMode='design';
+  // a genuinely new design query clears the filter, optional data & proceed state
+  if(q!==designQuery){selectedStd='all';userRiskCat='';userSiteClass='';designProceeded=false;}
+  designQuery=q;
+  const ctx=analyzeQuery(q);
+  const hasTopics=ctx.topics.length||ctx.projType||ctx.loc;
+  let html=buildContextCard(ctx)+buildControls(ctx,'design');
+  if(!hasTopics||designProceeded){
+    html+=buildProcedureHTML(ctx.topics)+buildResponse(ctx);
+  }
+  const res=document.getElementById('designResults');
+  res.innerHTML=html;
+  res.style.display='block';
+  res.scrollIntoView({behavior:'smooth',block:'start'});
+  maybeAskClaude(ctx);
+}
+
 function quickSearch(q){
-  showView('search',document.querySelector('nav button'));
+  showView('search',document.querySelectorAll('nav button')[0]);
   document.getElementById('searchInput').value=q;
   handleSearch();
 }
 
+function quickDesign(q){
+  showView('design',document.querySelectorAll('nav button')[1]);
+  document.getElementById('designInput').value=q;
+  // seed designQuery so handleDesignSearch does not treat this as a brand-new
+  // query and clear the proceed flag we are setting on purpose
+  designQuery=q;designProceeded=true;   // chips are an explicit design intent
+  handleDesignSearch();
+}
+
+// Hand-off: carry the dictionary question into the Design function
+function goToDesign(){
+  const q=(lastQuery||document.getElementById('searchInput').value||'').trim();
+  showView('design',document.querySelectorAll('nav button')[1]);
+  if(q){
+    document.getElementById('designInput').value=q;
+    designQuery=q;designProceeded=true;  // the user already asked to design — show it all
+    handleDesignSearch();
+  }
+}
+
+// ── State reset ────────────────────────────────────────────────
+// Nothing is carried between functions: leaving a menu clears its data.
+function clearDictionary(){
+  lastQuery='';
+  const i=document.getElementById('searchInput'); if(i)i.value='';
+  const r=document.getElementById('results'); if(r){r.innerHTML='';r.style.display='none';}
+}
+function clearDesign(){
+  designQuery='';designProceeded=false;userRiskCat='';userSiteClass='';
+  const i=document.getElementById('designInput'); if(i)i.value='';
+  const r=document.getElementById('designResults'); if(r){r.innerHTML='';r.style.display='none';}
+}
+function clearSite(){
+  lastSiteData=null;
+  const r=document.getElementById('siteResults'); if(r){r.innerHTML='';r.style.display='none';}
+}
+// Full reset of every transient result (used on load and on menu change)
+function resetAllState(){
+  selectedStd='all';
+  clearDictionary();clearDesign();clearSite();
+}
+// Reset buttons inside each function
+function resetDictionary(){selectedStd='all';clearDictionary();window.scrollTo({top:0,behavior:'smooth'});}
+function resetDesign(){selectedStd='all';clearDesign();window.scrollTo({top:0,behavior:'smooth'});}
+
+const VIEWS=['search','design','browse','seismic','site','about'];
 function showView(v,btn){
-  ['search','browse','seismic','site','about'].forEach(id=>{
+  // moving to another function discards whatever the previous one held
+  resetAllState();
+  VIEWS.forEach(id=>{
     // must be 'block', not '' — the non-search views have display:none in the stylesheet
-    document.getElementById('view-'+id).style.display=(id===v?'block':'none');
+    const el=document.getElementById('view-'+id);
+    if(el)el.style.display=(id===v?'block':'none');
   });
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
   else{
     // sync the nav highlight when navigation is triggered programmatically
-    const idx={search:0,browse:1,seismic:2,site:3,about:4}[v];
+    const idx=VIEWS.indexOf(v);
     const nb=document.querySelectorAll('nav button')[idx];
     if(nb)nb.classList.add('active');
   }
+  renderMode=(v==='design')?'design':'dict';
   document.getElementById('mainNav').classList.remove('open');
   if(v==='browse')renderBrowse(currentBrowseFilter);
   if(v==='about'){renderAboutStds();updateAboutIndexStat();}
@@ -3698,9 +3850,15 @@ window.addEventListener('DOMContentLoaded',()=>{
   populateSiteProvince();
   updateAboutIndexStat();
   document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleSearch();});
+  document.getElementById('designInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleDesignSearch();});
   applyLanguage(); // apply saved language preference (EN default / 中文)
   syncAIToggle();
+  // A page refresh always starts clean — browsers otherwise restore the old
+  // input values, which would leave stale results on screen.
+  resetAllState();
 });
+// Also clear on bfcache restore (browser Back/Forward returning to the page)
+window.addEventListener('pageshow',e=>{if(e.persisted)resetAllState();});
 </script>
 <script src="i18n_zh.js" charset="utf-8" onerror="console.log('Chinese language pack not loaded — EN only')"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
