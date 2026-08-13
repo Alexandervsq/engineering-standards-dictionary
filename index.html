@@ -50,10 +50,11 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.25)}
 .hero h1{font-size:clamp(22px,4vw,36px);font-weight:800;margin-bottom:10px;letter-spacing:-.5px}
 .hero p{opacity:.75;font-size:15px;margin-bottom:28px;max-width:600px;margin-left:auto;margin-right:auto}
 .search-wrap{max-width:720px;margin:0 auto 20px;display:flex;gap:8px}
-#searchInput{flex:1;padding:14px 18px;border-radius:10px;border:2px solid transparent;font-size:15px;font-family:inherit;outline:none;transition:.2s}
-#searchInput:focus{border-color:var(--accent)}
-#searchBtn{padding:14px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
-#searchBtn:hover{background:#d35400}
+/* class-based so every function's search bar (Dictionary, Design, …) matches */
+.search-wrap input{flex:1;min-width:0;padding:14px 18px;border-radius:10px;border:2px solid transparent;font-size:15px;font-family:inherit;outline:none;transition:.2s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap .go-btn{padding:14px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
+.search-wrap .go-btn:hover{background:#d35400}
 .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
 .chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s}
 .chip:hover{background:rgba(255,255,255,.25)}
@@ -344,7 +345,7 @@ nav button{font-size:14px}
 .logo-sub{font-size:11.5px}
 .credit-bar{font-size:12px}
 .hero p{font-size:16px}
-#searchInput,#searchBtn{font-size:16px}
+.search-wrap input,.search-wrap .go-btn{font-size:16px}
 .chip{font-size:13px}
 .badge{font-size:12.5px}
 .context-card h3{font-size:15px}
@@ -445,7 +446,7 @@ nav button{font-size:14px}
       <input id="searchInput" type="text" data-i18n-ph="hero.ph" autocomplete="off"
         placeholder="e.g. concrete cover requirements · steel seismic detailing · foundation bearing capacity · power plant in North Maluku"
         onkeydown="if(event.key==='Enter')handleSearch()">
-      <button id="searchBtn" onclick="handleSearch()" data-i18n="hero.btn">Search</button>
+      <button id="searchBtn" class="go-btn" onclick="handleSearch()" data-i18n="hero.btn">Search</button>
       <button id="aiToggle" class="ai-toggle" onclick="toggleAI()" title="Connect your own Claude API key for live AI answers">✨ AI</button>
       <button class="reset-btn" onclick="resetDictionary()" data-i18n="hero.reset" title="Clear this page">↻</button>
     </div>
@@ -484,7 +485,7 @@ nav button{font-size:14px}
       <input id="designInput" type="text" data-i18n-ph="dz.ph" autocomplete="off"
         placeholder="e.g. reinforced concrete beam design · steel column design · foundation design · seismic base shear · construction safety SMKK"
         onkeydown="if(event.key==='Enter')handleDesignSearch()">
-      <button id="designBtn" onclick="handleDesignSearch()" data-i18n="dz.btn">Design</button>
+      <button id="designBtn" class="go-btn" onclick="handleDesignSearch()" data-i18n="dz.btn">Design</button>
       <button class="ai-toggle" onclick="toggleAI()" title="Connect your own Claude API key for live AI answers">✨ AI</button>
       <button class="reset-btn" onclick="resetDesign()" data-i18n="dz.reset" title="Clear this page">↻</button>
     </div>
@@ -2206,6 +2207,16 @@ answer_modules:{
            ["AKK (Analisis Keselamatan Konstruksi)","Mandatory for <strong>risiko sedang and besar</strong>, together with a special work permit (izin kerja khusus)"]
          ]},
        notes:["Hazard identification must be derived from the actual work method, and the control analysis must be integrated across engineering control, administrative control, human-behaviour aspects and change management (manajemen perubahan)."]},
+      {h:"IBPRP Scoring &amp; Residual Risk — the 16-column table (Permen PUPR 10/2021, Tabel 2-2)",
+       table:{center:true,cols:["Column group","Contents"],
+         rows:[
+           ["Deskripsi Risiko (1–5)","No · Uraian Pekerjaan (routine &amp; non-routine, taken from the work schedule) · Identifikasi Bahaya · Risiko against the 4 receptors (Pekerja / Peralatan / Material / Lingkungan-Publik) · Perundangan atau Persyaratan Lain"],
+           ["Penilaian Tingkat Risiko (6–9)","<strong>Kemungkinan F — scale 1–5</strong> · <strong>Keparahan A — scale 1–5</strong> · Nilai Risiko = <strong>F × A</strong> · Tingkat Risiko Awal (TR)"],
+           ["Pengendalian Risiko Awal (10)","Initial control written in hierarchy order: 1 Eliminasi · 2 Substitusi · 3 Rekayasa Teknik · 4 Administrasi · 5 APD"],
+           ["Penilaian Sisa Risiko (11–14)","Re-score after the initial control: Kemungkinan (F) · Keparahan (A) · Nilai Risiko (F × A) · <strong>Tingkat Risiko Sisa</strong>"],
+           ["Pengendalian lanjutan (15–16)","Further control required where residual risk is still not acceptable · Keterangan"]
+         ]},
+       notes:["Kekerapan/Kemungkinan = how often the construction-safety hazard event occurs (scale 1–5). Keparahan = severity of the injury, loss or damage caused (scale 1–5). Tingkat Risiko is the combination of the two.","Band mapping as used in the Ministry's own worked example (Tabel 2-2 contoh, steel box girder mobilisation): scores 2, 3 and 4 → <strong>Kecil</strong>; 6, 9 and 12 → <strong>Sedang</strong>; 16 → <strong>Besar</strong>. The formal criteria table sits in Lampiran J.","The IBPRP is signed by the Kepala Pelaksana Pekerjaan Konstruksi. Control-level definitions (Permen PUPR 10/2021): <em>eliminasi</em> = remove the hazard by not placing people on the activity; <em>substitusi</em> = replace the process, operation, material or equipment; <em>rekayasa teknis</em> = control the design of equipment and workplace; <em>pengendalian administratif</em> = procedures, work permits, job safety analysis and competence; <em>APD/APK</em> = adequate personal and work protective equipment."]},
       {h:"Hierarchy of Risk Control (Permen PUPR 10/2021, Lampiran D.2)",
        table:{center:true,cols:["Order","Control level","Meaning"],
          rows:[
@@ -2233,6 +2244,45 @@ answer_modules:{
            ["<strong>Risiko sedang &amp; besar</strong>","A <strong>separate Pimpinan UKK</strong> coordinating directly with the project leader","Ahli Keselamatan Konstruksi / Ahli K3 Konstruksi; Koordinator Keselamatan Konstruksi; Koordinator Tanggap Darurat; anggota UKK"]
          ]},
        notes:["Standard UKK roster (Tabel 8): Personil Keselamatan Konstruksi · Petugas P3K · Petugas tanggap darurat · Flagman · Tenaga kesehatan · Personil Penjamin Mutu. Role duties (Lampiran D): the Pimpinan UKK ensures SMKK requirements are met; Petugas Keselamatan Konstruksi sets safety targets, runs inductions, performs inspections, coordinates and reports incidents; Petugas Tanggap Darurat announces emergencies and reports to the safety manager; Tenaga kesehatan performs first aid and liaises with clinics; Petugas pengelola lalu lintas prepares and enforces the RMLLP; Petugas pengelola lingkungan prepares the environmental plan and inspects the site.","In supervision consultancy (RKK Pengawasan) the personnel list must include Ahli K3/Keselamatan Konstruksi, Petugas K3/Keselamatan Konstruksi and the relevant technical experts, each with certificates (e.g. Sertifikat Ahli Muda K3 Konstruksi)."]},
+      {h:"Leadership Commitment &amp; Worker Participation (Permen PUPR 10/2021, Lampiran A.3–A.4)",
+       table:{cols:["Requirement","Provision"],
+         rows:[
+           ["Management site visit","A scheduled visit by the company leader (or one level below) to the project — <strong>Tabel 1-2 Jadwal Kunjungan Pimpinan</strong>, planned month by month"],
+           ["Purpose of the visit","(a) discuss construction-safety problems directly with workers; (b) provide solutions to those problems; (c) enforce discipline against observed violations"],
+           ["Worker consultation &amp; participation","<strong>Tabel 1-3 Program Komunikasi dan Partisipasi Pekerja</strong> — a documented programme, not ad-hoc"],
+           ["Supervision &amp; accountability","Lampiran A.4 — supervision, training, accountability, resources and support must all be assigned and evidenced"],
+           ["Safety culture programme","Awareness procedure by risk level + a commitment to prevent unsafe behaviour + a construction-safety culture programme for all personnel, signed by the Kepala Pelaksana and the Penanggung Jawab Keselamatan Konstruksi"]
+         ]},
+       notes:["The point of the leadership visit is explicitly to verify that the RKK is actually being implemented and to raise worker participation — it is a compliance record, so the schedule and its realisation are auditable."]},
+      {h:"Safety Communication Programme (Permen PUPR 10/2021, Lampiran C.4, Tabel 3-8)",
+       table:{center:true,cols:["Activity","Who attends","Frequency / trigger"],
+         rows:[
+           ["<strong>Induksi Keselamatan Konstruksi</strong> (safety induction)","New workers, transferred workers, guests, suppliers and any other party entering the work area","Before first entry to the construction area"],
+           ["<strong>Pertemuan pagi hari</strong> (safety morning)","<strong>All workers</strong>","<strong>Every morning before work starts</strong>"],
+           ["<strong>Pertemuan kelompok kerja</strong> (toolbox meeting)","The work group","Before that group's work starts"],
+           ["<strong>Rapat Keselamatan Konstruksi</strong> (construction safety meeting)","Led by the Penanggung Jawab Keselamatan Konstruksi and/or Kepala Pelaksana; attended by <strong>all unit heads</strong>","Per the communication schedule"],
+           ["Hazard information","All personnel — content set according to the risk level of the work","Ongoing"],
+           ["HSE Statistic Board &amp; Papan Pengumuman","Site-wide display","Maintained continuously"]
+         ]},
+       notes:["Every one of these procedures/work instructions must be written down and signed by the Penanggung Jawab Keselamatan Konstruksi and the Kepala Pelaksana Pekerjaan Konstruksi, and the whole set must appear in the <em>Jadwal Program Komunikasi</em> (Tabel 3-8) with a named person responsible."]},
+      {h:"Special Work Permits &amp; AKK / Construction Safety Analysis (Lampiran D.2, Tabel 4-2 &amp; 4-3)",
+       table:{center:true,cols:["Item","Provision"],
+         rows:[
+           ["AKK / CSA content","Work steps broken down — <strong>no more than 10 items</strong> — each reviewed for hazards and controls, considering material, people, method/procedure, equipment and environment"],
+           ["Permit distribution","Three copies: original held by the <strong>Pengguna Jasa</strong> as documented information, second by the <strong>Penyedia Jasa</strong>, third by the <strong>Pengawas Pekerjaan</strong>; signed by the UKK"],
+           ["Permit categories (11)","Hot work (any ignition source) · Excavation · Lifting · Confined space (poor natural ventilation, flammable and/or toxic gas) · Diving · Cold work (everything not covered above) · Working at night (beyond normal hours) · Working at height · Scaffolding · Radiography (x-ray) · Electrical (live) work"]
+         ]},
+       notes:["AKK plus a special work permit is mandatory for every medium and large-risk activity (Lampiran D.2 element 4). The AKK form records the permit applicant, the work, the dates, the supervisor and the department."]},
+      {h:"Monitoring, Inspection &amp; Performance Evaluation (Permen PUPR 10/2021, Lampiran E)",
+       table:{cols:["Activity","Requirement"],
+         rows:[
+           ["Purpose of inspection","Find non-standard conditions and behaviour, and technical non-conformities, in order to identify potential hazards"],
+           ["Inspection periods","Checklists (lembar periksa) signed over a defined period — <strong>daily, weekly or monthly</strong>"],
+           ["Required checklist scopes","Work scope · Pesawat angkat &amp; angkut (heavy plant) · Perkakas (tools) · Bahan/material · Environment (housekeeping, pollution, hygiene) · Health · Security"],
+           ["Signatures","Each checklist signed by the relevant Ahli Teknik and the Penanggung Jawab Keselamatan Konstruksi; the material checklist is additionally approved by the Pengawas Pekerjaan"],
+           ["Audit &amp; review","Audit against the RKK criteria → compliance evaluation → management review → corrective action and continual improvement"]
+         ]},
+       notes:["Evaluation asks whether the SMKK controls actually delivered a benefit, judged against the construction work reports plus the corrective and improvement actions taken. Inspection results are reported on the forms in the Lampiran Laporan Pelaksanaan RKK."]},
       {h:"Operational Safety Controls &amp; Environment (Permen PUPR 10/2021, Lampiran D.2 element 4)",extra:true,
        table:{cols:["Area","Required control"],
          rows:[
@@ -2246,6 +2296,19 @@ answer_modules:{
            ["Investigation","Procedure for investigating incidents, dangerous occurrences and occupational disease"]
          ]},
        notes:["Building reliability management is integrated with the RMPK; site-perimeter security and traffic control with the RMLLP; environmental control with the RKPPL — the SMKK documents are explicitly cross-referenced, not standalone."]},
+      {h:"Site Security, Housekeeping &amp; Waste (Permen PUPR 10/2021, Lampiran D.2)",extra:true,
+       table:{cols:["Item","Minimum requirement"],
+         rows:[
+           ["Security personnel","Number matched to the security-risk control need"],
+           ["CCTV","Required especially at work locations with <strong>large risk level</strong> and criminal-act potential"],
+           ["Safety fence (pagar pengaman)","At locations directly bordering the surrounding community and with accident potential"],
+           ["ID Card","For <strong>all</strong> workers, guests, suppliers and other parties entering the construction area"],
+           ["Housekeeping (5R)","Ringkas · Rapih · Resik · Rawat · Rajin — performed <strong>at least once a day at the end of the work</strong>, signed by the Penanggung Jawab Keselamatan Konstruksi and the Kepala Pelaksana/Wakil Manajemen"],
+           ["Waste segregation","Separated bins for <strong>organik / anorganik / B3</strong> — at least <strong>1 bin in every work area</strong>"],
+           ["Temporary waste storage","A temporary collection point, likewise separated into organik, anorganik and B3"],
+           ["Environmental measurement","Pengukuran Ambang Batas K3 Lingkungan (Tabel 4-4): parameter, <strong>NAB threshold value</strong>, governing regulation and measurement period — reported in the Laporan Periksa Lingkungan"]
+         ]},
+       notes:["Emergency preparedness (D.3) requires a written response procedure matched to the nature and classification of the works, signed by the relevant Ahli Teknik and the Penanggung Jawab Keselamatan Konstruksi, plus an incident-investigation procedure covering accidents, dangerous occurrences and occupational disease."]},
       {h:"International Equivalents — HSE Management Systems",extra:true,
        table:{cols:["🇮🇩 Indonesia (SMKK)","🇺🇸 United States","🇨🇳 China"],
          rows:[
@@ -2259,7 +2322,7 @@ answer_modules:{
          ]},
        notes:["The SMKK cost is a <strong>reimbursable, separately-priced item</strong> — Permen PUPR 10/2021 requires the SMKK implementation cost to contain at least 9 components and to sit outside the expert-remuneration budget, so safety provisions cannot be competed away in tender."]}
     ],
-    sources:"Permen PUPR 10/2021 Lampiran A (roles of Pengguna/Penyedia Jasa, UKK), B (PMPM), C (Rancangan Konseptual SMKK — Tabel 5 risk scoring, Tabel 6 IBPRP, Tabel 8 personnel), D (RKK formats &amp; the 5 elements) — extracted from PDF pp. 1–100 · UU 2/2017 Jasa Konstruksi · PP 14/2021 · ISO 45001 · OSHA 29 CFR 1926 · GB 50656-2011 / JGJ 59-2011"
+    sources:"Permen PUPR 10/2021 — pp. 1–100: Lampiran A (roles of Pengguna/Penyedia Jasa, UKK), B (PMPM), C (Rancangan Konseptual SMKK — Tabel 5 risk scoring, Tabel 6 IBPRP, Tabel 8 personnel), D (RKK formats &amp; the 5 elements) · pp. 100–200: A.3–A.4 (leadership commitment, Tabel 1-2 visit schedule, Tabel 1-3 worker participation), B.1–B.3 (Tabel 2-2 full IBPRP with residual risk, Tabel 2-3/2-4 sasaran &amp; program, Tabel 2-5 legal register), C.1–C.5 (Tabel 3-1 plant, 3-2 imported material, 3-3 personnel, 3-4 training, 3-5→3-8 communication), D.1–D.3 (Tabel 4-1 procedure register, 4-2 AKK/CSA, 4-3 work permit, 4-4 environmental thresholds), E (inspection, checklists, audit) — extracted from PDF · UU 1/1970 · UU 2/2017 Jasa Konstruksi · UU 11/2020 · PP 14/2021 · ISO 45001 · OSHA 29 CFR 1926 · GB 50656-2011 / JGJ 59-2011"
   }
 
 },
