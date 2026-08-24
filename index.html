@@ -176,13 +176,21 @@ ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position
 .proc-ref{display:block;font-size:11.5px;color:var(--blue2);margin-top:3px;font-weight:500}
 .proc-alt{background:#f2fbf5;border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text2);line-height:1.65;margin-top:14px}
 /* PP 22/2021 environmental quality tables (exact-replica + Excel export) */
-.env-card{background:#fff;border:1px solid var(--gray2);border-left:4px solid #2e8b57;border-radius:10px;padding:14px 16px;margin:16px 0;box-shadow:var(--card-shadow)}
-.env-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.env-card{background:#fff;border:1px solid var(--gray2);border-left:4px solid #2e8b57;border-radius:10px;margin:12px 0;box-shadow:var(--card-shadow);overflow:hidden}
+.env-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px;cursor:pointer;list-style:none;transition:.15s}
+.env-head::-webkit-details-marker{display:none}
+.env-head:hover{background:#f4faf6}
+.env-card[open] .env-head{background:#f0f7f2;border-bottom:1px solid var(--gray2)}
 .env-title{font-size:14.5px;font-weight:700;color:var(--navy);line-height:1.45}
 .env-code{display:block;font-size:11.5px;font-weight:500;color:var(--blue2);margin-top:2px}
+.env-count{display:inline-block;font-size:11px;font-weight:600;color:#2e8b57;background:#e6f4ec;border-radius:20px;padding:2px 9px;margin-left:8px;white-space:nowrap}
+.env-tools{display:flex;align-items:center;gap:10px;margin-left:auto}
+.env-twist{font-size:15px;color:#2e8b57;transition:transform .2s;display:inline-block}
+.env-card[open] .env-twist{transform:rotate(90deg)}
+.env-body{padding:14px 16px 16px}
 .env-xls{background:#1d6f42;color:#fff;border:none;border-radius:7px;padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
 .env-xls:hover{background:#155432}
-.env-scroll{overflow-x:auto;margin-top:10px;border:1px solid var(--gray2);border-radius:8px}
+.env-scroll{overflow-x:auto;border:1px solid var(--gray2);border-radius:8px;max-height:70vh;overflow-y:auto}
 .env-table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:640px}
 .env-table th,.env-table td{border:1px solid #d7dee6;padding:6px 9px;text-align:left;vertical-align:top;line-height:1.45}
 .env-table thead th{background:#eef4fa;color:var(--navy);font-weight:700;position:sticky;top:0;white-space:nowrap}
@@ -935,8 +943,8 @@ standards: [
   {id:"pp-22-2021",code:"PP 22/2021",cat:"SNI",topic:["environmental"],
    title:"Penyelenggaraan Perlindungan dan Pengelolaan Lingkungan Hidup",
    title_en:"Implementation of Environmental Protection and Management",year:2021,
-   scope:"Indonesia's governing environmental regulation (implementing UU 32/2009 as amended by UU 11/2020): Persetujuan Lingkungan (AMDAL / UKL-UPL / SPPL), Persetujuan Teknis (PERTEK), water quality standards for rivers and lakes (Lampiran VI), ambient air quality standards (Lampiran VII), sea water quality standards (Lampiran VIII), wastewater and emission control, and B3 hazardous-waste management",
-   key_params:{"Water classes":"Kelas I–IV","River/lake parameters":"49 / 48","Ambient air parameters":"7 (PM₂,₅ 24 h = 55 µg/m³)","Sea water designations":"Pelabuhan / Wisata Bahari / Biota Laut","PM₁₀ 24 h":"75 µg/m³","SO₂ 1 h":"150 µg/m³","Approval tiers":"AMDAL / UKL-UPL / SPPL"}},
+   scope:"Indonesia's governing environmental regulation (implementing UU 32/2009 as amended by UU 11/2020): Persetujuan Lingkungan (AMDAL / UKL-UPL / SPPL), Persetujuan Teknis (PERTEK), water quality standards for rivers and lakes (Lampiran VI), ambient air quality standards (Lampiran VII), sea water quality standards (Lampiran VIII), wastewater and emission control, and B3 hazardous-waste management (Lampiran X characteristics, XI–XIII TCLP thresholds, XIV non-B3 list, XV violation grading)",
+   key_params:{"Water classes":"Kelas I–IV","River/lake parameters":"49 / 48","Ambient air parameters":"7 (PM₂,₅ 24 h = 55 µg/m³)","Sea water designations":"Pelabuhan / Wisata Bahari / Biota Laut","PM₁₀ 24 h":"75 µg/m³","SO₂ 1 h":"150 µg/m³","Approval tiers":"AMDAL / UKL-UPL / SPPL","B3 waste categories":"Kategori 1 / Kategori 2 (TCLP-A / TCLP-B)","B3 characteristics":"6 (E/I/R/X/C/T)","Non-B3 registered":"FABA, slag, mill scale, EAF dust, SBE","Violation grades":"Ringan / Sedang / Berat"}},
 
   {id:"nfpa",code:"NFPA 1/10/13/14/101",cat:"American",topic:["fire"],
    title:"NFPA Fire Codes (Fire Code, Extinguishers, Sprinklers, Standpipes, Life Safety)",year:2021,
@@ -1153,7 +1161,7 @@ topics:{
     standards:["permen-pupr-10-2021"],
     required_info:[]},
   environmental:{name:"Environmental Quality & Permits",name_id:"Lingkungan Hidup & Perizinan",
-    keywords:["environment","environmental","lingkungan","lingkungan hidup","baku mutu","quality standard","water quality","kualitas air","baku mutu air","air sungai","river water","air danau","lake water","air laut","sea water","seawater","marine water","udara","air quality","udara ambien","ambient air","baku mutu udara","emisi","emission","emissions","pencemaran","pollution","polusi","limbah","waste","limbah cair","wastewater","air limbah","effluent","limbah b3","b3","hazardous waste","amdal","ukl-upl","ukl upl","sppl","persetujuan lingkungan","environmental permit","izin lingkungan","environmental approval","pertek","persetujuan teknis","rkl-rpl","andal","kerangka acuan","pp 22","pp 22/2021","kelas air","water class","tds","tss","bod","cod","do","dissolved oxygen","coliform","pm10","pm2.5","pm 2,5","so2","no2","ozon","ozone","nmhc","tsp","timbal","baku mutu air laut","biota laut","wisata bahari","pelabuhan","klorofil","salinitas","kekeruhan","turbidity","environmental monitoring","pemantauan lingkungan","effluent standard","ambient standard"],
+    keywords:["environment","environmental","lingkungan","lingkungan hidup","baku mutu","quality standard","water quality","kualitas air","baku mutu air","air sungai","river water","air danau","lake water","air laut","sea water","seawater","marine water","udara","air quality","udara ambien","ambient air","baku mutu udara","emisi","emission","emissions","pencemaran","pollution","polusi","limbah","waste","limbah cair","wastewater","air limbah","effluent","limbah b3","b3","hazardous waste","amdal","ukl-upl","ukl upl","sppl","persetujuan lingkungan","environmental permit","izin lingkungan","environmental approval","pertek","persetujuan teknis","rkl-rpl","andal","kerangka acuan","pp 22","pp 22/2021","kelas air","water class","tds","tss","bod","cod","do","dissolved oxygen","coliform","pm10","pm2.5","pm 2,5","so2","no2","ozon","ozone","nmhc","tsp","timbal","baku mutu air laut","biota laut","wisata bahari","pelabuhan","klorofil","salinitas","kekeruhan","turbidity","environmental monitoring","pemantauan lingkungan","effluent standard","ambient standard","limbah b3","b3 waste","hazardous waste","tclp","toxicity characteristic leaching","kategori limbah","waste category","penimbusan","landfill","tanah terkontaminasi","contaminated soil","limbah non b3","non-b3","faba","fly ash","bottom ash","slag","pelanggaran","violation","sanksi","sanction","teguran","rincian teknis","karakteristik limbah","mudah meledak","mudah menyala","korosif","infeksius","reaktif","beracun"],
     standards:["pp-22-2021"],
     required_info:[]}
 },
@@ -2486,6 +2494,34 @@ answer_modules:{
        notes:["PP 22/2021 tightened the previous PP 41/1999 limits considerably and introduced <strong>PM₂,₅</strong> and annual averaging periods. Key construction-relevant values: <strong>TSP 24 h = 230 µg/m³</strong>, <strong>PM₁₀ 24 h = 75 µg/m³</strong>, <strong>PM₂,₅ 24 h = 55 µg/m³</strong> — these govern dust control on site."]},
       {h:"Sea Water Quality Standard (PP 22/2021 Lampiran VIII) — full table",envTable:"sea",
        notes:["Three designations: <em>Pelabuhan</em> (port), <em>Wisata Bahari</em> (marine tourism) and <em>Biota Laut</em> (marine biota). The Biota Laut column carries sub-limits for <strong>coral</strong>, <strong>mangrove</strong> and <strong>lamun</strong> (seagrass) where the regulation distinguishes them — relevant to any reclamation, jetty, outfall or dredging work."]},
+      {h:"B3 Hazardous Waste — the six characteristics (PP 22/2021 Lampiran X)",
+       table:{center:true,cols:["#","Characteristic","Defining criterion"],
+         rows:[
+           ["1","<strong>Mudah meledak</strong> — explosive (E)","Waste that at standard temperature and pressure (25 °C, 760 mmHg) can explode, or through chemical and/or physical reaction can generate gas at high temperature and pressure that rapidly damages its surroundings"],
+           ["2","<strong>Mudah menyala</strong> — ignitable (I)","Liquid waste containing &lt; 24% alcohol by volume and/or with a flash point ≤ 60 °C (140 °F) that ignites on contact with flame or spark at 760 mmHg — tested by Seta closed cup or Pensky-Martens closed cup; or non-liquid waste that ignites through friction, moisture absorption or spontaneous chemical change at 25 °C"],
+           ["3","<strong>Reaktif</strong> — reactive (R)","Waste that is normally unstable and reacts violently without detonating; reacts violently with water; forms potentially explosive mixtures with water; or generates toxic gas/vapour/fume in quantities that endanger human health or the environment"],
+           ["4","<strong>Infeksius</strong> — infectious (X)","Medical and laboratory waste containing pathogens in sufficient concentration or quantity to transmit disease — body parts, cultures, sharps, and waste from infectious patient care"],
+           ["5","<strong>Korosif</strong> — corrosive (C)","Waste with pH ≤ 2 (acid) or pH ≥ 12,5 (alkaline), or that corrodes steel at a rate exceeding 6,35 mm/year at 55 °C"],
+           ["6","<strong>Beracun</strong> — toxic (T)","Determined by TCLP leaching test, LD50 oral toxicity test, and sub-chronic toxicity evaluation — the TCLP thresholds are in Lampiran XI (see the table below)"]
+         ]},
+       notes:["A waste is classified as B3 if it appears on the B3 list, or if testing shows any of the six characteristics above. Toxicity is graded into <strong>Kategori 1</strong> (acute — above TCLP-A) and <strong>Kategori 2</strong> (chronic — between TCLP-A and TCLP-B), which drives the entire downstream storage, transport, treatment and landfill regime."]},
+      {h:"TCLP Limits for B3 Waste Categorisation (Lampiran XI) — full table",envTable:"b3_tclp",
+       notes:["72 contaminants across inorganic, anion, organic, pesticide and additional-parameter groups. Above TCLP-A the waste is Kategori 1; between TCLP-A and TCLP-B it is Kategori 2."]},
+      {h:"TCLP Treatment Standard Before Landfilling (Lampiran XII) — full table",envTable:"b3_landfill",
+       notes:["The Lampiran XII values are identical to the TCLP-B column of Lampiran XI — B3 waste must be treated down to these leachate concentrations before it may be placed in a final landfill facility (penimbusan akhir)."]},
+      {h:"Contaminated-Soil Thresholds — TCLP &amp; Total Concentration (Lampiran XIII) — full table",envTable:"b3_soil",
+       notes:["Six columns pair a leaching limit (TCLP) with a total-concentration limit (TK) at three severity tiers A/B/C. This is the table that governs remediation of land contaminated by a spill or historic disposal — directly relevant where a project site has prior industrial use."]},
+      {h:"Registered Non-B3 Waste (Lampiran XIV) — full table",envTable:"nonb3",
+       notes:["The headline change in PP 22/2021: <strong>fly ash and bottom ash (FABA)</strong> from coal-fired power plants moved out of the B3 list into the registered non-B3 category, alongside steel and nickel slag, mill scale, EAF dust and spent bleaching earth. Non-B3 waste is managed by a Rincian Teknis in the Environmental Approval rather than a full PERTEK."]},
+      {h:"Violations &amp; Sanction Grading (PP 22/2021 Lampiran XV)",
+       table:{center:true,cols:["Field of violation","Entries","Severity grades applied"],
+         rows:[
+           ["<strong>Tabel 1</strong> — Pengendalian Pencemaran Air (water pollution control)","~55","Ringan · Sedang · Berat"],
+           ["<strong>Tabel 2</strong> — Pengendalian Pencemaran Udara (air pollution control)","~60","Ringan · Sedang · Berat"],
+           ["<strong>Tabel 3</strong> — Pengendalian Pencemaran Laut (sea pollution control)","~40","Ringan · Sedang · Berat"],
+           ["<strong>Tabel 4</strong> — Pengelolaan Limbah B3 (B3 waste management)","~126","Ringan · Sedang · Berat, split by Penghasil (generator) and Jasa (service provider)"]
+         ]},
+       notes:["<strong>Ringan (light)</strong> — administrative and record-keeping failures: monitoring points not labelled with name and coordinates, no competent-person certificate for the pollution-control officer, no wastewater-treatment operator certificate, no environmental management system.","<strong>Sedang (medium)</strong> — failures of substance in monitoring and control: not monitoring effluent quality at the designated compliance point, having no compliance point at all, not monitoring surface water/groundwater/soil, no emergency-response system for water pollution, not using a registered laboratory, not installing continuous automatic monitoring where required.","<strong>Berat (severe)</strong> — discharging or emitting beyond the standard, operating without the required approval, and (Tabel 4) exceeding the emission or non-B3 utilisation standards. Severity determines the administrative sanction applied: written warning → government coercion → suspension → revocation of the Perizinan Berusaha.","This annex lists roughly 280 individually numbered violations. The grading framework and representative entries per grade are summarised here; consult the official Lampiran XV for the complete enumerated list before relying on a specific item in an enforcement context."]},
       {h:"Construction-Relevant Compliance Points",extra:true,
        table:{cols:["Activity","What the standard controls"],
          rows:[
@@ -3155,7 +3191,9 @@ function envGrid(t,L){
   const cols=t.cols[L]||t.cols.e;
   const grid=[cols.slice()];
   t.rows.forEach(r=>{
-    let cells=[r.n,(r.p&&(r.p[L]||r.p.e))||'',envPipe(r.u,L)].concat(r.v||[]);
+    // envPipe also resolves value cells that carry per-language text
+    // ("id|en|zh"); plain numeric values pass through untouched
+    let cells=[r.n,(r.p&&(r.p[L]||r.p.e))||'',envPipe(r.u,L)].concat((r.v||[]).map(v=>envPipe(v,L)));
     while(cells.length<cols.length)cells.push(r.k?(r.k[L]||r.k.e||''):'');
     grid.push(cells.slice(0,cols.length));
   });
@@ -3182,14 +3220,23 @@ function renderEnvTable(key){
     const fl=t.foot[L]||t.foot.e;
     foot=`<div class="env-foot"><strong>${T('env.notes','Keterangan / Notes:')}</strong><ul>${fl.map(f=>`<li>${escapeHtml(f)}</li>`).join('')}</ul></div>`;
   }
-  return `<div class="env-card">
-    <div class="env-head">
-      <div><span class="env-title">${escapeHtml(title)}</span><span class="env-code">${escapeHtml(t.code)}</span></div>
-      <button class="env-xls" onclick="exportEnvTable('${key}')">${T('env.export','⬇ Export to Excel')}</button>
+  // collapsed by default — the user opens only the table they need, so the
+  // page stays short instead of stacking hundreds of rows
+  const nRows=t.rows.length;
+  const countLbl=`${nRows} ${T('env.rows','rows')}`;
+  return `<details class="env-card">
+    <summary class="env-head">
+      <div><span class="env-title">${escapeHtml(title)}</span><span class="env-count">${countLbl}</span><span class="env-code">${escapeHtml(t.code)}</span></div>
+      <span class="env-tools">
+        <button class="env-xls" onclick="event.preventDefault();event.stopPropagation();exportEnvTable('${key}')">${T('env.export','⬇ Export to Excel')}</button>
+        <span class="env-twist">▸</span>
+      </span>
+    </summary>
+    <div class="env-body">
+      <div class="env-scroll"><table class="env-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>
+      ${foot}
     </div>
-    <div class="env-scroll"><table class="env-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    ${foot}
-  </div>`;
+  </details>`;
 }
 
 function renderAllEnvTables(){
@@ -3241,12 +3288,16 @@ function exportEnvTable(key){
    +'<Style ss:ID="hdr"><Font ss:FontName="Calibri" ss:Size="11" ss:Bold="1" ss:Color="#1F3864"/><Interior ss:Color="#DDEBF7" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center" ss:WrapText="1"/>'+borders+'</Style>'
    +'<Style ss:ID="cel"><Alignment ss:Vertical="Top" ss:WrapText="1"/>'+borders+'</Style>'
    +'</Styles>'
-   +'<Worksheet ss:Name="'+xmlEsc(String(t.code).replace(/[\\\/\?\*\[\]:]/g,' ').substring(0,31))+'">'
+   +'<Worksheet ss:Name="'+xmlEsc(title.replace(/[\\\/\?\*\[\]:]/g,' ').trim().substring(0,31))+'">'
    +'<Table>'+colsXml+rowsXml+'</Table>'
    +'<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel"><FreezePanes/><FrozenNoSplit/><SplitHorizontal>4</SplitHorizontal><TopRowBottomPane>4</TopRowBottomPane><ActivePane>2</ActivePane></WorksheetOptions>'
    +'</Worksheet></Workbook>';
 
-  const fname=String(t.code).replace(/[^\w\-]+/g,'_')+'_'+L+'.xls';
+  // filename follows the TABLE TITLE in the active language (CJK kept intact),
+  // with the Lampiran reference appended so the source stays identifiable
+  const lampiran=(String(t.code).match(/Lampiran\s+[IVXAB\-]+/i)||[''])[0].replace(/\s+/g,'_');
+  const safeTitle=title.replace(/[\\\/:\*\?"<>\|]+/g,' ').replace(/\s+/g,' ').trim().replace(/ /g,'_').substring(0,80);
+  const fname=safeTitle+(lampiran?'_('+lampiran+')':'')+'.xls';
   const blob=new Blob(['﻿'+xml],{type:'application/vnd.ms-excel;charset=UTF-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');

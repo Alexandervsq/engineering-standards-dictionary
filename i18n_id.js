@@ -116,6 +116,7 @@ window.IDN = {
   // environmental tables
   "env.export":"⬇ Ekspor ke Excel",
   "env.notes":"Keterangan:",
+  "env.rows":"baris",
 
   // AI answer card
   "ai.title":"Jawaban Teknik",
@@ -189,6 +190,34 @@ var MOD_IDN = {
        notes:["PP 22/2021 memperketat batas PP 41/1999 secara signifikan serta memperkenalkan <strong>PM₂,₅</strong> dan periode rata-rata tahunan. Nilai penting bagi konstruksi: <strong>TSP 24 jam = 230 µg/m³</strong>, <strong>PM₁₀ 24 jam = 75 µg/m³</strong>, <strong>PM₂,₅ 24 jam = 55 µg/m³</strong> — inilah yang mengendalikan pengendalian debu di lapangan."]},
       {h:"Baku Mutu Air Laut (PP 22/2021 Lampiran VIII) — tabel lengkap",
        notes:["Tiga peruntukan: <em>Pelabuhan</em>, <em>Wisata Bahari</em>, dan <em>Biota Laut</em>. Kolom Biota Laut memuat sub-batas untuk <strong>coral</strong> (terumbu karang), <strong>mangrove</strong>, dan <strong>lamun</strong> pada parameter yang dibedakan oleh peraturan — relevan bagi pekerjaan reklamasi, dermaga, outfall, atau pengerukan."]},
+      {h:"Limbah B3 — enam karakteristik (PP 22/2021 Lampiran X)",
+       table:{center:true,cols:["#","Karakteristik","Kriteria penetapan"],
+         rows:[
+           ["1","<strong>Mudah meledak</strong> (explosive — E)","Limbah yang pada suhu dan tekanan standar (25 °C, 760 mmHg) dapat meledak, atau melalui reaksi kimia dan/atau fisika dapat menghasilkan gas bersuhu dan bertekanan tinggi yang dengan cepat merusak lingkungan sekitarnya"],
+           ["2","<strong>Mudah menyala</strong> (ignitable — I)","Limbah cair mengandung alkohol &lt; 24% volume dan/atau titik nyala ≤ 60 °C (140 °F) yang menyala bila kontak dengan api atau percikan pada 760 mmHg — diuji dengan Seta closed cup atau Pensky-Martens closed cup; atau limbah bukan cairan yang menyala melalui gesekan, penyerapan uap air, atau perubahan kimia spontan pada 25 °C"],
+           ["3","<strong>Reaktif</strong> (reactive — R)","Limbah yang tidak stabil dan bereaksi hebat tanpa meledak; bereaksi hebat dengan air; membentuk campuran berpotensi meledak dengan air; atau menghasilkan gas/uap/asap beracun dalam jumlah yang membahayakan kesehatan manusia atau lingkungan"],
+           ["4","<strong>Infeksius</strong> (infectious — X)","Limbah medis dan laboratorium yang mengandung patogen dalam konsentrasi atau jumlah yang cukup untuk menularkan penyakit — bagian tubuh, kultur, benda tajam, serta limbah dari perawatan pasien infeksius"],
+           ["5","<strong>Korosif</strong> (corrosive — C)","Limbah dengan pH ≤ 2 (asam) atau pH ≥ 12,5 (basa), atau yang mengorosi baja melebihi laju 6,35 mm/tahun pada 55 °C"],
+           ["6","<strong>Beracun</strong> (toxic — T)","Ditetapkan melalui uji pelindian TCLP, uji toksikologi LD50 oral, dan evaluasi toksisitas sub-kronis — nilai ambang TCLP tercantum pada Lampiran XI (tabel di bawah)"]
+         ]},
+       notes:["Limbah digolongkan B3 bila tercantum dalam daftar Limbah B3, atau bila hasil pengujian menunjukkan salah satu dari enam karakteristik di atas. Toksisitas dibagi menjadi <strong>Kategori 1</strong> (akut — di atas TCLP-A) dan <strong>Kategori 2</strong> (kronis — di antara TCLP-A dan TCLP-B), yang menentukan seluruh rangkaian ketentuan penyimpanan, pengangkutan, pengolahan, dan penimbusan berikutnya."]},
+      {h:"Baku Mutu TCLP untuk Penetapan Kategori Limbah B3 (Lampiran XI) — tabel lengkap",
+       notes:["72 zat pencemar mencakup kelompok anorganik, anion, organik, pestisida, dan parameter tambahan. Di atas TCLP-A limbah masuk Kategori 1; di antara TCLP-A dan TCLP-B masuk Kategori 2."]},
+      {h:"Standar Pengolahan TCLP Sebelum Penimbusan Akhir (Lampiran XII) — tabel lengkap",
+       notes:["Nilai pada Lampiran XII identik dengan kolom TCLP-B Lampiran XI — Limbah B3 wajib diolah hingga mencapai konsentrasi lindi ini sebelum boleh ditempatkan di fasilitas penimbusan akhir."]},
+      {h:"Nilai Baku Tanah Terkontaminasi — TCLP &amp; Total Konsentrasi (Lampiran XIII) — tabel lengkap",
+       notes:["Enam kolom memasangkan batas pelindian (TCLP) dengan batas konsentrasi total (TK) pada tiga tingkat A/B/C. Tabel inilah yang mengatur pemulihan lahan yang terkontaminasi akibat tumpahan atau pembuangan masa lalu — sangat relevan bila lokasi proyek pernah dipakai untuk kegiatan industri."]},
+      {h:"Limbah Non-B3 Terdaftar (Lampiran XIV) — tabel lengkap",
+       notes:["Perubahan utama pada PP 22/2021: <strong>fly ash dan bottom ash (FABA)</strong> dari PLTU berbahan bakar batubara dikeluarkan dari daftar Limbah B3 dan masuk kategori Limbah non-B3 terdaftar, bersama slag besi dan nikel, mill scale, debu EAF, serta spent bleaching earth. Limbah non-B3 dikelola dengan Rincian Teknis dalam Persetujuan Lingkungan, bukan PERTEK penuh."]},
+      {h:"Jenis Pelanggaran &amp; Tingkat Sanksi (PP 22/2021 Lampiran XV)",
+       table:{center:true,cols:["Bidang pelanggaran","Jumlah butir","Tingkat yang diterapkan"],
+         rows:[
+           ["<strong>Tabel 1</strong> — Pengendalian Pencemaran Air","± 55","Ringan · Sedang · Berat"],
+           ["<strong>Tabel 2</strong> — Pengendalian Pencemaran Udara","± 60","Ringan · Sedang · Berat"],
+           ["<strong>Tabel 3</strong> — Pengendalian Pencemaran Laut","± 40","Ringan · Sedang · Berat"],
+           ["<strong>Tabel 4</strong> — Pengelolaan Limbah B3","± 126","Ringan · Sedang · Berat, dipisah antara Penghasil dan Jasa"]
+         ]},
+       notes:["<strong>Ringan</strong> — kelalaian administratif dan pencatatan: titik pemantauan tidak dilengkapi nama dan titik koordinat, penanggung jawab pengendalian pencemaran tidak bersertifikat kompetensi, operator IPAL tidak bersertifikat, tidak memiliki sistem manajemen lingkungan.","<strong>Sedang</strong> — kelalaian substantif pada pemantauan dan pengendalian: tidak memantau mutu Air Limbah pada titik penaatan yang ditetapkan, tidak memiliki titik penaatan, tidak memantau air permukaan/air tanah/tanah, tidak memiliki sistem tanggap darurat pencemaran air, tidak menggunakan laboratorium teregistrasi, tidak memasang alat pemantauan otomatis bagi kegiatan yang diwajibkan.","<strong>Berat</strong> — membuang atau mengemisikan melampaui baku mutu, beroperasi tanpa persetujuan yang dipersyaratkan, dan (Tabel 4) melampaui baku mutu emisi atau pemanfaatan Limbah non-B3. Tingkat pelanggaran menentukan sanksi administratif: teguran tertulis → paksaan pemerintah → pembekuan → pencabutan Perizinan Berusaha.","Lampiran ini memuat sekitar 280 butir pelanggaran bernomor. Kerangka penilaian dan butir representatif tiap tingkat diringkas di sini; rujuk Lampiran XV resmi untuk daftar lengkap sebelum menyandarkan suatu butir dalam konteks penegakan hukum."]},
       {h:"Titik Kepatuhan yang Relevan bagi Konstruksi",
        table:{cols:["Kegiatan","Yang dikendalikan oleh baku mutu"],
          rows:[
