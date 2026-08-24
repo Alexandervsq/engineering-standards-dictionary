@@ -242,6 +242,302 @@ sea:{
   }
 },
 
+// ── Lampiran I Bagian I — protected areas (AMDAL screening trigger) ──
+kawasan_lindung:{
+  code:"PP 22/2021 Lampiran I — Bagian I",
+  title:{i:"Daftar Kawasan Lindung",e:"List of Protected Areas",z:"保护区名录"},
+  cols:{i:["No","Kawasan Lindung","Kelompok"],e:["No","Protected Area","Group"],z:["序号","保护区","分组"]},
+  rows:[
+   {n:"a",p:{i:"Kawasan hutan lindung",e:"Protection forest area",z:"防护林区"},u:"Hutan|Forest|林地",v:[],k:{i:"",e:"",z:""}},
+   {n:"b",p:{i:"Kawasan lindung gambut",e:"Peat protection area",z:"泥炭保护区"},u:"Hutan|Forest|林地",v:[],k:{i:"",e:"",z:""}},
+   {n:"c",p:{i:"Kawasan resapan air",e:"Water catchment / recharge area",z:"水源涵养区"},u:"Air|Water|水"},
+   {n:"d",p:{i:"Sempadan pantai",e:"Coastal border zone",z:"海岸缓冲带"},u:"Sempadan|Buffer|缓冲带"},
+   {n:"e",p:{i:"Sempadan sungai",e:"River border zone",z:"河岸缓冲带"},u:"Sempadan|Buffer|缓冲带"},
+   {n:"f",p:{i:"Kawasan sekitar danau atau waduk",e:"Area around a lake or reservoir",z:"湖泊或水库周边区"},u:"Sempadan|Buffer|缓冲带"},
+   {n:"g",p:{i:"Suaka margasatwa dan suaka margasatwa laut",e:"Wildlife sanctuary and marine wildlife sanctuary",z:"野生动物保护区与海洋野生动物保护区"},u:"Konservasi|Conservation|自然保护"},
+   {n:"h",p:{i:"Cagar alam dan cagar alam laut",e:"Nature reserve and marine nature reserve",z:"自然保护区与海洋自然保护区"},u:"Konservasi|Conservation|自然保护"},
+   {n:"i",p:{i:"Kawasan pantai berhutan bakau",e:"Mangrove coastal area",z:"红树林海岸区"},u:"Konservasi|Conservation|自然保护"},
+   {n:"j",p:{i:"Taman nasional dan taman nasional laut",e:"National park and marine national park",z:"国家公园与海洋国家公园"},u:"Konservasi|Conservation|自然保护"},
+   {n:"k",p:{i:"Taman hutan raya",e:"Grand forest park",z:"大森林公园"},u:"Konservasi|Conservation|自然保护"},
+   {n:"l",p:{i:"Taman wisata alam dan taman wisata alam laut",e:"Nature tourism park and marine nature tourism park",z:"自然旅游公园与海洋自然旅游公园"},u:"Konservasi|Conservation|自然保护"},
+   {n:"m",p:{i:"Kawasan cagar budaya dan ilmu pengetahuan",e:"Cultural heritage and science reserve",z:"文化遗产与科学保护区"},u:"Cagar|Heritage|遗产"},
+   {n:"n",p:{i:"Kawasan cagar alam geologi",e:"Geological nature reserve",z:"地质自然保护区"},u:"Cagar|Heritage|遗产"},
+   {n:"o",p:{i:"Kawasan imbuhan air tanah",e:"Groundwater recharge area",z:"地下水补给区"},u:"Air|Water|水"},
+   {n:"p",p:{i:"Sempadan mata air",e:"Spring border zone",z:"泉水缓冲带"},u:"Air|Water|水"},
+   {n:"q",p:{i:"Kawasan perlindungan plasma nutfah",e:"Germplasm protection area",z:"种质资源保护区"},u:"Konservasi|Conservation|自然保护"},
+   {n:"r",p:{i:"Kawasan pengungsian satwa",e:"Wildlife refuge area",z:"野生动物庇护区"},u:"Konservasi|Conservation|自然保护"},
+   {n:"s",p:{i:"Terumbu karang",e:"Coral reef",z:"珊瑚礁"},u:"Laut|Marine|海洋"},
+   {n:"t",p:{i:"Kawasan konservasi pesisir dan pulau-pulau kecil",e:"Coastal and small-island conservation area",z:"海岸与小岛保护区"},u:"Laut|Marine|海洋"},
+   {n:"u",p:{i:"Kawasan konservasi maritim",e:"Maritime conservation area",z:"海事保护区"},u:"Laut|Marine|海洋"},
+   {n:"v",p:{i:"Kawasan konservasi perairan",e:"Aquatic conservation area",z:"水域保护区"},u:"Laut|Marine|海洋"},
+   {n:"w",p:{i:"Kawasan koridor bagi jenis satwa atau biota laut yang dilindungi",e:"Corridor area for protected wildlife or marine biota",z:"受保护野生动物或海洋生物走廊区"},u:"Laut|Marine|海洋"}
+  ],
+  foot:{
+   i:["Kawasan lindung huruf a sampai w adalah wilayah yang ditetapkan dengan fungsi utama melindungi kelestarian Lingkungan Hidup, mencakup sumber daya alam dan sumber daya buatan. Penetapannya dilakukan sesuai ketentuan peraturan perundang-undangan.",
+      "Lokasi rencana Usaha di dalam kawasan lindung menaikkan skala sensitifitas lokasi pada penentuan kategori Amdal (lihat tabel Kategori Amdal): di dalam kawasan konservasi = skala 3, di dalam kawasan lindung di luar kategori konservasi = skala 2, di luar kawasan lindung = skala 1."],
+   e:["Protected areas a through w are territories designated with the primary function of protecting environmental sustainability, covering both natural and man-made resources. Their designation follows the applicable laws and regulations.",
+      "Siting a planned activity inside a protected area raises the location-sensitivity score used to determine the AMDAL category (see the AMDAL Category table): inside a conservation area = scale 3, inside a protected area outside the conservation category = scale 2, outside any protected area = scale 1."],
+   z:["a 至 w 项保护区是以保护环境可持续性为主要功能而划定的区域，涵盖自然资源与人造资源，其划定依照相关法律法规执行。",
+      "拟建项目选址位于保护区内会提高 AMDAL 类别判定中的选址敏感度分值（见 AMDAL 类别表）：位于生态保护区内 = 3 分，位于保护区内但非生态保护类别 = 2 分，位于保护区之外 = 1 分。"]
+  }
+},
+
+// ── Lampiran I Bagian IV — AMDAL category A/B/C scoring ──
+amdal_kategori:{
+  code:"PP 22/2021 Lampiran I — Bagian IV",
+  title:{i:"Penentuan Kategori Amdal (A / B / C)",e:"AMDAL Category Determination (A / B / C)",z:"AMDAL 类别判定（A / B / C）"},
+  cols:{i:["No","Kriteria","Skala Kepentingan","Skala Nilai"],e:["No","Criterion","Level of Significance","Score"],z:["序号","判定准则","重要程度","分值"]},
+  rows:[
+   {n:"1",p:{i:"Kompleksitas Kegiatan Utama dan Penunjang",e:"Complexity of the main and supporting activity",z:"主体与配套活动的复杂程度"},u:"—",v:["Sangat Kompleks|Highly complex|非常复杂","3"]},
+   {n:"",p:{i:"Kompleksitas Kegiatan Utama dan Penunjang",e:"Complexity of the main and supporting activity",z:"主体与配套活动的复杂程度"},u:"—",v:["Cukup Kompleks|Moderately complex|较为复杂","2"]},
+   {n:"",p:{i:"Kompleksitas Kegiatan Utama dan Penunjang",e:"Complexity of the main and supporting activity",z:"主体与配套活动的复杂程度"},u:"—",v:["Tidak Kompleks|Not complex|不复杂","1"]},
+   {n:"2",p:{i:"Dampak Usaha dan/atau Kegiatan terhadap lingkungan",e:"Impact of the activity on the environment",z:"项目对环境的影响"},u:"—",v:["Berdampak Sangat Penting|Very significant impact|影响非常重大","3"]},
+   {n:"",p:{i:"Dampak Usaha dan/atau Kegiatan terhadap lingkungan",e:"Impact of the activity on the environment",z:"项目对环境的影响"},u:"—",v:["Berdampak Lebih Penting|More significant impact|影响较为重大","2"]},
+   {n:"",p:{i:"Dampak Usaha dan/atau Kegiatan terhadap lingkungan",e:"Impact of the activity on the environment",z:"项目对环境的影响"},u:"—",v:["Berdampak Penting|Significant impact|影响重大","1"]},
+   {n:"3",p:{i:"Sensitifitas lokasi rencana Usaha",e:"Sensitivity of the planned location",z:"拟建选址敏感度"},u:"—",v:["Di dalam kawasan konservasi (Tinggi)|Inside a conservation area (High)|位于生态保护区内（高）","3"]},
+   {n:"",p:{i:"Sensitifitas lokasi rencana Usaha",e:"Sensitivity of the planned location",z:"拟建选址敏感度"},u:"—",v:["Di dalam kawasan lindung di luar kategori konservasi (Sedang)|Inside a protected area outside the conservation category (Medium)|位于保护区内但非生态保护类别（中）","2"]},
+   {n:"",p:{i:"Sensitifitas lokasi rencana Usaha",e:"Sensitivity of the planned location",z:"拟建选址敏感度"},u:"—",v:["Di luar kawasan lindung (Rendah)|Outside any protected area (Low)|位于保护区之外（低）","1"]},
+   {n:"4",p:{i:"Status daya dukung dan daya tampung Lingkungan Hidup (D3TLH)",e:"Status of environmental carrying capacity (D3TLH)",z:"环境承载力状况 (D3TLH)"},u:"—",v:["D3TLH sangat terlampaui (Tinggi)|Carrying capacity greatly exceeded (High)|承载力已严重超载（高）","3"]},
+   {n:"",p:{i:"Status daya dukung dan daya tampung Lingkungan Hidup (D3TLH)",e:"Status of environmental carrying capacity (D3TLH)",z:"环境承载力状况 (D3TLH)"},u:"—",v:["D3TLH telah terlampaui (Sedang)|Carrying capacity exceeded (Medium)|承载力已超载（中）","2"]},
+   {n:"",p:{i:"Status daya dukung dan daya tampung Lingkungan Hidup (D3TLH)",e:"Status of environmental carrying capacity (D3TLH)",z:"环境承载力状况 (D3TLH)"},u:"—",v:["D3TLH belum terlampaui (Rendah)|Carrying capacity not yet exceeded (Low)|承载力尚未超载（低）","1"]},
+   {n:"A",p:{i:"➤ Amdal Kategori A",e:"➤ AMDAL Category A",z:"➤ AMDAL A 类"},u:"—",v:["Jumlah skala nilai kumulatif|Cumulative score|累计分值","> 9"]},
+   {n:"B",p:{i:"➤ Amdal Kategori B",e:"➤ AMDAL Category B",z:"➤ AMDAL B 类"},u:"—",v:["Jumlah skala nilai kumulatif|Cumulative score|累计分值","6 – 9"]},
+   {n:"C",p:{i:"➤ Amdal Kategori C",e:"➤ AMDAL Category C",z:"➤ AMDAL C 类"},u:"—",v:["Jumlah skala nilai kumulatif|Cumulative score|累计分值","< 6"]}
+  ],
+  foot:{
+   i:["Kategori Amdal ditentukan dengan menjumlahkan nilai skala dari 4 (empat) kriteria di atas — nilai minimum 4 dan maksimum 12.",
+      "Langkah perhitungan: (1) isi ringkasan informasi lingkungan sesuai format pada Lampiran I; (2) kelompokkan skala rencana Usaha sesuai keempat pertanyaan; (3) jumlahkan; (4) tetapkan kategori A, B, atau C.",
+      "Kategori Amdal menentukan kompleksitas dokumen dan komposisi Tim Uji Kelayakan yang menilainya."],
+   e:["The AMDAL category is determined by summing the scores of the four criteria above — minimum 4, maximum 12.",
+      "Calculation steps: (1) complete the environmental information summary per the format in Lampiran I; (2) classify the planned activity against each of the four questions; (3) sum the scores; (4) assign category A, B or C.",
+      "The AMDAL category governs the complexity of the document and the composition of the feasibility-test team that assesses it."],
+   z:["AMDAL 类别由上述四项准则的分值相加确定 — 最低 4 分，最高 12 分。",
+      "计算步骤：(1) 按附件 I 格式填报环境信息摘要；(2) 就四个问题对拟建项目分级；(3) 求和；(4) 判定为 A、B 或 C 类。",
+      "AMDAL 类别决定文件的复杂程度以及负责审查的环境可行性审查组构成。"]
+  }
+},
+
+// ── Lampiran IV — feasibility-test team (TUK) requirements ──
+tuk:{
+  code:"PP 22/2021 Lampiran IV",
+  title:{i:"Persyaratan Pengusulan Tim Uji Kelayakan Lingkungan Hidup (TUK)",e:"Requirements for Proposing the Environmental Feasibility Test Team (TUK)",z:"环境可行性审查组（TUK）提名要求"},
+  cols:{i:["No","Posisi","Persyaratan"],e:["No","Position","Requirement"],z:["序号","职位","任职要求"]},
+  rows:[
+   {n:"1",p:{i:"Ketua Tim Uji Kelayakan Lingkungan Hidup",e:"Chair of the Environmental Feasibility Test Team",z:"环境可行性审查组组长"},u:"—",v:["Surat keputusan pengangkatan sebagai pejabat yang menangani Amdal atau pejabat fungsional tertentu, dengan pengalaman penilaian Amdal paling sedikit 2 (dua) tahun|Decree of appointment as the official handling AMDAL or a designated functional official, with at least 2 years' experience in AMDAL assessment|须持有担任 AMDAL 主管官员或特定职能官员的任命决定书，并具备至少 2 年 AMDAL 评审经验"]},
+   {n:"2",p:{i:"Kepala Sekretariat Tim Uji Kelayakan Lingkungan Hidup",e:"Head of the TUK Secretariat",z:"审查组秘书处主任"},u:"—",v:["Surat keputusan pengangkatan sebagai pejabat yang menangani Amdal atau pejabat fungsional tertentu, dengan pengalaman penilaian Amdal paling sedikit 2 (dua) tahun|Decree of appointment as the official handling AMDAL or a designated functional official, with at least 2 years' experience in AMDAL assessment|须持有担任 AMDAL 主管官员或特定职能官员的任命决定书，并具备至少 2 年 AMDAL 评审经验"]},
+   {n:"3",p:{i:"Sekretariat TUK (Pusat, provinsi, atau kabupaten/kota)",e:"TUK Secretariat (national, provincial or regency/city)",z:"审查组秘书处（中央、省或县/市级）"},u:"—",v:["(a) berkedudukan di instansi yang membidangi Perlindungan dan Pengelolaan Lingkungan Hidup; (b) daftar usulan personel sekretariat; (c) surat pernyataan kesediaan melaksanakan SOP pelaksanaan tugas dan fungsi sekretariat; (d) memiliki fasilitas sistem informasi dan akses internet yang memadai untuk pelaksanaan uji kelayakan; (e) surat pernyataan kesediaan menggunakan sistem informasi dokumen Lingkungan Hidup|(a) located within the agency responsible for environmental protection and management; (b) a proposed list of secretariat personnel; (c) a statement of willingness to follow the SOP for the secretariat's duties and functions; (d) adequate information-system facilities and internet access for conducting the feasibility test; (e) a statement of willingness to use the environmental-document information system|(a) 设于负责环境保护与管理的机构内；(b) 提交秘书处人员建议名单；(c) 提交承诺执行秘书处职责标准作业程序的声明书；(d) 具备开展可行性审查所需的信息系统设施与网络接入；(e) 提交承诺使用环境文件信息系统的声明书"]}
+  ],
+  foot:{
+   i:["Tim Uji Kelayakan Lingkungan Hidup (TUK) adalah tim yang melakukan uji kelayakan atas dokumen Amdal dan menerbitkan rekomendasi yang menjadi dasar Persetujuan Kelayakan Lingkungan Hidup.",
+      "TUK dibentuk pada tingkat Pusat, provinsi, dan kabupaten/kota. Selain ketua dan sekretariat, TUK beranggotakan ahli bersertifikat sesuai kebutuhan bidang kajian.",
+      "Ringkasan ini memuat posisi utama; rujuk Lampiran IV untuk persyaratan lengkap seluruh posisi."],
+   e:["The Environmental Feasibility Test Team (TUK) is the body that tests AMDAL documents for feasibility and issues the recommendation on which the Environmental Feasibility Approval is based.",
+      "TUKs are formed at national, provincial and regency/city level. Besides the chair and secretariat, a TUK includes certified experts matched to the fields under study.",
+      "This summary covers the principal positions; consult Lampiran IV for the complete requirements of every position."],
+   z:["环境可行性审查组（TUK）负责对 AMDAL 文件开展可行性审查，并出具作为《环境可行性批准》依据的推荐意见。",
+      "TUK 在中央、省及县/市三级设立。除组长与秘书处外，审查组还须按研究领域需要配备持证专家。",
+      "此处为主要职位摘要；各职位完整要求请查阅附件 IV。"]
+  }
+},
+
+// ── Lampiran V — changes that alter the Environmental Approval ──
+perubahan:{
+  code:"PP 22/2021 Lampiran V — Bagian Kesatu",
+  title:{i:"Jenis Perubahan yang Menyebabkan Perubahan Persetujuan Lingkungan",e:"Types of Change Requiring a Change to the Environmental Approval",z:"导致环境批准变更的变更类型"},
+  cols:{i:["No","Jenis Perubahan Usaha dan/atau Kegiatan"],e:["No","Type of Change to the Business and/or Activity"],z:["序号","项目变更类型"]},
+  rows:[
+   {n:"1",p:{i:"Perubahan spesifikasi teknik, alat produksi, bahan baku dan/atau bahan penolong",e:"Change to technical specifications, production equipment, raw materials and/or auxiliary materials",z:"技术规格、生产设备、原料和/或辅料的变更"},u:"—",v:[]},
+   {n:"2",p:{i:"Penambahan kapasitas produksi",e:"Increase in production capacity",z:"生产能力增加"},u:"—",v:[]},
+   {n:"3",p:{i:"Perluasan lahan dan bangunan",e:"Expansion of land and buildings",z:"用地与建筑物扩大"},u:"—",v:[]},
+   {n:"4",p:{i:"Perubahan waktu atau durasi operasi Usaha",e:"Change to the time or duration of operations",z:"运营时间或工期的变更"},u:"—",v:[]},
+   {n:"5",p:{i:"Perubahan kebijakan pemerintah",e:"Change in government policy",z:"政府政策变化"},u:"—",v:[]},
+   {n:"6",p:{i:"Terjadi perubahan lingkungan hidup yang mendasar (antara lain bencana alam)",e:"A fundamental change in the environment (e.g. natural disaster)",z:"环境发生根本性变化（如自然灾害）"},u:"—",v:[]},
+   {n:"7",p:{i:"Tidak dilaksanakannya rencana Usaha dalam jangka waktu 3 (tiga) tahun",e:"The planned activity is not carried out within 3 (three) years",z:"拟建项目在 3 年内未实施"},u:"—",v:[]},
+   {n:"8",p:{i:"Perubahan identitas penanggung jawab Usaha dan/atau Kegiatan",e:"Change to the identity of the person responsible for the activity",z:"项目责任人身份变更"},u:"—",v:[]},
+   {n:"9",p:{i:"Perubahan Usaha dan/atau Kegiatan",e:"Change to the business and/or activity itself",z:"项目本身的变更"},u:"—",v:[]},
+   {n:"10",p:{i:"Perubahan wilayah administrasi",e:"Change to the administrative region",z:"行政区划变更"},u:"—",v:[]},
+   {n:"11",p:{i:"Perubahan pengelolaan dan pemantauan Lingkungan Hidup",e:"Change to environmental management and monitoring",z:"环境管理与监测的变更"},u:"—",v:[]},
+   {n:"12",p:{i:"Sertifikat layak operasi yang lebih ketat dari Persetujuan Lingkungan yang dimiliki",e:"An operational feasibility certificate stricter than the Environmental Approval already held",z:"运营合格证严于现持有的环境批准"},u:"—",v:[]},
+   {n:"13",p:{i:"Penciutan / pengurangan Usaha dan/atau Kegiatan",e:"Reduction / downscaling of the business and/or activity",z:"项目缩减"},u:"—",v:[]}
+  ],
+  foot:{
+   i:["Perubahan yang berdampak menambah dampak negatif atau meningkatkan skala/besaran dampak negatif yang sudah ada mewajibkan penyusunan <strong>addendum Andal dan RKL-RPL</strong>. Lampiran V Bagian Ketiga membagi addendum menjadi 3 (tiga) tipe menurut tingkat perubahan.",
+      "Bagian Kedua memuat Format Penyajian Informasi Lingkungan; Bagian Keempat memuat Tata Laksana Perubahan Persetujuan Lingkungan; Bagian Kelima memuat Tata Laksana Penyusunan <strong>DELH</strong> (Dokumen Evaluasi Lingkungan Hidup) dan <strong>DPLH</strong> (Dokumen Pengelolaan Lingkungan Hidup) — instrumen bagi Usaha yang telah berjalan namun belum memiliki dokumen lingkungan.",
+      "Perubahan yang tidak menambah dampak negatif dapat cukup dengan perubahan administratif tanpa addendum."],
+   e:["A change that adds a new negative impact, or increases the scale of an existing one, requires an <strong>addendum to the ANDAL and RKL-RPL</strong>. Lampiran V Bagian Ketiga divides addenda into three types according to the degree of change.",
+      "Bagian Kedua sets out the Environmental Information Presentation Format; Bagian Keempat the procedure for changing the Environmental Approval; and Bagian Kelima the procedure for preparing <strong>DELH</strong> (Environmental Evaluation Document) and <strong>DPLH</strong> (Environmental Management Document) — the instruments for activities already running but lacking an environmental document.",
+      "A change that adds no negative impact may be handled as an administrative change without an addendum."],
+   z:["若变更新增负面影响或加大既有负面影响的规模，须编制 <strong>ANDAL 与 RKL-RPL 附录（addendum）</strong>。附件 V 第三部分按变更程度将附录分为三种类型。",
+      "第二部分规定环境信息呈报格式；第四部分规定环境批准变更的办理程序；第五部分规定 <strong>DELH</strong>（环境评价文件）与 <strong>DPLH</strong>（环境管理文件）的编制程序 — 适用于已运营但尚无环境文件的项目。",
+      "不新增负面影响的变更可按行政变更办理，无须编制附录。"]
+  }
+},
+
+// ── Lampiran IX — the B3 hazardous-waste list ──
+b3_list:{
+  code:"PP 22/2021 Lampiran IX",
+  title:{i:"Daftar Limbah B3 — Kode dan Kategori Bahaya",e:"B3 Hazardous Waste List — Codes and Hazard Category",z:"B3 危险废物名录 — 代码与危害类别"},
+  cols:{i:["Kode","Zat Pencemar / Jenis Limbah","Sumber / Kelompok","Kategori Bahaya"],
+        e:["Code","Contaminant / Waste Type","Source / Group","Hazard Category"],
+        z:["代码","污染物 / 废物类型","来源 / 分组","危害类别"]},
+  rows:[
+   {n:"A101a",p:{i:"Tetrakloroetilen",e:"Tetrachloroethylene",z:"四氯乙烯"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A102a",p:{i:"Trikloroetilen",e:"Trichloroethylene",z:"三氯乙烯"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A103a",p:{i:"Metilen klorida",e:"Methylene chloride",z:"二氯甲烷"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A104a",p:{i:"1,1,1-trikloroetana",e:"1,1,1-trichloroethane",z:"1,1,1-三氯乙烷"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A105a",p:{i:"1,1,2-trikloroetana",e:"1,1,2-trichloroethane",z:"1,1,2-三氯乙烷"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A106a",p:{i:"Karbon tetraklorida",e:"Carbon tetrachloride",z:"四氯化碳"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A107a",p:{i:"1,1,2-trikloro-1,2,2-trifluoroetana",e:"1,1,2-trichloro-1,2,2-trifluoroethane",z:"1,1,2-三氯-1,2,2-三氟乙烷"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A108a",p:{i:"Triklorofluorometana",e:"Trichlorofluoromethane",z:"三氯氟甲烷"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A109a",p:{i:"Orto-diklorobenzena",e:"Ortho-dichlorobenzene",z:"邻二氯苯"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A110a",p:{i:"Klorobenzena",e:"Chlorobenzene",z:"氯苯"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A111a",p:{i:"Trikloroetana",e:"Trichloroethane",z:"三氯乙烷"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A112a",p:{i:"Fluorokarbon terklorinasi",e:"Chlorinated fluorocarbon",z:"氯化氟碳化物"},u:"Pelarut terhalogenasi|Halogenated solvent|卤代溶剂",v:["1"]},
+   {n:"A101b–A121b",p:{i:"Pelarut tidak terhalogenasi — ksilena, aseton, asetat, benzena, etil eter, metil isobutil keton, n-butil alkohol, sikloheksanon, dimetilbenzena, metanol, kresol, toluena, metil etil keton, karbon disulfida, isobutanol, piridina, 2-etoksietanol, 2-nitropropana, asam kresilat, nitrobenzena",e:"Non-halogenated solvents — xylene, acetone, acetate, benzene, ethyl ether, methyl isobutyl ketone, n-butyl alcohol, cyclohexanone, dimethylbenzene, methanol, cresol, toluene, methyl ethyl ketone, carbon disulphide, isobutanol, pyridine, 2-ethoxyethanol, 2-nitropropane, cresylic acid, nitrobenzene",z:"非卤代溶剂 — 二甲苯、丙酮、乙酸酯、苯、乙醚、甲基异丁基酮、正丁醇、环己酮、二甲基苯、甲醇、甲酚、甲苯、甲乙酮、二硫化碳、异丁醇、吡啶、乙二醇乙醚、2-硝基丙烷、甲酚酸、硝基苯"},u:"Pelarut tidak terhalogenasi|Non-halogenated solvent|非卤代溶剂",v:["1"]},
+   {n:"A101c–A110c",p:{i:"Asam atau basa — amonium hidroksida, asam hidrobromat, asam hidroklorat, asam hidrofluorat, asam nitrat, asam fosfat, kalium hidroksida, natrium hidroksida, asam sulfat, asam klorida",e:"Acids or bases — ammonium hydroxide, hydrobromic acid, hydrochloric acid, hydrofluoric acid, nitric acid, phosphoric acid, potassium hydroxide, sodium hydroxide, sulphuric acid, hydrochloric acid",z:"酸或碱 — 氢氧化铵、氢溴酸、盐酸、氢氟酸、硝酸、磷酸、氢氧化钾、氢氧化钠、硫酸、盐酸"},u:"Asam atau basa|Acid or base|酸或碱",v:["1"]},
+   {n:"A101d",p:{i:"Limbah mengandung POPs dan UPOPs (a.l. PCB, DDT, PCDD, PCDF)",e:"Waste containing POPs and UPOPs (incl. PCB, DDT, PCDD, PCDF)",z:"含持久性有机污染物 (POPs/UPOPs) 的废物（含 PCB、DDT、PCDD、PCDF）"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A102d",p:{i:"Aki / baterai bekas",e:"Used batteries / accumulators",z:"废蓄电池"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A103d",p:{i:"Debu dan fiber asbes — asbes biru (crocidolite), coklat (amosite), abu-abu (anthophyllite)",e:"Asbestos dust and fibre — blue (crocidolite), brown (amosite), grey (anthophyllite)",z:"石棉粉尘与纤维 — 青石棉、褐石棉、直闪石石棉"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A104d",p:{i:"Air lindi (leachate) dari fasilitas penimbusan akhir Limbah B3",e:"Leachate from a B3 waste final-landfill facility",z:"B3 危险废物最终填埋设施渗滤液"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A105d",p:{i:"Limbah terkontaminasi merkuri (Hg) dengan konsentrasi > 10 ppm",e:"Waste contaminated with mercury (Hg) at > 10 ppm",z:"汞污染废物，浓度 > 10 ppm"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A106d",p:{i:"Limbah laboratorium yang mengandung B3",e:"Laboratory waste containing B3",z:"含 B3 的实验室废物"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A107d",p:{i:"Pelarut bekas lainnya yang belum dikodifikasi",e:"Other used solvents not yet codified",z:"其他尚未编码的废溶剂"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A108d",p:{i:"Limbah terkontaminasi B3",e:"B3-contaminated waste",z:"受 B3 污染的废物"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A109d",p:{i:"Limbah asam lainnya yang belum dikodifikasi",e:"Other acidic waste not yet codified",z:"其他尚未编码的酸性废物"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A110d",p:{i:"Limbah karbon aktif yang mengandung zat pencemar kode A101a–A112a, A101b–A121b, A101c–A110c dan/atau Limbah A105d, A107d",e:"Spent activated carbon containing contaminants coded A101a–A112a, A101b–A121b, A101c–A110c and/or wastes A105d, A107d",z:"含代码 A101a–A112a、A101b–A121b、A101c–A110c 及/或 A105d、A107d 污染物的废活性炭"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"A111d",p:{i:"Refrigerant bekas dari peralatan elektronik",e:"Used refrigerant from electronic equipment",z:"电子设备废制冷剂"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["1"]},
+   {n:"B101d",p:{i:"Limbah terkontaminasi merkuri (Hg) dengan konsentrasi 0,3 – 10 ppm",e:"Waste contaminated with mercury (Hg) between 0,3 and 10 ppm",z:"汞污染废物，浓度 0,3 – 10 ppm"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B102d",p:{i:"Debu dan fiber asbes putih (chrysotile)",e:"White asbestos (chrysotile) dust and fibre",z:"白石棉（温石棉）粉尘与纤维"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B103d",p:{i:"Lead scrap",e:"Lead scrap",z:"废铅"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B104d",p:{i:"Kemasan bekas B3",e:"Used B3 packaging",z:"B3 废包装物"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B105d",p:{i:"Minyak pelumas bekas (hidrolik, mesin, gear, lubrikasi, separator dan campurannya)",e:"Used lubricating oil (hydraulic, engine, gear, lubrication, separator and mixtures)",z:"废润滑油（液压、发动机、齿轮、润滑、分离器及其混合物）"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B106d",p:{i:"Limbah resin atau penukar ion",e:"Resin or ion-exchange waste",z:"树脂或离子交换废物"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B107d",p:{i:"Limbah elektronik — CRT, lampu TL, printed circuit board (PCB), kawat logam",e:"Electronic waste — CRT, fluorescent lamps, printed circuit boards, metal wire",z:"电子废物 — 阴极射线管、荧光灯管、印刷电路板、金属线"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B108d",p:{i:"Sludge IPAL dari fasilitas IPAL terpadu pada kawasan industri",e:"WWTP sludge from an integrated industrial-estate treatment plant",z:"工业园区集中污水处理厂污泥"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B109d",p:{i:"Filter bekas dari fasilitas pengendalian pencemaran udara",e:"Used filters from air-pollution control facilities",z:"大气污染控制设施废滤料"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B110d",p:{i:"Kain majun bekas (used rags) dan sejenisnya",e:"Used rags and similar materials",z:"废棉纱、抹布及类似物"},u:"Tidak spesifik lain|Other non-specific|其他非特定来源",v:["2"]},
+   {n:"B401",p:{i:"Copper slag",e:"Copper slag",z:"铜渣"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B404",p:{i:"Slag timah putih",e:"Tin (Sn) slag",z:"锡渣"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B405",p:{i:"Iron concentrate — peleburan besi/baja dengan induction furnace frekuensi rendah, kupola dan/atau reheating furnace",e:"Iron concentrate — iron/steel smelting using a low-frequency induction furnace, cupola and/or reheating furnace",z:"铁精矿 — 采用低频感应炉、冲天炉及/或再加热炉的钢铁冶炼"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B406",p:{i:"Mill scale — peleburan besi/baja dengan induction furnace frekuensi rendah, kupola dan/atau reheating furnace",e:"Mill scale — iron/steel smelting using a low-frequency induction furnace, cupola and/or reheating furnace",z:"氧化铁皮 — 采用低频感应炉、冲天炉及/或再加热炉的钢铁冶炼"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B407",p:{i:"Debu besi/baja dari pengendalian pencemaran udara",e:"Iron/steel dust from air-pollution control",z:"大气污染控制产生的钢铁粉尘"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B408",p:{i:"PS Ball — peleburan besi/baja dengan induction furnace atau kupola",e:"PS Ball — iron/steel smelting using an induction furnace or cupola",z:"PS 球 — 采用感应炉或冲天炉的钢铁冶炼"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B409",p:{i:"Fly ash — pembakaran batubara pada fasilitas stoker boiler dan/atau tungku industri",e:"Fly ash — coal combustion in a stoker boiler and/or industrial furnace",z:"粉煤灰 — 链条炉排锅炉及/或工业炉的燃煤过程"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B410",p:{i:"Bottom ash — pembakaran batubara pada fasilitas stoker boiler dan/atau tungku industri",e:"Bottom ash — coal combustion in a stoker boiler and/or industrial furnace",z:"炉底渣 — 链条炉排锅炉及/或工业炉的燃煤过程"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B411",p:{i:"Sludge IPAL",e:"WWTP sludge",z:"污水处理厂污泥"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B413",p:{i:"Spent bleaching earth — proses industri oleochemical",e:"Spent bleaching earth — oleochemical industry process",z:"废白土 — 油脂化学工业过程"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B414",p:{i:"Gipsum — proses desulfurisasi pada PLTU",e:"Gypsum — desulphurisation process at a coal power plant",z:"石膏 — 燃煤电厂脱硫过程"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B415",p:{i:"Kapur — proses pembuatan pupuk amonium",e:"Lime — ammonium fertiliser manufacture",z:"石灰 — 铵肥生产过程"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B416",p:{i:"Tailing — pengolahan dan/atau pemurnian bijih mineral logam",e:"Tailings — processing and/or refining of metallic mineral ore",z:"尾矿 — 金属矿石加工与精炼"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]},
+   {n:"B417",p:{i:"Refraktori bekas dari fasilitas termal (tungku bakar, boiler, pot lining)",e:"Spent refractory from thermal facilities (kilns, boilers, pot lining)",z:"热工设施废耐火材料（焙烧炉、锅炉、槽衬）"},u:"Sumber spesifik khusus|Special specific source|特定专门来源",v:["2"]}
+  ],
+  foot:{
+   i:["Lampiran IX memuat 4 (empat) tabel: <strong>Tabel 1</strong> Limbah B3 dari sumber tidak spesifik · <strong>Tabel 2</strong> Limbah B3 dari B3 kedaluwarsa, tumpah, atau tidak memenuhi spesifikasi produk · <strong>Tabel 3</strong> Limbah B3 dari sumber spesifik umum · <strong>Tabel 4</strong> Limbah B3 dari sumber spesifik khusus. Seluruhnya memuat sekitar 314 kode limbah.",
+      "Skema kode: awalan <strong>A</strong> umumnya Kategori Bahaya <strong>1</strong> (akut) dan awalan <strong>B</strong> Kategori <strong>2</strong> (kronis). Kategori menentukan seluruh rangkaian ketentuan penyimpanan, pengangkutan, pengolahan, dan penimbusan.",
+      "⚠ <strong>Perbedaan penting</strong> — fly ash, bottom ash, mill scale, dan PS ball muncul di <em>kedua</em> daftar, dibedakan oleh <strong>teknologi</strong>: B409/B410 (Limbah B3) berasal dari <em>stoker boiler dan/atau tungku industri</em>, sedangkan N106/N107 (Limbah non-B3, Lampiran XIV) berasal dari PLTU atau kegiatan lain dengan teknologi <em>selain</em> itu. Demikian pula B406 vs N103 (mill scale) dan B408 vs N105 (PS ball).",
+      "Tabel ini memuat Tabel 1 (sumber tidak spesifik) dan Tabel 4 (sumber spesifik khusus) secara lengkap. Tabel 2 dan Tabel 3 bersifat spesifik per industri dan sangat panjang — rujuk Lampiran IX resmi untuk daftar lengkapnya."],
+   e:["Lampiran IX contains four tables: <strong>Table 1</strong> B3 waste from non-specific sources · <strong>Table 2</strong> B3 waste from expired, spilled or off-specification B3 · <strong>Table 3</strong> B3 waste from general specific sources · <strong>Table 4</strong> B3 waste from special specific sources. Together they carry roughly 314 waste codes.",
+      "Code scheme: an <strong>A</strong> prefix is generally Hazard Category <strong>1</strong> (acute) and a <strong>B</strong> prefix Category <strong>2</strong> (chronic). The category drives the whole storage, transport, treatment and landfill regime.",
+      "⚠ <strong>Important distinction</strong> — fly ash, bottom ash, mill scale and PS ball appear on <em>both</em> lists, separated by the <strong>combustion/smelting technology</strong>: B409/B410 (B3 waste) come from a <em>stoker boiler and/or industrial furnace</em>, whereas N106/N107 (non-B3, Lampiran XIV) come from a power plant or other activity using technology <em>other than</em> those. The same applies to B406 vs N103 (mill scale) and B408 vs N105 (PS ball).",
+      "This table reproduces Table 1 (non-specific sources) and Table 4 (special specific sources) in full. Tables 2 and 3 are industry-by-industry and very long — consult the official Lampiran IX for their complete listing."],
+   z:["附件 IX 含四张表：<strong>表 1</strong> 非特定来源 B3 废物 · <strong>表 2</strong> 过期、泄漏或不合格 B3 产生的废物 · <strong>表 3</strong> 一般特定来源 B3 废物 · <strong>表 4</strong> 特定专门来源 B3 废物。合计约 314 个废物代码。",
+      "代码规则：<strong>A</strong> 前缀通常为危害类别 <strong>1</strong>（急性），<strong>B</strong> 前缀为类别 <strong>2</strong>（慢性）。类别决定贮存、运输、处理与填埋的全套要求。",
+      "⚠ <strong>重要区分</strong> — 粉煤灰、炉底渣、氧化铁皮与 PS 球在<em>两份名录中均出现</em>，以<strong>燃烧/冶炼技术</strong>区分：B409/B410（B3 危险废物）来自<em>链条炉排锅炉及/或工业炉</em>，而 N106/N107（非 B3，附件 XIV）来自采用<em>其他</em>技术的电厂或其他活动。氧化铁皮 B406 与 N103、PS 球 B408 与 N105 同理。",
+      "本表完整收录表 1（非特定来源）与表 4（特定专门来源）。表 2 与表 3 按行业逐项列举且篇幅很长 — 完整清单请查阅官方附件 IX。"]
+  }
+},
+
+// ── Permen PUPR 10/2021 Lampiran K.1 — SMKK audit checklist ──
+smkk_checklist:{
+  code:"Permen PUPR 10/2021 — Tabel 1 Lembar Pemeriksaan SMKK",
+  title:{i:"Lembar Pemeriksaan SMKK (Daftar Simak Audit Internal)",e:"SMKK Inspection Sheet (Internal Audit Checklist)",z:"SMKK 检查表（内部审核检查清单）"},
+  cols:{i:["No. Kriteria","Kriteria Pemeriksaan","Elemen","Kategori Temuan"],
+        e:["Criterion No.","Inspection Criterion","Element","Finding Category"],
+        z:["准则编号","检查准则","要素","发现类别"]},
+  rows:[
+   {n:"A.1.1",p:{i:"Penyedia Jasa menetapkan isu internal dan eksternal yang dapat mempengaruhi penerapan SMKK",e:"The contractor identifies internal and external issues that may affect SMKK implementation",z:"承包方确定可能影响 SMKK 实施的内外部问题"},u:"A.1 Kepedulian pimpinan|A.1 Leadership awareness|A.1 管理层关注",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"A.1.2",p:{i:"Penyedia Jasa membentuk organisasi pengelola SMKK berdasarkan persyaratan peraturan",e:"The contractor forms an SMKK management organisation per the regulatory requirements",z:"承包方按法规要求组建 SMKK 管理组织"},u:"A.1 Kepedulian pimpinan|A.1 Leadership awareness|A.1 管理层关注",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"A.1.3",p:{i:"Besaran organisasi pengelola SMKK disesuaikan dengan skala pekerjaan konstruksi",e:"The size of the SMKK organisation matches the scale of the construction work",z:"SMKK 管理组织规模与工程规模相匹配"},u:"A.1 Kepedulian pimpinan|A.1 Leadership awareness|A.1 管理层关注",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"A.1.4",p:{i:"Penyedia Jasa menunjuk penanggung jawab pengelola SMKK yang berkompeten untuk administrasi dan operasional keselamatan konstruksi",e:"The contractor appoints a competent SMKK manager responsible for safety administration and operations",z:"承包方指定具备能力的 SMKK 负责人，负责施工安全的行政与运行管理"},u:"A.1 Kepedulian pimpinan|A.1 Leadership awareness|A.1 管理层关注",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"A.1.5",p:{i:"Susunan, tugas, wewenang dan tanggung jawab organisasi pengelola SMKK ditetapkan secara tertulis oleh manajemen",e:"The structure, duties, authority and responsibilities of the SMKK organisation are set out in writing by management",z:"SMKK 管理组织的构成、职责、权限由管理层以书面形式确定"},u:"A.1 Kepedulian pimpinan|A.1 Leadership awareness|A.1 管理层关注",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"A.2.x",p:{i:"Komitmen Keselamatan Konstruksi — kebijakan, penandatanganan pakta komitmen, penyebarluasan kepada seluruh pekerja",e:"Construction Safety Commitment — policy, signed commitment pact, dissemination to all workers",z:"施工安全承诺 — 方针、签署承诺书、向全体作业人员传达"},u:"A.2 Komitmen|A.2 Commitment|A.2 承诺",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"B.1.x",p:{i:"Identifikasi Bahaya, Penilaian Risiko dan Peluang (IBPRP) disusun, ditinjau, dan disahkan",e:"Hazard Identification, Risk and Opportunity Assessment (IBPRP) prepared, reviewed and authorised",z:"危险源辨识、风险与机遇评价（IBPRP）已编制、评审并批准"},u:"B.1 Identifikasi Bahaya|B.1 Hazard identification|B.1 危险源辨识",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"B.2.x",p:{i:"Rencana tindakan keteknikan, manajemen dan tenaga kerja — sasaran dan program tersusun serta terukur",e:"Engineering, management and workforce action plan — targets and programmes documented and measurable",z:"工程技术、管理与人力行动计划 — 目标与方案已文件化且可测量"},u:"B.2 Rencana tindakan|B.2 Action plan|B.2 行动计划",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"B.3.x",p:{i:"Standar dan peraturan perundang-undangan keselamatan konstruksi diidentifikasi dan dipenuhi",e:"Construction-safety standards and legislation identified and complied with",z:"施工安全标准与法规已识别并遵守"},u:"B.3 Standar & peraturan|B.3 Standards & law|B.3 标准与法规",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"C.1.x",p:{i:"Sumber daya — peralatan, material, dan biaya penerapan SMKK tersedia sesuai rencana",e:"Resources — equipment, materials and SMKK implementation budget available per plan",z:"资源 — 设备、材料及 SMKK 实施费用按计划落实"},u:"C.1 Sumber Daya|C.1 Resources|C.1 资源",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"C.2.x",p:{i:"Kompetensi — personel keselamatan konstruksi bersertifikat sesuai tingkat risiko",e:"Competence — construction-safety personnel certified in line with the risk level",z:"能力 — 施工安全人员持证且与风险等级相匹配"},u:"C.2 Kompetensi|C.2 Competence|C.2 能力",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"C.3.x",p:{i:"Kepedulian — program peningkatan kepedulian, pelatihan dan sosialisasi SMKK terlaksana",e:"Awareness — awareness programme, training and SMKK socialisation carried out",z:"意识 — 意识提升方案、培训与 SMKK 宣贯已实施"},u:"C.3 Kepedulian|C.3 Awareness|C.3 意识",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"C.4.x",p:{i:"Komunikasi — induksi, safety morning, toolbox meeting, rapat keselamatan konstruksi terjadwal dan terlaksana",e:"Communication — induction, safety morning, toolbox meeting and safety meetings scheduled and held",z:"沟通 — 安全交底、班前会、班组会与安全例会已排期并执行"},u:"C.4 Komunikasi|C.4 Communication|C.4 沟通",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"C.5.x",p:{i:"Informasi terdokumentasi — pengendalian akses, penyimpanan dan pemutakhiran dokumen SMKK",e:"Documented information — access control, storage and updating of SMKK documents",z:"文件化信息 — SMKK 文件的访问控制、保存与更新"},u:"C.5 Informasi Terdokumentasi|C.5 Documented information|C.5 文件化信息",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"D.1.x",p:{i:"Perencanaan operasi — struktur pelaksana, alur koordinasi dengan UKK, tugas dan tanggung jawab",e:"Operational planning — execution structure, coordination with the UKK, duties and responsibilities",z:"运行策划 — 施工组织架构、与 UKK 的协调流程、职责分工"},u:"D.1 Perencanaan Operasi|D.1 Operational planning|D.1 运行策划",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"D.2.x",p:{i:"Pengendalian operasi — AKK, izin kerja khusus, APD/APK, pengelolaan kesehatan dan lingkungan kerja, tanggap darurat, investigasi insiden",e:"Operational control — CSA, special work permits, PPE, occupational health and environmental management, emergency response, incident investigation",z:"运行控制 — 施工安全分析、专项作业许可、个体防护、职业健康与作业环境管理、应急响应、事故调查"},u:"D.2 Pengendalian Operasi|D.2 Operational control|D.2 运行控制",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"E.1.x",p:{i:"Pemantauan, pengukuran dan inspeksi dilaksanakan sesuai jadwal dengan lembar periksa",e:"Monitoring, measurement and inspection carried out on schedule using checklists",z:"监测、测量与巡检按计划并使用检查表实施"},u:"E.1 Pemantauan & Pengukuran|E.1 Monitoring & measurement|E.1 监测与测量",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"E.2.x",p:{i:"Audit internal dilaksanakan terhadap kriteria penerapan RKK",e:"Internal audit conducted against the RKK implementation criteria",z:"依据 RKK 实施准则开展内部审核"},u:"E.2 Audit Internal|E.2 Internal audit|E.2 内部审核",v:["SESUAI / MINOR / MAJOR"]},
+   {n:"E.3.x",p:{i:"Tinjauan manajemen dilaksanakan dan menghasilkan tindakan perbaikan berkelanjutan",e:"Management review conducted, producing continual-improvement actions",z:"开展管理评审并形成持续改进措施"},u:"E.3 Tinjauan Manajemen|E.3 Management review|E.3 管理评审",v:["SESUAI / MINOR / MAJOR"]}
+  ],
+  foot:{
+   i:["Lembar Pemeriksaan SMKK memuat <strong>86 butir kriteria</strong> yang tersebar pada 5 elemen (A–E) dan 15 subelemen. Setiap butir dinilai dengan kategori temuan <strong>SESUAI</strong>, <strong>MINOR</strong>, atau <strong>MAJOR</strong>, disertai kolom Hasil Observasi.",
+      "Struktur checklist mengikuti persis 5 elemen RKK: A Kepemimpinan &amp; Partisipasi Pekerja · B Perencanaan · C Dukungan · D Operasi · E Evaluasi Kinerja.",
+      "Tabel ini menyajikan struktur lengkap dan butir kriteria mewakili tiap subelemen. Untuk seluruh 86 butir verbatim, rujuk Tabel 1 pada Lampiran Permen PUPR 10/2021.",
+      "Temuan MAJOR umumnya menuntut tindakan korektif segera sebelum pekerjaan dilanjutkan; temuan MINOR ditindaklanjuti dalam kerangka waktu yang disepakati."],
+   e:["The SMKK Inspection Sheet carries <strong>86 criteria</strong> spread across 5 elements (A–E) and 15 sub-elements. Each is graded with a finding category of <strong>SESUAI</strong> (conforming), <strong>MINOR</strong>, or <strong>MAJOR</strong>, alongside an observation column.",
+      "The checklist structure mirrors the 5 RKK elements exactly: A Leadership &amp; Worker Participation · B Planning · C Support · D Operation · E Performance Evaluation.",
+      "This table presents the complete structure with a representative criterion for each sub-element. For all 86 criteria verbatim, consult Table 1 in the Permen PUPR 10/2021 annex.",
+      "A MAJOR finding normally requires immediate corrective action before work continues; a MINOR finding is closed out within an agreed timeframe."],
+   z:["SMKK 检查表共含 <strong>86 项准则</strong>，分布于 5 个要素（A–E）与 15 个子要素。每项按 <strong>SESUAI</strong>（符合）、<strong>MINOR</strong>（轻微）或 <strong>MAJOR</strong>（严重）评定发现类别，并附观察结果栏。",
+      "检查表结构与 RKK 五大要素完全对应：A 领导力与员工参与 · B 策划 · C 支持 · D 运行 · E 绩效评价。",
+      "本表给出完整结构及各子要素的代表性准则。86 项准则的逐字内容请查阅部长条例 PUPR 10/2021 附件表 1。",
+      "MAJOR 发现通常要求在继续施工前立即整改；MINOR 发现按商定期限闭环。"]
+  }
+},
+
+// ── Permen PUPR 10/2021 — site monitoring & evaluation checklist ──
+smkk_monitoring:{
+  code:"Permen PUPR 10/2021 — Tabel 2 Daftar Simak Pemantauan",
+  title:{i:"Daftar Simak Pemantauan dan Evaluasi Keselamatan Konstruksi",e:"Construction Safety Monitoring & Evaluation Checklist",z:"施工安全监测与评价检查清单"},
+  cols:{i:["No","Pertanyaan Pemeriksaan","Kategori","Jawaban"],
+        e:["No","Inspection Question","Category","Answer"],
+        z:["序号","检查问题","类别","答复"]},
+  rows:[
+   {n:"1.1",p:{i:"Shop Drawing — Pekerjaan Risiko besar",e:"Shop drawings — large-risk work",z:"施工详图 — 大风险作业"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"1.2",p:{i:"Spesifikasi Teknis — Pekerjaan Risiko besar",e:"Technical specifications — large-risk work",z:"技术规格 — 大风险作业"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"1.3",p:{i:"Struktur Organisasi beserta ringkasan tugas, tanggung jawab dan kewenangan",e:"Organisation chart with a summary of duties, responsibilities and authority",z:"组织架构及职责、权限摘要"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"1.4",p:{i:"Perhitungan Struktur — Pekerjaan Risiko besar",e:"Structural calculations — large-risk work",z:"结构计算 — 大风险作业"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"1.5",p:{i:"Perhitungan kapasitas Formwork dan Falsework — Pekerjaan Risiko besar",e:"Formwork and falsework capacity calculations — large-risk work",z:"模板与支撑架承载力计算 — 大风险作业"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"1.6",p:{i:"Kurva S",e:"S-curve (progress schedule)",z:"S 曲线（进度）"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"1.7",p:{i:"Data Monitoring Pergerakan (positioning, settlement, defleksi) — Pekerjaan Risiko besar",e:"Movement monitoring data (positioning, settlement, deflection) — large-risk work",z:"位移监测数据（定位、沉降、挠度）— 大风险作业"},u:"1. Kesiapan Dokumen Teknis|1. Technical document readiness|1. 技术文件准备",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"2.1",p:{i:"Dokumen RKK ada di pekerjaan konstruksi",e:"The RKK document is present on the construction works",z:"施工现场存有 RKK 文件"},u:"2. Memenuhi Ketentuan Keselamatan Konstruksi|2. Compliance with construction-safety provisions|2. 符合施工安全规定",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"2.2",p:{i:"Daftar Risk Register — Pekerjaan Risiko besar",e:"Risk register — large-risk work",z:"风险登记册 — 大风险作业"},u:"2. Memenuhi Ketentuan Keselamatan Konstruksi|2. Compliance with construction-safety provisions|2. 符合施工安全规定",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"2.3",p:{i:"Laporan SMKK Bulanan",e:"Monthly SMKK report",z:"SMKK 月报"},u:"2. Memenuhi Ketentuan Keselamatan Konstruksi|2. Compliance with construction-safety provisions|2. 符合施工安全规定",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"2.4",p:{i:"Izin Kerja (Work Permit) — Pekerjaan Risiko besar",e:"Work permit — large-risk work",z:"作业许可证 — 大风险作业"},u:"2. Memenuhi Ketentuan Keselamatan Konstruksi|2. Compliance with construction-safety provisions|2. 符合施工安全规定",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"2.5",p:{i:"Terdapat JSA yang diturunkan dari Metode Pekerjaan",e:"A JSA derived from the work method is in place",z:"存在由施工方法导出的工作安全分析 (JSA)"},u:"2. Memenuhi Ketentuan Keselamatan Konstruksi|2. Compliance with construction-safety provisions|2. 符合施工安全规定",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"3.1",p:{i:"Tenaga Ahli bersertifikat",e:"Certified experts",z:"持证专家"},u:"3. Tenaga Kerja Kompeten Bersertifikat|3. Certified competent workforce|3. 持证合格人员",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"3.2",p:{i:"Tenaga Terampil pada Pekerjaan Risiko besar",e:"Skilled workers on large-risk work",z:"大风险作业的技术工人"},u:"3. Tenaga Kerja Kompeten Bersertifikat|3. Certified competent workforce|3. 持证合格人员",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"3.3",p:{i:"Operator Alat Berat bersertifikat",e:"Certified heavy-equipment operators",z:"持证重型设备操作人员"},u:"3. Tenaga Kerja Kompeten Bersertifikat|3. Certified competent workforce|3. 持证合格人员",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"4.1",p:{i:"Alat Berat memiliki SILO (Surat Izin Laik Operasi)",e:"Heavy equipment holds a SILO (operating fitness permit)",z:"重型设备持有 SILO（准用证）"},u:"4. Peralatan Memenuhi Standar Kelaikan|4. Equipment meets fitness standards|4. 设备符合准用标准",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"4.2",p:{i:"Perhitungan kapasitas alat angkat (lifting plan)",e:"Lifting appliance capacity calculation (lifting plan)",z:"起重设备承载力计算（吊装方案）"},u:"4. Peralatan Memenuhi Standar Kelaikan|4. Equipment meets fitness standards|4. 设备符合准用标准",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"5.1",p:{i:"Laporan Uji Material (tanah, aspal, semen, baja)",e:"Material test reports (soil, asphalt, cement, steel)",z:"材料试验报告（土、沥青、水泥、钢材）"},u:"5. Material Memenuhi Standar Mutu|5. Materials meet quality standards|5. 材料符合质量标准",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"6.1",p:{i:"Teknologi yang digunakan tidak pernah mengalami kecelakaan",e:"The technology in use has no accident history",z:"所采用技术无事故记录"},u:"6. Teknologi Memenuhi Standar Kelaikan|6. Technology meets fitness standards|6. 技术符合准用标准",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"6.2",p:{i:"Langkah metode kerja terdapat di dalam Izin Kerja",e:"The work-method steps are contained in the work permit",z:"施工方法步骤已载入作业许可证"},u:"6. Teknologi Memenuhi Standar Kelaikan|6. Technology meets fitness standards|6. 技术符合准用标准",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"7.1",p:{i:"SOP Pemberian Izin Kerja",e:"SOP for issuing work permits",z:"作业许可签发标准作业程序"},u:"7. Melaksanakan SOP|7. SOP implementation|7. 执行标准作业程序",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"7.2",p:{i:"SOP Persetujuan sebelum pelaksanaan pekerjaan",e:"SOP for approval before work commences",z:"施工前审批标准作业程序"},u:"7. Melaksanakan SOP|7. SOP implementation|7. 执行标准作业程序",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"7.3",p:{i:"SOP Pengawasan Pekerjaan",e:"SOP for work supervision",z:"施工监督标准作业程序"},u:"7. Melaksanakan SOP|7. SOP implementation|7. 执行标准作业程序",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"7.4",p:{i:"SOP Persetujuan setelah pelaksanaan pekerjaan",e:"SOP for approval after work completion",z:"施工后审批标准作业程序"},u:"7. Melaksanakan SOP|7. SOP implementation|7. 执行标准作业程序",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]},
+   {n:"7.5",p:{i:"SOP Pengecekan Alat Berat",e:"SOP for heavy-equipment checking",z:"重型设备检查标准作业程序"},u:"7. Melaksanakan SOP|7. SOP implementation|7. 执行标准作业程序",v:["Ya/Ada · Tidak ada|Yes · No|有 · 无"]}
+  ],
+  foot:{
+   i:["Daftar simak diisi per kunjungan pemantauan dengan header: Nama Paket Pekerjaan · Pemilik Pekerjaan · Kontraktor · Konsultan Pengawas/MK · Tanggal Pemantauan.",
+      "Setiap butir dijawab <strong>Ya/Ada</strong> atau <strong>Tidak/Tidak ada</strong>, disertai kolom Keterangan dan kolom Nilai untuk pembobotan.",
+      "Perhatikan bahwa banyak butir berlaku khusus untuk <strong>Pekerjaan Risiko besar</strong> — shop drawing, spesifikasi teknis, perhitungan struktur, perhitungan formwork/falsework, data monitoring pergerakan, risk register, dan izin kerja."],
+   e:["The checklist is completed at each monitoring visit, with a header for: package name · project owner · contractor · supervision/MK consultant · monitoring date.",
+      "Each item is answered <strong>Ya/Ada</strong> (yes/present) or <strong>Tidak/Tidak ada</strong> (no/absent), with a Remarks column and a Score column for weighting.",
+      "Note that many items apply specifically to <strong>large-risk work</strong> — shop drawings, technical specifications, structural calculations, formwork/falsework capacity, movement monitoring data, the risk register, and work permits."],
+   z:["每次监测巡访时填写该清单，表头包含：工程包名称 · 业主 · 承包方 · 监理/项目管理咨询方 · 监测日期。",
+      "每项以 <strong>Ya/Ada</strong>（有）或 <strong>Tidak/Tidak ada</strong>（无）作答，并设备注栏与用于加权的评分栏。",
+      "注意多项内容专门适用于<strong>大风险作业</strong> — 施工详图、技术规格、结构计算、模板与支撑架承载力、位移监测数据、风险登记册及作业许可。"]
+  }
+},
+
 // ── Lampiran XI — TCLP limits that decide the B3 waste category ──
 b3_tclp:{
   code:"PP 22/2021 Lampiran XI",

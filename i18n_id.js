@@ -117,6 +117,8 @@ window.IDN = {
   "env.export":"⬇ Ekspor ke Excel",
   "env.notes":"Keterangan:",
   "env.rows":"baris",
+  "mod.expandAll":"⊞ Buka semua",
+  "mod.collapseAll":"⊟ Tutup semua",
 
   // AI answer card
   "ai.title":"Jawaban Teknik",
@@ -173,6 +175,21 @@ var MOD_IDN = {
            ["<strong>PERTEK</strong>","Persetujuan Teknis","Diperlukan bersama instrumen di atas untuk pembuangan air limbah, emisi udara, pengelolaan limbah B3, dan pembuangan ke laut","Persetujuan teknis, kemudian dikukuhkan dengan SLO (Surat Kelayakan Operasional)"]
          ]},
        notes:["<strong>Persetujuan Lingkungan merupakan prasyarat Perizinan Berusaha</strong> — persetujuan lingkungan wajib diperoleh sebelum izin usaha diterbitkan (PP 22/2021 sebagai pelaksanaan UU 32/2009 sebagaimana diubah oleh UU 11/2020 Cipta Kerja).","Dokumen AMDAL terdiri atas <em>Formulir Kerangka Acuan</em> → <em>ANDAL</em> → <em>RKL-RPL</em>, dan digolongkan ke dalam kategori A, B, dan C menurut skala serta kompleksitas dampak. Limbah nonbahan berbahaya cukup dengan <em>Rincian Teknis</em>, bukan PERTEK penuh."]},
+      {h:"Kawasan Lindung — pemicu penapisan Amdal (PP 22/2021 Lampiran I, Bagian I)",
+       notes:["23 jenis kawasan lindung yang ditetapkan. Apakah suatu proyek berada di dalamnya merupakan pertanyaan penapisan yang langsung masuk ke dalam skala nilai kategori Amdal di bawah, dan dalam beberapa hal menentukan bahwa Amdal wajib disusun tanpa memandang skala kegiatan."]},
+      {h:"Kategori Amdal A / B / C — sistem skala nilai (Lampiran I, Bagian IV)",
+       notes:["Empat kriteria, masing-masing berskala 1–3, dijumlahkan menjadi nilai 4 sampai 12: <strong>&gt; 9 = Kategori A</strong>, <strong>6–9 = Kategori B</strong>, <strong>&lt; 6 = Kategori C</strong>. Lampiran I juga memuat Bagian II (ringkasan informasi lingkungan awal yang disampaikan sebelum penapisan), Bagian III (tata cara penapisan yang menentukan wajib tidaknya Amdal) dan Bagian V (tata laksana pengecualian Amdal)."]},
+      {h:"Pedoman Pengisian Formulir Amdal &amp; UKL-UPL (Lampiran II &amp; III)",
+       table:{cols:["Lampiran","Dokumen","Cakupan pedoman"],
+         rows:[
+           ["<strong>Lampiran II</strong>","<strong>Formulir Kerangka Acuan</strong> (lingkup studi Andal)","Tujuan dan fungsi Formulir Kerangka Acuan — merumuskan lingkup dan kedalaman studi Andal; penerimaan dan penilaian dokumen Andal dan RKL-RPL; penilaian substansi; waktu proses penilaian dan perbaikan; serta penyampaian rekomendasi uji kelayakan. Termasuk panduan uji tahap proyek, panduan uji kualitas dokumen, dan panduan penilaian rinci RKL-RPL."],
+           ["<strong>Lampiran III</strong>","<strong>Formulir UKL-UPL</strong>","Identitas penanggung jawab Usaha dan/atau Kegiatan; rencana Usaha dan/atau Kegiatan; dampak lingkungan yang ditimbulkan serta upaya pengelolaan dan pemantauan; surat pernyataan; daftar pustaka; dan lampiran. Mencakup pula penerimaan dan pemeriksaan formulir UKL-UPL."]
+         ]},
+       notes:["Formulir Kerangka Acuan mengunci <em>lingkup dan kedalaman</em> studi Andal sebelum studi dimulai — kekeliruan pada tahap ini merupakan penyebab paling umum ditolaknya Amdal. Formulir UKL-UPL bersifat formulir baku, bukan studi: komitmen lingkungan yang diisikan pada bagian C menjadi ketentuan yang mengikat secara hukum setelah PKPLH terbit."]},
+      {h:"Tim Uji Kelayakan Lingkungan Hidup — TUK (PP 22/2021 Lampiran IV)",
+       notes:["TUK adalah tim yang melakukan uji kelayakan atas Amdal dan menerbitkan rekomendasi yang menjadi dasar Persetujuan Kelayakan Lingkungan Hidup. TUK dibentuk pada tingkat Pusat, provinsi, atau kabupaten/kota sesuai kewenangan penerbitan persetujuan."]},
+      {h:"Perubahan yang Menyebabkan Perubahan Persetujuan Lingkungan (Lampiran V)",
+       notes:["Tiga belas jenis perubahan. Perubahan yang menambah dampak negatif atau meningkatkan skala dampak yang sudah ada mewajibkan <strong>addendum Andal dan RKL-RPL</strong> (tiga tipe addendum menurut tingkat perubahan). Lampiran V juga memuat tata laksana DELH/DPLH bagi Usaha yang telah berjalan tanpa dokumen lingkungan — jalur untuk kembali memenuhi ketentuan."]},
       {h:"Kelas Mutu Air — menurut peruntukan (PP 22/2021 Lampiran VI)",
        table:{center:true,cols:["Kelas","Peruntukan"],
          rows:[
@@ -190,6 +207,8 @@ var MOD_IDN = {
        notes:["PP 22/2021 memperketat batas PP 41/1999 secara signifikan serta memperkenalkan <strong>PM₂,₅</strong> dan periode rata-rata tahunan. Nilai penting bagi konstruksi: <strong>TSP 24 jam = 230 µg/m³</strong>, <strong>PM₁₀ 24 jam = 75 µg/m³</strong>, <strong>PM₂,₅ 24 jam = 55 µg/m³</strong> — inilah yang mengendalikan pengendalian debu di lapangan."]},
       {h:"Baku Mutu Air Laut (PP 22/2021 Lampiran VIII) — tabel lengkap",
        notes:["Tiga peruntukan: <em>Pelabuhan</em>, <em>Wisata Bahari</em>, dan <em>Biota Laut</em>. Kolom Biota Laut memuat sub-batas untuk <strong>coral</strong> (terumbu karang), <strong>mangrove</strong>, dan <strong>lamun</strong> pada parameter yang dibedakan oleh peraturan — relevan bagi pekerjaan reklamasi, dermaga, outfall, atau pengerukan."]},
+      {h:"Daftar Limbah B3 — kode dan kategori bahaya (PP 22/2021 Lampiran IX)",
+       notes:["Empat tabel dengan total ± 314 kode. Tabel ini memuat secara lengkap Tabel 1 (sumber tidak spesifik — pelarut, asam/basa, dan limbah umum yang hampir selalu dihasilkan setiap lokasi kerja) dan Tabel 4 (sumber spesifik khusus — slag, abu, mill scale, tailing).","Baca bersama daftar Limbah non-B3: <strong>material yang sama dapat berstatus B3 atau non-B3 tergantung teknologi yang menghasilkannya</strong>. Fly ash dari stoker boiler adalah B409 (B3); fly ash dari PLTU dengan teknologi lain adalah N106 (non-B3)."]},
       {h:"Limbah B3 — enam karakteristik (PP 22/2021 Lampiran X)",
        table:{center:true,cols:["#","Karakteristik","Kriteria penetapan"],
          rows:[

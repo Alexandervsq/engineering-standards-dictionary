@@ -236,7 +236,23 @@ ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position
 .mtable td:first-child{font-weight:600;color:var(--navy)}
 .mtable.center td,.mtable.center th{text-align:center}
 .mtable.center td:first-child{text-align:left}
-.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* every long table scrolls inside its own pane instead of pushing the page down */
+.tablewrap{overflow:auto;-webkit-overflow-scrolling:touch;max-height:60vh;border:1px solid var(--gray2);border-radius:8px;margin:8px 0}
+.tablewrap .mtable{margin:0}
+.tablewrap .mtable thead th{position:sticky;top:0;z-index:2}
+/* collapsible section inside an answer module — click the title to open */
+.mod-sec{border-top:1px solid var(--gray2)}
+.mod-sec:first-of-type{border-top:none}
+.mod-sec>summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:10px;padding:11px 2px;user-select:none;transition:.15s}
+.mod-sec>summary::-webkit-details-marker{display:none}
+.mod-sec>summary:hover{background:#f6fafd}
+.mod-sec>summary h4{margin:0;flex:1;font-size:13.5px;line-height:1.5}
+.mod-sec .sec-twist{font-size:13px;color:var(--blue2);font-weight:700;transition:transform .2s;margin-top:2px}
+.mod-sec[open] .sec-twist{transform:rotate(90deg)}
+.mod-sec-body{padding:2px 0 12px}
+.mod-tools{display:flex;gap:8px;margin:2px 0 8px}
+.mod-tool{background:#eef5fc;color:var(--blue2);border:1px solid var(--gray2);border-radius:16px;padding:4px 12px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+.mod-tool:hover{background:var(--blue2);color:#fff;border-color:var(--blue2)}
 .note-box{background:#eef7ff;border-left:3px solid var(--blue2);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--text2);margin:10px 0;line-height:1.6}
 .note-box.warn{background:#fffbf0;border-left-color:#f0c040}
 
@@ -2319,6 +2335,10 @@ answer_modules:{
            ["Permit categories (11)","Hot work (any ignition source) · Excavation · Lifting · Confined space (poor natural ventilation, flammable and/or toxic gas) · Diving · Cold work (everything not covered above) · Working at night (beyond normal hours) · Working at height · Scaffolding · Radiography (x-ray) · Electrical (live) work"]
          ]},
        notes:["AKK plus a special work permit is mandatory for every medium and large-risk activity (Lampiran D.2 element 4). The AKK form records the permit applicant, the work, the dates, the supervisor and the department."]},
+      {h:"SMKK Inspection Sheet — the internal audit checklist (Tabel 1)",envTable:"smkk_checklist",
+       notes:["The formal audit instrument: <strong>86 criteria</strong> across the 5 RKK elements and 15 sub-elements, each graded <strong>SESUAI / MINOR / MAJOR</strong> against an observation. This is the sheet an auditor or the Pengguna Jasa works through when verifying SMKK implementation on site."]},
+      {h:"Construction Safety Monitoring Checklist — site walk (Tabel 2)",envTable:"smkk_monitoring",
+       notes:["The field counterpart to the audit sheet — completed at each monitoring visit across 7 categories: technical-document readiness, safety-provision compliance, certified workforce, equipment fitness (SILO), material quality, technology fitness, and SOP implementation. Many items are triggered specifically by <strong>large-risk</strong> work."]},
       {h:"Monitoring, Inspection &amp; Performance Evaluation (Permen PUPR 10/2021, Lampiran E)",
        table:{cols:["Activity","Requirement"],
          rows:[
@@ -2477,6 +2497,21 @@ answer_modules:{
            ["<strong>PERTEK</strong>","Persetujuan Teknis","Required alongside the above for wastewater discharge, air emissions, B3 hazardous-waste management, and disposal to sea","Technical approval, later confirmed by SLO (Surat Kelayakan Operasional)"]
          ]},
        notes:["<strong>Persetujuan Lingkungan is a prerequisite for the Perizinan Berusaha (business licence)</strong> — the environmental approval must be secured before the operating permit is issued (PP 22/2021, implementing UU 32/2009 as amended by UU 11/2020 Cipta Kerja).","AMDAL documents comprise the <em>Formulir Kerangka Acuan</em> → <em>ANDAL</em> → <em>RKL-RPL</em>. AMDAL is graded into categories A, B and C by impact scale and complexity. Non-hazardous waste requires a <em>Rincian Teknis</em> rather than a full PERTEK."]},
+      {h:"Protected Areas — AMDAL screening trigger (PP 22/2021 Lampiran I, Bagian I)",envTable:"kawasan_lindung",
+       notes:["23 designated protected-area types. Whether a project sits inside one is a screening question that feeds directly into the AMDAL category score below, and in some cases determines that AMDAL is mandatory regardless of scale."]},
+      {h:"AMDAL Category A / B / C — the scoring system (Lampiran I, Bagian IV)",envTable:"amdal_kategori",
+       notes:["Four criteria, each scored 1–3, summed to give a total between 4 and 12: <strong>&gt; 9 = Category A</strong>, <strong>6–9 = Category B</strong>, <strong>&lt; 6 = Category C</strong>. Lampiran I also sets out Bagian II (the initial environmental information summary submitted before screening), Bagian III (the penapisan procedure that decides whether AMDAL is required at all) and Bagian V (the procedure for exempting an activity from AMDAL)."]},
+      {h:"AMDAL &amp; UKL-UPL Form Guidance (Lampiran II &amp; III)",
+       table:{cols:["Annex","Document","What the guidance covers"],
+         rows:[
+           ["<strong>Lampiran II</strong>","<strong>Formulir Kerangka Acuan</strong> (Terms of Reference for the ANDAL study)","Purpose and function of the KA form — to frame the scope and depth of the ANDAL study; receipt and assessment of the ANDAL and RKL-RPL documents; substantive assessment of content; timelines for assessment and revision; and issuance of the feasibility-test recommendation. Includes the project-stage test guide, the document-quality test guide, and the detailed RKL-RPL assessment guide."],
+           ["<strong>Lampiran III</strong>","<strong>Formulir UKL-UPL</strong>","Identity of the person responsible for the activity; description of the planned activity; the environmental impacts arising and the management &amp; monitoring commitments; the statement letter; bibliography; and attachments. Also covers receipt and examination of the submitted UKL-UPL form."]
+         ]},
+       notes:["The KA form fixes the <em>scope and depth</em> of the ANDAL study before the study begins — getting it wrong is the most common cause of a rejected AMDAL. The UKL-UPL form is a standard form, not a study: the environmental commitments entered in section C become legally binding conditions once the PKPLH is issued."]},
+      {h:"Feasibility Test Team — TUK (PP 22/2021 Lampiran IV)",envTable:"tuk",
+       notes:["The TUK is the body that tests the AMDAL for feasibility and issues the recommendation on which the Persetujuan Kelayakan Lingkungan Hidup is based. It is constituted at national, provincial or regency/city level according to the authority issuing the approval."]},
+      {h:"Changes Requiring a Change to the Environmental Approval (Lampiran V)",envTable:"perubahan",
+       notes:["Thirteen change types. A change that adds a negative impact or increases the scale of an existing one requires an <strong>addendum to the ANDAL and RKL-RPL</strong> (three addendum types by degree of change). Lampiran V also carries the DELH/DPLH procedure for activities already operating without an environmental document — the retrospective route back into compliance."]},
       {h:"Water Quality Classes — designated use (PP 22/2021 Lampiran VI)",
        table:{center:true,cols:["Class","Designated use"],
          rows:[
@@ -2494,6 +2529,8 @@ answer_modules:{
        notes:["PP 22/2021 tightened the previous PP 41/1999 limits considerably and introduced <strong>PM₂,₅</strong> and annual averaging periods. Key construction-relevant values: <strong>TSP 24 h = 230 µg/m³</strong>, <strong>PM₁₀ 24 h = 75 µg/m³</strong>, <strong>PM₂,₅ 24 h = 55 µg/m³</strong> — these govern dust control on site."]},
       {h:"Sea Water Quality Standard (PP 22/2021 Lampiran VIII) — full table",envTable:"sea",
        notes:["Three designations: <em>Pelabuhan</em> (port), <em>Wisata Bahari</em> (marine tourism) and <em>Biota Laut</em> (marine biota). The Biota Laut column carries sub-limits for <strong>coral</strong>, <strong>mangrove</strong> and <strong>lamun</strong> (seagrass) where the regulation distinguishes them — relevant to any reclamation, jetty, outfall or dredging work."]},
+      {h:"B3 Hazardous Waste List — codes &amp; hazard category (PP 22/2021 Lampiran IX)",envTable:"b3_list",
+       notes:["Four tables and ~314 codes in total. This table reproduces Table 1 (non-specific sources — the solvents, acids and general wastes almost every site generates) and Table 4 (special specific sources — slag, ash, mill scale, tailings) in full.","Read this alongside the non-B3 list: the <strong>same material can be B3 or non-B3 depending on the technology that produced it</strong>. Fly ash from a stoker boiler is B409 (B3); fly ash from a PLTU using other technology is N106 (non-B3)."]},
       {h:"B3 Hazardous Waste — the six characteristics (PP 22/2021 Lampiran X)",
        table:{center:true,cols:["#","Characteristic","Defining criterion"],
          rows:[
@@ -3305,6 +3342,12 @@ function exportEnvTable(key){
   setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},400);
 }
 
+// expand/collapse every collapsible section within one answer module
+function toggleModSecs(btn,open){
+  const card=btn.closest('.module-card')||btn.closest('.mod-body')||document;
+  card.querySelectorAll('.mod-sec').forEach(d=>{d.open=open;});
+}
+
 function renderModule(key,mod){
   // pick the Chinese version of the module content when 中文 is active
   const m=(LANG==='zh'&&mod.zh)?mod.zh:((LANG==='id'&&mod.idn)?mod.idn:mod);
@@ -3316,6 +3359,11 @@ function renderModule(key,mod){
   if(hasProc){
     body+=`<div class="mod-systematic">${T('mod.systematic','📋 The design parameters below are arranged to follow the design procedure above — work through them in order. Additional considerations are grouped at the end.')}</div>`;
   }
+  // expand / collapse every section in this module at once
+  body+=`<div class="mod-tools">
+    <button class="mod-tool" onclick="toggleModSecs(this,true)">${T('mod.expandAll','⊞ Expand all')}</button>
+    <button class="mod-tool" onclick="toggleModSecs(this,false)">${T('mod.collapseAll','⊟ Collapse all')}</button>
+  </div>`;
   let coreN=0, dividerDone=false;
   let shownAny=false;
   m.sections.forEach((sec,i)=>{
@@ -3330,11 +3378,14 @@ function renderModule(key,mod){
     }
     let tag='';
     if(!isExtra&&hasProc){coreN++;tag=`<span class="param-step">${coreN}</span>`;}
-    body+=`<h4>${tag}${sec.h}</h4>`;
-    if(sec.table)body+=renderModTable(sec.table);
-    if(sec.notes)sec.notes.forEach(n=>body+=`<div class="note-box">${n}</div>`);
+    // each section collapses behind its own title so the module reads as a
+    // clickable index rather than one very long scroll
+    let inner='';
+    if(sec.table)inner+=renderModTable(sec.table);
+    if(sec.notes)sec.notes.forEach(n=>inner+=`<div class="note-box">${n}</div>`);
     // exact-replica regulation table with Excel export (PP 22/2021 Lampiran)
-    if(base.envTable)body+=renderEnvTable(base.envTable);
+    if(base.envTable)inner+=renderEnvTable(base.envTable);
+    body+=`<details class="mod-sec"><summary><h4>${tag}${sec.h}</h4><span class="sec-twist">▸</span></summary><div class="mod-sec-body">${inner}</div></details>`;
   });
   if(!shownAny){body+=`<div class="note-box">${T('mod.noStd','No dedicated parameters for the selected standard system in this module — switch to “All” or another standard, or see the comparison cards above.')}</div>`;}
   if(mod.tool_link){
