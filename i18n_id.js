@@ -118,6 +118,9 @@ window.IDN = {
   "env.notes":"Keterangan:",
   "env.rows":"baris",
   "mod.expandAll":"⊞ Buka semua",
+  "mod.clickHint":"▾ Klik judul untuk detail",
+  "mod.clickTable":"▾ Klik judul untuk tabel lengkap",
+  "env.clickHint":"▾ Klik judul untuk membuka tabel lengkap",
   "mod.collapseAll":"⊟ Tutup semua",
 
   // AI answer card

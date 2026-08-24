@@ -249,6 +249,19 @@ ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position
 .mod-sec>summary h4{margin:0;flex:1;font-size:13.5px;line-height:1.5}
 .mod-sec .sec-twist{font-size:13px;color:var(--blue2);font-weight:700;transition:transform .2s;margin-top:2px}
 .mod-sec[open] .sec-twist{transform:rotate(90deg)}
+/* affordance: tell the user the collapsed title is clickable */
+.sec-hint{font-size:11px;color:var(--blue2);background:#eef5fc;border:1px solid #d6e6f5;border-radius:12px;padding:2px 9px;white-space:nowrap;font-weight:600;margin-top:1px;flex-shrink:0}
+.mod-sec[open] .sec-hint{display:none}
+.mod-sec>summary:hover .sec-hint{background:var(--blue2);color:#fff;border-color:var(--blue2)}
+.env-hint{font-size:11.5px;color:#1d6f42;background:#e6f4ec;border:1px solid #bfe0cd;border-radius:12px;padding:3px 10px;white-space:nowrap;font-weight:600}
+.env-card[open] .env-hint{display:none}
+.env-head:hover .env-hint{background:#1d6f42;color:#fff;border-color:#1d6f42}
+/* on narrow screens keep the affordance (there is no hover there) but shrink it */
+@media(max-width:640px){
+  .sec-hint,.env-hint{font-size:10px;padding:1px 7px}
+  .env-head{align-items:flex-start}
+  .env-tools{margin-left:0;width:100%;flex-wrap:wrap;gap:7px}
+}
 .mod-sec-body{padding:2px 0 12px}
 .mod-tools{display:flex;gap:8px;margin:2px 0 8px}
 .mod-tool{background:#eef5fc;color:var(--blue2);border:1px solid var(--gray2);border-radius:16px;padding:4px 12px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
@@ -3265,6 +3278,7 @@ function renderEnvTable(key){
     <summary class="env-head">
       <div><span class="env-title">${escapeHtml(title)}</span><span class="env-count">${countLbl}</span><span class="env-code">${escapeHtml(t.code)}</span></div>
       <span class="env-tools">
+        <span class="env-hint">${T('env.clickHint','▾ Click the title to open the full table')}</span>
         <button class="env-xls" onclick="event.preventDefault();event.stopPropagation();exportEnvTable('${key}')">${T('env.export','⬇ Export to Excel')}</button>
         <span class="env-twist">▸</span>
       </span>
@@ -3385,7 +3399,12 @@ function renderModule(key,mod){
     if(sec.notes)sec.notes.forEach(n=>inner+=`<div class="note-box">${n}</div>`);
     // exact-replica regulation table with Excel export (PP 22/2021 Lampiran)
     if(base.envTable)inner+=renderEnvTable(base.envTable);
-    body+=`<details class="mod-sec"><summary><h4>${tag}${sec.h}</h4><span class="sec-twist">▸</span></summary><div class="mod-sec-body">${inner}</div></details>`;
+    // hint tells the user this collapsed title opens; it names a table when the
+    // section carries one, so "click for details" is specific rather than generic
+    const hint=base.envTable
+      ? T('mod.clickTable','▾ Click for the full table')
+      : T('mod.clickHint','▾ Click for details');
+    body+=`<details class="mod-sec"><summary><h4>${tag}${sec.h}</h4><span class="sec-hint">${hint}</span><span class="sec-twist">▸</span></summary><div class="mod-sec-body">${inner}</div></details>`;
   });
   if(!shownAny){body+=`<div class="note-box">${T('mod.noStd','No dedicated parameters for the selected standard system in this module — switch to “All” or another standard, or see the comparison cards above.')}</div>`;}
   if(mod.tool_link){
