@@ -1447,6 +1447,48 @@ window.QA_CARDS=[
     "危险性较大的分部分项工程（深基坑、模板支撑、起重吊装、高大脚手架）须编<strong>专项施工方案</strong>，超过一定规模须<strong>专家论证</strong>",
     "<strong>安全文明施工费</strong> — 法定计取、不可竞价压减",
     "新进人员须完成<strong>三级安全教育</strong>（公司、项目、班组）"]}],
-  src:"部长条例 PUPR 10/2021 附件 A–D（第 1–100 页） · UU 2/2017 · PP 14/2021 · OSHA 29 CFR 1926 · ISO 45001:2018 · GB 50656-2011 · JGJ 59-2011"}}
+  src:"部长条例 PUPR 10/2021 附件 A–D（第 1–100 页） · UU 2/2017 · PP 14/2021 · OSHA 29 CFR 1926 · ISO 45001:2018 · GB 50656-2011 · JGJ 59-2011"}},
+
+{id:"env-quality-standards",
+ kw:["baku mutu","environmental quality standard","water quality standard","ambient air standard","sea water standard","pp 22","pp 22/2021","kelas air","water class","amdal","ukl-upl","sppl","persetujuan lingkungan","environmental permit","pertek","pm2.5","pm10","effluent limit","baku mutu air","baku mutu udara","baku mutu air laut"],
+ kw_zh:["环境质量标准","水质标准","空气质量标准","海水水质标准","环境许可","环评","排放限值","水体类别"],
+ en:{title:"Environmental Quality Standards & Permits (PP 22/2021)",
+  sections:[
+   {h:"🇮🇩 PP 22/2021 — approval tiers",pts:[
+    "<strong>AMDAL</strong> (important impact) → Persetujuan Kelayakan Lingkungan Hidup, after TUK feasibility test; documents: Formulir KA → ANDAL → RKL-RPL",
+    "<strong>UKL-UPL</strong> (no important impact) → PKPLH · <strong>SPPL</strong> (low impact) → registered statement",
+    "<strong>PERTEK</strong> required for wastewater discharge, air emissions, B3 waste and disposal to sea; confirmed later by <strong>SLO</strong>",
+    "Persetujuan Lingkungan is a <strong>prerequisite for the Perizinan Berusaha</strong> (UU 11/2020 Cipta Kerja)"]},
+   {h:"🇮🇩 Key numerical limits",pts:[
+    "Water classes <strong>Kelas I–IV</strong> by designated use (Lampiran VI): Kelas I = drinking-water raw water … Kelas IV = crop irrigation",
+    "River Kelas I: TSS <strong>40</strong>, BOD <strong>2</strong>, COD <strong>10</strong>, DO ≥ <strong>6</strong> mg/L · Kelas IV: TSS 400, BOD 12, COD 80, DO ≥ 1 mg/L",
+    "Lake nutrients are tighter: Total N <strong>0,65/0,75/1,90</strong> mg/L, Total P <strong>0,01/0,03/0,1</strong> mg/L; adds Transparansi &amp; Klorofil-a",
+    "Ambient air (Lampiran VII): <strong>TSP 24 h 230</strong>, <strong>PM₁₀ 24 h 75</strong> (annual 40), <strong>PM₂,₅ 24 h 55</strong> (annual 15), SO₂ 1 h 150, NO₂ 1 h 200, CO 8 h 4.000 µg/m³",
+    "Sea water (Lampiran VIII) by use — Pelabuhan / Wisata Bahari / Biota Laut, with coral, mangrove and lamun sub-limits"]},
+   {h:"🇺🇸 US / 🇨🇳 China equivalents",pts:[
+    "🇺🇸 NEPA EA/EIS; NPDES discharge permit (CWA); Title V / NSR emission permits (CAA); construction stormwater CGP + SWPPP; NAAQS PM₂,₅ 24 h = 35 µg/m³",
+    "🇨🇳 环境影响评价 report/form/registration by tier; 排污许可证 discharge permit; <strong>三同时</strong> (pollution controls designed, built and commissioned with the main works)",
+    "🇨🇳 Ambient GB 3095-2012 (PM₂,₅ 24 h Grade II = 75 µg/m³); surface water GB 3838-2002 Class I–V",
+    "Where lender standards apply (IFC EHS, WHO AQG), the <strong>stricter</strong> value normally governs"]}],
+  src:"PP 22/2021 Lampiran VI, VII & VIII · UU 32/2009 jo. UU 11/2020 · US EPA NAAQS / CWA / CAA · GB 3095-2012 · GB 3838-2002 · IFC EHS Guidelines"},
+ zh:{title:"环境质量标准与环境许可（PP 22/2021）",
+  sections:[
+   {h:"🇮🇩 PP 22/2021 — 审批层级",pts:[
+    "<strong>AMDAL</strong>（有重大影响）→ 经 TUK 审查后取得《环境可行性批准》；文件为《工作大纲表》→《ANDAL》→《RKL-RPL》",
+    "<strong>UKL-UPL</strong>（无重大影响）→ PKPLH · <strong>SPPL</strong>（影响轻微）→ 登记承诺函",
+    "废水排放、大气排放、B3 危废及向海排放须办 <strong>PERTEK</strong>，其后以 <strong>SLO</strong> 确认",
+    "环境批准是<strong>营业许可（Perizinan Berusaha）的前置条件</strong>（UU 11/2020 创造就业法）"]},
+   {h:"🇮🇩 关键限值",pts:[
+    "水体按用途分 <strong>I–IV 类</strong>（附件 VI）：I 类 = 饮用水水源 …… IV 类 = 农田灌溉",
+    "河流 I 类：TSS <strong>40</strong>、BOD <strong>2</strong>、COD <strong>10</strong>、DO ≥ <strong>6</strong> mg/L；IV 类：TSS 400、BOD 12、COD 80、DO ≥ 1 mg/L",
+    "湖泊营养盐更严：总氮 <strong>0,65/0,75/1,90</strong> mg/L、总磷 <strong>0,01/0,03/0,1</strong> mg/L；另增透明度与叶绿素 a",
+    "环境空气（附件 VII）：<strong>TSP 24 h 230</strong>、<strong>PM₁₀ 24 h 75</strong>（年均 40）、<strong>PM₂,₅ 24 h 55</strong>（年均 15）、SO₂ 1 h 150、NO₂ 1 h 200、CO 8 h 4.000 µg/m³",
+    "海水（附件 VIII）按功能区 — 港口／海洋旅游／海洋生物，并含珊瑚、红树林、海草分项限值"]},
+   {h:"🇺🇸 美国 / 🇨🇳 中国对标",pts:[
+    "🇺🇸 NEPA 的 EA/EIS；排放 NPDES 许可（CWA）；大气 Title V / NSR 许可（CAA）；施工雨水 CGP + SWPPP；NAAQS PM₂,₅ 24 h = 35 µg/m³",
+    "🇨🇳 环境影响评价分报告书/报告表/登记表；排污许可证；<strong>三同时</strong>（污染防治设施与主体工程同时设计、施工、投产）",
+    "🇨🇳 环境空气 GB 3095-2012（PM₂,₅ 24 h 二级 = 75 µg/m³）；地表水 GB 3838-2002 I–V 类",
+    "若适用贷款方标准（IFC EHS、WHO 空气质量准则），通常以<strong>较严者</strong>为准"]}],
+  src:"PP 22/2021 附件 VI、VII 与 VIII · UU 32/2009 与 UU 11/2020 · 美国 EPA NAAQS / CWA / CAA · GB 3095-2012 · GB 3838-2002 · IFC EHS 导则"}}
 
 ];

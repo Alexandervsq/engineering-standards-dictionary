@@ -175,6 +175,23 @@ ol.proc-steps li:last-child{border-bottom:none}
 ol.proc-steps li::before{counter-increment:pstep;content:counter(pstep);position:absolute;left:0;top:8px;width:26px;height:26px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
 .proc-ref{display:block;font-size:11.5px;color:var(--blue2);margin-top:3px;font-weight:500}
 .proc-alt{background:#f2fbf5;border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text2);line-height:1.65;margin-top:14px}
+/* PP 22/2021 environmental quality tables (exact-replica + Excel export) */
+.env-card{background:#fff;border:1px solid var(--gray2);border-left:4px solid #2e8b57;border-radius:10px;padding:14px 16px;margin:16px 0;box-shadow:var(--card-shadow)}
+.env-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.env-title{font-size:14.5px;font-weight:700;color:var(--navy);line-height:1.45}
+.env-code{display:block;font-size:11.5px;font-weight:500;color:var(--blue2);margin-top:2px}
+.env-xls{background:#1d6f42;color:#fff;border:none;border-radius:7px;padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
+.env-xls:hover{background:#155432}
+.env-scroll{overflow-x:auto;margin-top:10px;border:1px solid var(--gray2);border-radius:8px}
+.env-table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:640px}
+.env-table th,.env-table td{border:1px solid #d7dee6;padding:6px 9px;text-align:left;vertical-align:top;line-height:1.45}
+.env-table thead th{background:#eef4fa;color:var(--navy);font-weight:700;position:sticky;top:0;white-space:nowrap}
+.env-table tbody tr:nth-child(even){background:#fafcfe}
+.env-table td:first-child{text-align:center;color:var(--text2);white-space:nowrap;width:44px}
+.env-table td.env-val{text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
+.env-table td.env-unit{white-space:nowrap;color:var(--text2)}
+.env-foot{margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6}
+.env-foot li{margin-bottom:4px;margin-left:16px}
 .proc-seismic{background:#fef4f4;border:1px solid #f3c9c4;border-left:4px solid #d9534f;border-radius:8px;padding:11px 14px 6px;margin-top:14px}
 .proc-seismic-h{font-size:13.5px;font-weight:700;color:#b23b34;margin-bottom:4px}
 .proc-seismic-note{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:6px}
@@ -430,6 +447,7 @@ nav button{font-size:14px}
       <button onclick="showView('about',this)" data-i18n="nav.about">About / Deploy</button>
       <div class="lang-switch">
         <button class="lang-btn active" data-lang="en" onclick="setLang('en')" title="English"><svg viewBox="0 0 60 30" width="22" height="11" aria-label="UK flag"><clipPath id="ukf"><rect width="60" height="30"/></clipPath><g clip-path="url(#ukf)"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/></g></svg>EN</button>
+        <button class="lang-btn" data-lang="id" onclick="setLang('id')" title="Bahasa Indonesia"><svg viewBox="0 0 30 20" width="22" height="14" aria-label="Indonesia flag"><rect width="30" height="10" fill="#CE1126"/><rect y="10" width="30" height="10" fill="#fff"/></svg>ID</button>
         <button class="lang-btn" data-lang="zh" onclick="setLang('zh')" title="简体中文"><svg viewBox="0 0 30 20" width="22" height="14" aria-label="China flag"><defs><path id="cnstar" d="M0,-1 L0.2245,-0.309 L0.9511,-0.309 L0.3633,0.118 L0.5878,0.809 L0,0.382 L-0.5878,0.809 L-0.3633,0.118 L-0.9511,-0.309 L-0.2245,-0.309 Z"/></defs><rect width="30" height="20" fill="#DE2910"/><g fill="#FFDE00"><use href="#cnstar" transform="translate(5,5) scale(3)"/><use href="#cnstar" transform="translate(10,2) scale(1) rotate(23)"/><use href="#cnstar" transform="translate(12,4.5) scale(1) rotate(46)"/><use href="#cnstar" transform="translate(12,7.5) scale(1) rotate(70)"/><use href="#cnstar" transform="translate(10,10) scale(1) rotate(21)"/></g></svg>中文</button>
       </div>
     </nav>
@@ -461,6 +479,7 @@ nav button{font-size:14px}
       <span class="chip" onclick="quickSearch('purlin design requirements')" data-i18n="chip.purlin">🏠 Purlin</span>
       <span class="chip" onclick="quickSearch('foundation type selection criteria')" data-i18n="chip.ftype">🧱 Foundation Type</span>
       <span class="chip" onclick="quickSearch('SMKK construction safety keselamatan konstruksi')" data-i18n="chip.hse">🦺 HSE / SMKK</span>
+      <span class="chip" onclick="quickSearch('baku mutu lingkungan air udara PP 22 2021')" data-i18n="chip.env">🌿 Environmental</span>
       <span class="chip" onclick="quickSearch('power plant structural design North Maluku')" data-i18n="chip.pp">⚡ Power Plant (Example)</span>
       <span class="chip" style="background:rgba(230,126,34,.35);border-color:rgba(230,126,34,.6)" onclick="showView('site',null)" data-i18n="chip.site">📡 Site Analysis (Wind · Rain · Soil)</span>
     </div>
@@ -499,6 +518,7 @@ nav button{font-size:14px}
       <span class="chip" onclick="quickDesign('purlin design cold formed')" data-i18n="dz.chip.purlin">🏠 Purlin Design</span>
       <span class="chip" onclick="quickDesign('fire protection design egress hydrant')" data-i18n="dz.chip.fire">🔥 Fire Protection</span>
       <span class="chip" onclick="quickDesign('SMKK construction safety plan RKK risk level')" data-i18n="dz.chip.hse">🦺 HSE / SMKK Safety</span>
+      <span class="chip" onclick="quickDesign('environmental quality standard baku mutu air udara PP 22')" data-i18n="dz.chip.env">🌿 Environmental</span>
     </div>
     <div class="badges">
       <span class="badge sni" data-i18n="badge.sni">🇮🇩 SNI (Indonesian)</span>
@@ -741,6 +761,7 @@ git push -u origin main</pre>
 <script src="standards_manifest.js" onerror="console.log('No PDF manifest — download links unavailable')"></script>
 <script src="qa_cards.js" charset="utf-8" onerror="console.log('QA cards not loaded — extractive answers only')"></script>
 <script src="procedures.js" charset="utf-8" onerror="console.log('Procedures not loaded')"></script>
+<script src="env_tables.js" charset="utf-8" onerror="console.log('Environmental tables not loaded')"></script>
 <script>
 // ================================================================
 // I18N — language state & helpers (Chinese pack: i18n_zh.js)
@@ -775,14 +796,19 @@ function matchesActiveStd(text){
   if(!d.id&&!d.us&&!d.cn)return true; // generic — keep
   return d[ck];
 }
-function T(key,en){const z=window.ZH;return(LANG==='zh'&&z&&z[key])?z[key]:en;}
-function locName(v){return(LANG==='zh'&&v.name_zh)?v.name_zh:v.name;}
+// Active language pack: 中文 → window.ZH · Bahasa Indonesia → window.IDN · English → none (base text)
+function langPack(){return LANG==='zh'?window.ZH:(LANG==='id'?window.IDN:null);}
+// Short key for the tri-lingual data files (env_tables.js uses i/e/z)
+function langKey(){return LANG==='zh'?'z':(LANG==='id'?'i':'e');}
+function T(key,en){const p=langPack();return(p&&p[key])?p[key]:en;}
+function locName(v){if(LANG==='zh'&&v.name_zh)return v.name_zh;if(LANG==='id'&&v.name_id)return v.name_id;return v.name;}
 function locNote(v){return(LANG==='zh'&&v.note_zh)?v.note_zh:(v.note||'');}
 function hazardLabel(s){if(LANG==='zh'&&window.HAZARD_ZH&&window.HAZARD_ZH[s])return window.HAZARD_ZH[s];return(s||'').replace(/_/g,' ').toUpperCase();}
 function trParam(s){if(LANG!=='zh'||!window.PARAM_ZH)return s;let out=String(s);for(let i=0;i<window.PARAM_ZH.length;i++)out=out.split(window.PARAM_ZH[i][0]).join(window.PARAM_ZH[i][1]);return out;}
-function stdTitle(s){return(LANG==='zh'&&s.title_zh)?s.title_zh:(s.title_en||s.title||'');}
+// Indonesian standards carry their Indonesian title in `title` and the English one in `title_en`
+function stdTitle(s){if(LANG==='zh'&&s.title_zh)return s.title_zh;if(LANG==='id')return s.title||s.title_en||'';return s.title_en||s.title||'';}
 function stdScope(s){return(LANG==='zh'&&s.scope_zh)?s.scope_zh:(s.scope||'');}
-function topicName(t){const v=KB.topics[t];if(!v)return t;return(LANG==='zh'&&v.name_zh)?v.name_zh:v.name;}
+function topicName(t){const v=KB.topics[t];if(!v)return t;if(LANG==='zh'&&v.name_zh)return v.name_zh;if(LANG==='id'&&v.name_id)return v.name_id;return v.name;}
 function monthLabels(){return LANG==='zh'?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:MONTHS;}
 function setLang(l){LANG=l;try{localStorage.setItem('esd_lang',l)}catch(e){}applyLanguage();}
 
@@ -800,16 +826,17 @@ function rebuildLocationSelects(){
 }
 
 function applyLanguage(){
-  document.documentElement.lang=(LANG==='zh')?'zh-CN':'en';
+  document.documentElement.lang=(LANG==='zh')?'zh-CN':(LANG==='id'?'id-ID':'en');
+  const pack=langPack();
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     if(el.dataset.orig==null)el.dataset.orig=el.innerHTML;
     const k=el.dataset.i18n;
-    el.innerHTML=(LANG==='zh'&&window.ZH&&window.ZH[k])?window.ZH[k]:el.dataset.orig;
+    el.innerHTML=(pack&&pack[k])?pack[k]:el.dataset.orig;
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
     if(el.dataset.origPh==null)el.dataset.origPh=el.placeholder;
     const k=el.dataset.i18nPh;
-    el.placeholder=(LANG==='zh'&&window.ZH&&window.ZH[k])?window.ZH[k]:el.dataset.origPh;
+    el.placeholder=(pack&&pack[k])?pack[k]:el.dataset.origPh;
   });
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
   rebuildLocationSelects();
@@ -904,6 +931,12 @@ standards: [
    title_en:"Guidelines for the Construction Safety Management System (SMKK / HSE)",year:2021,
    scope:"Indonesia's governing construction-safety (HSE / K3) regulation: duties of Pengguna & Penyedia Jasa, PMPM quality assurance, the five mandatory SMKK documents (Rancangan Konseptual SMKK, RKK, RMPK, Program Mutu, RKPPL, RMLLP), IBPRP hazard identification, construction-safety risk levels (Kecil/Sedang/Besar), the 5 RKK elements, UKK safety unit organisation, safety personnel qualification, and SMKK implementation cost",
    key_params:{"Risk bands (Tabel J-3)":"1–4 Kecil / 5–12 Sedang / 15–25 Besar","Risk score":"TR = K × A (each scale 1–5)","HPS thresholds":"≤Rp10bn / Rp10–100bn / >Rp100bn","Workforce thresholds":"<25 / 25–100 / >100","Personnel ratio":"1:60 / 1:50 / 1:40","Multi-risk categories":"5 (pekerja, peralatan, material, publik, lingkungan)","RKK elements":"5","Control hierarchy":"5 levels (eliminasi→APD)","AKK required":"risiko sedang & besar","Work permit types":"11","SMKK cost components":"9","Reporting":"harian / mingguan (Mon) / bulanan (10th)","Housekeeping":"5R"}},
+
+  {id:"pp-22-2021",code:"PP 22/2021",cat:"SNI",topic:["environmental"],
+   title:"Penyelenggaraan Perlindungan dan Pengelolaan Lingkungan Hidup",
+   title_en:"Implementation of Environmental Protection and Management",year:2021,
+   scope:"Indonesia's governing environmental regulation (implementing UU 32/2009 as amended by UU 11/2020): Persetujuan Lingkungan (AMDAL / UKL-UPL / SPPL), Persetujuan Teknis (PERTEK), water quality standards for rivers and lakes (Lampiran VI), ambient air quality standards (Lampiran VII), sea water quality standards (Lampiran VIII), wastewater and emission control, and B3 hazardous-waste management",
+   key_params:{"Water classes":"Kelas I–IV","River/lake parameters":"49 / 48","Ambient air parameters":"7 (PM₂,₅ 24 h = 55 µg/m³)","Sea water designations":"Pelabuhan / Wisata Bahari / Biota Laut","PM₁₀ 24 h":"75 µg/m³","SO₂ 1 h":"150 µg/m³","Approval tiers":"AMDAL / UKL-UPL / SPPL"}},
 
   {id:"nfpa",code:"NFPA 1/10/13/14/101",cat:"American",topic:["fire"],
    title:"NFPA Fire Codes (Fire Code, Extinguishers, Sprinklers, Standpipes, Life Safety)",year:2021,
@@ -1118,6 +1151,10 @@ topics:{
   hse_safety:{name:"HSE / Construction Safety (SMKK)",name_id:"Keselamatan Konstruksi (SMKK)",
     keywords:["hse","k3","smkk","smk3","safety","keselamatan","keselamatan konstruksi","construction safety","health and safety","kesehatan kerja","occupational safety","rkk","rencana keselamatan konstruksi","rmpk","rkppl","rmllp","program mutu","rancangan konseptual","ibprp","identifikasi bahaya","hazard identification","risk assessment","penilaian risiko","tingkat risiko","risk level","akk","analisis keselamatan konstruksi","job safety analysis","jsa","ukk","unit keselamatan konstruksi","ahli k3","petugas keselamatan","apd","ppe","alat pelindung diri","apk","hierarchy of control","hirarki pengendalian","eliminasi","substitusi","toolbox meeting","safety induction","induksi keselamatan","tanggap darurat","emergency response","p3k","first aid","kecelakaan kerja","work accident","near miss","permit to work","izin kerja","5r","housekeeping","biaya smkk","safety cost","iso 45001","ohsas","osha","permen pupr 10","zero accident","pengguna jasa","penyedia jasa","audit keselamatan","inspeksi keselamatan","laporan harian","laporan mingguan","laporan bulanan","daily report","progress report","laporan pelaksanaan","rona lingkungan","environmental baseline","environmental monitoring","pemantauan lingkungan","amdal","ukl-upl","rkl","rpl","traffic management","manajemen lalu lintas","penutupan jalan","road closure","flagman","pengaturan lalu lintas","dinas perhubungan","satlantas","pho","serah terima"],
     standards:["permen-pupr-10-2021"],
+    required_info:[]},
+  environmental:{name:"Environmental Quality & Permits",name_id:"Lingkungan Hidup & Perizinan",
+    keywords:["environment","environmental","lingkungan","lingkungan hidup","baku mutu","quality standard","water quality","kualitas air","baku mutu air","air sungai","river water","air danau","lake water","air laut","sea water","seawater","marine water","udara","air quality","udara ambien","ambient air","baku mutu udara","emisi","emission","emissions","pencemaran","pollution","polusi","limbah","waste","limbah cair","wastewater","air limbah","effluent","limbah b3","b3","hazardous waste","amdal","ukl-upl","ukl upl","sppl","persetujuan lingkungan","environmental permit","izin lingkungan","environmental approval","pertek","persetujuan teknis","rkl-rpl","andal","kerangka acuan","pp 22","pp 22/2021","kelas air","water class","tds","tss","bod","cod","do","dissolved oxygen","coliform","pm10","pm2.5","pm 2,5","so2","no2","ozon","ozone","nmhc","tsp","timbal","baku mutu air laut","biota laut","wisata bahari","pelabuhan","klorofil","salinitas","kekeruhan","turbidity","environmental monitoring","pemantauan lingkungan","effluent standard","ambient standard"],
+    standards:["pp-22-2021"],
     required_info:[]}
 },
 
@@ -1135,7 +1172,8 @@ topicToModule:{
   foundation_type:"foundation_type",
   fire:"fire",
   serviceability:"serviceability",
-  hse_safety:"hse"
+  hse_safety:"hse",
+  environmental:"environmental"
 },
 
 // ================================================================
@@ -2417,6 +2455,63 @@ answer_modules:{
        notes:["The SMKK cost is a <strong>reimbursable, separately-priced item</strong> — Permen PUPR 10/2021 requires the SMKK implementation cost to contain at least 9 components and to sit outside the expert-remuneration budget, so safety provisions cannot be competed away in tender."]}
     ],
     sources:"Permen PUPR 10/2021 — pp. 1–100: Lampiran A (roles of Pengguna/Penyedia Jasa, UKK), B (PMPM), C (Rancangan Konseptual SMKK — Tabel 5 risk scoring, Tabel 6 IBPRP, Tabel 8 personnel), D (RKK formats &amp; the 5 elements) · pp. 100–200: A.3–A.4 (leadership commitment, Tabel 1-2 visit schedule, Tabel 1-3 worker participation), B.1–B.3 (Tabel 2-2 full IBPRP with residual risk, Tabel 2-3/2-4 sasaran &amp; program, Tabel 2-5 legal register), C.1–C.5 (Tabel 3-1 plant, 3-2 imported material, 3-3 personnel, 3-4 training, 3-5→3-8 communication), D.1–D.3 (Tabel 4-1 procedure register, 4-2 AKK/CSA, 4-3 work permit, 4-4 environmental thresholds), E (inspection, checklists, audit) · pp. 200–300: F/Tabel 6-1 (consultancy reporting), G (RKPPL — Tabel 2.1 rona lingkungan awal by STA, Tabel 3.1 environmental work plan, AMDAL/UKL-UPL linkage rule), H (RMLLP — 13 traffic elements, Tabel 3 agency coordination, Tabel 5 closure schedule, daily observation duty), I (Matrik Pelaporan — daily/weekly/monthly deadlines, copies &amp; approval chain) · pp. 300–414: J (Tabel J-2a kekerapan, J-2b keparahan, <strong>Tabel J-3 risk matrix 1-4/5-12/15-25</strong>, J.2 auto-large-risk works list), K.2 (<strong>the 9 SMKK cost components</strong>, helmet colour code, plant marking), and the batang tubuh Pasal 33–38 (statutory risk criteria by HPS value/workforce/technology, UKK formation, <strong>personnel ratios 1:60 / 1:50 / 1:40</strong>) — <strong>document fully covered (all 414 pp.)</strong> · UU 1/1970 · UU 2/2017 Jasa Konstruksi · UU 11/2020 · PP 14/2021 · ISO 45001 · OSHA 29 CFR 1926 · GB 50656-2011 / JGJ 59-2011"
+  },
+
+  environmental:{
+    title:"Environmental Quality Standards &amp; Permits — PP 22/2021",
+    sections:[
+      {h:"Environmental Approval Framework (PP 22/2021 — Persetujuan Lingkungan)",
+       table:{center:true,cols:["Tier","Instrument","When it applies","Output"],
+         rows:[
+           ["<strong>AMDAL</strong>","Analisis Mengenai Dampak Lingkungan Hidup","Business/activity with <strong>important impact</strong> on the environment (wajib AMDAL)","<strong>Persetujuan Kelayakan Lingkungan Hidup</strong> — issued after the Tim Uji Kelayakan (TUK) feasibility test"],
+           ["<strong>UKL-UPL</strong>","Upaya Pengelolaan &amp; Upaya Pemantauan Lingkungan Hidup","Activity <strong>without</strong> important impact but still requiring management &amp; monitoring","<strong>Persetujuan Pernyataan Kesanggupan Pengelolaan Lingkungan Hidup (PKPLH)</strong>"],
+           ["<strong>SPPL</strong>","Surat Pernyataan Kesanggupan Pengelolaan &amp; Pemantauan Lingkungan Hidup","Low-impact / small-scale activity","Registered statement letter"],
+           ["<strong>PERTEK</strong>","Persetujuan Teknis","Required alongside the above for wastewater discharge, air emissions, B3 hazardous-waste management, and disposal to sea","Technical approval, later confirmed by SLO (Surat Kelayakan Operasional)"]
+         ]},
+       notes:["<strong>Persetujuan Lingkungan is a prerequisite for the Perizinan Berusaha (business licence)</strong> — the environmental approval must be secured before the operating permit is issued (PP 22/2021, implementing UU 32/2009 as amended by UU 11/2020 Cipta Kerja).","AMDAL documents comprise the <em>Formulir Kerangka Acuan</em> → <em>ANDAL</em> → <em>RKL-RPL</em>. AMDAL is graded into categories A, B and C by impact scale and complexity. Non-hazardous waste requires a <em>Rincian Teknis</em> rather than a full PERTEK."]},
+      {h:"Water Quality Classes — designated use (PP 22/2021 Lampiran VI)",
+       table:{center:true,cols:["Class","Designated use"],
+         rows:[
+           ["<strong>Kelas I</strong>","Raw water for drinking water, and/or other uses requiring the same water quality"],
+           ["<strong>Kelas II</strong>","Water recreation infrastructure, freshwater fish farming, livestock, crop irrigation, and/or other uses requiring the same quality"],
+           ["<strong>Kelas III</strong>","Freshwater fish farming, livestock, crop irrigation, and/or other uses requiring the same quality"],
+           ["<strong>Kelas IV</strong>","Crop irrigation and/or other uses requiring the same quality"]
+         ]},
+       notes:["The class assigned to a water body determines which column of the tables below is the compliance limit for any discharge or abstraction affecting it. A dash (—) means the parameter is not stipulated for that class."]},
+      {h:"River Water Quality Standard (PP 22/2021 Lampiran VI-I) — full table",envTable:"river",
+       notes:["Reproduced exactly as the regulation, 49 parameters × 4 classes. Use the <strong>Export to Excel</strong> button to download the table in the language currently selected."]},
+      {h:"Lake Water Quality Standard (PP 22/2021 Lampiran VI-II) — full table",envTable:"lake",
+       notes:["The lake table adds <em>Transparansi</em> (transparency) and <em>Klorofil-a</em> and applies tighter nutrient limits than the river table — Total Nitrogen 0,65 / 0,75 / 1,90 mg/L and Total Fosfat 0,01 / 0,03 / 0,1 mg/L — reflecting lake eutrophication sensitivity."]},
+      {h:"Ambient Air Quality Standard (PP 22/2021 Lampiran VII) — full table",envTable:"air",
+       notes:["PP 22/2021 tightened the previous PP 41/1999 limits considerably and introduced <strong>PM₂,₅</strong> and annual averaging periods. Key construction-relevant values: <strong>TSP 24 h = 230 µg/m³</strong>, <strong>PM₁₀ 24 h = 75 µg/m³</strong>, <strong>PM₂,₅ 24 h = 55 µg/m³</strong> — these govern dust control on site."]},
+      {h:"Sea Water Quality Standard (PP 22/2021 Lampiran VIII) — full table",envTable:"sea",
+       notes:["Three designations: <em>Pelabuhan</em> (port), <em>Wisata Bahari</em> (marine tourism) and <em>Biota Laut</em> (marine biota). The Biota Laut column carries sub-limits for <strong>coral</strong>, <strong>mangrove</strong> and <strong>lamun</strong> (seagrass) where the regulation distinguishes them — relevant to any reclamation, jetty, outfall or dredging work."]},
+      {h:"Construction-Relevant Compliance Points",extra:true,
+       table:{cols:["Activity","What the standard controls"],
+         rows:[
+           ["Site dewatering / discharge to a river","Effluent must not push the receiving water beyond its class limits (Lampiran VI) — TSS, pH, oil &amp; grease and metals are the usual binding parameters"],
+           ["Earthworks &amp; haul roads","Ambient dust against TSP / PM₁₀ / PM₂,₅ (Lampiran VII); watering and wheel-wash are the standard mitigations"],
+           ["Concrete batching &amp; crushing","Ambient PM plus SO₂/NO₂ from plant; emission PERTEK required for stationary sources"],
+           ["Marine works — jetty, reclamation, dredging, outfall","Lampiran VIII limits for the designated sea-water use, with coral/mangrove/seagrass sub-limits where present"],
+           ["Fuel, oil and chemical storage","B3 hazardous-waste management under PERTEK; spill containment to keep oil &amp; grease within limits"],
+           ["Wastewater from site facilities","Domestic effluent standard plus the receiving-body class limits"]
+         ]},
+       notes:["On a construction project these standards interlock with the SMKK environmental documents: the <strong>RKPPL</strong> environmental management plan must accommodate and elaborate the RKL-RPL or UKL-UPL commitments derived from this regulation (Permen PUPR 10/2021, Lampiran G)."]},
+      {h:"International Comparison — Ambient Air &amp; Water",extra:true,
+       table:{cols:["Parameter","🇮🇩 PP 22/2021","🇺🇸 US EPA NAAQS","🇨🇳 GB 3095-2012 (Grade II)"],
+         rows:[
+           ["PM₂,₅ — 24 h","<strong>55 µg/m³</strong>","35 µg/m³","75 µg/m³"],
+           ["PM₂,₅ — annual","<strong>15 µg/m³</strong>","9 µg/m³ (2024)","35 µg/m³"],
+           ["PM₁₀ — 24 h","<strong>75 µg/m³</strong>","150 µg/m³","150 µg/m³"],
+           ["PM₁₀ — annual","<strong>40 µg/m³</strong>","—","70 µg/m³"],
+           ["SO₂ — 24 h","<strong>75 µg/m³</strong>","—","150 µg/m³"],
+           ["NO₂ — annual","<strong>50 µg/m³</strong>","100 µg/m³","40 µg/m³"],
+           ["CO — 8 h","<strong>4.000 µg/m³</strong>","10 mg/m³ (9 ppm)","4.000 µg/m³"],
+           ["Surface water classes","Kelas I–IV","EPA designated uses by state","GB 3838-2002 Class I–V"]
+         ]},
+       notes:["Indonesia's PM₁₀ and PM₂,₅ annual limits are notably stricter than both the Chinese Grade II and (for PM₁₀ 24 h) the US standard, while the PM₂,₅ 24-hour limit is more permissive than the US. Where a project has lender or parent-company requirements (IFC EHS Guidelines, WHO AQG), the <strong>stricter</strong> of the applicable values normally governs."]}
+    ],
+    sources:"PP 22/2021 Lampiran VI (Baku Mutu Air Nasional — I. Sungai, II. Danau), Lampiran VII (Baku Mutu Udara Ambien), Lampiran VIII (Baku Mutu Air Laut) — transcribed from the official PDF and cross-checked parameter-by-parameter · PP 22/2021 batang tubuh (Persetujuan Lingkungan, AMDAL/UKL-UPL/SPPL, Persetujuan Teknis) · UU 32/2009 · UU 11/2020 Cipta Kerja · Permen PUPR 10/2021 Lampiran G (RKPPL linkage) · US EPA NAAQS · GB 3095-2012 / GB 3838-2002 · IFC EHS Guidelines"
   }
 
 },
@@ -3012,7 +3107,7 @@ function buildProcedureHTML(topics){
 }
 
 function renderProcedure(proc){
-  const p=(LANG==='zh'&&proc.zh)?proc.zh:proc.en;
+  const p=(LANG==='zh'&&proc.zh)?proc.zh:((LANG==='id'&&proc.idn)?proc.idn:proc.en);
   if(!p)return'';
   const ck=activeCountryKey();
   let banner='';
@@ -3050,9 +3145,118 @@ function renderProcedure(proc){
   </details>`;
 }
 
+// ── PP 22/2021 environmental quality tables ────────────────────
+// Rendered as an exact replica of the regulation's table, in the
+// active language, with a one-click Excel export of the same grid.
+function envPipe(s,L){const a=String(s||'').split('|');return a.length<3?s:(L==='i'?a[0]:(L==='e'?a[1]:a[2]));}
+
+// Build the language-resolved grid (header row + data rows) for a table
+function envGrid(t,L){
+  const cols=t.cols[L]||t.cols.e;
+  const grid=[cols.slice()];
+  t.rows.forEach(r=>{
+    let cells=[r.n,(r.p&&(r.p[L]||r.p.e))||'',envPipe(r.u,L)].concat(r.v||[]);
+    while(cells.length<cols.length)cells.push(r.k?(r.k[L]||r.k.e||''):'');
+    grid.push(cells.slice(0,cols.length));
+  });
+  return{cols:cols,grid:grid};
+}
+
+function renderEnvTable(key){
+  const t=window.ENV_TABLES&&window.ENV_TABLES[key];
+  if(!t)return'';
+  const L=langKey();
+  const g=envGrid(t,L);
+  const title=(t.title&&(t.title[L]||t.title.e))||key;
+  let head='<tr>'+g.cols.map(c=>`<th>${escapeHtml(c)}</th>`).join('')+'</tr>';
+  let body='';
+  for(let i=1;i<g.grid.length;i++){
+    const row=g.grid[i];
+    body+='<tr>'+row.map((c,j)=>{
+      const cls=(j===2)?' class="env-unit"':((j>2&&j<g.cols.length-(t.foot?0:0)&&/^[\d.,\-—<>≥≤ ]*$/.test(String(c)))?' class="env-val"':'');
+      return `<td${cls}>${escapeHtml(String(c===''||c==null?'':c))}</td>`;
+    }).join('')+'</tr>';
+  }
+  let foot='';
+  if(t.foot&&(t.foot[L]||t.foot.e)){
+    const fl=t.foot[L]||t.foot.e;
+    foot=`<div class="env-foot"><strong>${T('env.notes','Keterangan / Notes:')}</strong><ul>${fl.map(f=>`<li>${escapeHtml(f)}</li>`).join('')}</ul></div>`;
+  }
+  return `<div class="env-card">
+    <div class="env-head">
+      <div><span class="env-title">${escapeHtml(title)}</span><span class="env-code">${escapeHtml(t.code)}</span></div>
+      <button class="env-xls" onclick="exportEnvTable('${key}')">${T('env.export','⬇ Export to Excel')}</button>
+    </div>
+    <div class="env-scroll"><table class="env-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>
+    ${foot}
+  </div>`;
+}
+
+function renderAllEnvTables(){
+  if(!window.ENV_TABLES)return'';
+  return ['river','lake','air','sea'].map(k=>renderEnvTable(k)).join('');
+}
+
+// ── Excel export (SpreadsheetML 2003 — opens natively in Excel, no library) ──
+function xmlEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function exportEnvTable(key){
+  const t=window.ENV_TABLES&&window.ENV_TABLES[key];
+  if(!t){alert('Table not found');return;}
+  const L=langKey();
+  const g=envGrid(t,L);
+  const title=(t.title&&(t.title[L]||t.title.e))||key;
+  const foot=(t.foot&&(t.foot[L]||t.foot.e))||[];
+
+  let rowsXml='';
+  const cell=(v,style)=>`<Cell ss:StyleID="${style}"><Data ss:Type="String">${xmlEsc(v)}</Data></Cell>`;
+  // title + source rows
+  rowsXml+=`<Row ss:Height="20"><Cell ss:StyleID="ttl" ss:MergeAcross="${g.cols.length-1}"><Data ss:Type="String">${xmlEsc(title)}</Data></Cell></Row>`;
+  rowsXml+=`<Row><Cell ss:StyleID="sub" ss:MergeAcross="${g.cols.length-1}"><Data ss:Type="String">${xmlEsc(t.code)}</Data></Cell></Row>`;
+  rowsXml+=`<Row></Row>`;
+  // header
+  rowsXml+='<Row>'+g.grid[0].map(c=>cell(c,'hdr')).join('')+'</Row>';
+  // body
+  for(let i=1;i<g.grid.length;i++){
+    rowsXml+='<Row>'+g.grid[i].map(c=>cell(c,'cel')).join('')+'</Row>';
+  }
+  // footnotes
+  if(foot.length){
+    rowsXml+=`<Row></Row>`;
+    rowsXml+=`<Row><Cell ss:StyleID="sub" ss:MergeAcross="${g.cols.length-1}"><Data ss:Type="String">${xmlEsc(T('env.notes','Keterangan / Notes:'))}</Data></Cell></Row>`;
+    foot.forEach(f=>{rowsXml+=`<Row><Cell ss:StyleID="note" ss:MergeAcross="${g.cols.length-1}"><Data ss:Type="String">${xmlEsc(f)}</Data></Cell></Row>`;});
+  }
+  let colsXml='<Column ss:Width="38"/><Column ss:Width="230"/><Column ss:Width="80"/>';
+  for(let i=3;i<g.cols.length;i++)colsXml+='<Column ss:Width="'+(i===g.cols.length-1?230:76)+'"/>';
+
+  const bd='<Border ss:Position="{P}" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#B7C4D2"/>';
+  const borders='<Borders>'+['Top','Bottom','Left','Right'].map(p=>bd.replace('{P}',p)).join('')+'</Borders>';
+  const xml='<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n'
+   +'<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+   +'<Styles>'
+   +'<Style ss:ID="Default" ss:Name="Normal"><Alignment ss:Vertical="Top"/><Font ss:FontName="Calibri" ss:Size="11"/></Style>'
+   +'<Style ss:ID="ttl"><Font ss:FontName="Calibri" ss:Size="14" ss:Bold="1" ss:Color="#1F3864"/><Alignment ss:Vertical="Center"/></Style>'
+   +'<Style ss:ID="sub"><Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#2E75B6"/></Style>'
+   +'<Style ss:ID="note"><Font ss:FontName="Calibri" ss:Size="9" ss:Color="#555555"/><Alignment ss:Vertical="Top" ss:WrapText="1"/></Style>'
+   +'<Style ss:ID="hdr"><Font ss:FontName="Calibri" ss:Size="11" ss:Bold="1" ss:Color="#1F3864"/><Interior ss:Color="#DDEBF7" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center" ss:WrapText="1"/>'+borders+'</Style>'
+   +'<Style ss:ID="cel"><Alignment ss:Vertical="Top" ss:WrapText="1"/>'+borders+'</Style>'
+   +'</Styles>'
+   +'<Worksheet ss:Name="'+xmlEsc(String(t.code).replace(/[\\\/\?\*\[\]:]/g,' ').substring(0,31))+'">'
+   +'<Table>'+colsXml+rowsXml+'</Table>'
+   +'<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel"><FreezePanes/><FrozenNoSplit/><SplitHorizontal>4</SplitHorizontal><TopRowBottomPane>4</TopRowBottomPane><ActivePane>2</ActivePane></WorksheetOptions>'
+   +'</Worksheet></Workbook>';
+
+  const fname=String(t.code).replace(/[^\w\-]+/g,'_')+'_'+L+'.xls';
+  const blob=new Blob(['﻿'+xml],{type:'application/vnd.ms-excel;charset=UTF-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=fname;document.body.appendChild(a);a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},400);
+}
+
 function renderModule(key,mod){
   // pick the Chinese version of the module content when 中文 is active
-  const m=(LANG==='zh'&&mod.zh)?mod.zh:mod;
+  const m=(LANG==='zh'&&mod.zh)?mod.zh:((LANG==='id'&&mod.idn)?mod.idn:mod);
   // Is a step-by-step procedure shown above? Only the Design function renders
   // one, so the systematic numbering belongs to that mode.
   const procKey=(window.PROCEDURES&&window.PROCEDURES[key]&&window.PROCEDURES[key].ref)?window.PROCEDURES[key].ref:key;
@@ -3078,6 +3282,8 @@ function renderModule(key,mod){
     body+=`<h4>${tag}${sec.h}</h4>`;
     if(sec.table)body+=renderModTable(sec.table);
     if(sec.notes)sec.notes.forEach(n=>body+=`<div class="note-box">${n}</div>`);
+    // exact-replica regulation table with Excel export (PP 22/2021 Lampiran)
+    if(base.envTable)body+=renderEnvTable(base.envTable);
   });
   if(!shownAny){body+=`<div class="note-box">${T('mod.noStd','No dedicated parameters for the selected standard system in this module — switch to “All” or another standard, or see the comparison cards above.')}</div>`;}
   if(mod.tool_link){
@@ -3256,7 +3462,7 @@ function matchQACards(q){
 }
 
 function renderQACard(card,related,ctx){
-  const c=(LANG==='zh'&&card.zh)?card.zh:card.en;
+  const c=(LANG==='zh'&&card.zh)?card.zh:((LANG==='id'&&card.idn)?card.idn:card.en);
   const pri=detectStdPriority(ctx.raw.toLowerCase());
   let secs=c.sections.slice();
   // country filter: show only the selected standard system's sections
@@ -4113,7 +4319,8 @@ window.addEventListener('DOMContentLoaded',()=>{
 // Also clear on bfcache restore (browser Back/Forward returning to the page)
 window.addEventListener('pageshow',e=>{if(e.persisted)resetAllState();});
 </script>
-<script src="i18n_zh.js" charset="utf-8" onerror="console.log('Chinese language pack not loaded — EN only')"></script>
+<script src="i18n_zh.js" charset="utf-8" onerror="console.log('Chinese language pack not loaded')"></script>
+<script src="i18n_id.js" charset="utf-8" onerror="console.log('Indonesian language pack not loaded')"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
